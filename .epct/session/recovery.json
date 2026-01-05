@@ -1,5 +1,16 @@
 {
-  "lastCheckpoint": null,
-  "canRecover": false,
-  "recoveryInstructions": ""
+  "lastCheckpoint": {
+    "timestamp": "2026-01-05T11:00:00Z",
+    "phase": "Développement (4/7)",
+    "lastChunk": {
+      "method": "BonsaiService.update",
+      "status": "completed"
+    },
+    "nextChunk": "BonsaiService.delete",
+    "completedChunks": 2,
+    "totalChunks": 6
+  },
+  "canRecover": true,
+  "errors": 0,
+  "recoveryInstructions": "Continuer avec BonsaiService.delete - workflow TDD"
 }
