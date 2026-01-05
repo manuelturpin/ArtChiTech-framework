@@ -3,9 +3,11 @@
  * Test du framework en conditions réelles
  */
 
-import express, { Request, Response } from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
+import * as Sentry from '@sentry/node'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { BonsaiService } from '../services/BonsaiService.js'
@@ -21,31 +23,94 @@ const app = express()
 const bonsaiService = new BonsaiService()
 const siteService = new SiteService()
 const PORT = process.env.PORT || 3000
+const NODE_ENV = process.env.NODE_ENV || 'development'
+
+// Sentry - Production error monitoring
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: NODE_ENV,
+    tracesSampleRate: NODE_ENV === 'production' ? 0.1 : 1.0,
+  })
+  console.log('✓ Sentry initialized')
+}
+
+// CORS - Restricted by environment
+const ALLOWED_ORIGINS = NODE_ENV === 'production'
+  ? (process.env.ALLOWED_ORIGINS || 'https://bonsai-tracker.com').split(',')
+  : ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001']
+
+const corsOptions: cors.CorsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc.) in dev
+    if (!origin && NODE_ENV !== 'production') {
+      callback(null, true)
+      return
+    }
+    if (origin && ALLOWED_ORIGINS.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error(`CORS: Origin ${origin} not allowed`))
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}
+
+// Rate Limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: NODE_ENV === 'production' ? 100 : 1000, // 100 req/15min in prod
+  message: { error: 'Too many requests, please try again later' },
+  standardHeaders: true,
+  legacyHeaders: false,
+})
 
 // Middleware - Security
 app.use(helmet({
-  contentSecurityPolicy: false, // Disable for development (inline scripts)
+  contentSecurityPolicy: NODE_ENV === 'production' ? undefined : false,
 }))
-app.use(cors())
-app.use(express.json())
+app.use(cors(corsOptions))
+app.use('/api/', apiLimiter) // Rate limit API routes
+app.use(express.json({ limit: '10kb' })) // Limit body size
+
+// Health check endpoint (before static files)
+app.get('/health', (_req: Request, res: Response) => {
+  res.json({
+    status: 'healthy',
+    environment: NODE_ENV,
+    timestamp: new Date().toISOString()
+  })
+})
+
 app.use(express.static(path.join(__dirname, '../../public')))
 
 // Seed data
 async function seedData() {
-  // Sites
-  await siteService.create({ name: 'Pépinière Nord', location: 'Saint-Denis', capacity: 100, type: 'pepiniere' })
-  await siteService.create({ name: 'Pépinière Sud', location: 'Saint-Pierre', capacity: 80, type: 'pepiniere' })
-  await siteService.create({ name: 'Pépinière Est', location: 'Saint-André', capacity: 60, type: 'pepiniere' })
+  // Check if data already exists (for SQLite persistence)
+  const existingSites = await siteService.findAll()
+  if (existingSites.length > 0) {
+    console.log(`✓ Using existing data: ${existingSites.length} sites`)
+    const existingBonsais = await bonsaiService.findAll()
+    console.log(`✓ Using existing data: ${existingBonsais.length} bonsais`)
+    return
+  }
+
+  // Sites - capture IDs for foreign keys
+  const siteNord = await siteService.create({ name: 'Pépinière Nord', location: 'Saint-Denis', capacity: 100, type: 'pepiniere' })
+  const siteSud = await siteService.create({ name: 'Pépinière Sud', location: 'Saint-Pierre', capacity: 80, type: 'pepiniere' })
+  const siteEst = await siteService.create({ name: 'Pépinière Est', location: 'Saint-André', capacity: 60, type: 'pepiniere' })
   await siteService.create({ name: 'Showroom Centre', location: 'Saint-Paul', capacity: 30, type: 'showroom' })
   console.log('✓ 4 sites de démo chargés')
 
-  // Bonsais
-  await bonsaiService.create({ species: 'Ficus retusa', age: 8, siteId: 'pepiniere-nord', metadata: { style: 'moyogi', origin: 'Taiwan', height: 35 } })
-  await bonsaiService.create({ species: 'Pinus thunbergii', age: 25, siteId: 'pepiniere-nord', status: 'treatment', metadata: { style: 'chokkan', height: 60 } })
-  await bonsaiService.create({ species: 'Juniperus chinensis', age: 15, siteId: 'pepiniere-sud', metadata: { style: 'shakan', height: 45, origin: 'China' } })
-  await bonsaiService.create({ species: 'Acer palmatum', age: 12, siteId: 'pepiniere-sud', metadata: { style: 'moyogi', origin: 'Japan', height: 40 } })
-  await bonsaiService.create({ species: 'Zelkova serrata', age: 18, siteId: 'pepiniere-est', status: 'healthy', metadata: { style: 'hokidachi', height: 55 } })
-  await bonsaiService.create({ species: 'Carmona microphylla', age: 5, siteId: 'pepiniere-nord', metadata: { style: 'informal', height: 20, notes: 'Débutant' } })
+  // Bonsais - use actual site IDs
+  await bonsaiService.create({ species: 'Ficus retusa', age: 8, siteId: siteNord.id, metadata: { style: 'moyogi', origin: 'Taiwan', height: 35 } })
+  await bonsaiService.create({ species: 'Pinus thunbergii', age: 25, siteId: siteNord.id, status: 'treatment', metadata: { style: 'chokkan', height: 60 } })
+  await bonsaiService.create({ species: 'Juniperus chinensis', age: 15, siteId: siteSud.id, metadata: { style: 'shakan', height: 45, origin: 'China' } })
+  await bonsaiService.create({ species: 'Acer palmatum', age: 12, siteId: siteSud.id, metadata: { style: 'moyogi', origin: 'Japan', height: 40 } })
+  await bonsaiService.create({ species: 'Zelkova serrata', age: 18, siteId: siteEst.id, status: 'healthy', metadata: { style: 'hokidachi', height: 55 } })
+  await bonsaiService.create({ species: 'Carmona microphylla', age: 5, siteId: siteNord.id, metadata: { style: 'informal', height: 20, notes: 'Débutant' } })
   console.log('✓ 6 bonsais de démo chargés')
 }
 
@@ -248,6 +313,34 @@ app.use((req: Request, _res: Response, next) => {
   next()
 })
 
+// Global error handler with Sentry
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
+  // Log to Sentry in production
+  if (process.env.SENTRY_DSN) {
+    Sentry.captureException(err, {
+      extra: {
+        method: req.method,
+        path: req.path,
+        query: req.query,
+      }
+    })
+  }
+
+  // Log locally
+  errorLogger.error(err.message, { stack: err.stack })
+
+  // CORS errors
+  if (err.message.includes('CORS')) {
+    res.status(403).json({ error: 'CORS policy violation' })
+    return
+  }
+
+  // Generic error response
+  res.status(500).json({
+    error: NODE_ENV === 'production' ? 'Internal server error' : err.message
+  })
+})
+
 // Start server
 seedData().then(() => {
   app.listen(PORT, () => {
@@ -259,6 +352,13 @@ seedData().then(() => {
 ║                                                   ║
 ║   Server: http://localhost:${PORT}                  ║
 ║   API:    http://localhost:${PORT}/api/bonsais      ║
+║   Health: http://localhost:${PORT}/health           ║
+║                                                   ║
+║   Security:                                       ║
+║   ✓ Helmet (headers)                              ║
+║   ✓ CORS (${NODE_ENV === 'production' ? 'restricted' : 'dev mode'})                            ║
+║   ✓ Rate Limit (${NODE_ENV === 'production' ? '100' : '1000'}/15min)                       ║
+║   ${process.env.SENTRY_DSN ? '✓' : '○'} Sentry (${process.env.SENTRY_DSN ? 'active' : 'set SENTRY_DSN'})                       ║
 ║                                                   ║
 ╚═══════════════════════════════════════════════════╝
 `)

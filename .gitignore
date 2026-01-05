@@ -3,3 +3,18 @@ dist/
 coverage/
 *.log
 .DS_Store
+
+# Environment files (secrets)
+.env
+.env.local
+.env.production
+
+# Database files
+*.db
+*.db-wal
+*.db-shm
+data/*.db
+
+# Test artifacts
+test-results/
+playwright-report/

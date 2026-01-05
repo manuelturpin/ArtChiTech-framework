@@ -1,6 +1,7 @@
 /**
  * BonsaiService - Gestion des bonsaïs
  * Implémenté avec TDD (RED → GREEN → REFACTOR)
+ * Supports both in-memory (testing) and SQLite (production) storage
  */
 
 import type {
@@ -10,9 +11,20 @@ import type {
   TransferBonsaiInput,
   BonsaiFilter
 } from '../types/bonsai.js'
+import { getDatabase } from '../db/database.js'
+import type Database from 'better-sqlite3'
+
+const USE_SQLITE = process.env.USE_SQLITE === 'true'
 
 export class BonsaiService {
   private bonsais: Map<string, Bonsai> = new Map()
+  private db: Database.Database | null = null
+
+  constructor() {
+    if (USE_SQLITE) {
+      this.db = getDatabase()
+    }
+  }
 
   /**
    * Crée un nouveau bonsai
@@ -34,7 +46,26 @@ export class BonsaiService {
       updatedAt: now
     }
 
-    this.bonsais.set(bonsai.id, bonsai)
+    if (this.db) {
+      const stmt = this.db.prepare(`
+        INSERT INTO bonsais (id, species, age, site_id, status, acquisition_date, metadata, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+      stmt.run(
+        bonsai.id,
+        bonsai.species,
+        bonsai.age,
+        bonsai.siteId,
+        bonsai.status,
+        bonsai.acquisitionDate.toISOString(),
+        JSON.stringify(bonsai.metadata),
+        bonsai.createdAt.toISOString(),
+        bonsai.updatedAt.toISOString()
+      )
+    } else {
+      this.bonsais.set(bonsai.id, bonsai)
+    }
+
     return bonsai
   }
 
@@ -59,7 +90,23 @@ export class BonsaiService {
       updatedAt: new Date()
     }
 
-    this.bonsais.set(id, updated)
+    if (this.db) {
+      const stmt = this.db.prepare(`
+        UPDATE bonsais SET species = ?, age = ?, status = ?, metadata = ?, updated_at = ?
+        WHERE id = ?
+      `)
+      stmt.run(
+        updated.species,
+        updated.age,
+        updated.status,
+        JSON.stringify(updated.metadata),
+        updated.updatedAt.toISOString(),
+        id
+      )
+    } else {
+      this.bonsais.set(id, updated)
+    }
+
     return updated
   }
 
@@ -68,6 +115,16 @@ export class BonsaiService {
    * Chunk 3/6 - TDD IN PROGRESS
    */
   async delete(id: string): Promise<boolean> {
+    if (this.db) {
+      const bonsai = await this.findById(id)
+      if (!bonsai) {
+        throw new Error(`Bonsai not found: ${id}`)
+      }
+      const stmt = this.db.prepare('DELETE FROM bonsais WHERE id = ?')
+      const result = stmt.run(id)
+      return result.changes > 0
+    }
+
     const exists = this.bonsais.has(id)
     if (!exists) {
       throw new Error(`Bonsai not found: ${id}`)
@@ -80,7 +137,30 @@ export class BonsaiService {
    * Chunk 4/6 - TDD IN PROGRESS
    */
   async findById(id: string): Promise<Bonsai | null> {
+    if (this.db) {
+      const stmt = this.db.prepare('SELECT * FROM bonsais WHERE id = ?')
+      const row = stmt.get(id) as any
+      return row ? this.rowToBonsai(row) : null
+    }
     return this.bonsais.get(id) ?? null
+  }
+
+  /**
+   * Convert database row to Bonsai object
+   */
+  private rowToBonsai(row: any): Bonsai {
+    return {
+      id: row.id,
+      species: row.species,
+      age: row.age,
+      siteId: row.site_id,
+      status: row.status,
+      acquisitionDate: new Date(row.acquisition_date),
+      lastTransferDate: row.last_transfer_date ? new Date(row.last_transfer_date) : undefined,
+      metadata: JSON.parse(row.metadata || '{}'),
+      createdAt: new Date(row.created_at),
+      updatedAt: new Date(row.updated_at)
+    }
   }
 
   /**
@@ -88,6 +168,39 @@ export class BonsaiService {
    * Chunk 5/6 - TDD IN PROGRESS
    */
   async findAll(filter?: BonsaiFilter): Promise<Bonsai[]> {
+    if (this.db) {
+      let sql = 'SELECT * FROM bonsais WHERE 1=1'
+      const params: any[] = []
+
+      if (filter) {
+        if (filter.siteId) {
+          sql += ' AND site_id = ?'
+          params.push(filter.siteId)
+        }
+        if (filter.status) {
+          sql += ' AND status = ?'
+          params.push(filter.status)
+        }
+        if (filter.species) {
+          sql += ' AND LOWER(species) LIKE ?'
+          params.push(`%${filter.species.toLowerCase()}%`)
+        }
+        if (filter.minAge !== undefined) {
+          sql += ' AND age >= ?'
+          params.push(filter.minAge)
+        }
+        if (filter.maxAge !== undefined) {
+          sql += ' AND age <= ?'
+          params.push(filter.maxAge)
+        }
+      }
+
+      const stmt = this.db.prepare(sql)
+      const rows = stmt.all(...params) as any[]
+      return rows.map(row => this.rowToBonsai(row))
+    }
+
+    // In-memory fallback
     let results = Array.from(this.bonsais.values())
 
     if (filter) {
@@ -135,7 +248,21 @@ export class BonsaiService {
       updatedAt: now
     }
 
-    this.bonsais.set(id, transferred)
+    if (this.db) {
+      const stmt = this.db.prepare(`
+        UPDATE bonsais SET site_id = ?, last_transfer_date = ?, updated_at = ?
+        WHERE id = ?
+      `)
+      stmt.run(
+        transferred.siteId,
+        transferred.lastTransferDate!.toISOString(),
+        transferred.updatedAt.toISOString(),
+        id
+      )
+    } else {
+      this.bonsais.set(id, transferred)
+    }
+
     return transferred
   }
 
