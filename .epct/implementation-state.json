@@ -1,0 +1,10 @@
+{
+  "project": "framework-projet-claude-code",
+  "worktree": "../lab-13-framework-dev",
+  "branch": "framework/implementation",
+  "startedAt": "2026-01-05T00:00:00Z",
+  "currentPhase": 1,
+  "currentTask": "1.1",
+  "completedTasks": [],
+  "status": "in_progress"
+}
