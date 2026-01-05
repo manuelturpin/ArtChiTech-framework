@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌳 Bonsai Tracker - MVP</title>
+  <style>
+    :root {
+      --primary: #2d5a27;
+      --primary-light: #4a7c43;
+      --secondary: #8b4513;
+      --bg: #f5f5dc;
+      --card-bg: #ffffff;
+      --text: #333333;
+      --text-light: #666666;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --info: #17a2b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 { font-size: 1.8rem; }
+    header p { opacity: 0.9; font-size: 0.9rem; margin-top: 0.25rem; }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--primary); }
+    .stat-card .label { font-size: 0.85rem; color: var(--text-light); margin-top: 0.25rem; }
+
+    .controls { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+
+    .controls select, .controls input {
+      padding: 0.6rem 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: white;
+    }
+
+    .controls select:focus, .controls input:focus { outline: none; border-color: var(--primary); }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-light); }
+    .btn-secondary { background: #e9ecef; color: var(--text); }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .bonsai-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .bonsai-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .bonsai-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bonsai-header h3 { font-size: 1.1rem; font-weight: 600; }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-healthy { background: var(--success); }
+    .status-sick { background: var(--danger); }
+    .status-treatment { background: var(--warning); color: #333; }
+    .status-quarantine { background: var(--info); }
+    .status-sold { background: #6c757d; }
+
+    .bonsai-body { padding: 1.25rem; }
+
+    .bonsai-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-item { display: flex; flex-direction: column; }
+    .info-item .label { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; }
+    .info-item .value { font-size: 0.95rem; font-weight: 500; }
+
+    .bonsai-actions {
+      display: flex;
+      gap: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      background: var(--primary);
+      color: white;
+      padding: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 { font-size: 1.25rem; }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-body { padding: 1.5rem; }
+
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      background: var(--success);
+      color: white;
+      border-radius: 8px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.error { background: var(--danger); }
+
+    .empty-state { text-align: center; padding: 3rem; color: var(--text-light); grid-column: 1/-1; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌳 Bonsai Tracker</h1>
+    <p>MVP - Test Framework Projet Claude Code</p>
+  </header>
+
+  <main>
+    <div class="stats-bar">
+      <div class="stat-card"><div class="value" id="stat-total">-</div><div class="label">Total Bonsais</div></div>
+      <div class="stat-card"><div class="value" id="stat-sites">-</div><div class="label">Sites</div></div>
+      <div class="stat-card"><div class="value" id="stat-healthy">-</div><div class="label">En Santé</div></div>
+      <div class="stat-card"><div class="value" id="stat-avg-age">-</div><div class="label">Âge Moyen</div></div>
+    </div>
+
+    <div class="controls">
+      <select id="filter-site"><option value="">Tous les sites</option></select>
+      <select id="filter-status">
+        <option value="">Tous les statuts</option>
+        <option value="healthy">🟢 En santé</option>
+        <option value="sick">🔴 Malade</option>
+        <option value="treatment">🟠 Traitement</option>
+        <option value="quarantine">🟡 Quarantaine</option>
+        <option value="sold">⚪ Vendu</option>
+      </select>
+      <input type="text" id="filter-species" placeholder="Rechercher espèce...">
+      <button class="btn btn-primary" id="btn-new">+ Nouveau Bonsai</button>
+    </div>
+
+    <div class="grid" id="bonsai-grid"></div>
+  </main>
+
+  <div class="modal" id="modal-form">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Nouveau Bonsai</h2>
+        <button class="modal-close" id="close-form">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="bonsai-form">
+          <input type="hidden" id="form-id">
+          <div class="form-group"><label>Espèce *</label><input type="text" id="form-species" required placeholder="ex: Ficus retusa"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Âge (années) *</label><input type="number" id="form-age" required min="0"></div>
+            <div class="form-group"><label>Site *</label><input type="text" id="form-site" required placeholder="pepiniere-nord"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Statut</label>
+              <select id="form-status">
+                <option value="healthy">🟢 En santé</option>
+                <option value="sick">🔴 Malade</option>
+                <option value="treatment">🟠 Traitement</option>
+                <option value="quarantine">🟡 Quarantaine</option>
+                <option value="sold">⚪ Vendu</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Style</label><input type="text" id="form-style" placeholder="moyogi..."></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Hauteur (cm)</label><input type="number" id="form-height" min="0"></div>
+            <div class="form-group"><label>Origine</label><input type="text" id="form-origin" placeholder="Japan..."></div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Enregistrer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-transfer">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Transférer le Bonsai</h2>
+        <button class="modal-close" id="close-transfer">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="transfer-form">
+          <input type="hidden" id="transfer-id">
+          <p id="transfer-info" style="margin-bottom:1rem;color:var(--text-light)"></p>
+          <div class="form-group"><label>Nouveau Site *</label><input type="text" id="transfer-site" required></div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Transférer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API = '/api';
+    let allBonsais = [];
+    let sites = new Set();
+
+    const statusLabels = { healthy: 'En santé', sick: 'Malade', treatment: 'Traitement', quarantine: 'Quarantaine', sold: 'Vendu' };
+
+    function el(tag, attrs = {}, children = []) {
+      const elem = document.createElement(tag);
+      Object.entries(attrs).forEach(([k, v]) => {
+        if (k === 'className') elem.className = v;
+        else if (k === 'textContent') elem.textContent = v;
+        else if (k.startsWith('on')) elem.addEventListener(k.slice(2).toLowerCase(), v);
+        else elem.setAttribute(k, v);
+      });
+      children.forEach(c => { if (c) elem.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+      return elem;
+    }
+
+    async function fetchBonsais() {
+      const res = await fetch(API + '/bonsais');
+      allBonsais = await res.json();
+      sites.clear();
+      allBonsais.forEach(b => sites.add(b.siteId));
+      updateSiteFilter();
+      renderBonsais();
+      fetchStats();
+    }
+
+    async function fetchStats() {
+      const res = await fetch(API + '/stats');
+      const s = await res.json();
+      document.getElementById('stat-total').textContent = s.total;
+      document.getElementById('stat-sites').textContent = Object.keys(s.bySite).length;
+      document.getElementById('stat-healthy').textContent = s.byStatus.healthy || 0;
+      document.getElementById('stat-avg-age').textContent = s.avgAge + ' ans';
+    }
+
+    function updateSiteFilter() {
+      const sel = document.getElementById('filter-site');
+      const val = sel.value;
+      while (sel.options.length > 1) sel.remove(1);
+      sites.forEach(s => sel.add(new Option(s, s)));
+      sel.value = val;
+    }
+
+    function renderBonsais() {
+      const grid = document.getElementById('bonsai-grid');
+      const sf = document.getElementById('filter-site').value;
+      const stf = document.getElementById('filter-status').value;
+      const spf = document.getElementById('filter-species').value.toLowerCase();
+
+      const filtered = allBonsais.filter(b =>
+        (!sf || b.siteId === sf) &&
+        (!stf || b.status === stf) &&
+        (!spf || b.species.toLowerCase().includes(spf))
+      );
+
+      grid.replaceChildren();
+
+      if (!filtered.length) {
+        grid.appendChild(el('div', { className: 'empty-state' }, [
+          el('div', { textContent: '🌱', style: 'font-size:4rem;margin-bottom:1rem' }),
+          el('h3', { textContent: 'Aucun bonsai trouvé' }),
+          el('p', { textContent: 'Ajoutez votre premier bonsai ou modifiez les filtres' })
+        ]));
+        return;
+      }
+
+      filtered.forEach(b => {
+        const card = el('div', { className: 'bonsai-card' }, [
+          el('div', { className: 'bonsai-header' }, [
+            el('h3', { textContent: b.species }),
+            el('span', { className: 'status-badge status-' + b.status, textContent: statusLabels[b.status] })
+          ]),
+          el('div', { className: 'bonsai-body' }, [
+            el('div', { className: 'bonsai-info' }, [
+              el('div', { className: 'info-item' }, [el('span', { className: 'label', textContent: 'Âge' }), el('span', { className: 'value', textContent: b.age + ' ans' })]),
+              el('div', { className: 'info-item' }, [el('span', { className: 'label', textContent: 'Site' }), el('span', { className: 'value', textContent: b.siteId })]),
+              b.metadata.style ? el('div', { className: 'info-item' }, [el('span', { className: 'label', textContent: 'Style' }), el('span', { className: 'value', textContent: b.metadata.style })]) : null,
+              b.metadata.height ? el('div', { className: 'info-item' }, [el('span', { className: 'label', textContent: 'Hauteur' }), el('span', { className: 'value', textContent: b.metadata.height + ' cm' })]) : null
+            ].filter(Boolean)),
+            el('div', { className: 'bonsai-actions' }, [
+              el('button', { className: 'btn btn-secondary btn-sm', textContent: '✏️ Modifier', onClick: () => openEdit(b.id) }),
+              el('button', { className: 'btn btn-secondary btn-sm', textContent: '🚚 Transférer', onClick: () => openTransfer(b.id) }),
+              el('button', { className: 'btn btn-danger btn-sm', textContent: '🗑️', onClick: () => deleteBonsai(b.id) })
+            ])
+          ])
+        ]);
+        grid.appendChild(card);
+      });
+    }
+
+    function openCreate() {
+      document.getElementById('modal-title').textContent = 'Nouveau Bonsai';
+      document.getElementById('bonsai-form').reset();
+      document.getElementById('form-id').value = '';
+      document.getElementById('modal-form').classList.add('active');
+    }
+
+    function openEdit(id) {
+      const b = allBonsais.find(x => x.id === id);
+      if (!b) return;
+      document.getElementById('modal-title').textContent = 'Modifier Bonsai';
+      document.getElementById('form-id').value = id;
+      document.getElementById('form-species').value = b.species;
+      document.getElementById('form-age').value = b.age;
+      document.getElementById('form-site').value = b.siteId;
+      document.getElementById('form-status').value = b.status;
+      document.getElementById('form-style').value = b.metadata.style || '';
+      document.getElementById('form-height').value = b.metadata.height || '';
+      document.getElementById('form-origin').value = b.metadata.origin || '';
+      document.getElementById('modal-form').classList.add('active');
+    }
+
+    function openTransfer(id) {
+      const b = allBonsais.find(x => x.id === id);
+      if (!b) return;
+      document.getElementById('transfer-id').value = id;
+      document.getElementById('transfer-info').textContent = 'Transférer "' + b.species + '" depuis ' + b.siteId;
+      document.getElementById('transfer-site').value = '';
+      document.getElementById('modal-transfer').classList.add('active');
+    }
+
+    function closeModals() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('form-id').value;
+      const data = {
+        species: document.getElementById('form-species').value,
+        age: +document.getElementById('form-age').value,
+        siteId: document.getElementById('form-site').value,
+        status: document.getElementById('form-status').value,
+        metadata: {
+          style: document.getElementById('form-style').value || undefined,
+          height: +document.getElementById('form-height').value || undefined,
+          origin: document.getElementById('form-origin').value || undefined
+        }
+      };
+      await fetch(API + '/bonsais' + (id ? '/' + id : ''), {
+        method: id ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      showToast(id ? 'Bonsai modifié !' : 'Bonsai créé !');
+      closeModals();
+      fetchBonsais();
+    }
+
+    async function handleTransfer(e) {
+      e.preventDefault();
+      const id = document.getElementById('transfer-id').value;
+      await fetch(API + '/bonsais/' + id + '/transfer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ targetSiteId: document.getElementById('transfer-site').value })
+      });
+      showToast('Bonsai transféré !');
+      closeModals();
+      fetchBonsais();
+    }
+
+    async function deleteBonsai(id) {
+      if (!confirm('Supprimer ce bonsai ?')) return;
+      await fetch(API + '/bonsais/' + id, { method: 'DELETE' });
+      showToast('Bonsai supprimé');
+      fetchBonsais();
+    }
+
+    function showToast(msg, err = false) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast' + (err ? ' error' : '') + ' show';
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    document.getElementById('filter-site').addEventListener('change', renderBonsais);
+    document.getElementById('filter-status').addEventListener('change', renderBonsais);
+    document.getElementById('filter-species').addEventListener('input', renderBonsais);
+    document.getElementById('btn-new').addEventListener('click', openCreate);
+    document.getElementById('close-form').addEventListener('click', closeModals);
+    document.getElementById('close-transfer').addEventListener('click', closeModals);
+    document.getElementById('bonsai-form').addEventListener('submit', handleSubmit);
+    document.getElementById('transfer-form').addEventListener('submit', handleTransfer);
+    document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModals(); }));
+
+    fetchBonsais();
+  </script>
+</body>
+</html>
