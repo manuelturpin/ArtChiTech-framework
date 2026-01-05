@@ -1,0 +1,23 @@
+{
+  "project": {
+    "name": "",
+    "type": "",
+    "created": ""
+  },
+  "currentPhase": 0,
+  "phaseName": "",
+  "progress": {
+    "phase": 0,
+    "overall": 0
+  },
+  "currentChunk": null,
+  "errors": {
+    "active": 0,
+    "blocking": false
+  },
+  "lastAction": null,
+  "session": {
+    "tokensEstimated": 0,
+    "contextRemaining": "100%"
+  }
+}
