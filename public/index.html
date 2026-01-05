@@ -12,7 +12,7 @@
       --bg: #f5f5dc;
       --card-bg: #ffffff;
       --text: #333333;
-      --text-light: #666666;
+      --text-light: #555555;
       --success: #28a745;
       --warning: #ffc107;
       --danger: #dc3545;
@@ -37,6 +37,39 @@
 
     header h1 { font-size: 1.8rem; }
     header p { opacity: 0.9; font-size: 0.9rem; margin-top: 0.25rem; }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.25rem;
+      margin-top: 1rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1.5rem;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: var(--primary);
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     main { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
@@ -223,15 +256,35 @@
     .toast.error { background: var(--danger); }
 
     .empty-state { text-align: center; padding: 3rem; color: var(--text-light); grid-column: 1/-1; }
+
+    /* Screen reader only - accessible but visually hidden */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>🌳 Bonsai Tracker</h1>
     <p>MVP - Test Framework Projet Claude Code</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="bonsais">🌳 Bonsais</button>
+      <button class="tab-btn" data-tab="sites">📍 Sites</button>
+    </div>
   </header>
 
   <main>
+    <!-- TAB BONSAIS -->
+    <div id="tab-bonsais" class="tab-content active">
+    <h2 class="sr-only">Gestion des Bonsais</h2>
     <div class="stats-bar">
       <div class="stat-card"><div class="value" id="stat-total">-</div><div class="label">Total Bonsais</div></div>
       <div class="stat-card"><div class="value" id="stat-sites">-</div><div class="label">Sites</div></div>
@@ -240,8 +293,8 @@
     </div>
 
     <div class="controls">
-      <select id="filter-site"><option value="">Tous les sites</option></select>
-      <select id="filter-status">
+      <select id="filter-site" aria-label="Filtrer par site"><option value="">Tous les sites</option></select>
+      <select id="filter-status" aria-label="Filtrer par statut">
         <option value="">Tous les statuts</option>
         <option value="healthy">🟢 En santé</option>
         <option value="sick">🔴 Malade</option>
@@ -249,11 +302,37 @@
         <option value="quarantine">🟡 Quarantaine</option>
         <option value="sold">⚪ Vendu</option>
       </select>
-      <input type="text" id="filter-species" placeholder="Rechercher espèce...">
+      <input type="text" id="filter-species" placeholder="Rechercher espèce..." aria-label="Rechercher par espèce">
       <button class="btn btn-primary" id="btn-new">+ Nouveau Bonsai</button>
     </div>
 
     <div class="grid" id="bonsai-grid"></div>
+    </div>
+
+    <!-- TAB SITES -->
+    <div id="tab-sites" class="tab-content">
+      <h2 class="sr-only">Gestion des Sites</h2>
+      <div class="stats-bar">
+        <div class="stat-card"><div class="value" id="stat-sites-total">-</div><div class="label">Total Sites</div></div>
+        <div class="stat-card"><div class="value" id="stat-sites-capacity">-</div><div class="label">Capacité Totale</div></div>
+        <div class="stat-card"><div class="value" id="stat-sites-pepiniere">-</div><div class="label">Pépinières</div></div>
+        <div class="stat-card"><div class="value" id="stat-sites-showroom">-</div><div class="label">Showrooms</div></div>
+      </div>
+
+      <div class="controls">
+        <select id="filter-site-type" aria-label="Filtrer par type de site">
+          <option value="">Tous les types</option>
+          <option value="pepiniere">Pépinière</option>
+          <option value="showroom">Showroom</option>
+          <option value="stockage">Stockage</option>
+          <option value="vente">Vente</option>
+        </select>
+        <input type="text" id="filter-site-location" placeholder="Rechercher localisation..." aria-label="Rechercher par localisation">
+        <button class="btn btn-primary" id="btn-new-site">+ Nouveau Site</button>
+      </div>
+
+      <div class="grid" id="site-grid"></div>
+    </div>
   </main>
 
   <div class="modal" id="modal-form">
@@ -304,6 +383,35 @@
           <p id="transfer-info" style="margin-bottom:1rem;color:var(--text-light)"></p>
           <div class="form-group"><label>Nouveau Site *</label><input type="text" id="transfer-site" required></div>
           <button type="submit" class="btn btn-primary" style="width:100%">Transférer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Site -->
+  <div class="modal" id="modal-site">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-site-title">Nouveau Site</h2>
+        <button class="modal-close" id="close-site">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="site-form">
+          <input type="hidden" id="site-form-id">
+          <div class="form-group"><label>Nom *</label><input type="text" id="site-form-name" required placeholder="ex: Pépinière Nord"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Localisation *</label><input type="text" id="site-form-location" required placeholder="Saint-Denis"></div>
+            <div class="form-group"><label>Capacité *</label><input type="number" id="site-form-capacity" required min="1"></div>
+          </div>
+          <div class="form-group"><label>Type</label>
+            <select id="site-form-type">
+              <option value="pepiniere">Pépinière</option>
+              <option value="showroom">Showroom</option>
+              <option value="stockage">Stockage</option>
+              <option value="vente">Vente</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Enregistrer</button>
         </form>
       </div>
     </div>
@@ -499,6 +607,133 @@
     document.getElementById('bonsai-form').addEventListener('submit', handleSubmit);
     document.getElementById('transfer-form').addEventListener('submit', handleTransfer);
     document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModals(); }));
+
+    // ============================================
+    // SITES MANAGEMENT
+    // ============================================
+    let allSites = [];
+    const typeLabels = { pepiniere: 'Pépinière', showroom: 'Showroom', stockage: 'Stockage', vente: 'Vente' };
+
+    async function fetchSites() {
+      const res = await fetch(API + '/sites');
+      allSites = await res.json();
+      renderSites();
+      fetchSiteStats();
+    }
+
+    async function fetchSiteStats() {
+      const res = await fetch(API + '/sites-stats');
+      const s = await res.json();
+      document.getElementById('stat-sites-total').textContent = s.total;
+      document.getElementById('stat-sites-capacity').textContent = s.totalCapacity;
+      document.getElementById('stat-sites-pepiniere').textContent = s.byType.pepiniere || 0;
+      document.getElementById('stat-sites-showroom').textContent = s.byType.showroom || 0;
+    }
+
+    function renderSites() {
+      const grid = document.getElementById('site-grid');
+      const typeFilter = document.getElementById('filter-site-type').value;
+      const locFilter = document.getElementById('filter-site-location').value.toLowerCase();
+
+      const filtered = allSites.filter(s =>
+        (!typeFilter || s.type === typeFilter) &&
+        (!locFilter || s.location.toLowerCase().includes(locFilter))
+      );
+
+      grid.replaceChildren();
+
+      if (!filtered.length) {
+        grid.appendChild(el('div', { className: 'empty-state' }, [
+          el('div', { textContent: '📍', style: 'font-size:4rem;margin-bottom:1rem' }),
+          el('h3', { textContent: 'Aucun site trouvé' }),
+          el('p', { textContent: 'Ajoutez votre premier site ou modifiez les filtres' })
+        ]));
+        return;
+      }
+
+      filtered.forEach(s => {
+        const card = el('div', { className: 'bonsai-card' }, [
+          el('div', { className: 'bonsai-header' }, [
+            el('h3', { textContent: s.name }),
+            el('span', { className: 'status-badge status-healthy', textContent: typeLabels[s.type] || s.type })
+          ]),
+          el('div', { className: 'bonsai-body' }, [
+            el('div', { className: 'bonsai-info' }, [
+              el('div', { className: 'info-item' }, [el('span', { className: 'label', textContent: 'Localisation' }), el('span', { className: 'value', textContent: s.location })]),
+              el('div', { className: 'info-item' }, [el('span', { className: 'label', textContent: 'Capacité' }), el('span', { className: 'value', textContent: s.capacity + ' bonsais' })]),
+              el('div', { className: 'info-item' }, [el('span', { className: 'label', textContent: 'Type' }), el('span', { className: 'value', textContent: typeLabels[s.type] || s.type })])
+            ]),
+            el('div', { className: 'bonsai-actions' }, [
+              el('button', { className: 'btn btn-secondary btn-sm', textContent: '✏️ Modifier', onClick: () => openEditSite(s.id) }),
+              el('button', { className: 'btn btn-danger btn-sm', textContent: '🗑️', onClick: () => deleteSite(s.id) })
+            ])
+          ])
+        ]);
+        grid.appendChild(card);
+      });
+    }
+
+    function openCreateSite() {
+      document.getElementById('modal-site-title').textContent = 'Nouveau Site';
+      document.getElementById('site-form').reset();
+      document.getElementById('site-form-id').value = '';
+      document.getElementById('modal-site').classList.add('active');
+    }
+
+    function openEditSite(id) {
+      const s = allSites.find(x => x.id === id);
+      if (!s) return;
+      document.getElementById('modal-site-title').textContent = 'Modifier Site';
+      document.getElementById('site-form-id').value = id;
+      document.getElementById('site-form-name').value = s.name;
+      document.getElementById('site-form-location').value = s.location;
+      document.getElementById('site-form-capacity').value = s.capacity;
+      document.getElementById('site-form-type').value = s.type;
+      document.getElementById('modal-site').classList.add('active');
+    }
+
+    async function handleSiteSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('site-form-id').value;
+      const data = {
+        name: document.getElementById('site-form-name').value,
+        location: document.getElementById('site-form-location').value,
+        capacity: +document.getElementById('site-form-capacity').value,
+        type: document.getElementById('site-form-type').value
+      };
+      await fetch(API + '/sites' + (id ? '/' + id : ''), {
+        method: id ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      showToast(id ? 'Site modifié !' : 'Site créé !');
+      closeModals();
+      fetchSites();
+    }
+
+    async function deleteSite(id) {
+      if (!confirm('Supprimer ce site ?')) return;
+      await fetch(API + '/sites/' + id, { method: 'DELETE' });
+      showToast('Site supprimé');
+      fetchSites();
+    }
+
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'sites') fetchSites();
+      });
+    });
+
+    document.getElementById('filter-site-type').addEventListener('change', renderSites);
+    document.getElementById('filter-site-location').addEventListener('input', renderSites);
+    document.getElementById('btn-new-site').addEventListener('click', openCreateSite);
+    document.getElementById('close-site').addEventListener('click', closeModals);
+    document.getElementById('site-form').addEventListener('submit', handleSiteSubmit);
 
     fetchBonsais();
   </script>
