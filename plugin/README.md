@@ -1,75 +1,120 @@
-# ArtChiTech Framework (ACT)
+# ACT Framework
 
-**ACT** est un plugin Claude Code pour la gestion de projets, de la découverte à la croissance.
+> Framework de suivi et realisation de projets en 7 phases pour Claude Code.
 
 ## Installation
 
-```bash
-# Via le script d'installation
-./scripts/install-local.sh
+### Prerequis
 
-# Ou manuellement
-cp -r plugin/ ~/.claude/plugins/cache/local/act/
+| Dependance | Version | Obligatoire |
+|------------|---------|-------------|
+| Claude Code | Latest | Oui |
+| Plugin `superpowers` | 3.6.0+ | Oui |
+| Python | 3.8+ | Oui |
+| Git | Any | Oui |
+
+### Installer les dependances
+
+```bash
+# 1. Installer le plugin superpowers
+claude plugins:install superpowers-marketplace/superpowers
+
+# 2. Verifier Python
+python3 --version  # Doit etre >= 3.8
 ```
 
-## Commandes
+### Installer ACT
+
+**Option A: Git clone (recommande pour developpement)**
+
+```bash
+git clone https://github.com/bonsai974/act-framework.git ~/projects/act
+cd ~/projects/act
+./scripts/install.sh
+```
+
+**Option B: Installation locale**
+
+```bash
+./scripts/install.sh
+```
+
+### Verifier l'installation
+
+Redemarrez Claude Code, puis tapez `/projet`.
+
+## Utilisation
+
+### Commandes
 
 | Commande | Description |
 |----------|-------------|
-| `/onboard` | Auditer un projet existant et générer un diagnostic |
-| `/projet` | Hub principal interactif |
-| `/status` | État et progression du projet |
-| `/next` | Passer à l'étape suivante |
-| `/fix` | Corriger l'erreur prioritaire |
-| `/resume` | Reprendre une session précédente |
+| `/projet` | Hub principal - point d'entree unique |
+| `/onboard` | Auditer et initialiser un projet |
+| `/status` | Voir l'etat complet du projet |
+| `/next` | Passer a la phase suivante |
+| `/fix` | Corriger les problemes |
+| `/resume` | Reprendre une session |
 | `/help` | Aide contextuelle |
 
-## Les 7 Phases
+### Les 7 Phases
 
-1. **Discovery** - Valider le problème et les besoins
-2. **Stratégie** - Définir roadmap et business model
+1. **Discovery** - Valider le probleme et les besoins
+2. **Strategie** - Definir roadmap et business model
 3. **Conception** - Designer architecture et UX
-4. **Développement** - Implémenter avec TDD
-5. **Qualité** - Tester et valider
-6. **Lancement** - Déployer et acquérir
-7. **Croissance** - Itérer et optimiser
+4. **Developpement** - Implementer avec TDD
+5. **Qualite** - Tester et valider
+6. **Lancement** - Deployer et acquerir
+7. **Croissance** - Iterer et optimiser
 
-## Modes d'Utilisation
+### Les 3 Modes
 
-| Mode | Quand l'utiliser | Description |
-|------|------------------|-------------|
-| **COMPLET** | Nouveau projet | Parcourt les 7 phases |
-| **FEATURE** | Nouvelle fonctionnalité | Adapté selon la feature (peut nécessiter toutes les phases) |
-| **QUICK** | Petite modification | Rapide mais vérifie l'impact global |
+| Mode | Usage |
+|------|-------|
+| COMPLET | Nouveau projet from scratch |
+| FEATURE | Nouvelle fonctionnalite |
+| QUICK | Bugfix ou refactoring |
 
-### Mode FEATURE
+## Structure .epct/
 
-Selon l'importance de la feature, peut nécessiter :
-- Toutes les phases (1-7) pour une feature majeure
-- Intégration au projet global en phase 7
-
-### Mode QUICK
-
-- Exécution rapide des étapes nécessaires
-- **Toujours vérifier l'intégralité du projet** après modification
-
-## Structure du Plugin
+ACT cree un dossier `.epct/` dans votre projet :
 
 ```
+.epct/
+├── state.json          # Etat courant
+├── session/            # Donnees de session
+└── history/
+    └── checkpoints/    # Points de sauvegarde
+```
+
+Ajoutez `.epct/` a votre `.gitignore` si vous ne voulez pas versionner l'etat ACT.
+
+## Integration Superpowers
+
+ACT utilise les skills superpowers selon la phase :
+
+| Phase | Skill |
+|-------|-------|
+| Discovery | `superpowers:brainstorming` |
+| Strategie | `superpowers:brainstorming` |
+| Conception | `superpowers:writing-plans` |
+| Developpement | `superpowers:test-driven-development` |
+| Qualite | `superpowers:code-reviewer` |
+
+## Developpement
+
+```bash
+# Lancer les tests
+bash plugin/tests/run_all_tests.sh
+
+# Structure
 plugin/
-├── .claude-plugin/
-│   └── plugin.json       # Configuration
-├── commands/             # 7 commandes slash
-├── agents/               # 6 agents spécialisés
-├── references/           # Documentation
-│   ├── phases/           # 7 phases détaillées
-│   ├── scoring/          # Critères de scoring
-│   ├── recommendations/  # Recommandations
-│   └── templates/        # Templates de rapports
-└── scripts/
-    └── detect_stack.py   # Détection de stack
+├── commands/      # Commandes slash
+├── skills/        # Skills reutilisables
+├── references/    # Documentation de reference
+└── tests/         # Tests automatises
 ```
 
 ## Licence
 
-MIT
+MIT - Manuel Turpin / Bonsai974
