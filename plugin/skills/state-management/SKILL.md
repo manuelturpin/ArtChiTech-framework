@@ -27,7 +27,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py r
 ### Update state
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py update --updates '{"phase": {"current": 2, "name": "Stratégie"}}'
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py update --updates '{"phase": {"current": 2, "name": "Strategy"}}'
 ```
 
 ### Create checkpoint

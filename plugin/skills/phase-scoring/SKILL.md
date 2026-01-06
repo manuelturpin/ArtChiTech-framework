@@ -30,32 +30,32 @@ After running project-detection, evaluate:
    - Target users defined?
    - Validation interviews done?
 
-2. **Stratégie (Phase 2)**
+2. **Strategy (Phase 2)**
    - Roadmap exists?
    - Business model defined?
    - KPIs identified?
 
-3. **Conception (Phase 3)**
+3. **Design (Phase 3)**
    - Architecture documented?
    - Tech stack chosen?
    - UI/UX mockups?
 
-4. **Développement (Phase 4)**
+4. **Development (Phase 4)**
    - Code exists?
    - Tests written?
    - CI/CD configured?
 
-5. **Qualité (Phase 5)**
+5. **Quality (Phase 5)**
    - Test coverage > 60%?
    - No critical bugs?
    - Performance validated?
 
-6. **Lancement (Phase 6)**
+6. **Launch (Phase 6)**
    - Deployed to production?
    - Monitoring in place?
    - Launch checklist complete?
 
-7. **Croissance (Phase 7)**
+7. **Growth (Phase 7)**
    - Analytics tracking?
    - Feedback loop?
    - Iteration cycle?
@@ -74,11 +74,11 @@ After running project-detection, evaluate:
     "growth": 0
   },
   "current_phase": 4,
-  "current_phase_name": "Développement",
+  "current_phase_name": "Development",
   "recommendations": [
-    "Augmenter la couverture de tests (actuellement ~30%)",
-    "Configurer CI/CD pour les tests automatiques",
-    "Documenter les API endpoints"
+    "Increase test coverage (currently ~30%)",
+    "Configure CI/CD for automated tests",
+    "Document API endpoints"
   ]
 }
 ```
