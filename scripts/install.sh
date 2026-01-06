@@ -1,23 +1,30 @@
 #!/bin/bash
 # ACT Framework - Installation Script
+#
+# Usage:
+#   One-liner (recommended):
+#     curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+#
+#   With arguments:
+#     curl -fsSL .../install.sh | bash -s -- --global
+#     curl -fsSL .../install.sh | bash -s -- --project
+#
+#   From cloned repo:
+#     ./scripts/install.sh [--global|--project]
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SOURCE_DIR="$SCRIPT_DIR/../plugin"
+# GitHub repo URL
+GITHUB_REPO="https://github.com/manuelturpin/ArtChiTech-framework.git"
 
-# Global: available for all projects
-GLOBAL_PLUGIN_DIR="$HOME/.claude/plugins"
-GLOBAL_ACT_DIR="$GLOBAL_PLUGIN_DIR/act"
+# Where the user is located (their project)
+USER_PWD="$PWD"
 
-# Project: available only for current project
-PROJECT_PLUGIN_DIR=".claude/plugins"
-PROJECT_ACT_DIR="$PROJECT_PLUGIN_DIR/act"
+# Temp directory for curl mode (will be set if needed)
+TEMP_DIR=""
+CLEANUP_NEEDED=false
 
-# Installation mode: "global", "project", or "" (prompt)
-INSTALL_MODE=""
-
-# Colors for output
+# Colors for output (defined early for use in detect_source)
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -25,6 +32,74 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 BOLD='\033[1m'
 NC='\033[0m' # No Color
+
+# Detect execution mode: curl | bash OR from cloned repo
+detect_source() {
+    # Try to find the script directory
+    if [[ -n "$BASH_SOURCE" && -f "$BASH_SOURCE" ]]; then
+        SCRIPT_DIR="$(cd "$(dirname "$BASH_SOURCE")" && pwd)"
+        if [[ -d "$SCRIPT_DIR/../plugin" ]]; then
+            # Running from cloned repo
+            SOURCE_DIR="$SCRIPT_DIR/../plugin"
+            ACT_REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+            return
+        fi
+    fi
+
+    # Running via curl | bash - need to clone the repo
+    echo -e "${CYAN}Downloading ACT Framework...${NC}"
+    TEMP_DIR=$(mktemp -d)
+    CLEANUP_NEEDED=true
+
+    # Clone with minimal depth for speed
+    if ! git clone --depth 1 --quiet "$GITHUB_REPO" "$TEMP_DIR/act" 2>/dev/null; then
+        echo -e "${RED}Error: Failed to clone ACT Framework from GitHub${NC}"
+        echo "Please check your internet connection and try again."
+        cleanup_temp
+        exit 1
+    fi
+
+    SOURCE_DIR="$TEMP_DIR/act/plugin"
+    ACT_REPO_DIR="$TEMP_DIR/act"
+    echo -e "${GREEN}✓${NC} Downloaded successfully"
+}
+
+# Cleanup temporary directory
+cleanup_temp() {
+    if [[ "$CLEANUP_NEEDED" == true && -n "$TEMP_DIR" && -d "$TEMP_DIR" ]]; then
+        rm -rf "$TEMP_DIR"
+    fi
+}
+
+# Trap to ensure cleanup on exit
+trap cleanup_temp EXIT
+
+# Global: available for all projects
+GLOBAL_PLUGIN_DIR="$HOME/.claude/plugins"
+GLOBAL_ACT_DIR="$GLOBAL_PLUGIN_DIR/act"
+
+# Project: will be set based on user's current directory
+PROJECT_PLUGIN_DIR=""
+PROJECT_ACT_DIR=""
+
+# Installation mode: "global", "project", or "" (prompt)
+INSTALL_MODE=""
+
+# ============================================
+# Detect source and download if needed
+# ============================================
+
+detect_source
+
+# ============================================
+# Helper Functions
+# ============================================
+
+is_inside_act_repo() {
+    # Check if current directory is inside the ACT repo
+    # Only relevant when running from cloned repo (not curl mode)
+    [[ -n "$ACT_REPO_DIR" && "$USER_PWD" == "$ACT_REPO_DIR"* ]]
+}
 
 # ============================================
 # Parse Command Line Arguments
@@ -39,6 +114,14 @@ while [[ $# -gt 0 ]]; do
         --project|-p)
             INSTALL_MODE="project"
             shift
+            # Check if next argument is a path (doesn't start with -)
+            if [[ $# -gt 0 && ! "$1" =~ ^- ]]; then
+                USER_PWD="$(cd "$1" 2>/dev/null && pwd)" || {
+                    echo -e "${RED}Error: Directory '$1' does not exist${NC}"
+                    exit 1
+                }
+                shift
+            fi
             ;;
         --help|-h)
             echo "ACT Framework - Installation Script"
@@ -46,13 +129,19 @@ while [[ $# -gt 0 ]]; do
             echo "Usage: ./install.sh [OPTIONS]"
             echo ""
             echo "Options:"
-            echo "  --global, -g     Install globally to ~/.claude/plugins/act/"
-            echo "                   Available for ALL your projects"
+            echo "  --global, -g         Install globally to ~/.claude/plugins/act/"
+            echo "                       Available for ALL your projects"
             echo ""
-            echo "  --project, -p    Install to ./.claude/plugins/act/"
-            echo "                   Available only for THIS project"
+            echo "  --project, -p [PATH] Install to [PATH]/.claude/plugins/act/"
+            echo "                       If PATH is omitted, uses current directory"
+            echo "                       Available only for THAT project"
             echo ""
-            echo "  --help, -h       Show this help message"
+            echo "  --help, -h           Show this help message"
+            echo ""
+            echo "Examples:"
+            echo "  ./install.sh --global"
+            echo "  ./install.sh --project ~/my-project"
+            echo "  cd ~/my-project && /path/to/install.sh --project"
             echo ""
             echo "If no option is provided, you will be prompted to choose."
             exit 0
@@ -126,7 +215,7 @@ check_gh_cli() {
 }
 
 check_superpowers() {
-    if [ -d "$HOME/.claude/plugins/cache/superpowers-marketplace" ] || [ -d "$PLUGIN_DIR/superpowers" ]; then
+    if [ -d "$HOME/.claude/plugins/cache/superpowers-marketplace" ] || [ -d "$HOME/.claude/plugins/superpowers" ]; then
         echo -e "${GREEN}✓${NC} Plugin superpowers installed"
         return 0
     fi
@@ -185,23 +274,55 @@ check_prerequisites() {
 }
 
 # ============================================
+# Check if inside ACT repo (warning for --project)
+# ============================================
+
+check_act_repo_warning() {
+    if is_inside_act_repo; then
+        echo ""
+        echo -e "${YELLOW}⚠ WARNING: You are inside the ACT repository${NC}"
+        echo -e "   Current: $USER_PWD"
+        echo -e "   ACT repo: $ACT_REPO_DIR"
+        echo ""
+        echo "   Installing here will put ACT inside the ACT repo itself."
+        echo "   This is probably NOT what you want."
+        echo ""
+        read -p "   Continue anyway? [y/N] " confirm
+        if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
+            echo ""
+            echo "To install in your project, run:"
+            echo -e "  ${CYAN}cd /path/to/your/project${NC}"
+            echo -e "  ${CYAN}$SCRIPT_DIR/install.sh --project${NC}"
+            echo ""
+            echo "Or specify the path directly:"
+            echo -e "  ${CYAN}$SCRIPT_DIR/install.sh --project /path/to/your/project${NC}"
+            exit 0
+        fi
+    fi
+}
+
+# ============================================
 # Installation Mode Selection
 # ============================================
 
 show_install_menu() {
+    # Set project paths based on USER_PWD
+    PROJECT_PLUGIN_DIR="$USER_PWD/.claude/plugins"
+    PROJECT_ACT_DIR="$PROJECT_PLUGIN_DIR/act"
+
     echo ""
-    echo -e "${CYAN}╭─────────────────────────────────────────────────────╮${NC}"
-    echo -e "${CYAN}│${NC}  ${BOLD}Where do you want to install ACT?${NC}                  ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}                                                     ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}  ${GREEN}1.${NC} Global                                          ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}     → ~/.claude/plugins/act/                        ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}     Available for ALL your projects                 ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}                                                     ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}  ${BLUE}2.${NC} Project                                          ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}     → ./.claude/plugins/act/                        ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}     Available only for THIS project                 ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}                                                     ${CYAN}│${NC}"
-    echo -e "${CYAN}╰─────────────────────────────────────────────────────╯${NC}"
+    echo -e "${CYAN}╭─────────────────────────────────────────────────────────────╮${NC}"
+    echo -e "${CYAN}│${NC}  ${BOLD}Where do you want to install ACT?${NC}                          ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}                                                               ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}  ${GREEN}1.${NC} Global                                                  ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}     → ~/.claude/plugins/act/                                  ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}     Available for ALL your projects                           ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}                                                               ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}  ${BLUE}2.${NC} Project (current directory)                              ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}     → $USER_PWD/.claude/plugins/act/${NC}"
+    echo -e "${CYAN}│${NC}     Available only for THIS project                           ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}                                                               ${CYAN}│${NC}"
+    echo -e "${CYAN}╰─────────────────────────────────────────────────────────────╯${NC}"
     echo ""
 
     while true; do
@@ -238,6 +359,13 @@ if [ "$INSTALL_MODE" = "global" ]; then
     TARGET_DIR="$GLOBAL_ACT_DIR"
     PARENT_DIR="$GLOBAL_PLUGIN_DIR"
 else
+    # Check if user is inside ACT repo
+    check_act_repo_warning
+
+    # Set project paths based on USER_PWD
+    PROJECT_PLUGIN_DIR="$USER_PWD/.claude/plugins"
+    PROJECT_ACT_DIR="$PROJECT_PLUGIN_DIR/act"
+
     TARGET_DIR="$PROJECT_ACT_DIR"
     PARENT_DIR="$PROJECT_PLUGIN_DIR"
 fi
@@ -257,6 +385,7 @@ if [ "$INSTALL_MODE" = "global" ]; then
     echo -e "Installing ACT Framework ${BOLD}globally${NC}..."
 else
     echo -e "Installing ACT Framework for ${BOLD}this project${NC}..."
+    echo -e "Target: ${CYAN}$USER_PWD${NC}"
 fi
 echo ""
 

@@ -1,56 +1,147 @@
-# ACT Starter Project
+# ACT - Test Manuel
 
-This is a simple webapp project for testing ACT Framework.
+> Guide pas-à-pas pour tester ACT Framework de zéro.
 
-## Quick Start
+## Prérequis
 
-1. **Run setup**
-   ```bash
-   bash setup.sh
-   ```
+Avant de commencer, vérifie que tu as :
 
-2. **Install ACT** (if not done)
-   ```bash
-   git clone https://github.com/manuelturpin/ArtChiTech-framework.git
-   cd ArtChiTech-framework
-   bash scripts/install.sh
-   ```
+- [ ] Claude Code installé
+- [ ] Plugin superpowers installé (`claude plugins:install superpowers-marketplace/superpowers`)
+- [ ] Python 3.8+
+- [ ] Git
 
-3. **Test ACT**
-   ```bash
-   cd starter-webapp
-   # In Claude Code:
-   /project
-   ```
+## Étape 1 : Créer le projet test
 
-4. **Report issues**
-   ```bash
-   # In Claude Code:
-   /feedback
-   ```
+```bash
+# Depuis n'importe où sur ta machine
+cd ~/Desktop  # ou autre dossier de ton choix
 
-## What to Test
+# Lancer le setup
+bash /chemin/vers/ArtChiTech-framework/docs/starter-project/setup.sh
+```
 
-1. `/project` - Should detect new project, offer to start
-2. `/onboard` - Should audit and initialize .epct/
-3. `/status` - Should show phase 1, scores at 0
-4. `/next` - Should guide through phase transition
-5. `/feedback` - Should capture context and create issue
+Ou manuellement :
 
-## Expected Flow
+```bash
+mkdir mon-projet-test
+cd mon-projet-test
+npm init -y
+mkdir src tests
+echo "console.log('Hello ACT');" > src/main.js
+```
+
+## Étape 2 : Installer ACT
+
+```bash
+# Depuis le dossier de ton projet test
+cd ~/Desktop/mon-projet-test
+
+# One-liner
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+
+# Choisir :
+# 1. Global → pour tous tes projets
+# 2. Project → pour ce projet uniquement
+```
+
+## Étape 3 : Ouvrir Claude Code
+
+```bash
+cd ~/Desktop/mon-projet-test  # ou starter-webapp si tu as utilisé setup.sh
+claude
+```
+
+## Étape 4 : Tester les commandes
+
+### Test 1 : `/projet`
 
 ```
-/project
-  -> "No ACT project detected"
-  -> Choose "Start new project"
-  -> Enter project name
-  -> Phase 1: Discovery begins
+/projet
+```
 
+**Résultat attendu :**
+- ACT détecte un nouveau projet
+- Propose de démarrer avec la Phase 1 : Discovery
+- Demande le nom du projet
+
+### Test 2 : `/status`
+
+```
 /status
-  -> Shows Phase 1/7
-  -> All scores at 0%
-
-/next
-  -> Shows Go/No-Go criteria
-  -> Guides to Phase 2 when ready
 ```
+
+**Résultat attendu :**
+- Affiche Phase 1/7
+- Scores à 0%
+- Liste des critères Go/No-Go
+
+### Test 3 : `/onboard`
+
+```
+/onboard
+```
+
+**Résultat attendu :**
+- Audit du projet
+- Création du dossier `.epct/`
+- Détection de la stack (Node.js, etc.)
+
+### Test 4 : `/next`
+
+```
+/next
+```
+
+**Résultat attendu :**
+- Affiche les critères pour passer à la Phase 2
+- Guide vers l'étape suivante
+
+### Test 5 : `/help`
+
+```
+/help
+```
+
+**Résultat attendu :**
+- Aide contextuelle selon la phase actuelle
+
+### Test 6 : `/feedback`
+
+```
+/feedback
+```
+
+**Résultat attendu :**
+- Formulaire pour signaler un bug ou suggestion
+- Crée une issue GitHub automatiquement
+
+## Checklist de validation
+
+| Commande | Fonctionne | Notes |
+|----------|:----------:|-------|
+| `/projet` | [ ] | |
+| `/status` | [ ] | |
+| `/onboard` | [ ] | |
+| `/next` | [ ] | |
+| `/help` | [ ] | |
+| `/feedback` | [ ] | |
+| `/resume` | [ ] | |
+| `/fix` | [ ] | |
+
+## En cas de problème
+
+1. **Commande non reconnue** → Redémarre Claude Code
+2. **Plugin non trouvé** → Vérifie `ls ~/.claude/plugins/`
+3. **Erreur Python** → Vérifie `python3 --version`
+
+Pour signaler un bug :
+```
+/feedback
+```
+
+Ou ouvre une issue sur [GitHub](https://github.com/manuelturpin/ArtChiTech-framework/issues).
+
+---
+
+**Bon test !**

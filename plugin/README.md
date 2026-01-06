@@ -25,18 +25,31 @@ python3 --version  # Must be >= 3.8
 
 ### Install ACT
 
-**Option A: Git clone (recommended for development)**
+**One-liner (recommended)**
 
 ```bash
-git clone https://github.com/manuelturpin/ArtChiTech-framework.git ~/projects/act
-cd ~/projects/act
-./scripts/install.sh
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
 ```
 
-**Option B: Local installation**
+The installer asks where to install:
+- **Global** (`~/.claude/plugins/act/`) - All projects
+- **Project** (`./claude/plugins/act/`) - Current project only
+
+**With arguments**
 
 ```bash
-./scripts/install.sh
+# Global install
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --global
+
+# Project install
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --project
+```
+
+**From git clone (for development)**
+
+```bash
+git clone https://github.com/manuelturpin/ArtChiTech-framework.git
+./ArtChiTech-framework/scripts/install.sh
 ```
 
 ### Verify installation

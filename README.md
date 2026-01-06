@@ -62,20 +62,42 @@ python3 --version  # Must be >= 3.8
 
 ### Install ACT
 
+#### One-liner (Recommended)
+
 ```bash
-git clone https://github.com/manuelturpin/ArtChiTech-framework.git
-cd ArtChiTech-framework
-./scripts/install.sh
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
 ```
 
-The installer will ask where to install:
+The installer will:
+1. Download ACT automatically
+2. Ask where to install (Global or Project)
+3. Install and clean up
+
+#### With Arguments
+
+```bash
+# Install globally (all projects)
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --global
+
+# Install in current project only
+cd ~/my-project
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --project
+```
+
+#### From Git Clone (Alternative)
+
+```bash
+# Clone the repo
+git clone https://github.com/manuelturpin/ArtChiTech-framework.git
+
+# Run installer
+./ArtChiTech-framework/scripts/install.sh
+```
 
 | Scope | Location | Availability |
 |-------|----------|--------------|
 | **Global** | `~/.claude/plugins/act/` | All your projects |
-| **Project** | `./.claude/plugins/act/` | This project only |
-
-You can also use flags: `--global` or `--project`
+| **Project** | `[project]/.claude/plugins/act/` | This project only |
 
 ### Verify Installation
 
