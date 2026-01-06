@@ -18,3 +18,6 @@ data/*.db
 # Test artifacts
 test-results/
 playwright-report/
+
+# Claude local preferences
+.claude/CLAUDE.local.md
