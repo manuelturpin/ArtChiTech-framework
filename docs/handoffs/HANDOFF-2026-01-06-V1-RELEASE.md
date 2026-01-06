@@ -51,15 +51,22 @@ Changements cles:
 - Documentation utilisateur detaillee
 - Video demo / tutorial
 
-### Phase 8: Ameliorations Futures
+### Phase 8+: Ameliorations Futures
 
-- Support multi-langue (i18n)
-- Dashboard web pour visualiser progression
-- Integration CI/CD (GitHub Actions)
-- Metriques et analytics
-- Mode collaboratif (multi-utilisateurs)
-- Export rapports PDF
-- Integration avec outils externes (Jira, Linear, Notion)
+| Idee | Description | Valeur |
+|------|-------------|--------|
+| Dashboard web | Interface visuelle pour suivre progression projet | Haute |
+| GitHub Actions | CI/CD automatise pour tests du framework | Moyenne |
+| Export PDF | Rapports d'audit telechargeables | Moyenne |
+| Integration Jira/Linear | Sync bidirectionnelle avec outils de gestion | Haute |
+| Mode collaboratif | Partager etat projet entre membres equipe | Haute |
+| Analytics | Metriques d'utilisation du framework | Basse |
+| Templates projets | Starter kits par type (webapp, API, CLI, library) | Moyenne |
+| Plugin VSCode | Integration IDE avec visualisation phases | Moyenne |
+| Support i18n | Multi-langue (FR, EN, ES, etc.) | Basse |
+| Notifications | Alertes sur blocages ou milestones | Basse |
+| AI Insights | Suggestions automatiques basees sur patterns | Haute |
+| Historique visuel | Timeline des transitions de phases | Moyenne |
 
 ## Prompt de Relance
 
