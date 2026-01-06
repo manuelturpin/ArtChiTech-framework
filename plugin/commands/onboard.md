@@ -7,6 +7,15 @@ description: Analyse un projet existant et produit un diagnostic complet avec re
 
 Analyser un projet existant et produire un diagnostic complet avec des recommandations actionnables.
 
+## Modes de Déclenchement
+
+| Mode | Contexte | Description |
+|------|----------|-------------|
+| Automatique | Spawnée par `/projet` | Projet existant détecté sans `.epct/` |
+| Manuel | Appelée directement | Ré-audit ou utilisateurs avancés |
+
+**Note** : Dans les deux cas, le comportement est identique. La différence est uniquement dans le déclenchement.
+
 ## Flux d'exécution
 
 1. **AUDIT** - Analyser la structure, stack, tests, CI/CD, docs
