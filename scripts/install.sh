@@ -276,6 +276,49 @@ PYEOF
 }
 
 # ============================================
+# Setup CLAUDE.md
+# ============================================
+
+setup_claude_md() {
+    local CLAUDE_MD="$USER_PWD/CLAUDE.md"
+
+    # ACT section content
+    local ACT_SECTION='# ACT Framework
+
+Ce projet utilise le framework ACT (ArtChiTech) pour la gestion de projet.
+
+## Commandes disponibles
+
+| Commande | Description |
+|----------|-------------|
+| `/act-project` | Hub principal - point d entrée |
+| `/act-status` | État du projet |
+| `/act-onboard` | Auditer le projet |
+| `/act-next` | Phase suivante |
+| `/act-fix` | Corriger les erreurs |
+| `/act-help` | Aide contextuelle |
+
+## Utilisation
+
+Tape `/act-project` pour commencer ou voir l état du projet.'
+
+    if [ ! -f "$CLAUDE_MD" ]; then
+        # Create new file
+        echo "$ACT_SECTION" > "$CLAUDE_MD"
+        echo -e "${GREEN}✓${NC} Created CLAUDE.md with ACT section"
+    else
+        # Check if ACT section already exists
+        if ! grep -q "# ACT Framework" "$CLAUDE_MD"; then
+            # Append to existing file
+            echo -e "\n$ACT_SECTION" >> "$CLAUDE_MD"
+            echo -e "${GREEN}✓${NC} Added ACT section to CLAUDE.md"
+        else
+            echo -e "${YELLOW}⚠${NC} ACT section already exists in CLAUDE.md"
+        fi
+    fi
+}
+
+# ============================================
 # Project Installation
 # ============================================
 
@@ -313,6 +356,9 @@ install_project() {
         cp -r "$SOURCE_DIR/references/"* "$PROJECT_CLAUDE/references/" 2>/dev/null || true
         echo -e "${GREEN}✓${NC} References copied to .claude/references/"
     fi
+
+    # Setup CLAUDE.md automatically for project mode
+    setup_claude_md
 }
 
 # ============================================
@@ -328,6 +374,13 @@ fi
 
 if [ "$INSTALL_MODE" = "global" ]; then
     install_global
+
+    # Ask if user wants to add CLAUDE.md to current project
+    echo ""
+    read -p "Add ACT section to CLAUDE.md in current project? [y/N] " add_claude < /dev/tty
+    if [ "$add_claude" = "y" ] || [ "$add_claude" = "Y" ]; then
+        setup_claude_md
+    fi
 else
     install_project
 fi
