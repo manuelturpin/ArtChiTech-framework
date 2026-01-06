@@ -1,73 +1,65 @@
-# ACT Framework - Atelier de Développement
+# ArtChiTech Framework (ACT)
 
-> **lab-13** = Atelier de développement du plugin ACT (ArtChiTech)
+> **lab-13** = Atelier de développement du plugin ACT
 
 ## Qu'est-ce que ACT ?
 
-**ACT (ArtChiTech)** est un framework de gestion de projet pour Claude Code qui structure le développement en **7 phases** : Discovery → Stratégie → Conception → Développement → Qualité → Lancement → Croissance.
+**ArtChiTech Framework (ACT)** est un plugin Claude Code pour la gestion de projets, structurant le développement en **7 phases** : Discovery → Stratégie → Conception → Développement → Qualité → Lancement → Croissance.
 
 ## Structure du Projet
 
 ```
 lab-13/
-├── plugin/              # 📦 Source du plugin ACT
-│   ├── commands/        # Commandes : /onboard, /projet, /status...
-│   ├── agents/          # Agents spécialisés
-│   ├── references/      # Documentation phases, scoring, templates
-│   └── scripts/         # Scripts utilitaires
-├── test-apps/           # 🧪 Applications de test
-│   └── bonsai-tracker/  # Test #1 : SaaS traçabilité bonsaïs
-├── docs/                # 📚 Documentation développement
-│   ├── plans/           # Plans d'implémentation
-│   ├── handoffs/        # Handoffs de sessions
-│   └── architecture/    # Documentation architecture
-└── scripts/             # 🔧 Scripts de build/installation
+├── CLAUDE.md                # Instructions pour Claude
+├── .claude/rules/           # Source of truth (documentation modulaire)
+├── plugin/                  # 📦 Source du plugin ACT
+│   ├── commands/            # Commandes slash
+│   ├── agents/              # Agents spécialisés
+│   ├── references/          # Documentation des phases
+│   └── scripts/             # Scripts utilitaires
+├── test-apps/               # 🧪 Applications de test (dev interne)
+├── docs/                    # 📚 Documentation développement
+│   ├── sources/             # Fichiers sources originaux
+│   ├── plans/               # Plans d'implémentation
+│   └── handoffs/            # Handoffs de sessions
+└── scripts/                 # 🔧 Scripts d'installation
 ```
 
-## Commandes du Plugin
+## Commandes
 
 | Commande | Description |
 |----------|-------------|
 | `/onboard` | Auditer un projet existant |
 | `/projet` | Hub principal interactif |
 | `/status` | État et progression |
-| `/resume` | Reprendre session |
-| `/fix` | Corriger erreur prioritaire |
 | `/next` | Étape suivante |
+| `/fix` | Corriger erreur prioritaire |
+| `/resume` | Reprendre session |
 | `/help` | Aide contextuelle |
-
-## Installation
-
-```bash
-# Installation locale du plugin
-./scripts/install-local.sh
-```
 
 ## Les 7 Phases
 
 | Phase | Objectif |
 |-------|----------|
-| 1. Discovery | Valider le problème |
-| 2. Stratégie | Définir roadmap |
-| 3. Conception | Designer architecture |
-| 4. Développement | Implémenter (TDD) |
+| 1. Discovery | Valider le problème et les besoins |
+| 2. Stratégie | Définir roadmap et business model |
+| 3. Conception | Designer architecture et UX |
+| 4. Développement | Implémenter avec TDD |
 | 5. Qualité | Tester et valider |
 | 6. Lancement | Déployer |
 | 7. Croissance | Itérer et optimiser |
 
-## Développement
+## Installation
 
-Voir [CLAUDE.md](CLAUDE.md) pour les conventions et le workflow de développement.
+```bash
+./scripts/install-local.sh
+```
 
 ## Documentation
 
-- [Plugin README](plugin/README.md) - Documentation utilisateur
-- [FRAMEWORK-SYNTHESIS.md](FRAMEWORK-SYNTHESIS.md) - Synthèse complète
-- [docs/](docs/) - Documentation développement
-
-## Auteur
-
-Manuel Turpin (Bonsai974)
+- [CLAUDE.md](CLAUDE.md) - Quick reference + liens vers `.claude/rules/`
+- [plugin/README.md](plugin/README.md) - Documentation utilisateur
+- [docs/sources/](docs/sources/) - Recherches et extractions originales
 
 ## Licence
 

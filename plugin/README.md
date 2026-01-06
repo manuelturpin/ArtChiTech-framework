@@ -1,6 +1,6 @@
-# ACT - Framework de Projet pour Claude Code
+# ArtChiTech Framework (ACT)
 
-**ACT (ArtChiTech)** est un plugin Claude Code pour la gestion de projets, de la découverte à la croissance.
+**ACT** est un plugin Claude Code pour la gestion de projets, de la découverte à la croissance.
 
 ## Installation
 
@@ -19,9 +19,9 @@ cp -r plugin/ ~/.claude/plugins/cache/local/act/
 | `/onboard` | Auditer un projet existant et générer un diagnostic |
 | `/projet` | Hub principal interactif |
 | `/status` | État et progression du projet |
-| `/resume` | Reprendre une session précédente |
-| `/fix` | Corriger l'erreur prioritaire |
 | `/next` | Passer à l'étape suivante |
+| `/fix` | Corriger l'erreur prioritaire |
+| `/resume` | Reprendre une session précédente |
 | `/help` | Aide contextuelle |
 
 ## Les 7 Phases
@@ -36,11 +36,22 @@ cp -r plugin/ ~/.claude/plugins/cache/local/act/
 
 ## Modes d'Utilisation
 
-| Mode | Quand l'utiliser | Durée |
-|------|------------------|-------|
-| **COMPLET** | Nouveau projet/SaaS | Semaines/mois |
-| **FEATURE** | Nouvelle fonctionnalité | Jours |
-| **QUICK** | Petite modification | Heures |
+| Mode | Quand l'utiliser | Description |
+|------|------------------|-------------|
+| **COMPLET** | Nouveau projet | Parcourt les 7 phases |
+| **FEATURE** | Nouvelle fonctionnalité | Adapté selon la feature (peut nécessiter toutes les phases) |
+| **QUICK** | Petite modification | Rapide mais vérifie l'impact global |
+
+### Mode FEATURE
+
+Selon l'importance de la feature, peut nécessiter :
+- Toutes les phases (1-7) pour une feature majeure
+- Intégration au projet global en phase 7
+
+### Mode QUICK
+
+- Exécution rapide des étapes nécessaires
+- **Toujours vérifier l'intégralité du projet** après modification
 
 ## Structure du Plugin
 
@@ -48,33 +59,16 @@ cp -r plugin/ ~/.claude/plugins/cache/local/act/
 plugin/
 ├── .claude-plugin/
 │   └── plugin.json       # Configuration
-├── commands/             # Commandes slash
-│   ├── onboard.md
-│   ├── projet.md
-│   ├── status.md
-│   ├── resume.md
-│   ├── fix.md
-│   ├── next.md
-│   └── help.md
-├── agents/               # Agents spécialisés
-│   ├── context-manager.md
-│   ├── chunk-manager.md
-│   ├── error-tracker.md
-│   ├── phase-controller.md
-│   ├── projet-orchestrator.md
-│   └── tips-engine.md
+├── commands/             # 7 commandes slash
+├── agents/               # 6 agents spécialisés
 ├── references/           # Documentation
 │   ├── phases/           # 7 phases détaillées
 │   ├── scoring/          # Critères de scoring
-│   ├── recommendations/  # Recommandations par type
+│   ├── recommendations/  # Recommandations
 │   └── templates/        # Templates de rapports
 └── scripts/
-    └── detect_stack.py   # Détection automatique de stack
+    └── detect_stack.py   # Détection de stack
 ```
-
-## Auteur
-
-Manuel Turpin (Bonsai974) - contact@bonsai974.re
 
 ## Licence
 
