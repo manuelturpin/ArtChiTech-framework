@@ -287,7 +287,7 @@ check_act_repo_warning() {
         echo "   Installing here will put ACT inside the ACT repo itself."
         echo "   This is probably NOT what you want."
         echo ""
-        read -p "   Continue anyway? [y/N] " confirm
+        read -p "   Continue anyway? [y/N] " confirm < /dev/tty
         if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
             echo ""
             echo "To install in your project, run:"
@@ -326,7 +326,7 @@ show_install_menu() {
     echo ""
 
     while true; do
-        read -p "Select option [1/2]: " choice
+        read -p "Select option [1/2]: " choice < /dev/tty
         case $choice in
             1)
                 INSTALL_MODE="global"
@@ -396,7 +396,7 @@ if [ -L "$TARGET_DIR" ]; then
 elif [ -d "$TARGET_DIR" ]; then
     echo ""
     echo -e "${YELLOW}⚠${NC} Directory $TARGET_DIR already exists"
-    read -p "   Remove and reinstall? [y/N] " confirm
+    read -p "   Remove and reinstall? [y/N] " confirm < /dev/tty
     if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
         rm -rf "$TARGET_DIR"
     else
