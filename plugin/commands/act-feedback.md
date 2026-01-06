@@ -1,5 +1,5 @@
 ---
-name: feedback
+name: act-feedback
 description: Report a bug, suggestion, or question with automatic context capture and GitHub Issue creation
 ---
 

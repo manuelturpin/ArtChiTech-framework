@@ -1,5 +1,5 @@
 ---
-name: onboard
+name: act-onboard
 description: Audit an existing project and initialize it in the ACT framework
 ---
 

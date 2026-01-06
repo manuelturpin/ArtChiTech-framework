@@ -11,7 +11,7 @@
 **ACT** transforms how you build software with Claude Code. Instead of diving straight into code, ACT guides you through a structured 7-phase methodology that ensures you're building the right thing, the right way.
 
 ```
-/projet
+/act-project
 ```
 
 That's it. One command to start. ACT automatically detects your context and guides you.
@@ -104,7 +104,7 @@ git clone https://github.com/manuelturpin/ArtChiTech-framework.git
 Restart Claude Code, then run:
 
 ```
-/projet
+/act-project
 ```
 
 ## Usage
@@ -113,15 +113,15 @@ Restart Claude Code, then run:
 
 | Command | Description |
 |---------|-------------|
-| `/projet` | **Main hub** - Start here |
-| `/onboard` | Audit and initialize a project |
-| `/status` | View project progress |
-| `/next` | Move to next phase |
-| `/fix` | Fix blocking issues |
-| `/resume` | Resume previous session |
-| `/help` | Contextual help |
-| `/feedback` | Report bugs or suggestions |
-| `/triage` | View open issues |
+| `/act-project` | **Main hub** - Start here |
+| `/act-onboard` | Audit and initialize a project |
+| `/act-status` | View project progress |
+| `/act-next` | Move to next phase |
+| `/act-fix` | Fix blocking issues |
+| `/act-resume` | Resume previous session |
+| `/act-help` | Contextual help |
+| `/act-feedback` | Report bugs or suggestions |
+| `/act-triage` | View open issues |
 
 ### Workflow Modes
 
@@ -161,7 +161,7 @@ ACT automatically uses the right superpowers skill for each phase:
 ## Example Session
 
 ```
-You: /projet
+You: /act-project
 
 ACT: Welcome! I detect this is a new project.
      Let's start with Phase 1: Discovery.
@@ -214,7 +214,7 @@ ArtChiTech-framework/
 Use the built-in feedback command:
 
 ```
-/feedback
+/act-feedback
 ```
 
 Or open an issue on [GitHub](https://github.com/manuelturpin/ArtChiTech-framework/issues).

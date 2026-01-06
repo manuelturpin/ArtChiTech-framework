@@ -1,5 +1,5 @@
 ---
-name: fix-issue
+name: act-fix-issue
 description: Read a GitHub Issue, analyze context, and implement a fix with TDD
 argument-hint: <issue-number>
 ---

@@ -1,5 +1,5 @@
 ---
-name: help
+name: act-help
 description: Contextual help for the ACT framework and its commands
 argument-hint: [topic]
 ---

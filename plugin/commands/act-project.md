@@ -1,5 +1,5 @@
 ---
-name: project
+name: act-project
 description: ACT main hub - Single entry point for managing projects (new, feature, refactor, status)
 ---
 

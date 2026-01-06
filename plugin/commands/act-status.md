@@ -1,5 +1,5 @@
 ---
-name: status
+name: act-status
 description: Display the complete ACT project state (phase, scores, progress)
 ---
 

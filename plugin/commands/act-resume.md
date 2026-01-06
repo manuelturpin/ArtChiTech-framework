@@ -1,5 +1,5 @@
 ---
-name: resume
+name: act-resume
 description: Resume a previous work session
 ---
 

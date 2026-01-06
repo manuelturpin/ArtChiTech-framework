@@ -1,5 +1,5 @@
 ---
-name: next
+name: act-next
 description: Check Go/No-Go criteria and proceed to the next phase
 ---
 

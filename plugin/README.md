@@ -54,7 +54,7 @@ git clone https://github.com/manuelturpin/ArtChiTech-framework.git
 
 ### Verify installation
 
-Restart Claude Code, then type `/projet`.
+Restart Claude Code, then type `/act-project`.
 
 ## Usage
 
@@ -62,13 +62,13 @@ Restart Claude Code, then type `/projet`.
 
 | Command | Description |
 |---------|-------------|
-| `/projet` | Main hub - single entry point |
-| `/onboard` | Audit and initialize a project |
-| `/status` | View complete project status |
-| `/next` | Move to next phase |
-| `/fix` | Fix issues |
-| `/resume` | Resume a session |
-| `/help` | Contextual help |
+| `/act-project` | Main hub - single entry point |
+| `/act-onboard` | Audit and initialize a project |
+| `/act-status` | View complete project status |
+| `/act-next` | Move to next phase |
+| `/act-fix` | Fix issues |
+| `/act-resume` | Resume a session |
+| `/act-help` | Contextual help |
 
 ### The 7 Phases
 

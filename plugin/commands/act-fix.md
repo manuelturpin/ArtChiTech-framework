@@ -1,5 +1,5 @@
 ---
-name: fix
+name: act-fix
 description: List and fix priority errors in the project
 argument-hint: [error-id]
 ---

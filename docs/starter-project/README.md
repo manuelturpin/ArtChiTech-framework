@@ -54,10 +54,10 @@ claude
 
 ## Étape 4 : Tester les commandes
 
-### Test 1 : `/projet`
+### Test 1 : `/act-project`
 
 ```
-/projet
+/act-project
 ```
 
 **Résultat attendu :**
@@ -65,10 +65,10 @@ claude
 - Propose de démarrer avec la Phase 1 : Discovery
 - Demande le nom du projet
 
-### Test 2 : `/status`
+### Test 2 : `/act-status`
 
 ```
-/status
+/act-status
 ```
 
 **Résultat attendu :**
@@ -76,10 +76,10 @@ claude
 - Scores à 0%
 - Liste des critères Go/No-Go
 
-### Test 3 : `/onboard`
+### Test 3 : `/act-onboard`
 
 ```
-/onboard
+/act-onboard
 ```
 
 **Résultat attendu :**
@@ -87,29 +87,29 @@ claude
 - Création du dossier `.epct/`
 - Détection de la stack (Node.js, etc.)
 
-### Test 4 : `/next`
+### Test 4 : `/act-next`
 
 ```
-/next
+/act-next
 ```
 
 **Résultat attendu :**
 - Affiche les critères pour passer à la Phase 2
 - Guide vers l'étape suivante
 
-### Test 5 : `/help`
+### Test 5 : `/act-help`
 
 ```
-/help
+/act-help
 ```
 
 **Résultat attendu :**
 - Aide contextuelle selon la phase actuelle
 
-### Test 6 : `/feedback`
+### Test 6 : `/act-feedback`
 
 ```
-/feedback
+/act-feedback
 ```
 
 **Résultat attendu :**
@@ -120,14 +120,14 @@ claude
 
 | Commande | Fonctionne | Notes |
 |----------|:----------:|-------|
-| `/projet` | [ ] | |
-| `/status` | [ ] | |
-| `/onboard` | [ ] | |
-| `/next` | [ ] | |
-| `/help` | [ ] | |
-| `/feedback` | [ ] | |
-| `/resume` | [ ] | |
-| `/fix` | [ ] | |
+| `/act-project` | [ ] | |
+| `/act-status` | [ ] | |
+| `/act-onboard` | [ ] | |
+| `/act-next` | [ ] | |
+| `/act-help` | [ ] | |
+| `/act-feedback` | [ ] | |
+| `/act-resume` | [ ] | |
+| `/act-fix` | [ ] | |
 
 ## En cas de problème
 
@@ -137,7 +137,7 @@ claude
 
 Pour signaler un bug :
 ```
-/feedback
+/act-feedback
 ```
 
 Ou ouvre une issue sur [GitHub](https://github.com/manuelturpin/ArtChiTech-framework/issues).

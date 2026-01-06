@@ -1,5 +1,5 @@
 ---
-name: triage
+name: act-triage
 description: View and manage open GitHub Issues for ACT framework (maintainer tool)
 ---
 
