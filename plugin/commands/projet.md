@@ -1,183 +1,101 @@
 ---
 name: projet
-command: /projet
-description: Hub principal interactif pour gérer le projet (nouveau, feature, refacto, status)
+description: Hub principal ACT - Point d'entree unique pour gerer les projets (nouveau, feature, refacto, status)
 ---
 
-# /projet - Hub Principal
+# /projet - Hub Principal ACT
 
-## Comportement
+Tu es le hub principal du framework ACT. Tu geres le point d'entree pour tous les projets.
 
-Point d'entrée principal du framework. Menu adaptatif selon :
-- Existence d'un projet actif
-- Phase actuelle
-- État (erreurs, progression, etc.)
+## Etape 1: Detection du Contexte
 
-## Détection Automatique
+Execute le script de detection :
 
-À l'appel de `/projet`, le framework détecte automatiquement le contexte :
-
-| Contexte | Indicateurs | Action |
-|----------|-------------|--------|
-| Nouveau projet | Aucun fichier code significatif | Affiche menu "Nouveau projet" |
-| Projet existant non-ACT | Code présent, pas de `.epct/` | Spawn `/onboard` automatiquement |
-| Projet ACT connu | Code + `.epct/state.json` | Affiche menu normal |
-
-### Logique de détection
-
-```
-/projet appelé
-    │
-    ├─ detect_stack.py retourne "research" ou erreur ?
-    │       → Menu "Nouveau projet"
-    │
-    ├─ Code détecté + pas de .epct/ ?
-    │       → "Projet existant détecté. Lancement de l'audit..."
-    │       → Spawn /onboard
-    │       → Après audit, retour au menu normal
-    │
-    └─ Code détecté + .epct/ présent ?
-            → Menu normal (projet actif)
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/project-detection/scripts/detect_stack.py
 ```
 
-## Affichage - Nouveau Projet
+Puis verifie si `.epct/` existe :
 
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py exists
+```
+
+## Etape 2: Determiner le Contexte
+
+Selon les resultats :
+
+### Contexte A: Nouveau Projet (pas de code significatif)
+
+Si la detection retourne `type: "research"` ou erreur, et pas de `.epct/` :
+
+Affiche :
 ```
 ╭─────────────────────────────────────────────────────╮
-│  🚀 Framework Projet Claude Code                    │
+│  🚀 ACT Framework - Nouveau Projet                  │
 │                                                     │
-│  Aucun projet actif.                                │
+│  Aucun projet actif detecte.                        │
 │                                                     │
-│  1. 🆕 Démarrer un nouveau projet                   │
+│  1. 🆕 Demarrer un nouveau projet                   │
 │  2. 📖 En savoir plus sur le framework              │
 │                                                     │
-│  Tapez le numéro ou décrivez votre besoin...        │
+│  Tapez le numero ou decrivez votre besoin...        │
 ╰─────────────────────────────────────────────────────╯
 ```
 
-## Affichage - Projet Actif
+Si choix 1 → Demande nom du projet, puis utilise `superpowers:brainstorming` pour la phase Discovery.
 
+### Contexte B: Projet Existant non-ACT (code sans .epct/)
+
+Si code detecte mais `.epct/` n'existe pas :
+
+Affiche :
+```
+📁 Projet existant detecte : [stack detectee]
+🔍 Lancement de l'audit initial...
+```
+
+Puis execute automatiquement `/onboard` (spawn la commande).
+
+Apres l'audit, reviens au menu normal (Contexte C).
+
+### Contexte C: Projet ACT Connu (code + .epct/)
+
+Si `.epct/state.json` existe, lis l'etat :
+
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
+```
+
+Affiche le menu adapte a la phase :
 ```
 ╭─────────────────────────────────────────────────────────────╮
-│  🚀 mon-app | Phase: Développement (4/7)                    │
+│  🚀 [nom-projet] | Phase: [phase-name] ([current]/7)        │
 │                                                             │
 │  Que voulez-vous faire ?                                    │
 │                                                             │
 │  1. ➕ Ajouter une feature                                  │
-│  2. 🔧 Refactoring/optimisation                             │
+│  2. 🔧 Refactoring/Quick fix                                │
 │  3. 📋 Voir checklist phase actuelle                        │
-│  4. ⏭️  Passer à la phase suivante                          │
+│  4. ⏭️  Passer a la phase suivante                          │
 │  5. 📊 Voir status complet                                  │
-│  6. 🔄 Ré-auditer le projet                                 │
+│  6. 🔄 Re-auditer le projet                                 │
 │                                                             │
-│  Tapez le numéro ou décrivez votre besoin...                │
+│  Tapez le numero ou decrivez votre besoin...                │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
-## Implémentation
+## Etape 3: Gerer le Choix
 
-```typescript
-async function executeProjetCommand(args?: string) {
-  // Si argument direct (ex: /projet status)
-  if (args) {
-    return await executeShortcut(args)
-  }
+| Choix | Action |
+|-------|--------|
+| 1 | Demander nom feature → Update state mode=FEATURE → Spawn `superpowers:brainstorming` |
+| 2 | Update state mode=QUICK → Demander description → Executer |
+| 3 | Afficher checklist de la phase actuelle depuis `references/phases/` |
+| 4 | Executer `/next` |
+| 5 | Executer `/status` |
+| 6 | Executer `/onboard` |
 
-  // Sinon, menu interactif
-  await skillCall('projet-orchestrator', 'showProjetMenu')
-}
+## Dependances
 
-function executeShortcut(command: string) {
-  const shortcuts = {
-    'status': () => executeStatusCommand(),
-    'fix': () => executeFixCommand(),
-    'resume': () => executeResumeCommand(),
-    'next': () => executeNextCommand(),
-    'help': () => executeHelpCommand()
-  }
-
-  return shortcuts[command]?.() || print(`Commande inconnue: ${command}`)
-}
-```
-
-## Raccourcis
-
-| Commande | Équivalent |
-|----------|------------|
-| `/projet status` | `/status` |
-| `/projet fix` | `/fix` |
-| `/projet resume` | `/resume` |
-| `/projet next` | `/next` |
-| `/projet help` | `/help` |
-
-## Flux Nouveau Projet
-
-```
-/projet
-  ↓
-Choix: "1. Démarrer un nouveau projet"
-  ↓
-Nom du projet ? → "mon-app"
-  ↓
-Type ? → "webapp"
-  ↓
-🎯 Phase Discovery activée
-  ↓
-Skill brainstorming activé
-  ↓
-[Guide validation problème...]
-```
-
-## Flux Feature
-
-```
-/projet
-  ↓
-Choix: "1. Ajouter une feature"
-  ↓
-Nom de la feature ? → "User Authentication"
-  ↓
-Description courte ? → "Login/logout avec JWT"
-  ↓
-[Selon phase actuelle:]
-  - Phase 1-3: brainstorming activé
-  - Phase 4: chunk-manager activé
-  ↓
-[Guide implémentation...]
-```
-
-## Entrée Texte Libre
-
-```
-/projet
-  ↓
-Input: "je veux ajouter une feature de paiement"
-  ↓
-[Interprétation: add_feature]
-  ↓
-Feature détectée: "paiement"
-Confirmer ? (o/n)
-```
-
-## Intégration avec Autres Commandes
-
-Le hub /projet coordonne toutes les autres commandes :
-
-```
-┌─────────────────────────────────────────────────────┐
-│                     /projet                         │
-│                        │                            │
-│    ┌─────────┬─────────┼─────────┬─────────┐       │
-│    │         │         │         │         │       │
-│    ▼         ▼         ▼         ▼         ▼       │
-│ /resume  /status    /fix     /next     /help       │
-│                                                     │
-│    │         │         │         │         │       │
-│    └─────────┴─────────┴─────────┴─────────┘       │
-│                        │                            │
-│                        ▼                            │
-│              Skills Framework                       │
-│   (context-manager, chunk-manager, phase-controller,│
-│    error-tracker, projet-orchestrator)              │
-└─────────────────────────────────────────────────────┘
-```
+Ce hub necessite le plugin `superpowers` pour les workflows avances.
