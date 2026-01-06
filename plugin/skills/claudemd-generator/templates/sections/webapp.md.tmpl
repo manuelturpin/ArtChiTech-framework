@@ -1,0 +1,44 @@
+## Commands
+
+```bash
+npm run dev       # Start development server
+npm run build     # Build for production
+npm run test      # Run tests
+npm run lint      # Lint code
+{{#if has_e2e}}
+npm run e2e       # Run E2E tests
+{{/if}}
+```
+
+## Performance
+
+- MUST use lazy loading for routes and heavy components
+- MUST optimize images (WebP format, responsive sizes)
+- MUST implement proper caching strategies
+- Target Lighthouse score: > 90 for all metrics
+
+## Accessibility
+
+- MUST include descriptive alt text on all images
+- MUST use semantic HTML elements (header, nav, main, footer)
+- MUST support keyboard navigation
+- MUST maintain color contrast ratio >= 4.5:1
+- MUST test with screen readers
+
+## State Management
+
+- Prefer server state (React Query/SWR) over client state
+- Use local state for UI-only concerns
+- Avoid prop drilling - use context sparingly
+
+## Styling
+
+{{#if tailwind}}
+- Use Tailwind utility classes
+- Extract repeated patterns to components
+- Use design tokens for consistency
+{{else}}
+- Use CSS Modules or styled-components
+- Follow BEM naming if using plain CSS
+- Keep styles co-located with components
+{{/if}}

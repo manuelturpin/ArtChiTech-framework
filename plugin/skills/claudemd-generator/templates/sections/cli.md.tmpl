@@ -1,0 +1,60 @@
+## Commands
+
+{{#if python}}
+```bash
+python -m {{package_name}} --help    # Show help
+python -m {{package_name}} --version # Show version
+pytest                               # Run tests
+```
+{{/if}}
+
+{{#if node}}
+```bash
+npx {{package_name}} --help    # Show help
+npx {{package_name}} --version # Show version
+npm test                       # Run tests
+```
+{{/if}}
+
+## CLI Conventions
+
+### Required Flags
+
+- MUST provide `--help` for all commands and subcommands
+- MUST provide `--version` flag
+- SHOULD support `-h` and `-v` shortcuts
+
+### Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| 0 | Success |
+| 1 | General error |
+| 2 | Usage/syntax error |
+| 130 | Interrupted (Ctrl+C) |
+
+### Output
+
+- Normal output to stdout
+- Errors and warnings to stderr
+- Support `--quiet` flag for silent mode
+- Support `--verbose` flag for debug info
+
+### Configuration
+
+- Support config file: `~/.config/{{name}}/config.yaml`
+- Support environment variables: `{{NAME}}_*`
+- Priority: CLI args > env vars > config file
+
+## User Experience
+
+- MUST show progress for long operations
+- MUST confirm destructive actions
+- SHOULD support `--dry-run` where applicable
+- SHOULD provide helpful error messages with suggestions
+
+## Portability
+
+- MUST work on Linux, macOS, Windows
+- NEVER assume specific shell features
+- Use cross-platform path handling

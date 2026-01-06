@@ -1,0 +1,39 @@
+# {{project_name}}
+
+> {{description}}
+
+## Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+{{stack_table}}
+
+## ACT Framework
+
+Current phase: **{{phase}}** ({{phase_name}})
+
+| Command | Description |
+|---------|-------------|
+| `/act-project` | Main hub |
+| `/act-status` | View progress |
+| `/act-next` | Move to next phase |
+| `/act-fix` | Fix blocking issues |
+| `/act-help` | Get contextual help |
+
+{{#if modular}}
+## Rules
+
+@.claude/rules/1-conventions.md
+@.claude/rules/2-{{type}}.md
+{{#if has_tests}}
+@.claude/rules/3-testing.md
+{{/if}}
+{{/if}}
+
+{{commands_section}}
+
+{{type_sections}}
+
+{{conventions_section}}
+
+{{testing_section}}

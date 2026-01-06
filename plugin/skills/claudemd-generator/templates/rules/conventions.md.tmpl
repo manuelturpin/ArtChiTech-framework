@@ -1,0 +1,107 @@
+# Code Conventions
+
+> Standards for consistent, maintainable code.
+
+## Naming Conventions
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Files | kebab-case | `user-service.ts` |
+| Directories | kebab-case | `api-handlers/` |
+| Variables | camelCase | `userName` |
+| Constants | UPPER_SNAKE | `MAX_RETRY_COUNT` |
+| Functions | camelCase | `getUserById()` |
+| Classes | PascalCase | `UserService` |
+| Types/Interfaces | PascalCase | `UserConfig` |
+| Enums | PascalCase | `UserStatus` |
+
+## File Organization
+
+### Project Structure
+
+```
+src/
+├── components/     # UI components (if applicable)
+├── services/       # Business logic
+├── utils/          # Helper functions
+├── types/          # Type definitions
+├── constants/      # Shared constants
+└── index.ts        # Public exports
+```
+
+### File Contents
+
+- One primary export per file
+- Keep files under 300 lines
+- Group related functions together
+
+## Code Style
+
+### Formatting
+
+| Element | Standard |
+|---------|----------|
+| Indentation | 2 spaces |
+| Line length | 100 characters max |
+| Quotes | Single quotes for strings |
+| Semicolons | Consistent (use or don't use) |
+
+### Comments
+
+**DO comment:**
+- Complex business logic
+- Non-obvious decisions
+- TODO items with context
+
+**DON'T comment:**
+- Obvious code (`i++; // increment i`)
+- Dead code (delete instead)
+- Change history (use git)
+
+### Functions
+
+- Keep functions under 50 lines
+- Single responsibility
+- Descriptive names over comments
+- Early returns for guard clauses
+
+## Git Conventions
+
+### Commit Messages
+
+Format: `type: short description`
+
+| Type | Usage |
+|------|-------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Documentation only |
+| `refactor` | Code change without behavior change |
+| `test` | Adding/modifying tests |
+| `chore` | Maintenance, dependencies |
+
+### Examples
+
+```bash
+feat: add user authentication
+fix: resolve null pointer in login
+docs: update API documentation
+refactor: simplify validation logic
+test: add unit tests for UserService
+chore: update dependencies
+```
+
+### Branches
+
+| Type | Format | Example |
+|------|--------|---------|
+| Feature | `feature/description` | `feature/add-auth` |
+| Fix | `fix/description` | `fix/login-error` |
+| Docs | `docs/description` | `docs/api-guide` |
+
+## Dependencies
+
+- Minimize external dependencies
+- Document why each dependency is needed
+- Keep dependencies updated
+- Prefer well-maintained packages

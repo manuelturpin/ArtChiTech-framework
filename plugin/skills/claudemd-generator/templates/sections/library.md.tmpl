@@ -1,0 +1,72 @@
+## Commands
+
+{{#if node}}
+```bash
+npm run build     # Build library
+npm run test      # Run tests
+npm run docs      # Generate documentation
+npm publish       # Publish to npm
+```
+{{/if}}
+
+{{#if python}}
+```bash
+python -m build           # Build package
+pytest                    # Run tests
+pdoc --html {{package}}   # Generate docs
+twine upload dist/*       # Publish to PyPI
+```
+{{/if}}
+
+## Library Conventions
+
+### Public API
+
+- Define clear public API in index/\_\_init\_\_
+- Use barrel exports for clean imports
+- Document all public functions and classes
+- Mark internal functions with underscore prefix
+
+### Exports
+
+```{{language}}
+// Good: explicit exports
+export { ComponentA, ComponentB } from './components';
+export type { ConfigOptions } from './types';
+
+// Bad: export everything
+export * from './internal';
+```
+
+### Documentation
+
+- MUST document all public API with JSDoc/docstrings
+- MUST include usage examples in documentation
+- MUST maintain README with quick start guide
+- SHOULD include API reference documentation
+
+## Versioning
+
+### Semantic Versioning
+
+| Change | Version |
+|--------|---------|
+| Breaking change | Major (X.0.0) |
+| New feature | Minor (0.X.0) |
+| Bug fix | Patch (0.0.X) |
+
+### Release Process
+
+1. Update version in package.json/pyproject.toml
+2. Update CHANGELOG.md
+3. Commit: `chore: release vX.Y.Z`
+4. Tag: `git tag vX.Y.Z`
+5. Push with tags
+6. Publish to registry
+
+## Compatibility
+
+- Document supported versions of runtime/language
+- Test against multiple versions in CI
+- Minimize dependencies
+- Document peer dependencies clearly

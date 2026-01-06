@@ -1,0 +1,73 @@
+## Code Conventions
+
+### Naming
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Files | kebab-case | `my-component.tsx` |
+| Variables | camelCase | `myVariable` |
+| Constants | UPPER_SNAKE | `MAX_RETRIES` |
+| Functions | camelCase | `getUserById()` |
+| Classes | PascalCase | `UserService` |
+| Types/Interfaces | PascalCase | `UserConfig` |
+
+### File Organization
+
+```
+src/
+├── components/     # UI components
+├── services/       # Business logic
+├── utils/          # Helper functions
+├── types/          # Type definitions
+└── index.ts        # Public exports
+```
+
+## Testing
+
+- MUST write tests before implementation (TDD)
+- Target test coverage: > 60%
+- Test edge cases and error conditions
+
+### Test Structure
+
+```
+tests/
+├── unit/           # Unit tests
+├── integration/    # Integration tests
+└── e2e/            # End-to-end tests
+```
+
+### Test Naming
+
+```
+test_<function>_<scenario>_<expected>
+```
+
+Example: `test_getUserById_invalidId_throwsError`
+
+## Documentation
+
+- Keep README.md up to date
+- Document breaking changes
+- Include examples for complex features
+- Add inline comments for non-obvious logic only
+
+## Git Conventions
+
+### Commit Messages
+
+```
+type: short description
+
+[optional body]
+
+[optional footer]
+```
+
+Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+
+### Branch Naming
+
+- `feature/description`
+- `fix/description`
+- `docs/description`

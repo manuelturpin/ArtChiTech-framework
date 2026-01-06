@@ -1,0 +1,80 @@
+## Commands
+
+{{#if node}}
+```bash
+npm run dev       # Start development server
+npm run build     # Build for production
+npm run test      # Run tests
+npm run migrate   # Run database migrations
+```
+{{/if}}
+
+{{#if python}}
+```bash
+uvicorn app.main:app --reload   # Start dev server
+pytest                          # Run tests
+alembic upgrade head            # Run migrations
+```
+{{/if}}
+
+## API Conventions
+
+### Endpoints
+
+- Use RESTful naming: `/resources/{id}`
+- Version in URL: `/api/v1/...`
+- Use plural nouns: `/users` not `/user`
+
+### HTTP Methods
+
+| Method | Usage |
+|--------|-------|
+| GET | Retrieve resources |
+| POST | Create new resource |
+| PUT | Replace resource |
+| PATCH | Partial update |
+| DELETE | Remove resource |
+
+### Status Codes
+
+| Code | Usage |
+|------|-------|
+| 200 | Success |
+| 201 | Created |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 500 | Server Error |
+
+## Validation
+
+- MUST validate all request inputs
+- MUST sanitize user-provided data
+{{#if fastapi}}
+- Use Pydantic models for request/response validation
+{{/if}}
+{{#if express}}
+- Use Zod or Joi for validation
+{{/if}}
+
+## Error Handling
+
+Return structured error responses:
+
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Human readable message",
+    "details": {}
+  }
+}
+```
+
+## Security
+
+- NEVER log sensitive data (passwords, tokens)
+- MUST use parameterized queries (no SQL injection)
+- MUST validate file uploads (size, type)
+- MUST implement rate limiting on public endpoints

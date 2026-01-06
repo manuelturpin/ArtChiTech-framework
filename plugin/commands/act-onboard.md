@@ -100,15 +100,86 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py u
   --updates '{"phase": {"current": [phase], "name": "[phase-name]"}, "scores": {...}}'
 ```
 
-## Step 6: CONFIRMATION
+## Step 6: CLAUDE.md GENERATION
+
+Check if a CLAUDE.md file exists in the project root.
+
+### If NO CLAUDE.md exists:
+
+1. Use the `claudemd-generator` skill to generate an optimized CLAUDE.md
+2. Calculate project complexity based on detected stack
+3. Select strategy:
+   - **SINGLE**: Complexity < 5 → Generate single CLAUDE.md (~150 lines)
+   - **MODULAR**: Complexity >= 5 → Generate CLAUDE.md + .claude/rules/
+
+Display preview:
+
+```
+╭──────────────────────────────────────────────────────────────╮
+│  📝 CLAUDE.md Generation                                      │
+│                                                               │
+│  Detected: [technologies]                                     │
+│  Strategy: [SINGLE/MODULAR] (~[N] lines)                     │
+│                                                               │
+│  Preview:                                                     │
+│  ──────────────────────────────────────                       │
+│  # [project-name]                                             │
+│  > [description]                                              │
+│                                                               │
+│  ## Tech Stack                                                │
+│  | Component | Technology |                                   │
+│  | Language  | [language] |                                   │
+│  ...                                                          │
+│                                                               │
+│  Generate? [Y/n/customize]                                    │
+╰──────────────────────────────────────────────────────────────╯
+```
+
+If user confirms:
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/claudemd-generator/scripts/generate_claudemd.py \
+  --stack "$(cat .epct/stack.json)" \
+  --name "[project-name]" \
+  --description "[detected description]" \
+  --phase [current-phase] \
+  --output "CLAUDE.md"
+```
+
+### If CLAUDE.md EXISTS:
+
+Analyze existing content and propose enhancements:
+
+```
+╭──────────────────────────────────────────────────────────────╮
+│  📝 CLAUDE.md Enhancement                                     │
+│                                                               │
+│  Existing CLAUDE.md detected ([N] lines)                      │
+│                                                               │
+│  Suggested additions:                                         │
+│  ✓ ACT Framework integration section                          │
+│  ✓ [Detected conventions based on stack]                      │
+│                                                               │
+│  Options:                                                     │
+│  1. Add ACT section only                                      │
+│  2. Add all suggestions                                       │
+│  3. Skip (keep existing)                                      │
+│                                                               │
+│  Choice? [1/2/3]                                              │
+╰──────────────────────────────────────────────────────────────╯
+```
+
+If option 1 or 2, append the relevant sections to the existing file.
+
+## Step 7: CONFIRMATION
 
 Display:
 ```
 ✅ Project initialized in ACT!
 
 📁 State saved in .epct/state.json
+📝 CLAUDE.md [created/updated/unchanged]
 🎯 Current phase: [phase-name]
 💡 Next action: [first recommendation]
 
-Type /projet to access the main menu.
+Type /act-project to access the main menu.
 ```
