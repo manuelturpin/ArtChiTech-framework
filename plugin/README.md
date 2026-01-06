@@ -28,7 +28,7 @@ python3 --version  # Doit etre >= 3.8
 **Option A: Git clone (recommande pour developpement)**
 
 ```bash
-git clone https://github.com/bonsai974/act-framework.git ~/projects/act
+git clone https://github.com/manuelturpin/ArtChiTech-framework.git ~/projects/act
 cd ~/projects/act
 ./scripts/install.sh
 ```
@@ -117,4 +117,4 @@ plugin/
 
 ## Licence
 
-MIT - Manuel Turpin / Bonsai974
+MIT - Manuel Turpin

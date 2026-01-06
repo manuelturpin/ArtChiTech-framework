@@ -4,11 +4,11 @@
   "description": "ACT (ArtChiTech) - Framework de suivi et réalisation de projets en 7 phases pour Claude Code. De Discovery à Croissance.",
   "author": {
     "name": "Manuel Turpin",
-    "email": "contact@bonsai974.re",
-    "url": "https://bonsai974.re"
+    "email": "manuel.turpin@gmail.com",
+    "url": "https://github.com/manuelturpin"
   },
-  "homepage": "https://github.com/bonsai974/act-framework",
-  "repository": "https://github.com/bonsai974/act-framework",
+  "homepage": "https://github.com/manuelturpin/ArtChiTech-framework",
+  "repository": "https://github.com/manuelturpin/ArtChiTech-framework",
   "license": "MIT",
   "keywords": [
     "framework",
