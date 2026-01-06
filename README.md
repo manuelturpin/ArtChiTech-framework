@@ -1,78 +1,208 @@
 # ArtChiTech Framework (ACT)
 
-> **lab-13** = Atelier de développement du plugin ACT
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/manuelturpin/ArtChiTech-framework/releases)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-purple.svg)](https://claude.ai/code)
 
-## Qu'est-ce que ACT ?
+> A 7-phase project management framework for Claude Code. From idea to production, structured and guided.
 
-**ArtChiTech Framework (ACT)** est un plugin Claude Code pour la gestion de projets, structurant le développement en **7 phases** : Discovery → Stratégie → Conception → Développement → Qualité → Lancement → Croissance.
+## What is ACT?
 
-## Quick Start
+**ACT** transforms how you build software with Claude Code. Instead of diving straight into code, ACT guides you through a structured 7-phase methodology that ensures you're building the right thing, the right way.
 
-```bash
-# Dans n'importe quel projet
+```
 /projet
 ```
 
-C'est tout ! Le framework détecte automatiquement votre contexte :
-- **Nouveau projet** → Guide de création
-- **Projet existant** → Audit automatique puis menu
-- **Projet ACT** → Menu de gestion
+That's it. One command to start. ACT automatically detects your context and guides you.
 
-## Structure du Projet
+## Features
 
-```
-lab-13/
-├── CLAUDE.md                # Instructions pour Claude
-├── .claude/rules/           # Source of truth (documentation modulaire)
-├── plugin/                  # 📦 Source du plugin ACT
-│   ├── commands/            # Commandes slash
-│   ├── agents/              # Agents spécialisés
-│   ├── references/          # Documentation des phases
-│   └── scripts/             # Scripts utilitaires
-├── test-apps/               # 🧪 Applications de test (dev interne)
-├── docs/                    # 📚 Documentation développement
-│   ├── sources/             # Fichiers sources originaux
-│   ├── plans/               # Plans d'implémentation
-│   └── handoffs/            # Handoffs de sessions
-└── scripts/                 # 🔧 Scripts d'installation
-```
+- **Structured Phases** - 7 proven phases from Discovery to Growth
+- **Smart Detection** - Automatically recognizes new vs existing projects
+- **TDD Integration** - Test-driven development built into the workflow
+- **Superpowers Skills** - Leverages brainstorming, planning, and review skills
+- **Progress Tracking** - Visual status and checkpoints
+- **Feedback Loop** - Built-in issue reporting to GitHub
 
-## Commandes
+## The 7 Phases
 
-| Commande | Description |
-|----------|-------------|
-| `/onboard` | Auditer un projet existant |
-| `/projet` | Hub principal interactif |
-| `/status` | État et progression |
-| `/next` | Étape suivante |
-| `/fix` | Corriger erreur prioritaire |
-| `/resume` | Reprendre session |
-| `/help` | Aide contextuelle |
+| Phase | Name | Goal |
+|:-----:|------|------|
+| 1 | **Discovery** | Validate the problem and user needs |
+| 2 | **Strategy** | Define roadmap and business model |
+| 3 | **Design** | Architect the solution and UX |
+| 4 | **Development** | Implement with TDD methodology |
+| 5 | **Quality** | Test, review, and validate |
+| 6 | **Launch** | Deploy and release |
+| 7 | **Growth** | Iterate based on feedback |
 
-## Les 7 Phases
-
-| Phase | Objectif |
-|-------|----------|
-| 1. Discovery | Valider le problème et les besoins |
-| 2. Stratégie | Définir roadmap et business model |
-| 3. Conception | Designer architecture et UX |
-| 4. Développement | Implémenter avec TDD |
-| 5. Qualité | Tester et valider |
-| 6. Lancement | Déployer |
-| 7. Croissance | Itérer et optimiser |
+Each phase has clear **Go/No-Go criteria** before advancing to the next.
 
 ## Installation
 
+### Prerequisites
+
+| Dependency | Version | Required |
+|------------|---------|:--------:|
+| [Claude Code](https://claude.ai/code) | Latest | Yes |
+| [Superpowers Plugin](https://github.com/superpowers-marketplace/superpowers) | 3.6.0+ | Yes |
+| Python | 3.8+ | Yes |
+| Git | Any | Yes |
+
+### Install Dependencies
+
 ```bash
-./scripts/install-local.sh
+# Install the superpowers plugin
+claude plugins:install superpowers-marketplace/superpowers
+
+# Verify Python
+python3 --version  # Must be >= 3.8
 ```
 
-## Documentation
+### Install ACT
 
-- [CLAUDE.md](CLAUDE.md) - Quick reference + liens vers `.claude/rules/`
-- [plugin/README.md](plugin/README.md) - Documentation utilisateur
-- [docs/sources/](docs/sources/) - Recherches et extractions originales
+```bash
+git clone https://github.com/manuelturpin/ArtChiTech-framework.git
+cd ArtChiTech-framework
+./scripts/install.sh
+```
 
-## Licence
+The installer will ask where to install:
 
-MIT
+| Scope | Location | Availability |
+|-------|----------|--------------|
+| **Global** | `~/.claude/plugins/act/` | All your projects |
+| **Project** | `./.claude/plugins/act/` | This project only |
+
+You can also use flags: `--global` or `--project`
+
+### Verify Installation
+
+Restart Claude Code, then run:
+
+```
+/projet
+```
+
+## Usage
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/projet` | **Main hub** - Start here |
+| `/onboard` | Audit and initialize a project |
+| `/status` | View project progress |
+| `/next` | Move to next phase |
+| `/fix` | Fix blocking issues |
+| `/resume` | Resume previous session |
+| `/help` | Contextual help |
+| `/feedback` | Report bugs or suggestions |
+| `/triage` | View open issues |
+
+### Workflow Modes
+
+| Mode | When to Use |
+|------|-------------|
+| **COMPLETE** | New project from scratch - all 7 phases |
+| **FEATURE** | Adding a feature to existing project |
+| **QUICK** | Bugfix or small refactoring |
+
+### Project Structure
+
+ACT creates a `.epct/` folder in your project to track state:
+
+```
+your-project/
+└── .epct/
+    ├── state.json          # Current phase and progress
+    ├── session/            # Session data
+    └── history/
+        └── checkpoints/    # Phase checkpoints
+```
+
+> **Tip**: Add `.epct/` to `.gitignore` if you don't want to version ACT state.
+
+## Superpowers Integration
+
+ACT automatically uses the right superpowers skill for each phase:
+
+| Phase | Skill Used |
+|-------|------------|
+| Discovery | `superpowers:brainstorming` |
+| Strategy | `superpowers:brainstorming` |
+| Design | `superpowers:writing-plans` |
+| Development | `superpowers:test-driven-development` |
+| Quality | `superpowers:code-reviewer` |
+
+## Example Session
+
+```
+You: /projet
+
+ACT: Welcome! I detect this is a new project.
+     Let's start with Phase 1: Discovery.
+
+     What problem are you trying to solve?
+
+You: I want to build a CLI tool for managing dotfiles
+
+ACT: Great! Let me use brainstorming to explore this further...
+     [Guides through discovery questions]
+
+     Phase 1 complete! Ready for Phase 2: Strategy?
+```
+
+## Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Setup
+
+```bash
+# Clone and install locally for development
+git clone https://github.com/manuelturpin/ArtChiTech-framework.git
+cd ArtChiTech-framework
+./scripts/install.sh --project  # Install in project scope
+```
+
+### Project Structure
+
+```
+ArtChiTech-framework/
+├── plugin/                 # ACT plugin source
+│   ├── commands/           # Slash commands
+│   ├── agents/             # Specialized agents
+│   ├── references/         # Phase documentation
+│   └── scripts/            # Utility scripts
+├── scripts/                # Installation scripts
+├── docs/                   # Documentation
+└── test-apps/              # Test applications
+```
+
+## Reporting Issues
+
+Use the built-in feedback command:
+
+```
+/feedback
+```
+
+Or open an issue on [GitHub](https://github.com/manuelturpin/ArtChiTech-framework/issues).
+
+## License
+
+MIT - [Manuel Turpin](https://github.com/manuelturpin)
+
+---
+
+<p align="center">
+  Built with Claude Code
+</p>
