@@ -21,3 +21,4 @@ playwright-report/
 
 # Claude local preferences
 .claude/CLAUDE.local.md
+test-apps/
