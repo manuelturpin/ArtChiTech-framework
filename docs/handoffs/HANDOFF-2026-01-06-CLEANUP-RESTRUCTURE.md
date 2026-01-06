@@ -72,7 +72,7 @@ Nouvelle approche modulaire selon les best practices officielles :
 
 **Décisions prises** :
 - **Plateforme** : GitHub privé
-- **Nom du repo** : `architech-framework`
+- **Nom du repo** : `ArtChiTech-framework`
 - **Historique** : Garder l'historique git actuel
 - **Contenu** : Tout le projet (lab-13)
 
@@ -88,10 +88,10 @@ Nouvelle approche modulaire selon les best practices officielles :
 
 ```bash
 # Créer le repo (avec gh CLI)
-gh repo create architech-framework --private --source=. --push
+gh repo create ArtChiTech-framework --private --source=. --push
 
 # Ou manuellement
-git remote add origin git@github.com:[username]/architech-framework.git
+git remote add origin git@github.com:[username]/ArtChiTech-framework.git
 git push -u origin main
 ```
 
@@ -101,7 +101,7 @@ git push -u origin main
 - ✅ CLAUDE.md modulaire avec rules/
 - ✅ Sources historiques récupérées
 - ✅ README à jour
-- ⏳ Publication GitHub (prochaine session)
+- ✅ Publié sur GitHub : https://github.com/manuelturpin/ArtChiTech-framework
 
 ## Fichiers clés
 
