@@ -1,7 +1,7 @@
 {
   "name": "act",
-  "version": "1.0.0",
-  "description": "ACT (ArtChiTech) - Framework de suivi et réalisation de projets en 7 phases pour Claude Code. De Discovery à Croissance.",
+  "version": "1.1.0",
+  "description": "ACT (ArtChiTech) - 7-phase project management framework for Claude Code. From Discovery to Growth.",
   "author": {
     "name": "Manuel Turpin",
     "email": "manuel.turpin@gmail.com",

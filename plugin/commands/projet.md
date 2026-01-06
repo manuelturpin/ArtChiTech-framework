@@ -1,101 +1,101 @@
 ---
-name: projet
-description: Hub principal ACT - Point d'entree unique pour gerer les projets (nouveau, feature, refacto, status)
+name: project
+description: ACT main hub - Single entry point for managing projects (new, feature, refactor, status)
 ---
 
-# /projet - Hub Principal ACT
+# /project - ACT Main Hub
 
-Tu es le hub principal du framework ACT. Tu geres le point d'entree pour tous les projets.
+You are the main hub of the ACT framework. You manage the entry point for all projects.
 
-## Etape 1: Detection du Contexte
+## Step 1: Context Detection
 
-Execute le script de detection :
+Execute the detection script:
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/project-detection/scripts/detect_stack.py
 ```
 
-Puis verifie si `.epct/` existe :
+Then check if `.epct/` exists:
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py exists
 ```
 
-## Etape 2: Determiner le Contexte
+## Step 2: Determine Context
 
-Selon les resultats :
+Based on results:
 
-### Contexte A: Nouveau Projet (pas de code significatif)
+### Context A: New Project (no significant code)
 
-Si la detection retourne `type: "research"` ou erreur, et pas de `.epct/` :
+If detection returns `type: "research"` or error, and no `.epct/`:
 
-Affiche :
+Display:
 ```
 ╭─────────────────────────────────────────────────────╮
-│  🚀 ACT Framework - Nouveau Projet                  │
+│  🚀 ACT Framework - New Project                     │
 │                                                     │
-│  Aucun projet actif detecte.                        │
+│  No active project detected.                        │
 │                                                     │
-│  1. 🆕 Demarrer un nouveau projet                   │
-│  2. 📖 En savoir plus sur le framework              │
+│  1. 🆕 Start a new project                          │
+│  2. 📖 Learn more about the framework               │
 │                                                     │
-│  Tapez le numero ou decrivez votre besoin...        │
+│  Type the number or describe your need...           │
 ╰─────────────────────────────────────────────────────╯
 ```
 
-Si choix 1 → Demande nom du projet, puis utilise `superpowers:brainstorming` pour la phase Discovery.
+If choice 1 → Ask for project name, then use `superpowers:brainstorming` for the Discovery phase.
 
-### Contexte B: Projet Existant non-ACT (code sans .epct/)
+### Context B: Existing non-ACT Project (code without .epct/)
 
-Si code detecte mais `.epct/` n'existe pas :
+If code detected but `.epct/` does not exist:
 
-Affiche :
+Display:
 ```
-📁 Projet existant detecte : [stack detectee]
-🔍 Lancement de l'audit initial...
+📁 Existing project detected: [detected stack]
+🔍 Launching initial audit...
 ```
 
-Puis execute automatiquement `/onboard` (spawn la commande).
+Then automatically execute `/onboard` (spawn the command).
 
-Apres l'audit, reviens au menu normal (Contexte C).
+After the audit, return to the normal menu (Context C).
 
-### Contexte C: Projet ACT Connu (code + .epct/)
+### Context C: Known ACT Project (code + .epct/)
 
-Si `.epct/state.json` existe, lis l'etat :
+If `.epct/state.json` exists, read the state:
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
-Affiche le menu adapte a la phase :
+Display the menu adapted to the phase:
 ```
 ╭─────────────────────────────────────────────────────────────╮
-│  🚀 [nom-projet] | Phase: [phase-name] ([current]/7)        │
+│  🚀 [project-name] | Phase: [phase-name] ([current]/7)      │
 │                                                             │
-│  Que voulez-vous faire ?                                    │
+│  What would you like to do?                                 │
 │                                                             │
-│  1. ➕ Ajouter une feature                                  │
+│  1. ➕ Add a feature                                        │
 │  2. 🔧 Refactoring/Quick fix                                │
-│  3. 📋 Voir checklist phase actuelle                        │
-│  4. ⏭️  Passer a la phase suivante                          │
-│  5. 📊 Voir status complet                                  │
-│  6. 🔄 Re-auditer le projet                                 │
+│  3. 📋 View current phase checklist                         │
+│  4. ⏭️  Move to next phase                                  │
+│  5. 📊 View complete status                                 │
+│  6. 🔄 Re-audit project                                     │
 │                                                             │
-│  Tapez le numero ou decrivez votre besoin...                │
+│  Type the number or describe your need...                   │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
-## Etape 3: Gerer le Choix
+## Step 3: Handle Choice
 
-| Choix | Action |
-|-------|--------|
-| 1 | Demander nom feature → Update state mode=FEATURE → Spawn `superpowers:brainstorming` |
-| 2 | Update state mode=QUICK → Demander description → Executer |
-| 3 | Afficher checklist de la phase actuelle depuis `references/phases/` |
-| 4 | Executer `/next` |
-| 5 | Executer `/status` |
-| 6 | Executer `/onboard` |
+| Choice | Action |
+|--------|--------|
+| 1 | Ask for feature name → Update state mode=FEATURE → Spawn `superpowers:brainstorming` |
+| 2 | Update state mode=QUICK → Ask for description → Execute |
+| 3 | Display checklist for current phase from `references/phases/` |
+| 4 | Execute `/next` |
+| 5 | Execute `/status` |
+| 6 | Execute `/onboard` |
 
-## Dependances
+## Dependencies
 
-Ce hub necessite le plugin `superpowers` pour les workflows avances.
+This hub requires the `superpowers` plugin for advanced workflows.

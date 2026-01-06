@@ -1,108 +1,108 @@
 ---
 name: fix
-description: Lister et corriger les erreurs prioritaires du projet
+description: List and fix priority errors in the project
 argument-hint: [error-id]
 ---
 
-# /fix - Correction d'Erreurs
+# /fix - Error Correction
 
-Tu aides a corriger les problemes bloquant la progression du projet.
+You help fix problems blocking project progress.
 
-## Sans Argument: Lister les Problemes
+## Without Argument: List Problems
 
-Analyse le projet en utilisant le skill `phase-scoring` et liste les problemes par priorite :
+Analyze the project using the `phase-scoring` skill and list problems by priority:
 
 ```
 ╭─────────────────────────────────────────────────────────────╮
-│  🔧 Problemes Detectes                                      │
+│  🔧 Problems Detected                                       │
 │                                                             │
 │  Phase: [phase-name] - Score: [score]%                      │
 │                                                             │
-│  🔴 Critiques (bloquent /next):                             │
-│  [1] Tests manquants - coverage < 60%                       │
-│  [2] CI/CD non configure                                    │
+│  🔴 Critical (block /next):                                 │
+│  [1] Missing tests - coverage < 60%                         │
+│  [2] CI/CD not configured                                   │
 │                                                             │
-│  🟡 Importants:                                             │
-│  [3] Documentation API incomplete                           │
-│  [4] Pas de gestion d'erreurs                               │
+│  🟡 Important:                                              │
+│  [3] Incomplete API documentation                           │
+│  [4] No error handling                                      │
 │                                                             │
 │  🟢 Suggestions:                                            │
-│  [5] Ajouter TypeScript strict mode                         │
+│  [5] Add TypeScript strict mode                             │
 │                                                             │
-│  Tapez /fix [numero] pour corriger un probleme.             │
+│  Type /fix [number] to fix a problem.                       │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
-## Avec Argument: Corriger le Probleme
+## With Argument: Fix the Problem
 
-`/fix 1` → Focus sur le probleme #1
+`/fix 1` → Focus on problem #1
 
-Selon le type de probleme :
+Depending on the problem type:
 
-### Probleme de Code
-Utilise `superpowers:systematic-debugging` pour analyser et corriger.
+### Code Problem
+Use `superpowers:systematic-debugging` to analyze and fix.
 
-### Probleme de Tests
-Utilise `superpowers:test-driven-development` pour ajouter les tests.
+### Test Problem
+Use `superpowers:test-driven-development` to add tests.
 
-### Probleme de Documentation
-Guide l'utilisateur pour creer la documentation manquante.
+### Documentation Problem
+Guide the user to create the missing documentation.
 
-### Probleme de Configuration
-Guide l'utilisateur etape par etape (CI/CD, linting, etc.).
+### Configuration Problem
+Guide the user step by step (CI/CD, linting, etc.).
 
-## Detection des Problemes
+## Problem Detection
 
-Pour chaque phase, verifie les criteres manquants :
+For each phase, check for missing criteria:
 
 ### Phase 1 - Discovery
-- README absent ou incomplet → 🔴 Critique
-- Pas de definition du probleme → 🔴 Critique
-- Pas de personas → 🟡 Important
+- README missing or incomplete → 🔴 Critical
+- No problem definition → 🔴 Critical
+- No personas → 🟡 Important
 
-### Phase 2 - Strategie
-- Pas de roadmap → 🔴 Critique
-- Business model non defini → 🟡 Important
-- KPIs manquants → 🟢 Suggestion
+### Phase 2 - Strategy
+- No roadmap → 🔴 Critical
+- Business model not defined → 🟡 Important
+- Missing KPIs → 🟢 Suggestion
 
-### Phase 3 - Conception
-- Pas d'architecture doc → 🔴 Critique
-- Specs techniques absentes → 🟡 Important
-- UI mockups manquants → 🟢 Suggestion
+### Phase 3 - Design
+- No architecture doc → 🔴 Critical
+- Technical specs missing → 🟡 Important
+- UI mockups missing → 🟢 Suggestion
 
-### Phase 4 - Developpement
-- Pas de tests → 🔴 Critique
-- CI/CD non configure → 🔴 Critique
-- Code non documente → 🟡 Important
+### Phase 4 - Development
+- No tests → 🔴 Critical
+- CI/CD not configured → 🔴 Critical
+- Undocumented code → 🟡 Important
 
-### Phase 5 - Qualite
-- Coverage < 60% → 🔴 Critique
-- Bugs critiques ouverts → 🔴 Critique
+### Phase 5 - Quality
+- Coverage < 60% → 🔴 Critical
+- Critical bugs open → 🔴 Critical
 - Linting errors → 🟡 Important
 
-### Phase 6 - Lancement
-- Non deploye → 🔴 Critique
-- Pas de monitoring → 🟡 Important
-- Doc utilisateur absente → 🟡 Important
+### Phase 6 - Launch
+- Not deployed → 🔴 Critical
+- No monitoring → 🟡 Important
+- User doc missing → 🟡 Important
 
-### Phase 7 - Croissance
-- Pas d'analytics → 🔴 Critique
-- Pas de feedback loop → 🟡 Important
-- Pas de changelog → 🟢 Suggestion
+### Phase 7 - Growth
+- No analytics → 🔴 Critical
+- No feedback loop → 🟡 Important
+- No changelog → 🟢 Suggestion
 
-## Apres Correction
+## After Correction
 
-Recalcule le score de la phase et affiche :
+Recalculate the phase score and display:
 ```
-✅ Probleme corrige !
-📊 Nouveau score phase [name]: [new-score]%
-[Si score >= 70] 💡 Vous pouvez maintenant utiliser /next
+✅ Problem fixed!
+📊 New phase [name] score: [new-score]%
+[If score >= 70] 💡 You can now use /next
 ```
 
-## Si Aucun Probleme
+## If No Problems
 
 ```
-✅ Aucun probleme detecte. Tout est vert!
+✅ No problems detected. Everything is green!
 
-💡 Continuez avec /next pour avancer
+💡 Continue with /next to move forward
 ```

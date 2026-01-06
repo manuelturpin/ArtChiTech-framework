@@ -1,58 +1,58 @@
 ---
 name: next
-description: Verifier les criteres Go/No-Go et passer a la phase suivante
+description: Check Go/No-Go criteria and proceed to the next phase
 ---
 
-# /next - Phase Suivante
+# /next - Next Phase
 
-Tu geres la transition vers la phase suivante du projet ACT.
+You manage the transition to the next phase of the ACT project.
 
-## Etape 1: Lire l'Etat
+## Step 1: Read State
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
-Si phase actuelle = 7, affiche :
+If current phase = 7, display:
 ```
-🎉 Felicitations ! Vous etes en phase Croissance (7/7).
-C'est la derniere phase - continuez a iterer !
+🎉 Congratulations! You are in the Growth phase (7/7).
+This is the last phase - keep iterating!
 ```
 
-## Etape 2: Verifier Go/No-Go
+## Step 2: Check Go/No-Go
 
-Le score de la phase actuelle doit etre >= 70% pour passer.
+The current phase score must be >= 70% to proceed.
 
-Consulte les criteres dans le skill `phase-scoring` :
-- Discovery : README, probleme defini, users
-- Strategie : Roadmap, business model
-- Conception : Architecture, specs
-- Developpement : Code, tests, CI
-- Qualite : Coverage, bugs
-- Lancement : Deploy, monitoring
-- Croissance : Analytics, feedback
+Consult the criteria in the `phase-scoring` skill:
+- Discovery: README, problem defined, users
+- Strategy: Roadmap, business model
+- Design: Architecture, specs
+- Development: Code, tests, CI
+- Quality: Coverage, bugs
+- Launch: Deploy, monitoring
+- Growth: Analytics, feedback
 
-## Etape 3a: Si Criteres OK (score >= 70)
+## Step 3a: If Criteria OK (score >= 70)
 
-Affiche :
+Display:
 ```
 ╭─────────────────────────────────────────────────────────────╮
-│  ✅ Phase [current] : [name] terminee !                     │
+│  ✅ Phase [current]: [name] completed!                      │
 │                                                             │
 │  Score: [score]%                                            │
-│  Criteres valides:                                          │
-│  ✓ [critere 1]                                              │
-│  ✓ [critere 2]                                              │
-│  ✓ [critere 3]                                              │
+│  Validated criteria:                                        │
+│  ✓ [criterion 1]                                            │
+│  ✓ [criterion 2]                                            │
+│  ✓ [criterion 3]                                            │
 │                                                             │
-│  Passer a la phase [next] : [next-name] ?                   │
-│  [o/n]                                                      │
+│  Proceed to phase [next]: [next-name]?                      │
+│  [y/n]                                                      │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
-Si oui :
-1. Cree un checkpoint
-2. Met a jour la phase
+If yes:
+1. Create a checkpoint
+2. Update the phase
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py checkpoint
@@ -60,74 +60,74 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py u
   --updates '{"phase": {"current": [next], "name": "[next-name]", "started_at": "[now]"}}'
 ```
 
-Affiche :
+Display:
 ```
-🎯 Phase [next-name] activee !
-💡 Utilisez /projet pour voir les actions disponibles.
+🎯 Phase [next-name] activated!
+💡 Use /projet to see available actions.
 ```
 
-## Etape 3b: Si Criteres NON OK (score < 70)
+## Step 3b: If Criteria NOT OK (score < 70)
 
-Affiche :
+Display:
 ```
 ╭─────────────────────────────────────────────────────────────╮
-│  ❌ Impossible de passer a la phase suivante                │
+│  ❌ Cannot proceed to the next phase                        │
 │                                                             │
-│  Phase actuelle: [name] ([current]/7)                       │
-│  Score: [score]% (minimum requis: 70%)                      │
+│  Current phase: [name] ([current]/7)                        │
+│  Score: [score]% (minimum required: 70%)                    │
 │                                                             │
-│  Criteres manquants:                                        │
-│  ✗ [critere manquant 1]                                     │
-│  ✗ [critere manquant 2]                                     │
+│  Missing criteria:                                          │
+│  ✗ [missing criterion 1]                                    │
+│  ✗ [missing criterion 2]                                    │
 │                                                             │
-│  💡 Actions recommandees:                                   │
-│  1. [action pour critere 1]                                 │
-│  2. [action pour critere 2]                                 │
+│  💡 Recommended actions:                                    │
+│  1. [action for criterion 1]                                │
+│  2. [action for criterion 2]                                │
 │                                                             │
-│  Utilisez /fix pour corriger les problemes.                 │
+│  Use /fix to address issues.                                │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
-## Noms des Phases
+## Phase Names
 
-| Phase | Nom |
-|-------|-----|
+| Phase | Name |
+|-------|------|
 | 1 | Discovery |
-| 2 | Strategie |
-| 3 | Conception |
-| 4 | Developpement |
-| 5 | Qualite |
-| 6 | Lancement |
-| 7 | Croissance |
+| 2 | Strategy |
+| 3 | Design |
+| 4 | Development |
+| 5 | Quality |
+| 6 | Launch |
+| 7 | Growth |
 
-## Criteres Go/No-Go par Phase
+## Go/No-Go Criteria by Phase
 
-### Phase 1 → 2 (Discovery → Strategie)
-- README avec probleme documente
-- Personas/users definis
-- Validation initiale faite
+### Phase 1 → 2 (Discovery → Strategy)
+- README with documented problem
+- Personas/users defined
+- Initial validation done
 
-### Phase 2 → 3 (Strategie → Conception)
-- Roadmap definie
-- Business model documente
-- KPIs identifies
+### Phase 2 → 3 (Strategy → Design)
+- Roadmap defined
+- Business model documented
+- KPIs identified
 
-### Phase 3 → 4 (Conception → Developpement)
-- Architecture documentee
-- Tech stack choisi
-- Specs techniques ecrites
+### Phase 3 → 4 (Design → Development)
+- Architecture documented
+- Tech stack chosen
+- Technical specs written
 
-### Phase 4 → 5 (Developpement → Qualite)
-- Code source present
-- Tests ecrits
-- CI/CD configure
+### Phase 4 → 5 (Development → Quality)
+- Source code present
+- Tests written
+- CI/CD configured
 
-### Phase 5 → 6 (Qualite → Lancement)
+### Phase 5 → 6 (Quality → Launch)
 - Coverage >= 60%
-- Pas de bugs critiques
-- Performance validee
+- No critical bugs
+- Performance validated
 
-### Phase 6 → 7 (Lancement → Croissance)
-- Deploye en production
-- Monitoring en place
-- Documentation utilisateur
+### Phase 6 → 7 (Launch → Growth)
+- Deployed to production
+- Monitoring in place
+- User documentation

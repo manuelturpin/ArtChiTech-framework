@@ -1,127 +1,127 @@
 ---
 name: resume
-description: Reprendre une session de travail precedente
+description: Resume a previous work session
 ---
 
-# /resume - Reprise de Session
+# /resume - Session Resume
 
-Tu aides a reprendre le travail la ou il s'etait arrete.
+You help resume work where it left off.
 
-## Etape 1: Verifier l'Etat
+## Step 1: Check State
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
-Si pas de `.epct/`, affiche :
+If no `.epct/`, display:
 ```
-❌ Aucun projet ACT a reprendre.
-💡 Utilisez /projet pour commencer.
+❌ No ACT project to resume.
+💡 Use /projet to get started.
 ```
 
-## Etape 2: Analyser le Contexte
+## Step 2: Analyze Context
 
-Affiche le resume :
+Display the summary:
 ```
 ╭─────────────────────────────────────────────────────────────╮
-│  🔄 Reprise de Session                                      │
+│  🔄 Session Resume                                          │
 │                                                             │
-│  Projet: [project.name]                                     │
+│  Project: [project.name]                                    │
 │  Phase: [phase.name] ([phase.current]/7)                    │
 │  Mode: [mode]                                               │
 │                                                             │
 ```
 
-Si `current_feature` existe :
+If `current_feature` exists:
 ```
-│  Feature en cours: [current_feature.name]                   │
+│  Feature in progress: [current_feature.name]                │
 │  Progress: [chunks_completed]/[chunks_total] chunks         │
 │                                                             │
-│  Derniere action: [description]                             │
+│  Last action: [description]                                 │
 │                                                             │
-│  Continuer cette feature ? [o/n]                            │
+│  Continue this feature? [y/n]                               │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
-Sinon :
+Otherwise:
 ```
-│  Aucune tache en cours.                                     │
+│  No task in progress.                                       │
 │                                                             │
 │  Options:                                                   │
-│  1. Voir le status complet (/status)                        │
-│  2. Continuer la phase actuelle (/projet)                   │
-│  3. Restaurer un checkpoint precedent                       │
+│  1. View full status (/status)                              │
+│  2. Continue current phase (/projet)                        │
+│  3. Restore a previous checkpoint                           │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
-## Etape 3: Restaurer un Checkpoint (si demande)
+## Step 3: Restore a Checkpoint (if requested)
 
-Liste les checkpoints disponibles :
+List available checkpoints:
 ```bash
 ls -la .epct/history/checkpoints/
 ```
 
 ```
-Checkpoints disponibles:
+Available checkpoints:
 [1] 2026-01-06T10-30-00.json - Phase 3, Score 85%
 [2] 2026-01-05T15-45-00.json - Phase 3, Score 70%
 [3] 2026-01-04T09-00-00.json - Phase 2, Score 65%
 
-Restaurer lequel ? [numero]
+Which one to restore? [number]
 ```
 
-Si choix fait :
+If choice made:
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py recover \
   --checkpoint-file "[filename]"
 ```
 
-## Apres Restauration
+## After Restoration
 
-Affiche :
+Display:
 ```
-✅ Checkpoint restaure !
+✅ Checkpoint restored!
 
-📊 Etat actuel:
+📊 Current state:
    Phase: [phase.name] ([phase.current]/7)
    Score: [score]%
 
-💡 Utilisez /status pour voir les details.
+💡 Use /status to see details.
 ```
 
-## Cas Speciaux
+## Special Cases
 
-### Session Ancienne (> 7 jours)
-
-```
-⚠️  Session trouvee mais ancienne (il y a [X] jours)
-
-Le contexte peut etre incomplet ou obsolete.
-Recommandation : /onboard pour re-auditer le projet.
-
-Continuer quand meme ? [o/n]
-```
-
-### Plusieurs Features en Cours
-
-Si le state montre plusieurs features non terminees :
+### Old Session (> 7 days)
 
 ```
-⚠️  Plusieurs features detectees :
+⚠️  Session found but old ([X] days ago)
+
+The context may be incomplete or outdated.
+Recommendation: /onboard to re-audit the project.
+
+Continue anyway? [y/n]
+```
+
+### Multiple Features in Progress
+
+If the state shows multiple unfinished features:
+
+```
+⚠️  Multiple features detected:
 
 1. [feature1.name] - [status]
 2. [feature2.name] - [status]
 
-Laquelle continuer ? [numero]
+Which one to continue? [number]
 ```
 
-### Aucun Checkpoint
+### No Checkpoint
 
-Si `.epct/history/checkpoints/` est vide :
+If `.epct/history/checkpoints/` is empty:
 
 ```
-📁 Aucun checkpoint sauvegarde.
+📁 No saved checkpoint.
 
-Le projet est en phase [phase.name].
-Utilisez /status pour voir l'etat actuel.
+The project is in phase [phase.name].
+Use /status to see the current state.
 ```

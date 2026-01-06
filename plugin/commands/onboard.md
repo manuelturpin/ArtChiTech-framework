@@ -1,114 +1,114 @@
 ---
 name: onboard
-description: Auditer un projet existant et l'initialiser dans le framework ACT
+description: Audit an existing project and initialize it in the ACT framework
 ---
 
-# /onboard - Audit de Projet
+# /onboard - Project Audit
 
-Tu audites le projet courant et l'initialises dans ACT.
+You audit the current project and initialize it in ACT.
 
-## Étape 1: DÉTECTION
+## Step 1: DETECTION
 
-Exécute le script de détection de stack :
+Execute the stack detection script:
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/project-detection/scripts/detect_stack.py
 ```
 
-Capture et analyse le résultat JSON contenant :
-- `stack` : Technologies détectées
-- `type` : Type de projet (webapp, api, cli, library)
-- `structure` : Analyse des dossiers
+Capture and analyze the JSON result containing:
+- `stack`: Detected technologies
+- `type`: Project type (webapp, api, cli, library)
+- `structure`: Folder analysis
 
-## Étape 2: SCORING
+## Step 2: SCORING
 
-Utilise le skill `phase-scoring` pour évaluer le projet.
+Use the `phase-scoring` skill to evaluate the project.
 
-Pour chaque phase (1-7), vérifie les critères selon `references/scoring-rules.md` :
+For each phase (1-7), verify the criteria according to `references/scoring-rules.md`:
 
-1. **Discovery** : README, problème défini, users
-2. **Stratégie** : Roadmap, business model
-3. **Conception** : Architecture, specs
-4. **Développement** : Code, tests, CI
-5. **Qualité** : Coverage, bugs
-6. **Lancement** : Deploy, monitoring
-7. **Croissance** : Analytics, feedback
+1. **Discovery**: README, defined problem, users
+2. **Strategy**: Roadmap, business model
+3. **Design**: Architecture, specs
+4. **Development**: Code, tests, CI
+5. **Quality**: Coverage, bugs
+6. **Launch**: Deploy, monitoring
+7. **Growth**: Analytics, feedback
 
-Calcule un score 0-100 par phase.
-La phase actuelle = première phase avec score < 70%.
+Calculate a score 0-100 per phase.
+The current phase = first phase with score < 70%.
 
-## Étape 3: RAPPORT
+## Step 3: REPORT
 
-Affiche le rapport visuel :
+Display the visual report:
 
 ```
 ╭───────────────────────────────────────────────────────────────╮
-│  📊 Audit ACT : [nom-projet]                                  │
+│  📊 ACT Audit: [project-name]                                 │
 │                                                               │
-│  Stack détectée : [technologies]                              │
-│  Type : [type]                                                │
+│  Detected stack: [technologies]                               │
+│  Type: [type]                                                 │
 │                                                               │
 │  ═══════════════════════════════════════════════════════════  │
 │                                                               │
 │  Phases                              Score                    │
 │  ───────────────────────────────────────────                  │
 │  ✅ 1. Discovery                     [██████████] 85%         │
-│  ✅ 2. Stratégie                     [███████░░░] 70%         │
-│  ✅ 3. Conception                    [█████████░] 90%         │
-│  🔄 4. Développement                 [████░░░░░░] 45%  ←      │
-│  ⬚ 5. Qualité                       [░░░░░░░░░░] 0%          │
-│  ⬚ 6. Lancement                     [░░░░░░░░░░] 0%          │
-│  ⬚ 7. Croissance                    [░░░░░░░░░░] 0%          │
+│  ✅ 2. Strategy                      [███████░░░] 70%         │
+│  ✅ 3. Design                        [█████████░] 90%         │
+│  🔄 4. Development                   [████░░░░░░] 45%  ←      │
+│  ⬚ 5. Quality                       [░░░░░░░░░░] 0%          │
+│  ⬚ 6. Launch                        [░░░░░░░░░░] 0%          │
+│  ⬚ 7. Growth                        [░░░░░░░░░░] 0%          │
 │                                                               │
-│  Score global : 42%                                           │
-│  Phase actuelle : Développement (4/7)                         │
+│  Overall score: 42%                                           │
+│  Current phase: Development (4/7)                             │
 ╰───────────────────────────────────────────────────────────────╯
 ```
 
-## Étape 4: RECOMMANDATIONS
+## Step 4: RECOMMENDATIONS
 
-Génère les 3 recommandations prioritaires :
+Generate the 3 priority recommendations:
 
 ```
-📋 Actions Recommandées :
+📋 Recommended Actions:
 
-1. 🔴 [Haute] Augmenter la couverture de tests
-   → Actuellement ~30%, objectif 60%
+1. 🔴 [High] Increase test coverage
+   → Currently ~30%, target 60%
 
-2. 🟡 [Moyenne] Configurer CI/CD
-   → Ajouter GitHub Actions pour tests auto
+2. 🟡 [Medium] Configure CI/CD
+   → Add GitHub Actions for automated tests
 
-3. 🟢 [Basse] Documenter les API
-   → Ajouter OpenAPI specs
+3. 🟢 [Low] Document APIs
+   → Add OpenAPI specs
 ```
 
-## Étape 5: INITIALISATION
+## Step 5: INITIALIZATION
 
-Crée ou met à jour `.epct/state.json` :
+Create or update `.epct/state.json`:
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py init \
-  --name "[nom-projet]" \
+  --name "[project-name]" \
   --type "[type]" \
   --stack "[stack-comma-separated]"
 ```
 
-Puis met à jour avec les scores :
+Then update with scores:
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py update \
   --updates '{"phase": {"current": [phase], "name": "[phase-name]"}, "scores": {...}}'
 ```
 
-## Étape 6: CONFIRMATION
+## Step 6: CONFIRMATION
 
-Affiche :
+Display:
 ```
-✅ Projet initialisé dans ACT !
+✅ Project initialized in ACT!
 
-📁 État sauvegardé dans .epct/state.json
-🎯 Phase actuelle : [phase-name]
-💡 Prochaine action : [première recommandation]
+📁 State saved in .epct/state.json
+🎯 Current phase: [phase-name]
+💡 Next action: [first recommendation]
 
-Tapez /projet pour accéder au menu principal.
+Type /projet to access the main menu.
 ```

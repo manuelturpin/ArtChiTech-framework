@@ -1,31 +1,31 @@
 # ACT Framework
 
-> Framework de suivi et realisation de projets en 7 phases pour Claude Code.
+> 7-phase project management framework for Claude Code.
 
 ## Installation
 
-### Prerequis
+### Prerequisites
 
-| Dependance | Version | Obligatoire |
-|------------|---------|-------------|
-| Claude Code | Latest | Oui |
-| Plugin `superpowers` | 3.6.0+ | Oui |
-| Python | 3.8+ | Oui |
-| Git | Any | Oui |
+| Dependency | Version | Required |
+|------------|---------|----------|
+| Claude Code | Latest | Yes |
+| Plugin `superpowers` | 3.6.0+ | Yes |
+| Python | 3.8+ | Yes |
+| Git | Any | Yes |
 
-### Installer les dependances
+### Install dependencies
 
 ```bash
-# 1. Installer le plugin superpowers
+# 1. Install the superpowers plugin
 claude plugins:install superpowers-marketplace/superpowers
 
-# 2. Verifier Python
-python3 --version  # Doit etre >= 3.8
+# 2. Verify Python
+python3 --version  # Must be >= 3.8
 ```
 
-### Installer ACT
+### Install ACT
 
-**Option A: Git clone (recommande pour developpement)**
+**Option A: Git clone (recommended for development)**
 
 ```bash
 git clone https://github.com/manuelturpin/ArtChiTech-framework.git ~/projects/act
@@ -33,88 +33,88 @@ cd ~/projects/act
 ./scripts/install.sh
 ```
 
-**Option B: Installation locale**
+**Option B: Local installation**
 
 ```bash
 ./scripts/install.sh
 ```
 
-### Verifier l'installation
+### Verify installation
 
-Redemarrez Claude Code, puis tapez `/projet`.
+Restart Claude Code, then type `/projet`.
 
-## Utilisation
+## Usage
 
-### Commandes
+### Commands
 
-| Commande | Description |
-|----------|-------------|
-| `/projet` | Hub principal - point d'entree unique |
-| `/onboard` | Auditer et initialiser un projet |
-| `/status` | Voir l'etat complet du projet |
-| `/next` | Passer a la phase suivante |
-| `/fix` | Corriger les problemes |
-| `/resume` | Reprendre une session |
-| `/help` | Aide contextuelle |
+| Command | Description |
+|---------|-------------|
+| `/projet` | Main hub - single entry point |
+| `/onboard` | Audit and initialize a project |
+| `/status` | View complete project status |
+| `/next` | Move to next phase |
+| `/fix` | Fix issues |
+| `/resume` | Resume a session |
+| `/help` | Contextual help |
 
-### Les 7 Phases
+### The 7 Phases
 
-1. **Discovery** - Valider le probleme et les besoins
-2. **Strategie** - Definir roadmap et business model
-3. **Conception** - Designer architecture et UX
-4. **Developpement** - Implementer avec TDD
-5. **Qualite** - Tester et valider
-6. **Lancement** - Deployer et acquerir
-7. **Croissance** - Iterer et optimiser
+1. **Discovery** - Validate the problem and needs
+2. **Strategy** - Define roadmap and business model
+3. **Design** - Design architecture and UX
+4. **Development** - Implement with TDD
+5. **Quality** - Test and validate
+6. **Launch** - Deploy and acquire users
+7. **Growth** - Iterate and optimize
 
-### Les 3 Modes
+### The 3 Modes
 
 | Mode | Usage |
 |------|-------|
-| COMPLET | Nouveau projet from scratch |
-| FEATURE | Nouvelle fonctionnalite |
-| QUICK | Bugfix ou refactoring |
+| COMPLETE | New project from scratch |
+| FEATURE | New feature |
+| QUICK | Bugfix or refactoring |
 
-## Structure .epct/
+## .epct/ Structure
 
-ACT cree un dossier `.epct/` dans votre projet :
+ACT creates a `.epct/` folder in your project:
 
 ```
 .epct/
-├── state.json          # Etat courant
-├── session/            # Donnees de session
+├── state.json          # Current state
+├── session/            # Session data
 └── history/
-    └── checkpoints/    # Points de sauvegarde
+    └── checkpoints/    # Checkpoints
 ```
 
-Ajoutez `.epct/` a votre `.gitignore` si vous ne voulez pas versionner l'etat ACT.
+Add `.epct/` to your `.gitignore` if you don't want to version ACT state.
 
-## Integration Superpowers
+## Superpowers Integration
 
-ACT utilise les skills superpowers selon la phase :
+ACT uses superpowers skills based on the phase:
 
 | Phase | Skill |
 |-------|-------|
 | Discovery | `superpowers:brainstorming` |
-| Strategie | `superpowers:brainstorming` |
-| Conception | `superpowers:writing-plans` |
-| Developpement | `superpowers:test-driven-development` |
-| Qualite | `superpowers:code-reviewer` |
+| Strategy | `superpowers:brainstorming` |
+| Design | `superpowers:writing-plans` |
+| Development | `superpowers:test-driven-development` |
+| Quality | `superpowers:code-reviewer` |
 
-## Developpement
+## Development
 
 ```bash
-# Lancer les tests
+# Run tests
 bash plugin/tests/run_all_tests.sh
 
 # Structure
 plugin/
-├── commands/      # Commandes slash
-├── skills/        # Skills reutilisables
-├── references/    # Documentation de reference
-└── tests/         # Tests automatises
+├── commands/      # Slash commands
+├── skills/        # Reusable skills
+├── references/    # Reference documentation
+└── tests/         # Automated tests
 ```
 
-## Licence
+## License
 
 MIT - Manuel Turpin

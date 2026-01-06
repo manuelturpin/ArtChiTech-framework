@@ -1,272 +1,272 @@
 ---
 name: help
-description: Aide contextuelle sur le framework ACT et ses commandes
-argument-hint: [sujet]
+description: Contextual help for the ACT framework and its commands
+argument-hint: [topic]
 ---
 
-# /help - Aide ACT
+# /help - ACT Help
 
-Tu fournis de l'aide contextuelle sur le framework ACT.
+You provide contextual help on the ACT framework.
 
-## Sans Argument: Aide Generale
+## Without Argument: General Help
 
 ```
 ╭─────────────────────────────────────────────────────────────╮
-│  📖 ACT Framework - Aide                                    │
+│  📖 ACT Framework - Help                                    │
 │                                                             │
-│  ACT (ArtChiTech) est un framework de gestion de projet     │
-│  en 7 phases : Discovery → Croissance.                      │
-│                                                             │
-│  ═══════════════════════════════════════════════════════    │
-│                                                             │
-│  Commandes Principales:                                     │
-│  /projet    Hub principal - point d'entree                  │
-│  /onboard   Auditer et initialiser un projet                │
-│  /status    Voir l'etat complet du projet                   │
-│  /next      Passer a la phase suivante                      │
-│  /fix       Corriger les problemes                          │
-│  /resume    Reprendre une session                           │
-│  /help      Cette aide                                      │
+│  ACT (ArtChiTech) is a project management framework         │
+│  with 7 phases: Discovery → Growth.                         │
 │                                                             │
 │  ═══════════════════════════════════════════════════════    │
 │                                                             │
-│  Pour plus d'aide: /help [sujet]                            │
-│  Sujets: phases, modes, commandes, phase-[1-7]              │
+│  Main Commands:                                             │
+│  /projet    Main hub - entry point                          │
+│  /onboard   Audit and initialize a project                  │
+│  /status    View complete project state                     │
+│  /next      Move to the next phase                          │
+│  /fix       Fix problems                                    │
+│  /resume    Resume a session                                │
+│  /help      This help                                       │
+│                                                             │
+│  ═══════════════════════════════════════════════════════    │
+│                                                             │
+│  For more help: /help [topic]                               │
+│  Topics: phases, modes, commands, phase-[1-7]               │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
 ## /help phases
 
 ```
-Les 7 Phases ACT:
+The 7 ACT Phases:
 
-1. Discovery    - Valider le probleme et les besoins
-2. Strategie    - Definir roadmap et business model
-3. Conception   - Designer architecture et UX
-4. Developpement - Implementer avec TDD
-5. Qualite      - Tester et valider
-6. Lancement    - Deployer et acquerir
-7. Croissance   - Iterer et optimiser
+1. Discovery    - Validate the problem and needs
+2. Strategy     - Define roadmap and business model
+3. Design       - Design architecture and UX
+4. Development  - Implement with TDD
+5. Quality      - Test and validate
+6. Launch       - Deploy and acquire users
+7. Growth       - Iterate and optimize
 
-Chaque phase requiert un score >= 70% pour passer a la suivante.
-Utilisez /status pour voir votre progression.
+Each phase requires a score >= 70% to move to the next one.
+Use /status to see your progress.
 ```
 
 ## /help modes
 
 ```
-Les 3 Modes ACT:
+The 3 ACT Modes:
 
-COMPLET  - Nouveau projet, toutes les phases
-           Utilise pour un projet from scratch.
-           Parcourt les 7 phases dans l'ordre.
+COMPLETE - New project, all phases
+           Used for a project from scratch.
+           Goes through all 7 phases in order.
 
-FEATURE  - Nouvelle fonctionnalite sur projet existant
-           Adapte selon l'importance de la feature.
-           Peut necessiter toutes les phases.
+FEATURE  - New feature on existing project
+           Adapted based on feature importance.
+           May require all phases.
 
-QUICK    - Bugfix ou refactoring rapide
-           Execution rapide des etapes necessaires.
-           Toujours verifier l'impact global.
+QUICK    - Bugfix or quick refactoring
+           Quick execution of necessary steps.
+           Always verify global impact.
 
-Le mode est automatiquement defini selon le contexte.
+The mode is automatically defined based on context.
 ```
 
-## /help commandes
+## /help commands
 
 ```
-Commandes ACT:
+ACT Commands:
 
-/projet   Hub principal - point d'entree unique
-          Detecte le contexte et propose les actions.
+/projet   Main hub - single entry point
+          Detects context and proposes actions.
 
-/onboard  Auditer et initialiser un projet
-          Analyse le projet, calcule les scores,
-          initialise .epct/state.json.
+/onboard  Audit and initialize a project
+          Analyzes the project, calculates scores,
+          initializes .epct/state.json.
 
-/status   Voir l'etat complet du projet
-          Affiche phase, scores, progression.
+/status   View complete project state
+          Displays phase, scores, progress.
 
-/next     Passer a la phase suivante
-          Verifie les criteres Go/No-Go.
-          Cree un checkpoint avant transition.
+/next     Move to the next phase
+          Verifies Go/No-Go criteria.
+          Creates a checkpoint before transition.
 
-/fix      Corriger les problemes
-          Liste les problemes par priorite.
-          Guide la correction.
+/fix      Fix problems
+          Lists problems by priority.
+          Guides the correction.
 
-/resume   Reprendre une session
-          Restaure le contexte de travail.
-          Peut restaurer depuis un checkpoint.
+/resume   Resume a session
+          Restores the work context.
+          Can restore from a checkpoint.
 
-/help     Cette aide
-          /help [sujet] pour aide specifique.
+/help     This help
+          /help [topic] for specific help.
 ```
 
 ## /help phase-[N]
 
-Affiche les details de la phase demandee.
+Displays details of the requested phase.
 
 ### /help phase-1
 
 ```
 Phase 1: Discovery
 
-Objectif: Valider le probleme et les besoins
+Objective: Validate the problem and needs
 
-Criteres de validation (score >= 70%):
-- README avec probleme documente (30 pts)
-- Personas/users definis (25 pts)
-- Validation documentee (25 pts)
-- Scope defini (20 pts)
+Validation criteria (score >= 70%):
+- README with documented problem (30 pts)
+- Personas/users defined (25 pts)
+- Documented validation (25 pts)
+- Scope defined (20 pts)
 
-Skills recommandes:
+Recommended skills:
 - superpowers:brainstorming
 
-Livrables:
-- README.md avec section "Probleme"
-- Personas ou user stories
-- Notes de validation/interviews
+Deliverables:
+- README.md with "Problem" section
+- Personas or user stories
+- Validation/interview notes
 ```
 
 ### /help phase-2
 
 ```
-Phase 2: Strategie
+Phase 2: Strategy
 
-Objectif: Definir roadmap et business model
+Objective: Define roadmap and business model
 
-Criteres de validation (score >= 70%):
-- Roadmap definie (30 pts)
-- Business model documente (25 pts)
-- Analyse concurrentielle (25 pts)
-- KPIs identifies (20 pts)
+Validation criteria (score >= 70%):
+- Roadmap defined (30 pts)
+- Business model documented (25 pts)
+- Competitive analysis (25 pts)
+- KPIs identified (20 pts)
 
-Skills recommandes:
+Recommended skills:
 - superpowers:brainstorming
 
-Livrables:
-- ROADMAP.md ou docs/roadmap
+Deliverables:
+- ROADMAP.md or docs/roadmap
 - Business model canvas
-- Benchmark concurrents
+- Competitor benchmark
 ```
 
 ### /help phase-3
 
 ```
-Phase 3: Conception
+Phase 3: Design
 
-Objectif: Designer architecture et UX
+Objective: Design architecture and UX
 
-Criteres de validation (score >= 70%):
-- Architecture documentee (30 pts)
-- Tech stack documente (25 pts)
-- Specs API (25 pts)
+Validation criteria (score >= 70%):
+- Architecture documented (30 pts)
+- Tech stack documented (25 pts)
+- API specs (25 pts)
 - UI mockups (20 pts)
 
-Skills recommandes:
+Recommended skills:
 - superpowers:writing-plans
 
-Livrables:
+Deliverables:
 - docs/architecture.md
-- Specs techniques
+- Technical specs
 - OpenAPI/GraphQL schema
 ```
 
 ### /help phase-4
 
 ```
-Phase 4: Developpement
+Phase 4: Development
 
-Objectif: Implementer avec TDD
+Objective: Implement with TDD
 
-Criteres de validation (score >= 70%):
-- Code source present (25 pts)
-- Tests ecrits (25 pts)
-- CI/CD configure (25 pts)
-- Code documente (25 pts)
+Validation criteria (score >= 70%):
+- Source code present (25 pts)
+- Tests written (25 pts)
+- CI/CD configured (25 pts)
+- Code documented (25 pts)
 
-Skills recommandes:
+Recommended skills:
 - superpowers:test-driven-development
 
-Livrables:
-- Code fonctionnel
-- Tests unitaires
-- Pipeline CI/CD
+Deliverables:
+- Functional code
+- Unit tests
+- CI/CD pipeline
 ```
 
 ### /help phase-5
 
 ```
-Phase 5: Qualite
+Phase 5: Quality
 
-Objectif: Tester et valider
+Objective: Test and validate
 
-Criteres de validation (score >= 70%):
+Validation criteria (score >= 70%):
 - Coverage > 60% (30 pts)
-- Pas de bugs critiques (30 pts)
-- Linting clean (20 pts)
+- No critical bugs (30 pts)
+- Clean linting (20 pts)
 - Performance OK (20 pts)
 
-Skills recommandes:
+Recommended skills:
 - superpowers:code-reviewer
 
-Livrables:
-- Rapport de coverage
-- Tests d'integration
-- Benchmarks performance
+Deliverables:
+- Coverage report
+- Integration tests
+- Performance benchmarks
 ```
 
 ### /help phase-6
 
 ```
-Phase 6: Lancement
+Phase 6: Launch
 
-Objectif: Deployer et acquerir
+Objective: Deploy and acquire users
 
-Criteres de validation (score >= 70%):
-- Deploye en production (30 pts)
-- Monitoring en place (25 pts)
-- Documentation utilisateur (25 pts)
+Validation criteria (score >= 70%):
+- Deployed to production (30 pts)
+- Monitoring in place (25 pts)
+- User documentation (25 pts)
 - Launch checklist (20 pts)
 
-Livrables:
-- URL production
-- Dashboard monitoring
-- Guide utilisateur
+Deliverables:
+- Production URL
+- Monitoring dashboard
+- User guide
 ```
 
 ### /help phase-7
 
 ```
-Phase 7: Croissance
+Phase 7: Growth
 
-Objectif: Iterer et optimiser
+Objective: Iterate and optimize
 
-Criteres de validation (score >= 70%):
-- Analytics configure (30 pts)
-- Feedback collecte (25 pts)
-- Iterations faites (25 pts)
-- Metriques croissance (20 pts)
+Validation criteria (score >= 70%):
+- Analytics configured (30 pts)
+- Feedback collected (25 pts)
+- Iterations done (25 pts)
+- Growth metrics (20 pts)
 
-Livrables:
-- Dashboard analytics
+Deliverables:
+- Analytics dashboard
 - Changelog
-- Metriques utilisateurs
+- User metrics
 ```
 
-## Sujet Inconnu
+## Unknown Topic
 
-Si le sujet demande n'existe pas :
+If the requested topic does not exist:
 
 ```
-❓ Sujet inconnu: [sujet]
+❓ Unknown topic: [topic]
 
-Sujets disponibles:
-- phases    : Les 7 phases du framework
-- modes     : Les 3 modes d'utilisation
-- commandes : Liste des commandes
-- phase-1 a phase-7 : Details d'une phase
+Available topics:
+- phases    : The 7 framework phases
+- modes     : The 3 usage modes
+- commands  : List of commands
+- phase-1 to phase-7 : Details of a phase
 
-Exemple: /help phases
+Example: /help phases
 ```

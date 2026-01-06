@@ -1,80 +1,80 @@
 ---
 name: status
-description: Afficher l'etat complet du projet ACT (phase, scores, progression)
+description: Display the complete ACT project state (phase, scores, progress)
 ---
 
-# /status - Etat du Projet
+# /status - Project State
 
-Tu affiches l'etat complet du projet ACT courant.
+You display the complete state of the current ACT project.
 
-## Etape 1: Verifier .epct/
+## Step 1: Check .epct/
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py exists
 ```
 
-Si `false`, affiche :
+If `false`, display:
 ```
-❌ Aucun projet ACT initialise.
-💡 Utilisez /projet pour commencer.
+❌ No ACT project initialized.
+💡 Use /projet to get started.
 ```
 
-## Etape 2: Lire l'Etat
+## Step 2: Read State
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
-## Etape 3: Afficher le Status
+## Step 3: Display Status
 
 ```
 ╭─────────────────────────────────────────────────────────────╮
 │  📊 [project.name] | Phase [phase.current]/7                │
 │                                                             │
 │  Mode: [mode]                                               │
-│  Demarre: [project.created_at]                              │
+│  Started: [project.created_at]                              │
 │                                                             │
 │  ═══════════════════════════════════════════════════════    │
 │                                                             │
-│  Progress Global: [calcul moyenne scores]%                  │
+│  Global Progress: [average scores calculation]%             │
 │  [████████░░░░░░░░░░░░] XX%                                 │
 │                                                             │
 │  Phases:                                                    │
 │  ✅ Discovery      [██████████] [scores.discovery]%         │
-│  ✅ Strategie      [███████░░░] [scores.strategy]%          │
-│  ✅ Conception     [█████████░] [scores.conception]%        │
-│  🔄 Developpement  [████░░░░░░] [scores.development]%  ←    │
-│  ⬚ Qualite        [░░░░░░░░░░] [scores.quality]%           │
-│  ⬚ Lancement      [░░░░░░░░░░] [scores.launch]%            │
-│  ⬚ Croissance     [░░░░░░░░░░] [scores.growth]%            │
+│  ✅ Strategy       [███████░░░] [scores.strategy]%          │
+│  ✅ Design         [█████████░] [scores.conception]%        │
+│  🔄 Development    [████░░░░░░] [scores.development]%  ←    │
+│  ⬚ Quality        [░░░░░░░░░░] [scores.quality]%           │
+│  ⬚ Launch         [░░░░░░░░░░] [scores.launch]%            │
+│  ⬚ Growth         [░░░░░░░░░░] [scores.growth]%            │
 │                                                             │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
-Si `current_feature` existe, ajouter :
+If `current_feature` exists, add:
 ```
-│  Feature en cours: [current_feature.name]                   │
+│  Current Feature: [current_feature.name]                    │
 │  Chunks: [chunks_completed]/[chunks_total]                  │
 ```
 
-## Indicateurs Visuels
+## Visual Indicators
 
 - `✅` : Phase complete (score >= 70)
-- `🔄` : Phase en cours
-- `⬚` : Phase non commencee
-- `←` : Indique la phase actuelle
+- `🔄` : Phase in progress
+- `⬚` : Phase not started
+- `←` : Indicates current phase
 
-## Calcul Progress Global
+## Global Progress Calculation
 
-Le progress global est la moyenne des scores de toutes les phases :
+Global progress is the average of all phase scores:
 
 ```
 progress = (discovery + strategy + conception + development + quality + launch + growth) / 7
 ```
 
-## Barre de Progression
+## Progress Bar
 
-Pour generer la barre de progression (10 caracteres) :
+To generate the progress bar (10 characters):
 
 - Score 0-9% : `[░░░░░░░░░░]`
 - Score 10-19% : `[█░░░░░░░░░]`
@@ -82,13 +82,13 @@ Pour generer la barre de progression (10 caracteres) :
 - ...
 - Score 100% : `[██████████]`
 
-## Apres Affichage
+## After Display
 
-Propose les actions suivantes :
+Suggest the following actions:
 
 ```
-💡 Actions disponibles:
-   /next   - Passer a la phase suivante
-   /fix    - Corriger les problemes
-   /projet - Retour au menu principal
+💡 Available actions:
+   /next   - Move to next phase
+   /fix    - Fix issues
+   /projet - Return to main menu
 ```
