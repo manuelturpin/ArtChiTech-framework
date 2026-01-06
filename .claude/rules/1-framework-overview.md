@@ -9,6 +9,19 @@
 
 ---
 
+## Point d'Entrée
+
+**`/projet` est le seul point d'entrée que l'utilisateur doit connaître.**
+
+Le framework détecte automatiquement le contexte :
+- Nouveau projet → Guide création
+- Projet existant non-ACT → Spawn `/onboard` automatiquement
+- Projet ACT connu → Menu normal
+
+Les autres commandes (`/status`, `/next`, `/fix`, etc.) sont des sous-actions accessibles via le menu ou directement pour les utilisateurs avancés.
+
+---
+
 ## Les 7 Phases du Projet
 
 Le framework structure tout projet en 7 phases séquentielles :
