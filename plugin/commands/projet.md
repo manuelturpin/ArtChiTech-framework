@@ -13,6 +13,33 @@ Point d'entrée principal du framework. Menu adaptatif selon :
 - Phase actuelle
 - État (erreurs, progression, etc.)
 
+## Détection Automatique
+
+À l'appel de `/projet`, le framework détecte automatiquement le contexte :
+
+| Contexte | Indicateurs | Action |
+|----------|-------------|--------|
+| Nouveau projet | Aucun fichier code significatif | Affiche menu "Nouveau projet" |
+| Projet existant non-ACT | Code présent, pas de `.epct/` | Spawn `/onboard` automatiquement |
+| Projet ACT connu | Code + `.epct/state.json` | Affiche menu normal |
+
+### Logique de détection
+
+```
+/projet appelé
+    │
+    ├─ detect_stack.py retourne "research" ou erreur ?
+    │       → Menu "Nouveau projet"
+    │
+    ├─ Code détecté + pas de .epct/ ?
+    │       → "Projet existant détecté. Lancement de l'audit..."
+    │       → Spawn /onboard
+    │       → Après audit, retour au menu normal
+    │
+    └─ Code détecté + .epct/ présent ?
+            → Menu normal (projet actif)
+```
+
 ## Affichage - Nouveau Projet
 
 ```
@@ -31,19 +58,20 @@ Point d'entrée principal du framework. Menu adaptatif selon :
 ## Affichage - Projet Actif
 
 ```
-╭─────────────────────────────────────────────────────╮
-│  🚀 mon-app | Phase: Développement (4/7)            │
-│                                                     │
-│  Que voulez-vous faire ?                            │
-│                                                     │
-│  1. ➕ Ajouter une feature                          │
-│  2. 🔧 Refactoring/optimisation                     │
-│  3. 📋 Voir checklist phase actuelle                │
-│  4. ⏭️  Passer à la phase suivante                  │
-│  5. 📊 Voir status complet                          │
-│                                                     │
-│  Tapez le numéro ou décrivez votre besoin...        │
-╰─────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────╮
+│  🚀 mon-app | Phase: Développement (4/7)                    │
+│                                                             │
+│  Que voulez-vous faire ?                                    │
+│                                                             │
+│  1. ➕ Ajouter une feature                                  │
+│  2. 🔧 Refactoring/optimisation                             │
+│  3. 📋 Voir checklist phase actuelle                        │
+│  4. ⏭️  Passer à la phase suivante                          │
+│  5. 📊 Voir status complet                                  │
+│  6. 🔄 Ré-auditer le projet                                 │
+│                                                             │
+│  Tapez le numéro ou décrivez votre besoin...                │
+╰─────────────────────────────────────────────────────────────╯
 ```
 
 ## Implémentation
