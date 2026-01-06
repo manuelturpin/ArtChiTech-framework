@@ -1,157 +1,272 @@
 ---
 name: help
-command: /help
-description: Affiche l'aide contextuelle (phase actuelle, commandes, anti-patterns)
+description: Aide contextuelle sur le framework ACT et ses commandes
+argument-hint: [sujet]
 ---
 
-# /help - Aide Contextuelle
+# /help - Aide ACT
 
-## Comportement
+Tu fournis de l'aide contextuelle sur le framework ACT.
 
-Affiche aide selon phase actuelle :
-- Documentation phase condensée
-- Liste des commandes
-- Tips et anti-patterns pertinents
-
-## Affichage
+## Sans Argument: Aide Generale
 
 ```
-╭─────────────────────────────────────────────────────╮
-│  📖 Aide - Phase Développement (4/7)                │
-╰─────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────╮
+│  📖 ACT Framework - Aide                                    │
+│                                                             │
+│  ACT (ArtChiTech) est un framework de gestion de projet     │
+│  en 7 phases : Discovery → Croissance.                      │
+│                                                             │
+│  ═══════════════════════════════════════════════════════    │
+│                                                             │
+│  Commandes Principales:                                     │
+│  /projet    Hub principal - point d'entree                  │
+│  /onboard   Auditer et initialiser un projet                │
+│  /status    Voir l'etat complet du projet                   │
+│  /next      Passer a la phase suivante                      │
+│  /fix       Corriger les problemes                          │
+│  /resume    Reprendre une session                           │
+│  /help      Cette aide                                      │
+│                                                             │
+│  ═══════════════════════════════════════════════════════    │
+│                                                             │
+│  Pour plus d'aide: /help [sujet]                            │
+│  Sujets: phases, modes, commandes, phase-[1-7]              │
+╰─────────────────────────────────────────────────────────────╯
+```
 
-## Objectif
-Implémenter le MVP avec qualité
+## /help phases
 
-## Skills Actifs
+```
+Les 7 Phases ACT:
+
+1. Discovery    - Valider le probleme et les besoins
+2. Strategie    - Definir roadmap et business model
+3. Conception   - Designer architecture et UX
+4. Developpement - Implementer avec TDD
+5. Qualite      - Tester et valider
+6. Lancement    - Deployer et acquerir
+7. Croissance   - Iterer et optimiser
+
+Chaque phase requiert un score >= 70% pour passer a la suivante.
+Utilisez /status pour voir votre progression.
+```
+
+## /help modes
+
+```
+Les 3 Modes ACT:
+
+COMPLET  - Nouveau projet, toutes les phases
+           Utilise pour un projet from scratch.
+           Parcourt les 7 phases dans l'ordre.
+
+FEATURE  - Nouvelle fonctionnalite sur projet existant
+           Adapte selon l'importance de la feature.
+           Peut necessiter toutes les phases.
+
+QUICK    - Bugfix ou refactoring rapide
+           Execution rapide des etapes necessaires.
+           Toujours verifier l'impact global.
+
+Le mode est automatiquement defini selon le contexte.
+```
+
+## /help commandes
+
+```
+Commandes ACT:
+
+/projet   Hub principal - point d'entree unique
+          Detecte le contexte et propose les actions.
+
+/onboard  Auditer et initialiser un projet
+          Analyse le projet, calcule les scores,
+          initialise .epct/state.json.
+
+/status   Voir l'etat complet du projet
+          Affiche phase, scores, progression.
+
+/next     Passer a la phase suivante
+          Verifie les criteres Go/No-Go.
+          Cree un checkpoint avant transition.
+
+/fix      Corriger les problemes
+          Liste les problemes par priorite.
+          Guide la correction.
+
+/resume   Reprendre une session
+          Restaure le contexte de travail.
+          Peut restaurer depuis un checkpoint.
+
+/help     Cette aide
+          /help [sujet] pour aide specifique.
+```
+
+## /help phase-[N]
+
+Affiche les details de la phase demandee.
+
+### /help phase-1
+
+```
+Phase 1: Discovery
+
+Objectif: Valider le probleme et les besoins
+
+Criteres de validation (score >= 70%):
+- README avec probleme documente (30 pts)
+- Personas/users definis (25 pts)
+- Validation documentee (25 pts)
+- Scope defini (20 pts)
+
+Skills recommandes:
+- superpowers:brainstorming
+
+Livrables:
+- README.md avec section "Probleme"
+- Personas ou user stories
+- Notes de validation/interviews
+```
+
+### /help phase-2
+
+```
+Phase 2: Strategie
+
+Objectif: Definir roadmap et business model
+
+Criteres de validation (score >= 70%):
+- Roadmap definie (30 pts)
+- Business model documente (25 pts)
+- Analyse concurrentielle (25 pts)
+- KPIs identifies (20 pts)
+
+Skills recommandes:
+- superpowers:brainstorming
+
+Livrables:
+- ROADMAP.md ou docs/roadmap
+- Business model canvas
+- Benchmark concurrents
+```
+
+### /help phase-3
+
+```
+Phase 3: Conception
+
+Objectif: Designer architecture et UX
+
+Criteres de validation (score >= 70%):
+- Architecture documentee (30 pts)
+- Tech stack documente (25 pts)
+- Specs API (25 pts)
+- UI mockups (20 pts)
+
+Skills recommandes:
+- superpowers:writing-plans
+
+Livrables:
+- docs/architecture.md
+- Specs techniques
+- OpenAPI/GraphQL schema
+```
+
+### /help phase-4
+
+```
+Phase 4: Developpement
+
+Objectif: Implementer avec TDD
+
+Criteres de validation (score >= 70%):
+- Code source present (25 pts)
+- Tests ecrits (25 pts)
+- CI/CD configure (25 pts)
+- Code documente (25 pts)
+
+Skills recommandes:
 - superpowers:test-driven-development
-- superpowers:code-review
 
-## Commandes
-
-  /projet   Hub principal, menu interactif
-  /resume   Reprendre session précédente
-  /status   Voir état et progression
-  /fix      Corriger erreur prioritaire
-  /next     Passer à l'étape suivante
-  /help     Cette aide
-
-## Anti-Patterns à Éviter
-
-  ⚠️  Skipping tests - "Je testerai plus tard" → jamais
-  ⚠️  Big bang commits - Commits massifs difficiles à review
-  ⚠️  Cowboy coding - Merge sans review
-
-## Checklist Phase (12 items)
-
-  ✅ Environment setup
-  ✅ CI/CD pipeline
-  🔄 Core features (en cours)
-  ○  Tests unitaires
-  ○  Tests d'intégration
-  ...
-
-💡 Tip: Utilisez /status pour voir la progression détaillée
+Livrables:
+- Code fonctionnel
+- Tests unitaires
+- Pipeline CI/CD
 ```
 
-## Implémentation
+### /help phase-5
 
-```typescript
-async function executeHelpCommand(topic?: string) {
-  const state = await skillCall('context-manager', 'readState')
+```
+Phase 5: Qualite
 
-  if (topic) {
-    return await showSpecificHelp(topic)
-  }
+Objectif: Tester et valider
 
-  // Header
-  printBox({
-    title: `📖 Aide - Phase ${state.phaseName} (${state.currentPhase}/7)`
-  })
+Criteres de validation (score >= 70%):
+- Coverage > 60% (30 pts)
+- Pas de bugs critiques (30 pts)
+- Linting clean (20 pts)
+- Performance OK (20 pts)
 
-  // 1. Objectif phase
-  const phaseDoc = await loadPhaseDoc(state.currentPhase)
-  print(`\n## Objectif`)
-  print(phaseDoc.objective)
+Skills recommandes:
+- superpowers:code-reviewer
 
-  // 2. Skills actifs
-  print(`\n## Skills Actifs`)
-  const skills = getPhaseSkills(state.currentPhase)
-  skills.forEach(skill => print(`- ${skill}`))
-
-  // 3. Commandes
-  print(`\n## Commandes\n`)
-  printCommandList()
-
-  // 4. Anti-patterns
-  print(`\n## Anti-Patterns à Éviter\n`)
-  const antiPatterns = await skillCall('tips-engine', 'getPhaseAntiPatterns', state.currentPhase)
-  antiPatterns.forEach(ap => print(`  ⚠️  ${ap}`))
-
-  // 5. Checklist résumé
-  print(`\n## Checklist Phase (${getChecklistLength(state.currentPhase)} items)\n`)
-  const checklist = await getPhaseChecklist(state.currentPhase)
-  const preview = checklist.slice(0, 5)
-  preview.forEach(item => {
-    const icon = item.done ? '✅' : item.inProgress ? '🔄' : '○'
-    print(`  ${icon} ${item.description}`)
-  })
-  if (checklist.length > 5) {
-    print(`  ...`)
-  }
-
-  // 6. Tip contextuel
-  const tip = await skillCall('tips-engine', 'detectSituation', state)
-  if (tip) {
-    print()
-    await skillCall('tips-engine', 'displayTip', tip)
-  }
-}
-
-function printCommandList() {
-  const commands = [
-    { cmd: '/projet', desc: 'Hub principal, menu interactif' },
-    { cmd: '/resume', desc: 'Reprendre session précédente' },
-    { cmd: '/status', desc: 'Voir état et progression' },
-    { cmd: '/fix', desc: 'Corriger erreur prioritaire' },
-    { cmd: '/next', desc: "Passer à l'étape suivante" },
-    { cmd: '/help', desc: 'Cette aide' }
-  ]
-
-  commands.forEach(({ cmd, desc }) => {
-    print(`  ${cmd.padEnd(10)} ${desc}`)
-  })
-}
+Livrables:
+- Rapport de coverage
+- Tests d'integration
+- Benchmarks performance
 ```
 
-## Aide Spécifique
+### /help phase-6
 
-```typescript
-async function showSpecificHelp(topic: string) {
-  const topics = {
-    'commands': showCommandsHelp,
-    'phases': showPhasesHelp,
-    'workflow': showWorkflowHelp,
-    'tdd': showTDDHelp,
-    'errors': showErrorsHelp
-  }
+```
+Phase 6: Lancement
 
-  const handler = topics[topic.toLowerCase()]
-  if (handler) {
-    await handler()
-  } else {
-    print(`Topic inconnu: ${topic}`)
-    print(`Topics disponibles: ${Object.keys(topics).join(', ')}`)
-  }
-}
+Objectif: Deployer et acquerir
+
+Criteres de validation (score >= 70%):
+- Deploye en production (30 pts)
+- Monitoring en place (25 pts)
+- Documentation utilisateur (25 pts)
+- Launch checklist (20 pts)
+
+Livrables:
+- URL production
+- Dashboard monitoring
+- Guide utilisateur
 ```
 
-## Topics Disponibles
+### /help phase-7
 
-| Topic | Description |
-|-------|-------------|
-| `/help commands` | Liste complète des commandes |
-| `/help phases` | Les 7 phases du framework |
-| `/help workflow` | Workflow chunk-test-fix |
-| `/help tdd` | Guide TDD détaillé |
-| `/help errors` | Gestion des erreurs |
+```
+Phase 7: Croissance
+
+Objectif: Iterer et optimiser
+
+Criteres de validation (score >= 70%):
+- Analytics configure (30 pts)
+- Feedback collecte (25 pts)
+- Iterations faites (25 pts)
+- Metriques croissance (20 pts)
+
+Livrables:
+- Dashboard analytics
+- Changelog
+- Metriques utilisateurs
+```
+
+## Sujet Inconnu
+
+Si le sujet demande n'existe pas :
+
+```
+❓ Sujet inconnu: [sujet]
+
+Sujets disponibles:
+- phases    : Les 7 phases du framework
+- modes     : Les 3 modes d'utilisation
+- commandes : Liste des commandes
+- phase-1 a phase-7 : Details d'une phase
+
+Exemple: /help phases
+```
