@@ -6,6 +6,18 @@
 
 **ArtChiTech Framework (ACT)** est un plugin Claude Code pour la gestion de projets, structurant le développement en **7 phases** : Discovery → Stratégie → Conception → Développement → Qualité → Lancement → Croissance.
 
+## Quick Start
+
+```bash
+# Dans n'importe quel projet
+/projet
+```
+
+C'est tout ! Le framework détecte automatiquement votre contexte :
+- **Nouveau projet** → Guide de création
+- **Projet existant** → Audit automatique puis menu
+- **Projet ACT** → Menu de gestion
+
 ## Structure du Projet
 
 ```
