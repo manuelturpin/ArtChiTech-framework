@@ -1,22 +1,22 @@
-# Recommandations par Type de Projet
+# Recommendations by Project Type
 
-Guide de recommandations contextuelles selon le type de projet detecte.
+Contextual recommendation guide based on detected project type.
 
 ---
 
-## Webapp / Site Web
+## Webapp / Website
 
-### Recommandations prioritaires
+### Priority recommendations
 
-| Priorite | Domaine | Description | Effort |
-|----------|---------|-------------|--------|
-| 1 | **Performance** | Lighthouse score, lazy loading, optimisation images, bundle splitting | Moyen |
-| 2 | **Accessibilite** | WCAG AA, contraste, navigation clavier, ARIA labels | Moyen |
-| 3 | **SEO** | Meta tags, sitemap.xml, robots.txt, structured data | Faible |
-| 4 | **Analytics** | PostHog, GA4, conversion tracking, heatmaps | Faible |
-| 5 | **Securite** | HTTPS, CSP headers, XSS protection, CORS | Moyen |
+| Priority | Domain | Description | Effort |
+|----------|--------|-------------|--------|
+| 1 | **Performance** | Lighthouse score, lazy loading, image optimization, bundle splitting | Medium |
+| 2 | **Accessibility** | WCAG AA, contrast, keyboard navigation, ARIA labels | Medium |
+| 3 | **SEO** | Meta tags, sitemap.xml, robots.txt, structured data | Low |
+| 4 | **Analytics** | PostHog, GA4, conversion tracking, heatmaps | Low |
+| 5 | **Security** | HTTPS, CSP headers, XSS protection, CORS | Medium |
 
-### Criteres d'evaluation
+### Evaluation criteria
 
 - **Performance**
   - First Contentful Paint < 1.8s
@@ -24,214 +24,214 @@ Guide de recommandations contextuelles selon le type de projet detecte.
   - Cumulative Layout Shift < 0.1
   - Total Blocking Time < 200ms
 
-- **Accessibilite**
-  - Alt text sur toutes les images
-  - Labels sur tous les champs de formulaire
-  - Contraste minimum 4.5:1 (texte normal)
-  - Navigation complete au clavier
+- **Accessibility**
+  - Alt text on all images
+  - Labels on all form fields
+  - Minimum contrast 4.5:1 (normal text)
+  - Full keyboard navigation
 
 - **SEO**
-  - Title et meta description uniques par page
-  - Headings hierarchiques (H1 unique)
-  - Images avec alt descriptifs
-  - URLs semantiques et propres
+  - Unique title and meta description per page
+  - Hierarchical headings (unique H1)
+  - Images with descriptive alt
+  - Clean semantic URLs
 
-### Skills suggeres
+### Suggested skills
 
-| Skill | Fonction |
+| Skill | Function |
 |-------|----------|
-| `/lighthouse` | Audit performance automatise |
-| `/a11y` | Audit accessibilite WCAG |
-| `/seo` | Optimisation SEO complete |
-| `/security-headers` | Configuration headers securite |
+| `/lighthouse` | Automated performance audit |
+| `/a11y` | WCAG accessibility audit |
+| `/seo` | Complete SEO optimization |
+| `/security-headers` | Security headers configuration |
 
 ---
 
 ## API Backend
 
-### Recommandations prioritaires
+### Priority recommendations
 
-| Priorite | Domaine | Description | Effort |
-|----------|---------|-------------|--------|
-| 1 | **Documentation API** | OpenAPI/Swagger spec, exemples requests | Moyen |
-| 2 | **Rate limiting** | Protection contre abuse, throttling | Moyen |
-| 3 | **Versioning** | Strategie de versions (URL, header, query) | Faible |
-| 4 | **Validation** | Schemas de validation (Zod, Joi, Pydantic) | Moyen |
-| 5 | **Monitoring** | Logs structures, metriques, tracing distribue | Eleve |
+| Priority | Domain | Description | Effort |
+|----------|--------|-------------|--------|
+| 1 | **API Documentation** | OpenAPI/Swagger spec, request examples | Medium |
+| 2 | **Rate limiting** | Abuse protection, throttling | Medium |
+| 3 | **Versioning** | Version strategy (URL, header, query) | Low |
+| 4 | **Validation** | Validation schemas (Zod, Joi, Pydantic) | Medium |
+| 5 | **Monitoring** | Structured logs, metrics, distributed tracing | High |
 
-### Criteres d'evaluation
+### Evaluation criteria
 
-- **Documentation API**
-  - Spec OpenAPI 3.0+ complete
-  - Exemples de requetes/reponses
-  - Codes d'erreur documentes
-  - Authentification expliquee
+- **API Documentation**
+  - Complete OpenAPI 3.0+ spec
+  - Request/response examples
+  - Documented error codes
+  - Authentication explained
 
 - **Validation**
-  - Validation d'entree sur tous les endpoints
-  - Messages d'erreur explicites
-  - Types stricts (TypeScript/Pydantic)
-  - Sanitization des inputs
+  - Input validation on all endpoints
+  - Explicit error messages
+  - Strict types (TypeScript/Pydantic)
+  - Input sanitization
 
 - **Monitoring**
-  - Request logging avec correlation ID
-  - Metriques de latence par endpoint
-  - Alertes sur erreurs 5xx
+  - Request logging with correlation ID
+  - Latency metrics per endpoint
+  - Alerts on 5xx errors
   - Health check endpoint
 
-### Skills suggeres
+### Suggested skills
 
-| Skill | Fonction |
+| Skill | Function |
 |-------|----------|
-| `/openapi` | Generer documentation OpenAPI |
-| `/security-audit` | Audit securite API (OWASP) |
-| `/api-testing` | Tests d'integration API |
+| `/openapi` | Generate OpenAPI documentation |
+| `/security-audit` | API security audit (OWASP) |
+| `/api-testing` | API integration tests |
 
 ---
 
 ## CLI Tool
 
-### Recommandations prioritaires
+### Priority recommendations
 
-| Priorite | Domaine | Description | Effort |
-|----------|---------|-------------|--------|
-| 1 | **Help messages** | `--help` complet, exemples d'usage | Faible |
-| 2 | **Man pages** | Documentation Unix standard | Moyen |
-| 3 | **Autocompletion** | Scripts Bash/Zsh/Fish | Moyen |
-| 4 | **Error messages** | Messages clairs, suggestions de correction | Faible |
-| 5 | **Configuration** | Fichier config, variables d'environnement | Moyen |
+| Priority | Domain | Description | Effort |
+|----------|--------|-------------|--------|
+| 1 | **Help messages** | Complete `--help`, usage examples | Low |
+| 2 | **Man pages** | Standard Unix documentation | Medium |
+| 3 | **Autocompletion** | Bash/Zsh/Fish scripts | Medium |
+| 4 | **Error messages** | Clear messages, correction suggestions | Low |
+| 5 | **Configuration** | Config file, environment variables | Medium |
 
-### Criteres d'evaluation
+### Evaluation criteria
 
 - **Help messages**
-  - Description claire de chaque commande
-  - Options documentees avec valeurs par defaut
-  - Exemples d'utilisation courants
-  - Version affichable (`--version`)
+  - Clear description of each command
+  - Options documented with default values
+  - Common usage examples
+  - Version displayable (`--version`)
 
 - **Error messages**
-  - Code de sortie semantique (0 = succes)
-  - Messages d'erreur en stderr
-  - Suggestions d'actions correctives
-  - Debug mode verbose (`--debug`)
+  - Semantic exit codes (0 = success)
+  - Error messages to stderr
+  - Corrective action suggestions
+  - Verbose debug mode (`--debug`)
 
 - **Configuration**
-  - Fichier config (~/.config/app/ ou .apprc)
-  - Variables d'environnement supportees
-  - Priorite: CLI args > env > config file
-  - Config par defaut sensee
+  - Config file (~/.config/app/ or .apprc)
+  - Environment variables supported
+  - Priority: CLI args > env > config file
+  - Sensible default config
 
-### Skills suggeres
+### Suggested skills
 
-| Skill | Fonction |
+| Skill | Function |
 |-------|----------|
-| `/cli-polish` | Ameliorer UX CLI |
-| `/man-page` | Generer man pages |
-| `/shell-completion` | Creer scripts autocompletion |
+| `/cli-polish` | Improve CLI UX |
+| `/man-page` | Generate man pages |
+| `/shell-completion` | Create autocompletion scripts |
 
 ---
 
 ## Library / Package
 
-### Recommandations prioritaires
+### Priority recommendations
 
-| Priorite | Domaine | Description | Effort |
-|----------|---------|-------------|--------|
-| 1 | **Documentation** | README complet, API docs, exemples | Moyen |
-| 2 | **Types** | TypeScript definitions, JSDoc, type hints | Moyen |
-| 3 | **Tests** | Couverture elevee (>80%), tests de regression | Eleve |
-| 4 | **Changelog** | CHANGELOG.md, semantic versioning | Faible |
-| 5 | **CI Multi-version** | Tests sur Node 18/20/22, Python 3.9-3.12 | Moyen |
+| Priority | Domain | Description | Effort |
+|----------|--------|-------------|--------|
+| 1 | **Documentation** | Complete README, API docs, examples | Medium |
+| 2 | **Types** | TypeScript definitions, JSDoc, type hints | Medium |
+| 3 | **Tests** | High coverage (>80%), regression tests | High |
+| 4 | **Changelog** | CHANGELOG.md, semantic versioning | Low |
+| 5 | **Multi-version CI** | Tests on Node 18/20/22, Python 3.9-3.12 | Medium |
 
-### Criteres d'evaluation
+### Evaluation criteria
 
 - **Documentation**
-  - README avec installation, usage basique
-  - API reference complete
-  - Exemples copiables/executables
+  - README with installation, basic usage
+  - Complete API reference
+  - Copyable/executable examples
   - Contributing guide
 
 - **Types**
   - TypeScript declarations (.d.ts)
-  - Exports corrects dans package.json
-  - Documentation des types complexes
-  - Generics documentes
+  - Correct exports in package.json
+  - Complex types documented
+  - Generics documented
 
 - **Tests**
-  - Couverture > 80%
-  - Tests unitaires exhaustifs
-  - Tests d'integration
-  - Tests de regression sur bugs fixes
+  - Coverage > 80%
+  - Exhaustive unit tests
+  - Integration tests
+  - Regression tests on fixed bugs
 
 - **Changelog**
-  - Format Keep a Changelog
+  - Keep a Changelog format
   - Semantic Versioning (semver)
-  - Breaking changes documentes
-  - Migration guides si necessaire
+  - Breaking changes documented
+  - Migration guides if needed
 
-### Skills suggeres
+### Suggested skills
 
-| Skill | Fonction |
+| Skill | Function |
 |-------|----------|
-| `/docs-gen` | Generer documentation API |
-| `/typedoc` | Documentation TypeScript |
-| `/changelog` | Generer changelog automatique |
+| `/docs-gen` | Generate API documentation |
+| `/typedoc` | TypeScript documentation |
+| `/changelog` | Generate automatic changelog |
 
 ---
 
 ## Documentation / Research
 
-### Recommandations prioritaires
+### Priority recommendations
 
-| Priorite | Domaine | Description | Effort |
-|----------|---------|-------------|--------|
-| 1 | **Structure** | Navigation claire, TOC, hierarchie | Faible |
-| 2 | **Search** | Recherche full-text, indexation | Moyen |
-| 3 | **Citations** | References sourcees, bibliographie | Faible |
-| 4 | **Export** | PDF, formats multiples (EPUB, HTML) | Moyen |
-| 5 | **Versioning** | Historique des modifications, branches | Faible |
+| Priority | Domain | Description | Effort |
+|----------|--------|-------------|--------|
+| 1 | **Structure** | Clear navigation, TOC, hierarchy | Low |
+| 2 | **Search** | Full-text search, indexing | Medium |
+| 3 | **Citations** | Sourced references, bibliography | Low |
+| 4 | **Export** | PDF, multiple formats (EPUB, HTML) | Medium |
+| 5 | **Versioning** | Modification history, branches | Low |
 
-### Criteres d'evaluation
+### Evaluation criteria
 
 - **Structure**
-  - Table des matieres automatique
-  - Hierarchie logique des sections
-  - Navigation prev/next
+  - Automatic table of contents
+  - Logical section hierarchy
+  - Prev/next navigation
   - Breadcrumbs
 
 - **Search**
-  - Recherche full-text rapide
-  - Indexation automatique
-  - Resultats avec contexte
-  - Filtres par section/tag
+  - Fast full-text search
+  - Automatic indexing
+  - Results with context
+  - Filters by section/tag
 
 - **Citations**
-  - Format citation standard (APA, MLA)
-  - Liens vers sources originales
+  - Standard citation format (APA, MLA)
+  - Links to original sources
   - Footnotes/endnotes
-  - Bibliographie automatique
+  - Automatic bibliography
 
 - **Export**
-  - Export PDF propre
-  - Export HTML statique
-  - Export Markdown
-  - Themes d'impression
+  - Clean PDF export
+  - Static HTML export
+  - Markdown export
+  - Print themes
 
-### Skills suggeres
+### Suggested skills
 
-| Skill | Fonction |
+| Skill | Function |
 |-------|----------|
-| `/docs-site` | Generer site documentation (Docusaurus, VitePress) |
-| `/pdf-export` | Export PDF professionnel |
-| `/search-index` | Indexation Algolia/Typesense |
+| `/docs-site` | Generate documentation site (Docusaurus, VitePress) |
+| `/pdf-export` | Professional PDF export |
+| `/search-index` | Algolia/Typesense indexing |
 
 ---
 
-## Matrice de priorites croisees
+## Cross-priority matrix
 
 | Type | P1 | P2 | P3 | P4 | P5 |
 |------|----|----|----|----|-----|
-| **Webapp** | Performance | A11y | SEO | Analytics | Securite |
+| **Webapp** | Performance | A11y | SEO | Analytics | Security |
 | **API** | API Docs | Rate Limit | Versioning | Validation | Monitoring |
 | **CLI** | Help | Man | Autocompl. | Errors | Config |
 | **Library** | Docs | Types | Tests | Changelog | Multi-CI |
@@ -239,24 +239,24 @@ Guide de recommandations contextuelles selon le type de projet detecte.
 
 ---
 
-## Quick Wins universels (< 2h)
+## Universal Quick Wins (< 2h)
 
-Applicables a tous les types de projets:
+Applicable to all project types:
 
-1. **README.md complet** - Installation, usage, contribution
-2. **LICENSE** - Choisir et ajouter une licence
-3. **.gitignore** - Ignorer node_modules, .env, builds
-4. **CI basique** - GitHub Actions pour tests + lint
-5. **EditorConfig** - Coherence indentation equipe
-6. **Pre-commit hooks** - Lint et format avant commit
+1. **Complete README.md** - Installation, usage, contribution
+2. **LICENSE** - Choose and add a license
+3. **.gitignore** - Ignore node_modules, .env, builds
+4. **Basic CI** - GitHub Actions for tests + lint
+5. **EditorConfig** - Team indentation consistency
+6. **Pre-commit hooks** - Lint and format before commit
 
 ---
 
 ## Effort estimation
 
-| Label | Duree typique |
-|-------|---------------|
-| Faible | < 2 heures |
-| Moyen | 2-8 heures |
-| Eleve | 1-3 jours |
-| Tres eleve | > 3 jours |
+| Label | Typical duration |
+|-------|------------------|
+| Low | < 2 hours |
+| Medium | 2-8 hours |
+| High | 1-3 days |
+| Very High | > 3 days |

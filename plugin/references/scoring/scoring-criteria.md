@@ -1,269 +1,269 @@
-# Criteres de Scoring par Categorie
+# Scoring Criteria by Category
 
-> Reference detaillee pour l'evaluation des projets. Chaque categorie est notee sur 100 points.
+> Detailed reference for project evaluation. Each category is scored out of 100 points.
 
 ---
 
 ## Documentation (100 points)
 
-Evalue la qualite et la completude de la documentation du projet.
+Evaluates the quality and completeness of project documentation.
 
-| Critere | Points | Description |
-|---------|--------|-------------|
-| README.md existe | +15 | Fichier README present a la racine |
-| README.md > 500 mots | +10 | Documentation substantielle (pas juste un titre) |
-| Description projet claire | +10 | Objectif, contexte, probleme resolu expliques |
-| Instructions installation | +15 | Etapes claires pour installer/setup le projet |
-| Instructions utilisation | +10 | Comment utiliser le projet (exemples, commandes) |
-| Dossier docs/ existe | +10 | Documentation organisee dans un dossier dedie |
-| Architecture documentee | +15 | Diagrammes ou explications de l'architecture |
-| API documentee | +15 | Documentation des endpoints/fonctions (si applicable) |
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| README.md exists | +15 | README file present at root |
+| README.md > 500 words | +10 | Substantial documentation (not just a title) |
+| Clear project description | +10 | Objective, context, problem solved explained |
+| Installation instructions | +15 | Clear steps to install/setup the project |
+| Usage instructions | +10 | How to use the project (examples, commands) |
+| docs/ folder exists | +10 | Documentation organized in a dedicated folder |
+| Architecture documented | +15 | Diagrams or architecture explanations |
+| API documented | +15 | Endpoint/function documentation (if applicable) |
 
-**Seuils d'evaluation:**
-- 80-100: Documentation excellente
-- 60-79: Documentation adequate
-- 40-59: Documentation minimale
-- 0-39: Documentation insuffisante
+**Evaluation thresholds:**
+- 80-100: Excellent documentation
+- 60-79: Adequate documentation
+- 40-59: Minimal documentation
+- 0-39: Insufficient documentation
 
 ---
 
 ## Tests (100 points)
 
-Evalue la presence, qualite et couverture des tests.
+Evaluates the presence, quality and coverage of tests.
 
-| Critere | Points | Description |
-|---------|--------|-------------|
-| Tests presents | +20 | Au moins un fichier de test existe |
-| Framework configure | +10 | vitest, jest, pytest, etc. dans les deps |
-| Tests unitaires > 5 | +10 | Au moins 5 tests unitaires |
-| Tests unitaires > 20 | +10 | Suite de tests substantielle |
-| Tests E2E presents | +20 | Tests end-to-end (Playwright, Cypress, etc.) |
-| Script test dans package.json | +10 | Commande `npm test` ou equivalent configuree |
-| Coverage configure | +10 | Outil de coverage installe et configure |
-| Coverage > 50% | +10 | Couverture de code superieure a 50% |
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Tests present | +20 | At least one test file exists |
+| Framework configured | +10 | vitest, jest, pytest, etc. in deps |
+| Unit tests > 5 | +10 | At least 5 unit tests |
+| Unit tests > 20 | +10 | Substantial test suite |
+| E2E tests present | +20 | End-to-end tests (Playwright, Cypress, etc.) |
+| Test script in package.json | +10 | `npm test` or equivalent command configured |
+| Coverage configured | +10 | Coverage tool installed and configured |
+| Coverage > 50% | +10 | Code coverage above 50% |
 
-**Seuils d'evaluation:**
-- 80-100: Tests excellents, projet bien couvert
-- 60-79: Tests adequats, couverture partielle
-- 40-59: Tests minimaux
-- 0-39: Tests insuffisants ou absents
+**Evaluation thresholds:**
+- 80-100: Excellent tests, well-covered project
+- 60-79: Adequate tests, partial coverage
+- 40-59: Minimal tests
+- 0-39: Insufficient or absent tests
 
 ---
 
 ## CI/CD (100 points)
 
-Evalue l'automatisation de l'integration et du deploiement.
+Evaluates integration and deployment automation.
 
-| Critere | Points | Description |
-|---------|--------|-------------|
-| Fichier CI present | +25 | `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile` |
-| Tests dans CI | +20 | Les tests s'executent automatiquement en CI |
-| Lint/Format dans CI | +15 | ESLint, Prettier, etc. executes en CI |
-| Build automatise | +15 | Build du projet en CI |
-| Deploy automatise | +25 | Deploiement automatique (staging ou prod) |
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| CI file present | +25 | `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile` |
+| Tests in CI | +20 | Tests run automatically in CI |
+| Lint/Format in CI | +15 | ESLint, Prettier, etc. executed in CI |
+| Automated build | +15 | Project build in CI |
+| Automated deploy | +25 | Automatic deployment (staging or prod) |
 
-**Fichiers a verifier:**
+**Files to check:**
 - `.github/workflows/*.yml`
 - `.gitlab-ci.yml`
 - `Jenkinsfile`
 - `.circleci/config.yml`
-- `vercel.json` (deploiement)
-- `netlify.toml` (deploiement)
+- `vercel.json` (deployment)
+- `netlify.toml` (deployment)
 
-**Seuils d'evaluation:**
-- 80-100: Pipeline CI/CD complet
-- 60-79: CI fonctionnel, deploy manuel
-- 40-59: CI basique
-- 0-39: Pas de CI/CD
+**Evaluation thresholds:**
+- 80-100: Complete CI/CD pipeline
+- 60-79: Functional CI, manual deploy
+- 40-59: Basic CI
+- 0-39: No CI/CD
 
 ---
 
-## Securite (100 points)
+## Security (100 points)
 
-Evalue les bonnes pratiques de securite.
+Evaluates security best practices.
 
-| Critere | Points | Description |
-|---------|--------|-------------|
-| .env dans .gitignore | +20 | Fichiers secrets exclus du repo |
-| Pas de secrets dans code | +20 | Aucune API key, password en dur |
-| Dependencies a jour | +15 | Packages mis a jour (< 6 mois) |
-| Headers securite | +15 | CSP, X-Frame-Options, etc. (webapp) |
-| Validation entrees | +15 | Zod, Joi, ou validation manuelle |
-| HTTPS configure | +15 | SSL/TLS en production |
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| .env in .gitignore | +20 | Secret files excluded from repo |
+| No secrets in code | +20 | No hardcoded API keys, passwords |
+| Dependencies up to date | +15 | Packages updated (< 6 months) |
+| Security headers | +15 | CSP, X-Frame-Options, etc. (webapp) |
+| Input validation | +15 | Zod, Joi, or manual validation |
+| HTTPS configured | +15 | SSL/TLS in production |
 
-**Verification secrets:**
-- Rechercher patterns: `apiKey`, `secret`, `password`, `token`
-- Verifier `.env.example` existe (sans valeurs sensibles)
-- Scanner avec `git-secrets` ou equivalent
+**Secrets verification:**
+- Search patterns: `apiKey`, `secret`, `password`, `token`
+- Check `.env.example` exists (without sensitive values)
+- Scan with `git-secrets` or equivalent
 
-**Seuils d'evaluation:**
-- 80-100: Securite exemplaire
-- 60-79: Securite adequate
-- 40-59: Vulnerabilites mineures
-- 0-39: Risques de securite majeurs
+**Evaluation thresholds:**
+- 80-100: Exemplary security
+- 60-79: Adequate security
+- 40-59: Minor vulnerabilities
+- 0-39: Major security risks
 
 ---
 
 ## Monitoring (100 points)
 
-Evalue la capacite a observer et debugger le projet en production.
+Evaluates the ability to observe and debug the project in production.
 
-| Critere | Points | Description |
-|---------|--------|-------------|
-| Error tracking | +25 | Sentry, Bugsnag, etc. configure |
-| Analytics configure | +20 | PostHog, GA4, Plausible, etc. |
-| Logs structures | +20 | Logging avec niveaux (info, warn, error) |
-| Health check endpoint | +15 | `/health` ou `/api/health` (si API) |
-| Alertes configurees | +20 | Notifications sur erreurs critiques |
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Error tracking | +25 | Sentry, Bugsnag, etc. configured |
+| Analytics configured | +20 | PostHog, GA4, Plausible, etc. |
+| Structured logs | +20 | Logging with levels (info, warn, error) |
+| Health check endpoint | +15 | `/health` or `/api/health` (if API) |
+| Alerts configured | +20 | Notifications on critical errors |
 
-**Outils recherches:**
+**Tools searched:**
 - Sentry, Bugsnag, Rollbar (error tracking)
 - PostHog, Plausible, GA4 (analytics)
 - Datadog, New Relic, Grafana (APM)
-- PagerDuty, Opsgenie (alertes)
+- PagerDuty, Opsgenie (alerts)
 
-**Seuils d'evaluation:**
-- 80-100: Observabilite complete
-- 60-79: Monitoring basique
-- 40-59: Quelques metriques
-- 0-39: Aucune visibilite production
+**Evaluation thresholds:**
+- 80-100: Complete observability
+- 60-79: Basic monitoring
+- 40-59: Some metrics
+- 0-39: No production visibility
 
 ---
 
 ## Performance (100 points)
 
-Evalue l'optimisation des performances.
+Evaluates performance optimization.
 
-| Critere | Points | Description |
-|---------|--------|-------------|
-| Lazy loading | +20 | Chargement differe des modules/images |
-| Images optimisees | +15 | next/image, sharp, WebP, compression |
-| Caching configure | +20 | Cache-Control, SWR, React Query, etc. |
-| Bundle size raisonnable | +15 | JS < 500KB gzipped pour webapp |
-| Lighthouse > 80 | +15 | Score Performance Lighthouse |
-| Lighthouse > 95 | +15 | Score Performance excellence |
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Lazy loading | +20 | Deferred loading of modules/images |
+| Optimized images | +15 | next/image, sharp, WebP, compression |
+| Caching configured | +20 | Cache-Control, SWR, React Query, etc. |
+| Reasonable bundle size | +15 | JS < 500KB gzipped for webapp |
+| Lighthouse > 80 | +15 | Lighthouse Performance score |
+| Lighthouse > 95 | +15 | Excellence Performance score |
 
-**Outils de verification:**
-- `npx lighthouse URL` (audit complet)
-- `npx bundle-analyzer` (taille bundle)
+**Verification tools:**
+- `npx lighthouse URL` (full audit)
+- `npx bundle-analyzer` (bundle size)
 - Chrome DevTools Network tab
 
-**Seuils d'evaluation:**
-- 80-100: Performance optimale
-- 60-79: Performance acceptable
-- 40-59: Lenteurs notables
-- 0-39: Performance critique
+**Evaluation thresholds:**
+- 80-100: Optimal performance
+- 60-79: Acceptable performance
+- 40-59: Notable slowdowns
+- 0-39: Critical performance
 
 ---
 
-## Accessibilite (100 points)
+## Accessibility (100 points)
 
-> **Applicable uniquement aux webapps et sites web.**
+> **Applicable only to webapps and websites.**
 
-Evalue la conformite aux standards d'accessibilite.
+Evaluates compliance with accessibility standards.
 
-| Critere | Points | Description |
-|---------|--------|-------------|
-| Alt text sur images | +20 | Toutes les images ont un alt significatif |
-| Labels sur formulaires | +20 | Tous les inputs ont des labels associes |
-| Contraste suffisant | +20 | Ratio de contraste >= 4.5:1 |
-| Navigation clavier | +20 | Tous les elements interactifs accessibles au clavier |
-| ARIA labels | +10 | Roles et labels ARIA sur elements complexes |
-| Lighthouse a11y > 90 | +10 | Score Accessibility Lighthouse |
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Alt text on images | +20 | All images have meaningful alt text |
+| Labels on forms | +20 | All inputs have associated labels |
+| Sufficient contrast | +20 | Contrast ratio >= 4.5:1 |
+| Keyboard navigation | +20 | All interactive elements keyboard accessible |
+| ARIA labels | +10 | ARIA roles and labels on complex elements |
+| Lighthouse a11y > 90 | +10 | Lighthouse Accessibility score |
 
-**Standards de reference:**
-- WCAG 2.1 niveau AA (minimum recommande)
-- WCAG 2.1 niveau AAA (excellence)
+**Reference standards:**
+- WCAG 2.1 level AA (minimum recommended)
+- WCAG 2.1 level AAA (excellence)
 
-**Outils de verification:**
+**Verification tools:**
 - Lighthouse Accessibility audit
 - axe DevTools extension
 - WAVE Web Accessibility Evaluator
 
-**Seuils d'evaluation:**
-- 80-100: Accessibilite excellente (WCAG AA)
-- 60-79: Accessibilite partielle
-- 40-59: Problemes d'accessibilite
-- 0-39: Non accessible
+**Evaluation thresholds:**
+- 80-100: Excellent accessibility (WCAG AA)
+- 60-79: Partial accessibility
+- 40-59: Accessibility issues
+- 0-39: Not accessible
 
 ---
 
-## Identite Visuelle (100 points)
+## Visual Identity (100 points)
 
-> **Applicable selon le type de projet:**
-> - **Requise:** webapp, mobile app, site marketing
-> - **Optionnelle:** documentation, research
-> - **Ignoree:** API, CLI, library
+> **Applicable depending on project type:**
+> - **Required:** webapp, mobile app, marketing site
+> - **Optional:** documentation, research
+> - **Ignored:** API, CLI, library
 
-Evalue la coherence et la qualite de l'identite visuelle.
+Evaluates the coherence and quality of visual identity.
 
-| Critere | Points | Description |
-|---------|--------|-------------|
-| Palette de couleurs | +20 | Couleurs definies et coherentes |
-| Typographie coherente | +20 | Fonts definis, hierarchie claire |
-| Logo present | +15 | Logo en plusieurs formats (SVG, PNG) |
-| Design system | +20 | Composants UI reutilisables et documentes |
-| Variables CSS/tokens | +15 | CSS custom properties ou design tokens |
-| Documentation design | +10 | Brandbook ou guide de style |
+| Criterion | Points | Description |
+|-----------|--------|-------------|
+| Color palette | +20 | Defined and coherent colors |
+| Consistent typography | +20 | Defined fonts, clear hierarchy |
+| Logo present | +15 | Logo in multiple formats (SVG, PNG) |
+| Design system | +20 | Reusable and documented UI components |
+| CSS variables/tokens | +15 | CSS custom properties or design tokens |
+| Design documentation | +10 | Brandbook or style guide |
 
-**Fichiers recherches:**
+**Files searched:**
 - `docs/brand/`, `docs/design/`, `.brand/`
 - `BRAND.md`, `BRANDBOOK.md`, `STYLE_GUIDE.md`
 - `figma.json`, `design-tokens.json`
 - `tailwind.config.*` (theme section)
 
-**Seuils d'evaluation:**
-- 80-100: Identite visuelle forte et coherente
-- 60-79: Charte graphique partielle
-- 40-59: Elements visuels basiques
-- 0-39: Aucune identite definie
+**Evaluation thresholds:**
+- 80-100: Strong and coherent visual identity
+- 60-79: Partial style guide
+- 40-59: Basic visual elements
+- 0-39: No defined identity
 
 ---
 
-## Calcul du Score Global
+## Global Score Calculation
 
-### Formule
+### Formula
 
 ```
-Score Global = Moyenne ponderee des categories applicables
+Global Score = Weighted average of applicable categories
 ```
 
-### Ponderations par defaut
+### Default weights
 
-| Type Projet | Doc | Tests | CI/CD | Secu | Monit | Perf | A11y | Visual |
-|-------------|-----|-------|-------|------|-------|------|------|--------|
+| Project Type | Doc | Tests | CI/CD | Sec | Monit | Perf | A11y | Visual |
+|--------------|-----|-------|-------|-----|-------|------|------|--------|
 | webapp | 10% | 15% | 15% | 15% | 10% | 15% | 10% | 10% |
 | api | 15% | 20% | 20% | 20% | 15% | 10% | - | - |
 | cli | 20% | 20% | 15% | 15% | 10% | 20% | - | - |
 | library | 25% | 25% | 15% | 15% | 10% | 10% | - | - |
 | docs | 40% | 10% | 15% | 10% | 5% | 10% | 5% | 5% |
 
-### Interpretation du Score Global
+### Global Score Interpretation
 
-| Score | Niveau | Description |
-|-------|--------|-------------|
-| 90-100 | Excellent | Projet production-ready, maintenance exemplaire |
-| 80-89 | Tres bien | Projet solide, quelques ameliorations possibles |
-| 70-79 | Bien | Projet fonctionnel, axes d'amelioration identifies |
-| 60-69 | Acceptable | Base solide mais travail necessaire |
-| 50-59 | Passable | Manques significatifs a combler |
-| 40-49 | Insuffisant | Projet necessite attention immediate |
-| 0-39 | Critique | Projet a risque, action urgente requise |
+| Score | Level | Description |
+|-------|-------|-------------|
+| 90-100 | Excellent | Production-ready project, exemplary maintenance |
+| 80-89 | Very Good | Solid project, some improvements possible |
+| 70-79 | Good | Functional project, improvement areas identified |
+| 60-69 | Acceptable | Solid foundation but work needed |
+| 50-59 | Passable | Significant gaps to address |
+| 40-49 | Insufficient | Project requires immediate attention |
+| 0-39 | Critical | At-risk project, urgent action required |
 
 ---
 
-## Notes d'Implementation
+## Implementation Notes
 
-### Comment scorer
+### How to score
 
-1. Parcourir chaque categorie applicable
-2. Verifier chaque critere (present/absent)
-3. Additionner les points obtenus
-4. Calculer le pourcentage (points / 100)
-5. Appliquer la ponderation pour le score global
+1. Go through each applicable category
+2. Check each criterion (present/absent)
+3. Add up points obtained
+4. Calculate percentage (points / 100)
+5. Apply weighting for global score
 
-### Cas particuliers
+### Special cases
 
-- **Criteres non applicables:** Si un critere ne s'applique pas (ex: API doc pour un CLI simple), ignorer et recalculer sur la base reduite
-- **Bonus:** Aucun bonus au-dela de 100 par categorie
-- **Penalites:** Les secrets dans le code = score Securite plafonne a 20%
+- **Non-applicable criteria:** If a criterion doesn't apply (e.g., API docs for a simple CLI), ignore and recalculate on reduced base
+- **Bonus:** No bonus beyond 100 per category
+- **Penalties:** Secrets in code = Security score capped at 20%

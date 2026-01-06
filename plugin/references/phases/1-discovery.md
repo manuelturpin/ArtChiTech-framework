@@ -1,52 +1,52 @@
-# Phase 1 : Discovery
+# Phase 1: Discovery
 
-**Objectif** : Valider le problème et définir la proposition de valeur
+**Objective**: Validate the problem and define the value proposition
 
-**Skills actifs** : `superpowers:brainstorming`
+**Active skills**: `superpowers:brainstorming`
 
 ## Checklist
 
-- [ ] Problem Statement validé (clair, mesurable)
-- [ ] Jobs-To-Be-Done documentés (3-5 JTBD principaux)
-- [ ] Personas définis (3-5 personas)
-- [ ] Value Proposition Canvas complété
-- [ ] TAM/SAM/SOM estimés
-- [ ] Benchmark concurrents (5+ analysés)
-- [ ] Opportunity Solution Tree créé
-- [ ] Hypothèses priorisées (impact × incertitude)
-- [ ] Interviews utilisateurs (5-10 minimum)
-- [ ] Sean Ellis Test planifié
-- [ ] Go/No-Go documenté
-- [ ] Pivot ou persévérer décidé
+- [ ] Problem Statement validated (clear, measurable)
+- [ ] Jobs-To-Be-Done documented (3-5 main JTBD)
+- [ ] Personas defined (3-5 personas)
+- [ ] Value Proposition Canvas completed
+- [ ] TAM/SAM/SOM estimated
+- [ ] Competitor benchmark (5+ analyzed)
+- [ ] Opportunity Solution Tree created
+- [ ] Hypotheses prioritized (impact × uncertainty)
+- [ ] User interviews (5-10 minimum)
+- [ ] Sean Ellis Test planned
+- [ ] Go/No-Go documented
+- [ ] Pivot or persevere decided
 
 ## Anti-Patterns
 
-⚠️ **Building before validation** : Ne pas coder avant d'avoir validé le problème avec des utilisateurs réels.
+⚠️ **Building before validation**: Do not code before validating the problem with real users.
 
-⚠️ **Solution-first thinking** : Partir de "je veux construire X" au lieu de "quel problème je résous ?".
+⚠️ **Solution-first thinking**: Starting from "I want to build X" instead of "what problem am I solving?".
 
-⚠️ **Confirmation bias** : Chercher des preuves qui confirment vos hypothèses au lieu de les tester.
+⚠️ **Confirmation bias**: Looking for evidence that confirms your hypotheses instead of testing them.
 
-⚠️ **Skipping user research** : Supposer connaître les besoins sans parler aux utilisateurs.
+⚠️ **Skipping user research**: Assuming you know the needs without talking to users.
 
-## Outils Recommandés
+## Recommended Tools
 
-- **Miro/FigJam** : Value Proposition Canvas, Opportunity Solution Tree
-- **Notion** : Documentation JTBD, Personas
-- **Typeform/Tally** : Surveys utilisateurs
-- **Calendly** : Planification interviews
+- **Miro/FigJam**: Value Proposition Canvas, Opportunity Solution Tree
+- **Notion**: JTBD documentation, Personas
+- **Typeform/Tally**: User surveys
+- **Calendly**: Interview scheduling
 
-## Métriques Clés
+## Key Metrics
 
-| Métrique | Cible |
-|----------|-------|
-| Interviews utilisateurs | 5-10 |
-| Sean Ellis Test | > 40% "très déçus" |
-| Problem-Solution Fit | Validé |
+| Metric | Target |
+|--------|--------|
+| User interviews | 5-10 |
+| Sean Ellis Test | > 40% "very disappointed" |
+| Problem-Solution Fit | Validated |
 
 ## Transition → Phase 2
 
-Conditions Go :
-- Problem Statement validé par utilisateurs
-- JTBD clairement définis
-- Value Proposition différenciante identifiée
+Go Conditions:
+- Problem Statement validated by users
+- JTBD clearly defined
+- Differentiating Value Proposition identified
