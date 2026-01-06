@@ -1,18 +1,18 @@
 ---
 name: error-tracker
-description: Track et priorise les erreurs, empêche progression tant qu'erreurs critiques non résolues
+description: Track and prioritize errors, prevent progression while critical errors remain unresolved
 ---
 
 # Error Tracker
 
-## Responsabilités
+## Responsibilities
 
-1. **Enregistrement erreurs** : Créer fichiers `.epct/errors/active/`
-2. **Priorisation** : Déterminer si erreur bloquante
-3. **Historique** : Déplacer vers `resolved/` quand fixé
-4. **Alerts** : Notifier si erreurs anciennes non traitées
+1. **Error Recording**: Create files in `.epct/errors/active/`
+2. **Prioritization**: Determine if error is blocking
+3. **History**: Move to `resolved/` when fixed
+4. **Alerts**: Notify if old errors remain untreated
 
-## Structure Erreur
+## Error Structure
 
 ```json
 {
@@ -33,9 +33,9 @@ description: Track et priorise les erreurs, empêche progression tant qu'erreurs
 }
 ```
 
-## Implémentation
+## Implementation
 
-### Enregistrer erreur
+### Record Error
 
 ```typescript
 async function recordError(error: ErrorInfo): Promise<string> {
@@ -73,7 +73,7 @@ async function recordError(error: ErrorInfo): Promise<string> {
 }
 ```
 
-### Résoudre erreur
+### Resolve Error
 
 ```typescript
 async function resolveError(errorId: string): Promise<void> {
@@ -95,7 +95,7 @@ async function resolveError(errorId: string): Promise<void> {
 }
 ```
 
-### Lister erreurs actives
+### List Active Errors
 
 ```typescript
 function listActiveErrors(): ErrorRecord[] {
@@ -103,7 +103,7 @@ function listActiveErrors(): ErrorRecord[] {
   return errorFiles
     .map(file => JSON.parse(readFile(file)))
     .sort((a, b) => {
-      // Prioriser : blocking > severity > age
+      // Prioritize: blocking > severity > age
       if (a.blocking !== b.blocking) return a.blocking ? -1 : 1
       if (a.severity !== b.severity) {
         const severityOrder = { critical: 0, major: 1, minor: 2 }
@@ -114,7 +114,7 @@ function listActiveErrors(): ErrorRecord[] {
 }
 ```
 
-## Sévérité et Blocage
+## Severity and Blocking
 
 ```typescript
 function determineSeverity(error: ErrorInfo): Severity {
@@ -144,9 +144,9 @@ function shouldAlertOldErrors(): boolean {
 }
 ```
 
-## Types d'Erreurs
+## Error Types
 
-| Type | Sévérité | Bloquant |
+| Type | Severity | Blocking |
 |------|----------|----------|
 | syntax_error | critical | ✅ |
 | assertion_failed | critical | ✅ |

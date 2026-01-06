@@ -1,36 +1,36 @@
 ---
-name: projet-orchestrator
-description: Orchestrateur principal qui coordonne tous les skills et gère le menu interactif /projet
+name: project-orchestrator
+description: Main orchestrator that coordinates all skills and manages the /project interactive menu
 ---
 
-# Projet Orchestrator
+# Project Orchestrator
 
-## Responsabilités
+## Responsibilities
 
-1. **Menu interactif** : Interface principale /projet
-2. **Coordination skills** : Active skills selon phase et contexte
-3. **Workflow global** : Gère flux discovery → croissance
-4. **Initialisation projet** : Setup nouveau projet
+1. **Interactive menu**: Main /project interface
+2. **Skills coordination**: Activates skills based on phase and context
+3. **Global workflow**: Manages flow from discovery to growth
+4. **Project initialization**: New project setup
 
-## Menu /projet
+## /project Menu
 
 ```
 ╭─────────────────────────────────────────────────────╮
-│  Que voulez-vous faire ?                            │
+│  What would you like to do?                         │
 │                                                     │
-│  1. 🆕 Démarrer un nouveau projet                   │
-│  2. ➕ Ajouter une feature                          │
-│  3. 🔧 Refactoring/optimisation                     │
-│  4. 📋 Voir checklist phase actuelle                │
-│  5. ⏭️  Passer à la phase suivante                  │
+│  1. 🆕 Start a new project                          │
+│  2. ➕ Add a feature                                │
+│  3. 🔧 Refactoring/optimization                     │
+│  4. 📋 View current phase checklist                 │
+│  5. ⏭️  Move to next phase                          │
 │                                                     │
-│  Tapez le numéro ou décrivez votre besoin...        │
+│  Type a number or describe your need...             │
 ╰─────────────────────────────────────────────────────╯
 ```
 
-## Implémentation
+## Implementation
 
-### Menu principal
+### Main menu
 
 ```typescript
 async function showProjetMenu() {
@@ -49,33 +49,33 @@ async function showProjetMenu() {
 
 function getActiveProjectOptions(state: ProjectState): MenuOption[] {
   return [
-    { id: 1, label: '➕ Ajouter une feature', action: 'add_feature' },
-    { id: 2, label: '🔧 Refactoring/optimisation', action: 'refactor' },
-    { id: 3, label: '📋 Voir checklist phase actuelle', action: 'show_checklist' },
-    { id: 4, label: '⏭️  Passer à la phase suivante', action: 'next_phase' },
-    { id: 5, label: '📊 Voir status complet', action: 'status' }
+    { id: 1, label: '➕ Add a feature', action: 'add_feature' },
+    { id: 2, label: '🔧 Refactoring/optimization', action: 'refactor' },
+    { id: 3, label: '📋 View current phase checklist', action: 'show_checklist' },
+    { id: 4, label: '⏭️  Move to next phase', action: 'next_phase' },
+    { id: 5, label: '📊 View full status', action: 'status' }
   ]
 }
 
 function getNewProjectOptions(): MenuOption[] {
   return [
-    { id: 1, label: '🆕 Démarrer un nouveau projet', action: 'new_project' },
-    { id: 2, label: '📖 En savoir plus sur le framework', action: 'help' }
+    { id: 1, label: '🆕 Start a new project', action: 'new_project' },
+    { id: 2, label: '📖 Learn more about the framework', action: 'help' }
   ]
 }
 ```
 
-### Nouveau projet (Discovery)
+### New project (Discovery)
 
 ```typescript
 async function startNewProject() {
-  print("🆕 Nouveau Projet\n")
+  print("🆕 New Project\n")
 
-  // 1. Collecter infos basiques
-  const name = await askUser("Nom du projet ?")
-  const type = await askUser("Type ? (webapp/mobile/feature/refacto)")
+  // 1. Collect basic info
+  const name = await askUser("Project name?")
+  const type = await askUser("Type? (webapp/mobile/feature/refacto)")
 
-  // 2. Initialiser état
+  // 2. Initialize state
   await skillCall('context-manager', 'updateState', {
     project: {
       name,
@@ -86,41 +86,41 @@ async function startNewProject() {
     phaseName: 'Discovery'
   })
 
-  // 3. Activer brainstorming pour Discovery
-  print("\n🎯 Phase Discovery : Validation du problème\n")
-  print("Activation skill brainstorming...\n")
+  // 3. Activate brainstorming for Discovery
+  print("\n🎯 Discovery Phase: Problem Validation\n")
+  print("Activating brainstorming skill...\n")
 
   await skillCall('superpowers:brainstorming', {
-    context: `Nouveau projet ${type} : ${name}`,
-    goal: 'Valider le problème et définir la proposition de valeur'
+    context: `New ${type} project: ${name}`,
+    goal: 'Validate the problem and define the value proposition'
   })
 
-  // Brainstorming guidera vers JTBD, Value Proposition Canvas, etc.
+  // Brainstorming will guide towards JTBD, Value Proposition Canvas, etc.
 }
 ```
 
-### Ajouter feature (current phase)
+### Add feature (current phase)
 
 ```typescript
 async function addFeature() {
   const state = await skillCall('context-manager', 'readState')
 
-  print(`\n➕ Ajouter Feature - Phase ${state.phaseName}\n`)
+  print(`\n➕ Add Feature - ${state.phaseName} Phase\n`)
 
-  const featureName = await askUser("Nom de la feature ?")
-  const featureDesc = await askUser("Description courte ?")
+  const featureName = await askUser("Feature name?")
+  const featureDesc = await askUser("Short description?")
 
-  // Activer skills selon phase
+  // Activate skills based on phase
   const phaseSkills = getPhaseSkills(state.currentPhase)
 
   if (state.currentPhase <= 3) {
-    // Discovery/Stratégie/Conception : brainstorming
+    // Discovery/Strategy/Design: brainstorming
     await skillCall('superpowers:brainstorming', {
       feature: featureName,
       description: featureDesc
     })
   } else if (state.currentPhase === 4) {
-    // Développement : chunk-manager + TDD
+    // Development: chunk-manager + TDD
     await skillCall('chunk-manager', 'planFeature', {
       name: featureName,
       description: featureDesc
@@ -129,7 +129,7 @@ async function addFeature() {
 }
 ```
 
-## Activation Skills Automatique
+## Automatic Skills Activation
 
 ```typescript
 function getPhaseSkills(phase: number): string[] {
@@ -153,7 +153,7 @@ async function activatePhaseSkills(phase: number) {
 }
 ```
 
-## Gestion des Actions
+## Action Handling
 
 ```typescript
 async function handleMenuChoice(choice: string, state: ProjectState) {
@@ -167,34 +167,34 @@ async function handleMenuChoice(choice: string, state: ProjectState) {
     'help': executeHelpCommand
   }
 
-  // Chercher par numéro ou texte
+  // Search by number or text
   const action = findAction(choice, actions)
 
   if (action) {
     await action()
   } else {
-    // Texte libre → interpréter comme description de besoin
+    // Free text → interpret as need description
     await interpretUserNeed(choice, state)
   }
 }
 ```
 
-## Interprétation Besoins
+## Need Interpretation
 
 ```typescript
 async function interpretUserNeed(description: string, state: ProjectState) {
-  // Analyser le texte pour déterminer l'intention
+  // Analyze text to determine intent
   const keywords = {
-    'nouveau': 'new_project',
-    'créer': 'new_project',
-    'ajouter': 'add_feature',
+    'new': 'new_project',
+    'create': 'new_project',
+    'add': 'add_feature',
     'feature': 'add_feature',
     'refactor': 'refactor',
-    'optimiser': 'refactor',
+    'optimize': 'refactor',
     'status': 'status',
-    'état': 'status',
-    'suivant': 'next_phase',
-    'avancer': 'next_phase'
+    'state': 'status',
+    'next': 'next_phase',
+    'advance': 'next_phase'
   }
 
   for (const [keyword, action] of Object.entries(keywords)) {
@@ -203,8 +203,8 @@ async function interpretUserNeed(description: string, state: ProjectState) {
     }
   }
 
-  // Aucun match → demander clarification
-  print("Je n'ai pas compris. Pouvez-vous préciser ?")
-  print("Exemples : 'ajouter une feature', 'voir le status', 'passer à la suite'")
+  // No match → ask for clarification
+  print("I didn't understand. Can you clarify?")
+  print("Examples: 'add a feature', 'view status', 'move to next phase'")
 }
 ```

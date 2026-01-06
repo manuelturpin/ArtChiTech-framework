@@ -1,27 +1,27 @@
 ---
 name: context-manager
-description: Gère le contexte de session et la persistance d'état pour éviter la perte de contexte entre sessions Claude Code
+description: Manages session context and state persistence to prevent context loss between Claude Code sessions
 ---
 
 # Context Manager
 
-## Responsabilités
+## Responsibilities
 
-1. **Lecture/Écriture état** : Gestion de `.epct/state.json`
-2. **Estimation tokens** : Tracking utilisation contexte
-3. **Checkpoints** : Sauvegarde automatique à intervalles critiques
-4. **Recovery** : Restauration contexte après interruption
+1. **State Read/Write**: Management of `.epct/state.json`
+2. **Token Estimation**: Context usage tracking
+3. **Checkpoints**: Automatic saving at critical intervals
+4. **Recovery**: Context restoration after interruption
 
-## Utilisation Interne
+## Internal Usage
 
-Appelé automatiquement par :
-- `/resume` : Restaure contexte session précédente
-- `/status` : Lit état actuel + crée checkpoint
-- Orchestrateur : Updates état après chaque action
+Called automatically by:
+- `/resume`: Restores previous session context
+- `/status`: Reads current state + creates checkpoint
+- Orchestrator: Updates state after each action
 
-## État Management
+## State Management
 
-### Lire l'état actuel
+### Read Current State
 
 ```typescript
 function readState(): ProjectState {
@@ -33,7 +33,7 @@ function readState(): ProjectState {
 }
 ```
 
-### Mettre à jour l'état
+### Update State
 
 ```typescript
 function updateState(updates: Partial<ProjectState>): void {
@@ -43,7 +43,7 @@ function updateState(updates: Partial<ProjectState>): void {
 }
 ```
 
-### Créer un checkpoint
+### Create a Checkpoint
 
 ```typescript
 function createCheckpoint(name: string): void {
@@ -62,11 +62,11 @@ function createCheckpoint(name: string): void {
 }
 ```
 
-### Estimer tokens utilisés
+### Estimate Used Tokens
 
 ```typescript
 function estimateTokens(): number {
-  // Heuristique simple : 1 token ≈ 4 caractères
+  // Simple heuristic: 1 token ≈ 4 characters
   const session = readFile('.epct/session/current.json')
   const sessionData = JSON.parse(session)
   return sessionData.commandsExecuted.reduce((total, cmd) => {
@@ -75,17 +75,17 @@ function estimateTokens(): number {
 }
 ```
 
-## Événements de Checkpoint
+## Checkpoint Events
 
-| Événement | Trigger | Nom checkpoint |
-|-----------|---------|----------------|
-| Chunk complété | Après tests verts | `chunk-${chunkName}` |
-| Commande /status | Utilisateur explicite | `user-status` |
-| Transition phase | Avant Go/No-Go | `phase-${n}-complete` |
-| Erreur détectée | Nouveau fichier erreur | `error-${errorId}` |
-| Contexte < 30% | Estimation tokens | `low-context` |
+| Event | Trigger | Checkpoint Name |
+|-------|---------|-----------------|
+| Chunk completed | After green tests | `chunk-${chunkName}` |
+| /status command | Explicit user action | `user-status` |
+| Phase transition | Before Go/No-Go | `phase-${n}-complete` |
+| Error detected | New error file | `error-${errorId}` |
+| Context < 30% | Token estimation | `low-context` |
 
-## Tips Contextuels
+## Contextual Tips
 
 ```typescript
 function shouldShowTip(): TipType | null {
@@ -111,10 +111,10 @@ function shouldShowTip(): TipType | null {
 
 ## Recovery Process
 
-1. Lire `.epct/session/recovery.json`
-2. Si `canRecover === true`, charger dernier checkpoint
-3. Afficher résumé : phase, dernier chunk, erreurs
-4. Proposer continuation ou nouveau départ
+1. Read `.epct/session/recovery.json`
+2. If `canRecover === true`, load last checkpoint
+3. Display summary: phase, last chunk, errors
+4. Offer continuation or fresh start
 
 ```typescript
 function recoverSession(): RecoveryInfo {

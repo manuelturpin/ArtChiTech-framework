@@ -1,51 +1,51 @@
 ---
 name: chunk-manager
-description: Découpe le travail en chunks testables et gère le workflow chunk-test-fix avec intégration TDD automatique
+description: Breaks down work into testable chunks and manages the chunk-test-fix workflow with automatic TDD integration
 ---
 
 # Chunk Manager
 
-## Responsabilités
+## Responsibilities
 
-1. **Découpage automatique** : Identifier chunks (fonctions/méthodes ~50 lignes)
-2. **Workflow TDD** : Orchestrer RED → GREEN → REFACTOR par chunk
-3. **Tracking progression** : Suivre chunks complétés vs restants
-4. **Blocage sur erreur** : Empêcher avancement si tests échouent
+1. **Automatic breakdown**: Identify chunks (functions/methods ~50 lines)
+2. **TDD Workflow**: Orchestrate RED → GREEN → REFACTOR per chunk
+3. **Progress tracking**: Track completed vs remaining chunks
+4. **Error blocking**: Prevent advancement if tests fail
 
-## Définition d'un Chunk
+## Chunk Definition
 
-Un chunk est :
-- 1 fonction OU 1 méthode
-- Maximum ~50 lignes de code
-- Testable de manière isolée
-- Responsabilité unique (SRP)
+A chunk is:
+- 1 function OR 1 method
+- Maximum ~50 lines of code
+- Testable in isolation
+- Single responsibility (SRP)
 
-## Workflow par Chunk
+## Workflow per Chunk
 
 ```
 ┌─────────────┐    ┌─────────┐    ┌─────────┐
-│ Implémenter │───▶│ Tester  │───▶│  Vert?  │
-│  1 chunk    │    │ le chunk│    │         │
+│ Implement   │───▶│  Test   │───▶│ Green?  │
+│  1 chunk    │    │ chunk   │    │         │
 └─────────────┘    └─────────┘    └────┬────┘
                                        │
                          ┌─────────────┴─────────────┐
                          │                           │
-                        OUI                         NON
+                        YES                         NO
                          │                           │
                          ▼                           ▼
                    ┌───────────┐            ┌──────────────┐
-                   │  Chunk    │            │ Fix erreur   │
-                   │  suivant  │            │ avant suite  │
+                   │   Next    │            │  Fix error   │
+                   │   chunk   │            │ before next  │
                    └───────────┘            └──────────────┘
 ```
 
-## Implémentation
+## Implementation
 
-### Identifier les chunks
+### Identify chunks
 
 ```typescript
 function identifyChunks(file: string, feature: string): Chunk[] {
-  // Analyse du code pour identifier méthodes/fonctions
+  // Analyze code to identify methods/functions
   const ast = parseFile(file)
   const methods = extractMethods(ast)
 
@@ -61,14 +61,14 @@ function identifyChunks(file: string, feature: string): Chunk[] {
 }
 ```
 
-### Exécuter workflow chunk
+### Execute chunk workflow
 
 ```typescript
 async function executeChunkWorkflow(chunk: Chunk): Promise<ChunkResult> {
-  // 1. Activer TDD skill
+  // 1. Activate TDD skill
   await skillCall('superpowers:test-driven-development', 'activate')
 
-  // 2. RED : Écrire test qui échoue
+  // 2. RED: Write failing test
   print(`\n🔴 RED: Writing failing test for ${chunk.name}`)
   const testFile = await writeTest(chunk)
   const redResult = await runTest(testFile)
@@ -77,13 +77,13 @@ async function executeChunkWorkflow(chunk: Chunk): Promise<ChunkResult> {
     throw new Error('Test should fail initially (RED phase)')
   }
 
-  // 3. GREEN : Implémenter minimum
+  // 3. GREEN: Implement minimum
   print(`\n🟢 GREEN: Implementing ${chunk.name}`)
   await implementChunk(chunk)
   const greenResult = await runTest(testFile)
 
   if (!greenResult.passed) {
-    // Erreur détectée → bloquer
+    // Error detected → block
     await skillCall('error-tracker', 'recordError', {
       chunk: chunk.name,
       test: testFile,
@@ -92,7 +92,7 @@ async function executeChunkWorkflow(chunk: Chunk): Promise<ChunkResult> {
     return { status: 'failed', error: greenResult.error }
   }
 
-  // 4. REFACTOR (optionnel si simple)
+  // 4. REFACTOR (optional if simple)
   print(`\n🔧 REFACTOR: Reviewing ${chunk.name}`)
   const needsRefactor = await shouldRefactor(chunk)
   if (needsRefactor) {
@@ -116,7 +116,7 @@ async function executeChunkWorkflow(chunk: Chunk): Promise<ChunkResult> {
 }
 ```
 
-### Proposer chunk suivant
+### Propose next chunk
 
 ```typescript
 function getNextChunk(): Chunk | null {
@@ -127,22 +127,22 @@ function getNextChunk(): Chunk | null {
     return null
   }
 
-  // Prioriser par dépendances (chunks sans dépendances d'abord)
+  // Prioritize by dependencies (chunks without dependencies first)
   const independent = pending.filter(c => c.dependencies.length === 0)
   return independent[0] || pending[0]
 }
 ```
 
-## Intégration avec Error Tracker
+## Integration with Error Tracker
 
-Si test échoue :
-1. Créer fichier erreur dans `.epct/errors/active/`
-2. Bloquer progression (ne pas proposer chunk suivant)
-3. Afficher message : "❌ Tests failed. Use /fix to resolve before continuing."
+If test fails:
+1. Create error file in `.epct/errors/active/`
+2. Block progression (don't propose next chunk)
+3. Display message: "❌ Tests failed. Use /fix to resolve before continuing."
 
-## Messages Utilisateur
+## User Messages
 
-### Chunk démarré
+### Chunk started
 
 ```
 🔄 Starting chunk: UserService.create
@@ -153,7 +153,7 @@ Si test échoue :
 🔴 RED phase: Writing failing test...
 ```
 
-### Chunk réussi
+### Chunk succeeded
 
 ```
 ✅ Chunk complete: UserService.create
@@ -163,7 +163,7 @@ Si test échoue :
 💡 Next chunk: UserService.update (3 remaining)
 ```
 
-### Chunk échoué
+### Chunk failed
 
 ```
 ❌ Chunk failed: UserService.create

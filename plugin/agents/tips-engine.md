@@ -1,17 +1,17 @@
 ---
 name: tips-engine
-description: Génère tips contextuels et anti-patterns selon phase et situation
+description: Generates contextual tips and anti-patterns based on phase and situation
 ---
 
 # Tips Engine
 
-## Responsabilités
+## Responsibilities
 
-1. **Tips contextuels** : Afficher aide selon situation
-2. **Anti-patterns** : Alerter sur erreurs courantes
-3. **Recommendations** : Suggérer prochaine action
+1. **Contextual tips**: Display help based on situation
+2. **Anti-patterns**: Alert on common mistakes
+3. **Recommendations**: Suggest next action
 
-## Tips par Situation
+## Tips by Situation
 
 ```typescript
 type TipSituation =
@@ -26,47 +26,47 @@ type TipSituation =
 const tips: Record<TipSituation, Tip> = {
   LOW_CONTEXT: {
     icon: '💡',
-    message: "Contexte limité (~30% restant). Terminez le chunk actuel puis /status pour sauvegarder.",
+    message: "Limited context (~30% remaining). Finish current chunk then /status to save.",
     priority: 'high'
   },
   PENDING_ERROR: {
     icon: '⚠️',
-    message: "Erreur en attente. /fix recommandé avant de continuer.",
+    message: "Pending error. /fix recommended before continuing.",
     priority: 'high'
   },
   READY_FOR_NEXT: {
     icon: '✅',
-    message: "Checklist phase complète. /next pour valider et avancer.",
+    message: "Phase checklist complete. /next to validate and proceed.",
     priority: 'medium'
   },
   LONG_SESSION: {
     icon: '⏰',
-    message: "Session longue (> 2h). Un /status créera un point de sauvegarde.",
+    message: "Long session (> 2h). A /status will create a save point.",
     priority: 'low'
   },
   FIRST_SESSION: {
     icon: '👋',
-    message: "Bienvenue ! Tapez /resume pour reprendre ou /projet pour commencer.",
+    message: "Welcome! Type /resume to continue or /projet to start.",
     priority: 'medium'
   },
   BLOCKED: {
     icon: '🚫',
-    message: "Bloqué par erreurs critiques. Résolvez avec /fix avant de continuer.",
+    message: "Blocked by critical errors. Resolve with /fix before continuing.",
     priority: 'high'
   },
   IDLE: {
     icon: '💤',
-    message: "Projet inactif depuis 24h. /status pour voir où vous en êtes.",
+    message: "Project inactive for 24h. /status to see where you left off.",
     priority: 'low'
   }
 }
 ```
 
-## Détection Situation
+## Situation Detection
 
 ```typescript
 function detectSituation(state: ProjectState): TipSituation | null {
-  // Priorité : HIGH > MEDIUM > LOW
+  // Priority: HIGH > MEDIUM > LOW
 
   // HIGH priority
   if (state.errors.blocking) {
@@ -103,7 +103,7 @@ function detectSituation(state: ProjectState): TipSituation | null {
 }
 ```
 
-## Anti-Patterns par Phase
+## Anti-Patterns by Phase
 
 ```typescript
 function getPhaseAntiPatterns(phase: number): string[] {
@@ -149,7 +149,7 @@ function getPhaseAntiPatterns(phase: number): string[] {
 }
 ```
 
-## Affichage Tips
+## Tip Display
 
 ```typescript
 function displayTip(situation: TipSituation): void {
@@ -163,9 +163,9 @@ function displayTip(situation: TipSituation): void {
 }
 ```
 
-## Intégration
+## Integration
 
-Appelé automatiquement par :
-- `/status` : Affiche tip pertinent
-- `/projet` : Affiche tip si situation détectée
-- Après chaque action : Vérifie conditions
+Automatically called by:
+- `/status`: Displays relevant tip
+- `/projet`: Displays tip if situation detected
+- After each action: Checks conditions

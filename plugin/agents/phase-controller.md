@@ -1,32 +1,32 @@
 ---
 name: phase-controller
-description: Gère les transitions entre phases avec Go/No-Go validation et chargement contextuel de documentation
+description: Manages transitions between phases with Go/No-Go validation and contextual documentation loading
 ---
 
 # Phase Controller
 
-## Responsabilités
+## Responsibilities
 
-1. **Validation checklist** : Vérifier complétion phase actuelle
-2. **Go/No-Go** : Décision utilisateur avant transition
-3. **Chargement doc** : Charger condensé phase suivante
-4. **Update état** : Transitionner vers nouvelle phase
+1. **Checklist validation**: Verify completion of current phase
+2. **Go/No-Go**: User decision before transition
+3. **Doc loading**: Load condensed next phase documentation
+4. **State update**: Transition to new phase
 
-## Les 7 Phases
+## The 7 Phases
 
-| # | Phase | Skills Principaux |
+| # | Phase | Main Skills |
 |---|-------|-------------------|
 | 1 | Discovery | brainstorming |
-| 2 | Stratégie | writing-plans, brainstorming |
-| 3 | Conception | writing-plans, brainstorming |
-| 4 | Développement | test-driven-development, code-review |
-| 5 | Qualité | verification-before-completion, systematic-debugging |
-| 6 | Lancement | verification-before-completion |
-| 7 | Croissance | root-cause-tracing, systematic-debugging |
+| 2 | Strategy | writing-plans, brainstorming |
+| 3 | Design | writing-plans, brainstorming |
+| 4 | Development | test-driven-development, code-review |
+| 5 | Quality | verification-before-completion, systematic-debugging |
+| 6 | Launch | verification-before-completion |
+| 7 | Growth | root-cause-tracing, systematic-debugging |
 
-## Implémentation
+## Implementation
 
-### Vérifier checklist phase
+### Check phase checklist
 
 ```typescript
 function checkPhaseChecklist(phase: number): ChecklistResult {
@@ -44,7 +44,7 @@ function checkPhaseChecklist(phase: number): ChecklistResult {
 }
 ```
 
-### Go/No-Go décision
+### Go/No-Go decision
 
 ```typescript
 async function goNoGoDecision(phase: number): Promise<boolean> {
@@ -52,59 +52,59 @@ async function goNoGoDecision(phase: number): Promise<boolean> {
   const errors = await skillCall('error-tracker', 'listActiveErrors')
   const blocking = errors.filter(e => e.blocking)
 
-  // Conditions pour GO
+  // Conditions for GO
   const checklistOK = checklist.ready
   const noBlockers = blocking.length === 0
   const testsPass = await runAllTests()
 
-  // Afficher status
+  // Display status
   print(`╭─────────────────────────────────────────────────╮`)
-  print(`│  Phase ${getPhaseName(phase)} terminée ?`)
+  print(`│  Phase ${getPhaseName(phase)} complete?`)
   print(`├─────────────────────────────────────────────────┤`)
-  print(`│  ✅ Checklist : ${checklist.completed}/${checklist.total} items`)
-  print(`│  ${noBlockers ? '✅' : '❌'} Bloqueurs : ${blocking.length}`)
-  print(`│  ${testsPass ? '✅' : '❌'} Tests : ${testsPass ? 'PASSING' : 'FAILING'}`)
+  print(`│  ✅ Checklist: ${checklist.completed}/${checklist.total} items`)
+  print(`│  ${noBlockers ? '✅' : '❌'} Blockers: ${blocking.length}`)
+  print(`│  ${testsPass ? '✅' : '❌'} Tests: ${testsPass ? 'PASSING' : 'FAILING'}`)
   print(`╰─────────────────────────────────────────────────╯`)
 
   if (!checklistOK) {
-    print(`\n⚠️  Items manquants :`)
+    print(`\n⚠️  Missing items:`)
     checklist.missing.forEach(item => print(`   - ${item.description}`))
   }
 
   if (blocking.length > 0) {
-    print(`\n❌ ${blocking.length} bloqueur(s). Utiliser /fix avant transition.`)
+    print(`\n❌ ${blocking.length} blocker(s). Use /fix before transition.`)
     return false
   }
 
   if (!testsPass) {
-    print(`\n❌ Tests échouent. Corriger avant transition.`)
+    print(`\n❌ Tests failing. Fix before transition.`)
     return false
   }
 
   if (!checklistOK) {
-    const answer = await askUser(`\n⚠️  Checklist incomplète. Continuer quand même ? (o/n)`)
-    return answer === 'o'
+    const answer = await askUser(`\n⚠️  Checklist incomplete. Continue anyway? (y/n)`)
+    return answer === 'y'
   }
 
-  const answer = await askUser(`\nPasser à Phase ${getPhaseName(phase + 1)} ? (o/n)`)
-  return answer === 'o'
+  const answer = await askUser(`\nProceed to Phase ${getPhaseName(phase + 1)}? (y/n)`)
+  return answer === 'y'
 }
 ```
 
-### Transition vers phase suivante
+### Transition to next phase
 
 ```typescript
 async function transitionToPhase(nextPhase: number): Promise<void> {
   const phaseName = getPhaseName(nextPhase)
 
-  // 1. Checkpoint avant transition
+  // 1. Checkpoint before transition
   await skillCall('context-manager', 'createCheckpoint', `phase-${nextPhase - 1}-complete`)
 
-  // 2. Charger doc condensée phase suivante
+  // 2. Load condensed next phase doc
   const phaseDoc = await loadFile(`src/reference/phases/${nextPhase}-${phaseName.toLowerCase()}.md`)
-  print(`\n📖 Chargement documentation : ${phaseName}...`)
+  print(`\n📖 Loading documentation: ${phaseName}...`)
 
-  // 3. Update état
+  // 3. Update state
   await skillCall('context-manager', 'updateState', {
     currentPhase: nextPhase,
     phaseName,
@@ -114,80 +114,80 @@ async function transitionToPhase(nextPhase: number): Promise<void> {
     }
   })
 
-  // 4. Afficher résumé phase
-  print(`\n✅ Transition vers Phase ${nextPhase} : ${phaseName}`)
-  print(`\n📋 Checklist phase (${getChecklistLength(nextPhase)} items)`)
-  print(`🔧 Skills actifs : ${getPhaseSkills(nextPhase).join(', ')}`)
-  print(`\n💡 Utilisez /help pour voir la documentation complète de cette phase`)
+  // 4. Display phase summary
+  print(`\n✅ Transition to Phase ${nextPhase}: ${phaseName}`)
+  print(`\n📋 Phase checklist (${getChecklistLength(nextPhase)} items)`)
+  print(`🔧 Active skills: ${getPhaseSkills(nextPhase).join(', ')}`)
+  print(`\n💡 Use /help to see the complete documentation for this phase`)
 }
 ```
 
-## Chargement Contextuel
+## Contextual Loading
 
-Seul le condensé de la phase actuelle est chargé en contexte :
-- Phase 4 active → `4-developpement.md` chargé
-- Économie tokens (7 fichiers × ~500 mots = 3500 mots, vs 1 × 500 = économie de 6× tokens)
+Only the condensed version of the current phase is loaded in context:
+- Phase 4 active → `4-development.md` loaded
+- Token savings (7 files × ~500 words = 3500 words, vs 1 × 500 = 6× token savings)
 
-## Messages Go/No-Go
+## Go/No-Go Messages
 
-### Prêt à avancer
-
-```
-╭─────────────────────────────────────────────────╮
-│  Phase Développement terminée ?                 │
-├─────────────────────────────────────────────────┤
-│  ✅ Checklist : 12/12 items                     │
-│  ✅ Bloqueurs : 0                               │
-│  ✅ Tests : PASSING                             │
-╰─────────────────────────────────────────────────╯
-
-Passer à Phase Qualité ? (o/n)
-```
-
-### Bloqueurs présents
+### Ready to proceed
 
 ```
 ╭─────────────────────────────────────────────────╮
-│  Phase Développement terminée ?                 │
+│  Phase Development complete?                    │
 ├─────────────────────────────────────────────────┤
-│  ✅ Checklist : 12/12 items                     │
-│  ❌ Bloqueurs : 2                               │
-│  ❌ Tests : FAILING                             │
+│  ✅ Checklist: 12/12 items                      │
+│  ✅ Blockers: 0                                 │
+│  ✅ Tests: PASSING                              │
 ╰─────────────────────────────────────────────────╯
 
-❌ 2 bloqueur(s). Utiliser /fix avant transition.
+Proceed to Phase Quality? (y/n)
 ```
 
-### Checklist incomplète
+### Blockers present
 
 ```
 ╭─────────────────────────────────────────────────╮
-│  Phase Développement terminée ?                 │
+│  Phase Development complete?                    │
 ├─────────────────────────────────────────────────┤
-│  ⚠️  Checklist : 10/12 items                    │
-│  ✅ Bloqueurs : 0                               │
-│  ✅ Tests : PASSING                             │
+│  ✅ Checklist: 12/12 items                      │
+│  ❌ Blockers: 2                                 │
+│  ❌ Tests: FAILING                              │
 ╰─────────────────────────────────────────────────╯
 
-⚠️  Items manquants :
-   - Documentation API
-   - Tests d'intégration
-
-Checklist incomplète. Continuer quand même ? (o/n)
+❌ 2 blocker(s). Use /fix before transition.
 ```
 
-## Noms des Phases
+### Checklist incomplete
+
+```
+╭─────────────────────────────────────────────────╮
+│  Phase Development complete?                    │
+├─────────────────────────────────────────────────┤
+│  ⚠️  Checklist: 10/12 items                     │
+│  ✅ Blockers: 0                                 │
+│  ✅ Tests: PASSING                              │
+╰─────────────────────────────────────────────────╯
+
+⚠️  Missing items:
+   - API Documentation
+   - Integration tests
+
+Checklist incomplete. Continue anyway? (y/n)
+```
+
+## Phase Names
 
 ```typescript
 function getPhaseName(phase: number): string {
   const names = {
     1: 'Discovery',
-    2: 'Stratégie',
-    3: 'Conception',
-    4: 'Développement',
-    5: 'Qualité',
-    6: 'Lancement',
-    7: 'Croissance'
+    2: 'Strategy',
+    3: 'Design',
+    4: 'Development',
+    5: 'Quality',
+    6: 'Launch',
+    7: 'Growth'
   }
   return names[phase] || 'Unknown'
 }
