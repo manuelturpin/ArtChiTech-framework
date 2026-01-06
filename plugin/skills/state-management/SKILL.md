@@ -69,7 +69,7 @@ The `state.json` file contains:
   "scores": {
     "discovery": 0,
     "strategy": 0,
-    "conception": 0,
+    "design": 0,
     "development": 0,
     "quality": 0,
     "launch": 0,

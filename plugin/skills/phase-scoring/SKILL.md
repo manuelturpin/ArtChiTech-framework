@@ -67,7 +67,7 @@ After running project-detection, evaluate:
   "scores": {
     "discovery": 85,
     "strategy": 70,
-    "conception": 90,
+    "design": 90,
     "development": 45,
     "quality": 0,
     "launch": 0,

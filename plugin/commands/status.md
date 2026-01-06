@@ -42,7 +42,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py r
 │  Phases:                                                    │
 │  ✅ Discovery      [██████████] [scores.discovery]%         │
 │  ✅ Strategy       [███████░░░] [scores.strategy]%          │
-│  ✅ Design         [█████████░] [scores.conception]%        │
+│  ✅ Design         [█████████░] [scores.design]%            │
 │  🔄 Development    [████░░░░░░] [scores.development]%  ←    │
 │  ⬚ Quality        [░░░░░░░░░░] [scores.quality]%           │
 │  ⬚ Launch         [░░░░░░░░░░] [scores.launch]%            │
@@ -69,7 +69,7 @@ If `current_feature` exists, add:
 Global progress is the average of all phase scores:
 
 ```
-progress = (discovery + strategy + conception + development + quality + launch + growth) / 7
+progress = (discovery + strategy + design + development + quality + launch + growth) / 7
 ```
 
 ## Progress Bar

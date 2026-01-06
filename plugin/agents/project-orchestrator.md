@@ -33,7 +33,7 @@ description: Main orchestrator that coordinates all skills and manages the /proj
 ### Main menu
 
 ```typescript
-async function showProjetMenu() {
+async function showProjectMenu() {
   const state = await skillCall('context-manager', 'readState')
   const hasProject = state.project.name !== ''
 
@@ -73,7 +73,7 @@ async function startNewProject() {
 
   // 1. Collect basic info
   const name = await askUser("Project name?")
-  const type = await askUser("Type? (webapp/mobile/feature/refacto)")
+  const type = await askUser("Type? (webapp/mobile/feature/refactor)")
 
   // 2. Initialize state
   await skillCall('context-manager', 'updateState', {
