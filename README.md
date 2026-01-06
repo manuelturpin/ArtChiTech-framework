@@ -1,107 +1,73 @@
-# Framework Projet Claude Code
+# ACT Framework - Atelier de Développement
 
-Framework de gestion de projet pour Claude Code qui transforme 167K mots de recherche en 6 commandes simples.
+> **lab-13** = Atelier de développement du plugin ACT (ArtChiTech)
 
-## Caractéristiques
+## Qu'est-ce que ACT ?
 
-- **6 commandes** : `/projet`, `/resume`, `/status`, `/fix`, `/next`, `/help`
-- **Persistance** : Contexte préservé entre sessions (`.epct/`)
-- **7 phases** : Discovery → Stratégie → Conception → Développement → Qualité → Lancement → Croissance
-- **TDD automatique** : Pattern chunk-test-fix
-- **Intégration Superpowers** : Skills activés selon phase
+**ACT (ArtChiTech)** est un framework de gestion de projet pour Claude Code qui structure le développement en **7 phases** : Discovery → Stratégie → Conception → Développement → Qualité → Lancement → Croissance.
 
-## Installation Rapide
+## Structure du Projet
 
-```bash
-# Copier dans votre projet
-cp -r src .claude/framework/
-cp -r .epct .epct/
-
-# Lancer
-/projet
+```
+lab-13/
+├── plugin/              # 📦 Source du plugin ACT
+│   ├── commands/        # Commandes : /onboard, /projet, /status...
+│   ├── agents/          # Agents spécialisés
+│   ├── references/      # Documentation phases, scoring, templates
+│   └── scripts/         # Scripts utilitaires
+├── test-apps/           # 🧪 Applications de test
+│   └── bonsai-tracker/  # Test #1 : SaaS traçabilité bonsaïs
+├── docs/                # 📚 Documentation développement
+│   ├── plans/           # Plans d'implémentation
+│   ├── handoffs/        # Handoffs de sessions
+│   └── architecture/    # Documentation architecture
+└── scripts/             # 🔧 Scripts de build/installation
 ```
 
-Voir [docs/installation.md](docs/installation.md) pour le guide complet.
-
-## Commandes
+## Commandes du Plugin
 
 | Commande | Description |
 |----------|-------------|
+| `/onboard` | Auditer un projet existant |
 | `/projet` | Hub principal interactif |
-| `/resume` | Reprendre session précédente |
 | `/status` | État et progression |
+| `/resume` | Reprendre session |
 | `/fix` | Corriger erreur prioritaire |
-| `/next` | Passer à l'étape suivante |
+| `/next` | Étape suivante |
 | `/help` | Aide contextuelle |
+
+## Installation
+
+```bash
+# Installation locale du plugin
+./scripts/install-local.sh
+```
 
 ## Les 7 Phases
 
-1. **Discovery** - Valider le problème
-2. **Stratégie** - Définir roadmap et business model
-3. **Conception** - Designer architecture et UX
-4. **Développement** - Implémenter avec TDD
-5. **Qualité** - Tester et valider
-6. **Lancement** - Déployer et acquérir
-7. **Croissance** - Itérer et optimiser
-
-## Architecture
-
-```
-src/
-├── skills/           # Skills du framework
-│   ├── context-manager.md
-│   ├── chunk-manager.md
-│   ├── error-tracker.md
-│   ├── phase-controller.md
-│   ├── projet-orchestrator.md
-│   └── tips-engine.md
-├── cli/              # Commandes utilisateur
-│   ├── projet.md
-│   ├── resume.md
-│   ├── status.md
-│   ├── fix.md
-│   ├── next.md
-│   └── help.md
-└── reference/        # Documentation phases
-    └── phases/
-        ├── 1-discovery.md
-        └── ...
-```
-
-## Workflow TDD
-
-```
-Pour chaque feature :
-1. Découper en chunks (~50 lignes)
-2. Pour chaque chunk :
-   🔴 RED   : Écrire test qui échoue
-   🟢 GREEN : Implémenter minimum
-   🔧 REFACTOR : Nettoyer
-3. Commit après chaque chunk vert
-```
-
-## Persistance
-
-L'état est sauvegardé dans `.epct/` :
-- `state.json` : État projet actuel
-- `checkpoints/` : Points de sauvegarde
-- `errors/` : Tracking erreurs
-- `session/` : Info session courante
-
-## Documentation
-
-- [Installation](docs/installation.md)
-- [Phases détaillées](src/reference/phases/)
+| Phase | Objectif |
+|-------|----------|
+| 1. Discovery | Valider le problème |
+| 2. Stratégie | Définir roadmap |
+| 3. Conception | Designer architecture |
+| 4. Développement | Implémenter (TDD) |
+| 5. Qualité | Tester et valider |
+| 6. Lancement | Déployer |
+| 7. Croissance | Itérer et optimiser |
 
 ## Développement
 
-Ce framework s'auto-utilise pour son développement.
+Voir [CLAUDE.md](CLAUDE.md) pour les conventions et le workflow de développement.
 
-```bash
-cd lab-13-framework-dev  # Worktree
-git branch               # framework/implementation
-/projet                  # Utiliser le framework
-```
+## Documentation
+
+- [Plugin README](plugin/README.md) - Documentation utilisateur
+- [FRAMEWORK-SYNTHESIS.md](FRAMEWORK-SYNTHESIS.md) - Synthèse complète
+- [docs/](docs/) - Documentation développement
+
+## Auteur
+
+Manuel Turpin (Bonsai974)
 
 ## Licence
 
