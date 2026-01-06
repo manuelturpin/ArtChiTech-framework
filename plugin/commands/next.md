@@ -1,174 +1,133 @@
 ---
 name: next
-command: /next
-description: Passe à l'étape suivante (chunk ou phase) avec validation Go/No-Go
+description: Verifier les criteres Go/No-Go et passer a la phase suivante
 ---
 
-# /next - Étape Suivante
+# /next - Phase Suivante
 
-## Comportement Contextuel
+Tu geres la transition vers la phase suivante du projet ACT.
 
-### Si dans un chunk
-- Proposer chunk suivant
-- Vérifier tests du chunk actuel
-- Bloquer si erreurs
+## Etape 1: Lire l'Etat
 
-### Si fin de phase
-- Déclencher Go/No-Go
-- Valider checklist
-- Transitionner si approuvé
-
-## Implémentation
-
-```typescript
-async function executeNextCommand() {
-  const state = await skillCall('context-manager', 'readState')
-
-  // 1. Déterminer contexte
-  const inChunk = state.currentChunk !== null
-  const phaseComplete = await isPhaseComplete(state.currentPhase)
-
-  if (inChunk) {
-    await handleNextChunk()
-  } else if (phaseComplete) {
-    await handleNextPhase(state.currentPhase)
-  } else {
-    print("💡 Continuez le travail en cours. Utilisez /status pour voir progression.")
-  }
-}
-
-async function handleNextChunk() {
-  // 1. Vérifier chunk actuel terminé
-  const state = await skillCall('context-manager', 'readState')
-  const currentChunk = state.currentChunk
-
-  if (currentChunk.status !== 'completed') {
-    print(`⚠️  Chunk actuel (${currentChunk.method}) non terminé`)
-    print(`💡 Terminez-le ou utilisez /fix si erreur`)
-    return
-  }
-
-  // 2. Récupérer chunk suivant
-  const nextChunk = await skillCall('chunk-manager', 'getNextChunk')
-
-  if (!nextChunk) {
-    print("✅ Tous les chunks de cette tâche sont terminés!")
-    print("💡 Utilisez /next à nouveau pour passer à la phase suivante")
-    return
-  }
-
-  // 3. Proposer chunk suivant
-  print(`\n📍 Chunk suivant : ${nextChunk.name}`)
-  print(`   File: ${nextChunk.file}`)
-  print(`   Lines: ${nextChunk.lineStart}-${nextChunk.lineEnd}`)
-  print(`   Size: ${nextChunk.size} lines`)
-
-  const answer = await askUser("Commencer ce chunk ? (o/n)")
-
-  if (answer === 'o') {
-    await skillCall('chunk-manager', 'executeChunkWorkflow', nextChunk)
-  }
-}
-
-async function handleNextPhase(currentPhase: number) {
-  // 1. Go/No-Go
-  const approved = await skillCall('phase-controller', 'goNoGoDecision', currentPhase)
-
-  if (!approved) {
-    print("\n❌ Transition refusée ou conditions non remplies")
-    print("💡 Complétez les items manquants puis /next à nouveau")
-    return
-  }
-
-  // 2. Transition
-  await skillCall('phase-controller', 'transitionToPhase', currentPhase + 1)
-}
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
-## Messages
-
-### Chunk suivant disponible
-
+Si phase actuelle = 7, affiche :
 ```
-📍 Chunk suivant : UserService.delete
-   File: src/services/UserService.ts
-   Lines: 120-165
-   Size: 45 lines
-   Dependencies: 0
-
-Commencer ce chunk ? (o/n)
+🎉 Felicitations ! Vous etes en phase Croissance (7/7).
+C'est la derniere phase - continuez a iterer !
 ```
 
-### Tous chunks terminés
+## Etape 2: Verifier Go/No-Go
 
+Le score de la phase actuelle doit etre >= 70% pour passer.
+
+Consulte les criteres dans le skill `phase-scoring` :
+- Discovery : README, probleme defini, users
+- Strategie : Roadmap, business model
+- Conception : Architecture, specs
+- Developpement : Code, tests, CI
+- Qualite : Coverage, bugs
+- Lancement : Deploy, monitoring
+- Croissance : Analytics, feedback
+
+## Etape 3a: Si Criteres OK (score >= 70)
+
+Affiche :
 ```
-✅ Tous les chunks de cette tâche sont terminés!
-
-💡 Utilisez /next à nouveau pour passer à la phase suivante
-```
-
-### Chunk en cours non terminé
-
-```
-⚠️  Chunk actuel (UserService.update) non terminé
-
-   Status: in_progress
-   Tests: ❌ FAILING
-
-💡 Terminez-le ou utilisez /fix si erreur
-```
-
-### Go/No-Go transition
-
-```
-╭─────────────────────────────────────────────────╮
-│  Phase Développement terminée ?                 │
-├─────────────────────────────────────────────────┤
-│  ✅ Checklist : 12/12 items                     │
-│  ✅ Bloqueurs : 0                               │
-│  ✅ Tests : PASSING                             │
-╰─────────────────────────────────────────────────╯
-
-Passer à Phase Qualité ? (o/n)
+╭─────────────────────────────────────────────────────────────╮
+│  ✅ Phase [current] : [name] terminee !                     │
+│                                                             │
+│  Score: [score]%                                            │
+│  Criteres valides:                                          │
+│  ✓ [critere 1]                                              │
+│  ✓ [critere 2]                                              │
+│  ✓ [critere 3]                                              │
+│                                                             │
+│  Passer a la phase [next] : [next-name] ?                   │
+│  [o/n]                                                      │
+╰─────────────────────────────────────────────────────────────╯
 ```
 
-### Phase finale (7/7)
+Si oui :
+1. Cree un checkpoint
+2. Met a jour la phase
 
-```
-╭─────────────────────────────────────────────────╮
-│  Phase Croissance terminée ?                    │
-├─────────────────────────────────────────────────┤
-│  ✅ Checklist : 8/8 items                       │
-│  ✅ Bloqueurs : 0                               │
-│  ✅ Tests : PASSING                             │
-╰─────────────────────────────────────────────────╯
-
-🎉 Félicitations ! Projet terminé !
-
-💡 Prochaines étapes suggérées :
-   - Documenter les leçons apprises
-   - Planifier la prochaine itération
-   - Célébrer ! 🎊
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py checkpoint
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py update \
+  --updates '{"phase": {"current": [next], "name": "[next-name]", "started_at": "[now]"}}'
 ```
 
-## Cas spéciaux
-
-### Erreurs bloquantes
-
+Affiche :
 ```
-❌ Impossible d'avancer
-
-   2 erreur(s) bloquante(s) en attente
-
-💡 Utilisez /fix pour les résoudre d'abord
+🎯 Phase [next-name] activee !
+💡 Utilisez /projet pour voir les actions disponibles.
 ```
 
-### Rien en cours
+## Etape 3b: Si Criteres NON OK (score < 70)
 
+Affiche :
 ```
-💡 Aucune tâche en cours.
+╭─────────────────────────────────────────────────────────────╮
+│  ❌ Impossible de passer a la phase suivante                │
+│                                                             │
+│  Phase actuelle: [name] ([current]/7)                       │
+│  Score: [score]% (minimum requis: 70%)                      │
+│                                                             │
+│  Criteres manquants:                                        │
+│  ✗ [critere manquant 1]                                     │
+│  ✗ [critere manquant 2]                                     │
+│                                                             │
+│  💡 Actions recommandees:                                   │
+│  1. [action pour critere 1]                                 │
+│  2. [action pour critere 2]                                 │
+│                                                             │
+│  Utilisez /fix pour corriger les problemes.                 │
+╰─────────────────────────────────────────────────────────────╯
+```
 
-   Options :
-   - /projet pour démarrer une nouvelle feature
-   - /status pour voir l'état du projet
-```
+## Noms des Phases
+
+| Phase | Nom |
+|-------|-----|
+| 1 | Discovery |
+| 2 | Strategie |
+| 3 | Conception |
+| 4 | Developpement |
+| 5 | Qualite |
+| 6 | Lancement |
+| 7 | Croissance |
+
+## Criteres Go/No-Go par Phase
+
+### Phase 1 → 2 (Discovery → Strategie)
+- README avec probleme documente
+- Personas/users definis
+- Validation initiale faite
+
+### Phase 2 → 3 (Strategie → Conception)
+- Roadmap definie
+- Business model documente
+- KPIs identifies
+
+### Phase 3 → 4 (Conception → Developpement)
+- Architecture documentee
+- Tech stack choisi
+- Specs techniques ecrites
+
+### Phase 4 → 5 (Developpement → Qualite)
+- Code source present
+- Tests ecrits
+- CI/CD configure
+
+### Phase 5 → 6 (Qualite → Lancement)
+- Coverage >= 60%
+- Pas de bugs critiques
+- Performance validee
+
+### Phase 6 → 7 (Lancement → Croissance)
+- Deploye en production
+- Monitoring en place
+- Documentation utilisateur
