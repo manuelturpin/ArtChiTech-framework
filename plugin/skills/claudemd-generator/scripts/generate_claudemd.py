@@ -324,28 +324,29 @@ test_<function>_<scenario>_<expected>
 Example: `test_getUserById_invalidId_throwsError`"""
 
 
-def generate_act_section(phase: int = 1) -> str:
-    """Generate ACT Framework integration section."""
+def generate_act_section(phase: int = 1, score: int = 0) -> str:
+    """Generate ACT Framework integration section with dynamic phase import."""
     phase_name = get_phase_name(phase)
 
     return f"""## ACT Framework
 
-Current phase: **{phase}** ({phase_name})
+Phase: **{phase}** ({phase_name}) | Score: {score}%
 
-| Command | Description |
-|---------|-------------|
-| `/act-project` | Main hub |
-| `/act-status` | View progress |
-| `/act-next` | Move to next phase |
-| `/act-fix` | Fix blocking issues |
-| `/act-help` | Get contextual help |"""
+@plugin/references/phases/{phase}-{phase_name.lower()}.md
+
+| Ressource | Accès |
+|-----------|-------|
+| État projet | `.epct/state.json` |
+| Historique | `.epct/history/` |
+| Aide | `/act-help` |"""
 
 
 def assemble_claudemd(
     project_name: str,
     description: str,
     stack_info: dict,
-    phase: int = 1
+    phase: int = 1,
+    score: int = 0
 ) -> str:
     """
     Assemble complete CLAUDE.md content.
@@ -355,6 +356,7 @@ def assemble_claudemd(
         description: Short project description
         stack_info: Stack detection results
         phase: Current ACT phase (1-7)
+        score: Current ACT score (0-100)
 
     Returns:
         Complete CLAUDE.md content
@@ -374,7 +376,7 @@ def assemble_claudemd(
     sections.append(generate_stack_table(stack_info))
 
     # ACT Integration
-    sections.append("\n" + generate_act_section(phase))
+    sections.append("\n" + generate_act_section(phase, score))
 
     # Commands
     commands = generate_commands_section(stack_info)
@@ -454,6 +456,12 @@ def main():
         help="Current ACT phase (1-7)"
     )
     parser.add_argument(
+        "--score",
+        type=int,
+        default=0,
+        help="Current ACT score (0-100)"
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print output without writing file"
@@ -494,7 +502,8 @@ def main():
             args.name,
             args.description,
             stack_info,
-            args.phase
+            args.phase,
+            args.score
         )
 
     # Output
