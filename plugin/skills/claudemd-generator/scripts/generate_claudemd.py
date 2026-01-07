@@ -274,7 +274,7 @@ def generate_conventions_section(stack_info: dict) -> str:
 | Functions | camelCase | `getUserById()` |
 | Classes | PascalCase | `UserService` |"""
 
-    if language in ["typescript", "javascript"]:
+    if language == "typescript":
         base += """
 
 ### TypeScript
@@ -282,6 +282,15 @@ def generate_conventions_section(stack_info: dict) -> str:
 - MUST use strict mode
 - Prefer interfaces over types for objects
 - Use explicit return types on functions"""
+
+    elif language == "javascript":
+        base += """
+
+### JavaScript
+
+- Use ES6+ features (const, let, arrow functions)
+- Prefer async/await over callbacks
+- Use JSDoc for documentation"""
 
     elif language == "python":
         base += """
