@@ -22,3 +22,6 @@ playwright-report/
 # Claude local preferences
 .claude/CLAUDE.local.md
 test-apps/
+
+# Private ideas (not for public repo)
+ideas/
