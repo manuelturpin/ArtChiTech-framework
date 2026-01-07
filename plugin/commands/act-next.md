@@ -7,20 +7,40 @@ description: Check Go/No-Go criteria and proceed to the next phase
 
 You manage the transition to the next phase of the ACT project.
 
-## Step 0: Resolve ACT Path
+## Step 0: Check Local Project State
 
-First, resolve the plugin path with fallback for local installation:
+**First**, check if an ACT project is initialized locally:
 
 ```bash
-ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
-if [ ! -d "$ACT_ROOT/skills" ]; then
-  echo "❌ Plugin ACT not found in $ACT_ROOT"
-  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
+if [ -f ".epct/state.json" ]; then
+  echo "✅ ACT project found locally"
+  cat .epct/state.json
+else
+  echo "❌ No ACT project initialized in this directory."
+  echo "💡 Use /act-project to get started."
   exit 1
 fi
 ```
 
+## Step 0b: Resolve ACT Path (for write operations)
+
+For operations requiring the plugin (checkpoint, update), resolve the path:
+
+```bash
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+# Note: ACT_ROOT is only needed for checkpoint/update operations
+# Reading state works directly from .epct/state.json
+```
+
 ## Step 1: Read State
+
+Read the state directly from the local JSON file:
+
+```bash
+cat .epct/state.json
+```
+
+Or if using the state manager script (when ACT_ROOT is available):
 
 ```bash
 python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read

@@ -7,29 +7,36 @@ description: Resume a previous work session
 
 You help resume work where it left off.
 
-## Step 0: Resolve ACT Path
+## Step 0: Check Local Project State
 
-First, resolve the plugin path with fallback for local installation:
+**First**, check if an ACT project is initialized locally:
 
 ```bash
-ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
-if [ ! -d "$ACT_ROOT/skills" ]; then
-  echo "❌ Plugin ACT not found in $ACT_ROOT"
-  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
+if [ -f ".epct/state.json" ]; then
+  echo "✅ ACT project found locally"
+  cat .epct/state.json
+else
+  echo "❌ No ACT project to resume."
+  echo "💡 Use /act-project to get started."
   exit 1
 fi
 ```
 
-## Step 1: Check State
+## Step 0b: Resolve ACT Path (for checkpoint operations)
+
+For checkpoint restore operations, resolve the path:
 
 ```bash
-python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+# Note: ACT_ROOT is only needed for checkpoint restore operations
 ```
 
-If no `.epct/`, display:
-```
-❌ No ACT project to resume.
-💡 Use /projet to get started.
+## Step 1: Read State
+
+Read the state directly from the local JSON file:
+
+```bash
+cat .epct/state.json
 ```
 
 ## Step 2: Analyze Context

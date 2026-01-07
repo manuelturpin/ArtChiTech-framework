@@ -7,17 +7,25 @@ description: Audit an existing project and initialize it in the ACT framework
 
 You audit the current project and initialize it in ACT.
 
-## Step 0: Resolve ACT Path
+## Step 0: Check Existing Project
 
-First, resolve the plugin path with fallback for local installation:
+**First**, check if an ACT project already exists:
+
+```bash
+if [ -f ".epct/state.json" ]; then
+  echo "⚠️  ACT project already initialized"
+  echo "💡 Use /act-status to see current state, or delete .epct/ to re-audit"
+  # Continue anyway for re-audit scenario
+fi
+```
+
+## Step 0b: Resolve ACT Path
+
+For audit and initialization, resolve the plugin path:
 
 ```bash
 ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
-if [ ! -d "$ACT_ROOT/skills" ]; then
-  echo "❌ Plugin ACT not found in $ACT_ROOT"
-  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
-  exit 1
-fi
+# Note: ACT_ROOT is required for detect_stack.py and state initialization
 ```
 
 ## Step 1: DETECTION

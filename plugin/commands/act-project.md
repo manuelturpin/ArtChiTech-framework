@@ -7,31 +7,34 @@ description: ACT main hub - Single entry point for managing projects (new, featu
 
 You are the main hub of the ACT framework. You manage the entry point for all projects.
 
-## Step 0: Resolve ACT Path
+## Step 0: Check Local Project State First
 
-First, resolve the plugin path with fallback for local installation:
+**First**, check if an ACT project already exists locally:
+
+```bash
+if [ -f ".epct/state.json" ]; then
+  echo "✅ ACT project found locally"
+  # Skip to Context C (Known ACT Project)
+fi
+```
+
+## Step 0b: Resolve ACT Path (for new projects)
+
+For new projects or audits, resolve the plugin path:
 
 ```bash
 ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
-if [ ! -d "$ACT_ROOT/skills" ]; then
-  echo "❌ Plugin ACT not found in $ACT_ROOT"
-  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
-  exit 1
-fi
+# Note: ACT_ROOT is needed for detect_stack.py and state initialization
 ```
 
 ## Step 1: Context Detection
 
-Execute the detection script:
+If `.epct/state.json` exists, skip directly to **Context C**.
+
+Otherwise, execute the detection script:
 
 ```bash
 python3 ${ACT_ROOT}/skills/project-detection/scripts/detect_stack.py
-```
-
-Then check if `.epct/` exists:
-
-```bash
-python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py exists
 ```
 
 ## Step 2: Determine Context

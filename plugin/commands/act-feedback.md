@@ -7,18 +7,20 @@ description: Report a bug, suggestion, or question with automatic context captur
 
 You help the user report issues with ACT by capturing context and creating a GitHub Issue.
 
-## Step 0: Resolve ACT Path
+## Step 0: Check Local Project State (Optional)
 
-First, resolve the plugin path with fallback for local installation:
+**First**, check if an ACT project exists to capture context:
 
 ```bash
-ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
-if [ ! -d "$ACT_ROOT/skills" ]; then
-  echo "❌ Plugin ACT not found in $ACT_ROOT"
-  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
-  exit 1
+if [ -f ".epct/state.json" ]; then
+  echo "✅ ACT project found - context will be captured"
+  cat .epct/state.json
+else
+  echo "ℹ️  No ACT project found - feedback will be created without ACT context"
 fi
 ```
+
+Note: Feedback can be submitted even without an initialized ACT project.
 
 ## Step 1: Check GitHub CLI
 

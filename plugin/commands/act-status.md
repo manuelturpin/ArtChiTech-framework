@@ -7,35 +7,36 @@ description: Display the complete ACT project state (phase, scores, progress)
 
 You display the complete state of the current ACT project.
 
-## Step 0: Resolve ACT Path
+## Step 0: Check Local Project State
 
-First, resolve the plugin path with fallback for local installation:
+**First**, check if an ACT project is initialized locally:
 
 ```bash
-ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
-if [ ! -d "$ACT_ROOT/skills" ]; then
-  echo "❌ Plugin ACT not found in $ACT_ROOT"
-  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
+if [ -f ".epct/state.json" ]; then
+  echo "✅ ACT project found locally"
+else
+  echo "❌ No ACT project initialized in this directory."
+  echo "💡 Use /act-project to get started."
   exit 1
 fi
 ```
 
-## Step 1: Check .epct/
+## Step 0b: Resolve ACT Path (for advanced operations)
+
+For operations requiring the plugin scripts, resolve the path:
 
 ```bash
-python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py exists
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+# Note: ACT_ROOT is only needed for advanced operations
+# Reading state works directly from .epct/state.json
 ```
 
-If `false`, display:
-```
-❌ No ACT project initialized.
-💡 Use /projet to get started.
-```
+## Step 1: Read State
 
-## Step 2: Read State
+Read the state directly from the local JSON file:
 
 ```bash
-python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read
+cat .epct/state.json
 ```
 
 ## Step 3: Display Status
