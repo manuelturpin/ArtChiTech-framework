@@ -32,8 +32,8 @@ curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/m
 ```
 
 The installer asks where to install:
-- **Global** (`~/.claude/plugins/act/`) - All projects
-- **Project** (`./claude/plugins/act/`) - Current project only
+- **Global** (`~/.claude/plugins/cache/manuelturpin/act/`) - All projects
+- **Project** (`./.claude/commands/`, `./.claude/agents/`, etc.) - Current project only
 
 **With arguments**
 
