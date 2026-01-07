@@ -1,230 +1,122 @@
-# ArtChiTech Framework (ACT)
+# ACT Framework
 
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/manuelturpin/ArtChiTech-framework/releases)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-purple.svg)](https://claude.ai/code)
+![Version](https://img.shields.io/badge/version-1.2.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-purple)
 
-> A 7-phase project management framework for Claude Code. From idea to production, structured and guided.
+> **Ship better projects.** From idea to production, guided by AI.
 
-## What is ACT?
+You start a project. Three weeks later, you're lost in your own code. Sound familiar?
 
-**ACT** transforms how you build software with Claude Code. Instead of diving straight into code, ACT guides you through a structured 7-phase methodology that ensures you're building the right thing, the right way.
+ACT gives your projects structure without the overhead. 7 phases. Clear milestones. No more "where was I?"
 
-```
-/act-project
-```
-
-That's it. One command to start. ACT automatically detects your context and guides you.
-
-## Features
-
-- **Structured Phases** - 7 proven phases from Discovery to Growth
-- **Smart Detection** - Automatically recognizes new vs existing projects
-- **TDD Integration** - Test-driven development built into the workflow
-- **Superpowers Skills** - Leverages brainstorming, planning, and review skills
-- **Progress Tracking** - Visual status and checkpoints
-- **Feedback Loop** - Built-in issue reporting to GitHub
-
-## The 7 Phases
-
-| Phase | Name | Goal |
-|:-----:|------|------|
-| 1 | **Discovery** | Validate the problem and user needs |
-| 2 | **Strategy** | Define roadmap and business model |
-| 3 | **Design** | Architect the solution and UX |
-| 4 | **Development** | Implement with TDD methodology |
-| 5 | **Quality** | Test, review, and validate |
-| 6 | **Launch** | Deploy and release |
-| 7 | **Growth** | Iterate based on feedback |
-
-Each phase has clear **Go/No-Go criteria** before advancing to the next.
-
-## Installation
-
-### Prerequisites
-
-| Dependency | Version | Required |
-|------------|---------|:--------:|
-| [Claude Code](https://claude.ai/code) | Latest | Yes |
-| [Superpowers Plugin](https://github.com/superpowers-marketplace/superpowers) | 3.6.0+ | Yes |
-| Python | 3.8+ | Yes |
-| Git | Any | Yes |
-
-### Install Dependencies
-
-```bash
-# Install the superpowers plugin
-claude plugins:install superpowers-marketplace/superpowers
-
-# Verify Python
-python3 --version  # Must be >= 3.8
-```
-
-### Install ACT
-
-#### One-liner (Recommended)
+## Quick Start
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
 ```
 
-The installer will:
-1. Download ACT automatically
-2. Ask where to install (Global or Project)
-3. Install and clean up
-
-#### With Arguments
-
-```bash
-# Install globally (all projects)
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --global
-
-# Install in current project only
-cd ~/my-project
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --project
-```
-
-#### From Git Clone (Alternative)
-
-```bash
-# Clone the repo
-git clone https://github.com/manuelturpin/ArtChiTech-framework.git
-
-# Run installer
-./ArtChiTech-framework/scripts/install.sh
-```
-
-| Scope | Location | Availability |
-|-------|----------|--------------|
-| **Global** | `~/.claude/plugins/act/` | All your projects |
-| **Project** | `[project]/.claude/plugins/act/` | This project only |
-
-### Verify Installation
-
-Restart Claude Code, then run:
+Then in Claude Code:
 
 ```
 /act-project
 ```
 
-## Usage
+That's it. ACT detects your context and guides you from there.
 
-### Commands
+## Why ACT?
 
-| Command | Description |
-|---------|-------------|
-| `/act-project` | **Main hub** - Start here |
-| `/act-onboard` | Audit and initialize a project |
-| `/act-status` | View project progress |
+| Without ACT | With ACT |
+|-------------|----------|
+| Start coding, figure it out later | Discovery → Strategy → Ship |
+| "Is this ready?" — No idea | Clear phases + progress score |
+| Reinvent the wheel each project | Built-in TDD, reviews, audits |
+
+## The 7 Phases
+
+```
+1. Discovery    →  Validate the problem
+2. Strategy     →  Define the roadmap
+3. Design       →  Architecture & UX
+4. Development  →  Build with TDD
+5. Quality      →  Test & validate
+6. Launch       →  Deploy & ship
+7. Growth       →  Iterate & improve
+```
+
+Each phase has **Go/No-Go criteria**. No skipping steps.
+
+## Commands
+
+| Command | What it does |
+|---------|--------------|
+| `/act-project` | Your project hub — start here |
+| `/act-status` | See where you are |
+| `/act-onboard` | Audit an existing project |
 | `/act-next` | Move to next phase |
 | `/act-fix` | Fix blocking issues |
-| `/act-resume` | Resume previous session |
-| `/act-help` | Contextual help |
-| `/act-feedback` | Report bugs or suggestions |
-| `/act-triage` | View open issues |
+| `/act-feedback` | Report bugs or ideas |
 
-### Workflow Modes
+## Requirements
 
-| Mode | When to Use |
-|------|-------------|
-| **COMPLETE** | New project from scratch - all 7 phases |
-| **FEATURE** | Adding a feature to existing project |
-| **QUICK** | Bugfix or small refactoring |
+- [Claude Code](https://claude.ai/code)
+- [Superpowers plugin](https://github.com/superpowers-marketplace/superpowers) (3.6.0+)
+- Python 3.8+
+- Git
 
-### Project Structure
-
-ACT creates a `.epct/` folder in your project to track state:
-
-```
-your-project/
-└── .epct/
-    ├── state.json          # Current phase and progress
-    ├── session/            # Session data
-    └── history/
-        └── checkpoints/    # Phase checkpoints
+```bash
+# Install superpowers first
+claude plugins:install superpowers-marketplace/superpowers
 ```
 
-> **Tip**: Add `.epct/` to `.gitignore` if you don't want to version ACT state.
+## Installation Options
 
-## Superpowers Integration
+**Global** (all projects):
+```bash
+curl ... | bash -s -- --global
+```
 
-ACT automatically uses the right superpowers skill for each phase:
+**Project only** (current directory):
+```bash
+curl ... | bash -s -- --project
+```
 
-| Phase | Skill Used |
-|-------|------------|
-| Discovery | `superpowers:brainstorming` |
-| Strategy | `superpowers:brainstorming` |
+## How It Works
+
+ACT uses the right tool for each phase:
+
+| Phase | Skill |
+|-------|-------|
+| Discovery & Strategy | `superpowers:brainstorming` |
 | Design | `superpowers:writing-plans` |
 | Development | `superpowers:test-driven-development` |
 | Quality | `superpowers:code-reviewer` |
 
-## Example Session
+## Project State
+
+ACT stores progress in `.epct/`:
 
 ```
-You: /act-project
-
-ACT: Welcome! I detect this is a new project.
-     Let's start with Phase 1: Discovery.
-
-     What problem are you trying to solve?
-
-You: I want to build a CLI tool for managing dotfiles
-
-ACT: Great! Let me use brainstorming to explore this further...
-     [Guides through discovery questions]
-
-     Phase 1 complete! Ready for Phase 2: Strategy?
+.epct/
+├── state.json       # Current phase
+└── history/         # Checkpoints
 ```
+
+Add to `.gitignore` if you don't want to track it.
 
 ## Contributing
 
-Contributions are welcome! Please:
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Setup
-
-```bash
-# Clone and install locally for development
-git clone https://github.com/manuelturpin/ArtChiTech-framework.git
-cd ArtChiTech-framework
-./scripts/install.sh --project  # Install in project scope
-```
-
-### Project Structure
-
-```
-ArtChiTech-framework/
-├── plugin/                 # ACT plugin source
-│   ├── commands/           # Slash commands
-│   ├── agents/             # Specialized agents
-│   ├── references/         # Phase documentation
-│   └── scripts/            # Utility scripts
-├── scripts/                # Installation scripts
-├── docs/                   # Documentation
-└── test-apps/              # Test applications
-```
-
-## Reporting Issues
-
-Use the built-in feedback command:
-
-```
-/act-feedback
-```
-
-Or open an issue on [GitHub](https://github.com/manuelturpin/ArtChiTech-framework/issues).
+Quick version:
+1. Fork → Branch → Code → Test → PR
 
 ## License
 
-MIT - [Manuel Turpin](https://github.com/manuelturpin)
+[MIT](LICENSE) — Manuel Turpin
 
 ---
 
 <p align="center">
-  Built with Claude Code
+  <strong>Stop winging it. Start shipping.</strong>
 </p>
