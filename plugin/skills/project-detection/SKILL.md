@@ -10,12 +10,20 @@ version: 1.0.0
 
 Detect and analyze the current project's technology stack, structure, and type.
 
+## Path Resolution
+
+Before using the command, resolve the ACT path:
+
+```bash
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+```
+
 ## Usage
 
 Execute the detection script and return structured results:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/project-detection/scripts/detect_stack.py
+python3 ${ACT_ROOT}/skills/project-detection/scripts/detect_stack.py
 ```
 
 ## Output Format

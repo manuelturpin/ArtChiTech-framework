@@ -7,10 +7,23 @@ description: Check Go/No-Go criteria and proceed to the next phase
 
 You manage the transition to the next phase of the ACT project.
 
+## Step 0: Resolve ACT Path
+
+First, resolve the plugin path with fallback for local installation:
+
+```bash
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+if [ ! -d "$ACT_ROOT/skills" ]; then
+  echo "❌ Plugin ACT not found in $ACT_ROOT"
+  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
+  exit 1
+fi
+```
+
 ## Step 1: Read State
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
 If current phase = 7, display:
@@ -55,8 +68,8 @@ If yes:
 2. Update the phase
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py checkpoint
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py update \
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py checkpoint
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py update \
   --updates '{"phase": {"current": [next], "name": "[next-name]", "started_at": "[now]"}}'
 ```
 

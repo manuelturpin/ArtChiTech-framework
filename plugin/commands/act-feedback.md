@@ -7,6 +7,19 @@ description: Report a bug, suggestion, or question with automatic context captur
 
 You help the user report issues with ACT by capturing context and creating a GitHub Issue.
 
+## Step 0: Resolve ACT Path
+
+First, resolve the plugin path with fallback for local installation:
+
+```bash
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+if [ ! -d "$ACT_ROOT/skills" ]; then
+  echo "❌ Plugin ACT not found in $ACT_ROOT"
+  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
+  exit 1
+fi
+```
+
 ## Step 1: Check GitHub CLI
 
 ```bash
@@ -70,10 +83,10 @@ Map to label:
 
 ```bash
 # Get ACT version
-cat ${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json | python3 -c "import sys,json; print(json.load(sys.stdin)['version'])"
+cat ${ACT_ROOT}/.claude-plugin/plugin.json | python3 -c "import sys,json; print(json.load(sys.stdin)['version'])"
 
 # Get state if exists
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read 2>/dev/null || echo "{}"
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read 2>/dev/null || echo "{}"
 ```
 
 Extract from state:

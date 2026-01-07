@@ -7,10 +7,23 @@ description: Display the complete ACT project state (phase, scores, progress)
 
 You display the complete state of the current ACT project.
 
+## Step 0: Resolve ACT Path
+
+First, resolve the plugin path with fallback for local installation:
+
+```bash
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+if [ ! -d "$ACT_ROOT/skills" ]; then
+  echo "❌ Plugin ACT not found in $ACT_ROOT"
+  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
+  exit 1
+fi
+```
+
 ## Step 1: Check .epct/
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py exists
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py exists
 ```
 
 If `false`, display:
@@ -22,7 +35,7 @@ If `false`, display:
 ## Step 2: Read State
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
 ## Step 3: Display Status

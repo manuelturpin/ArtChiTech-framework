@@ -10,42 +10,50 @@ version: 1.0.0
 
 Manage the `.epct/` directory and `state.json` file that tracks project progress through ACT phases.
 
+## Path Resolution
+
+Before using any command, resolve the ACT path:
+
+```bash
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+```
+
 ## Commands
 
 ### Initialize new project state
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py init --name "project-name" --type "webapp" --stack "react,typescript,vite"
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py init --name "project-name" --type "webapp" --stack "react,typescript,vite"
 ```
 
 ### Read current state
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
 ### Update state
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py update --updates '{"phase": {"current": 2, "name": "Strategy"}}'
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py update --updates '{"phase": {"current": 2, "name": "Strategy"}}'
 ```
 
 ### Create checkpoint
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py checkpoint
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py checkpoint
 ```
 
 ### Recover from checkpoint
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py recover --checkpoint-file "2026-01-06T10-30-00.json"
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py recover --checkpoint-file "2026-01-06T10-30-00.json"
 ```
 
 ### Check if .epct/ exists
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py exists
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py exists
 ```
 
 ## State Structure

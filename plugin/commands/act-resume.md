@@ -7,10 +7,23 @@ description: Resume a previous work session
 
 You help resume work where it left off.
 
+## Step 0: Resolve ACT Path
+
+First, resolve the plugin path with fallback for local installation:
+
+```bash
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+if [ ! -d "$ACT_ROOT/skills" ]; then
+  echo "❌ Plugin ACT not found in $ACT_ROOT"
+  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
+  exit 1
+fi
+```
+
 ## Step 1: Check State
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py read
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read
 ```
 
 If no `.epct/`, display:
@@ -72,7 +85,7 @@ Which one to restore? [number]
 
 If choice made:
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py recover \
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py recover \
   --checkpoint-file "[filename]"
 ```
 

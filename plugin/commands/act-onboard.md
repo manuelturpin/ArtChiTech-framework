@@ -7,12 +7,25 @@ description: Audit an existing project and initialize it in the ACT framework
 
 You audit the current project and initialize it in ACT.
 
+## Step 0: Resolve ACT Path
+
+First, resolve the plugin path with fallback for local installation:
+
+```bash
+ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
+if [ ! -d "$ACT_ROOT/skills" ]; then
+  echo "❌ Plugin ACT not found in $ACT_ROOT"
+  echo "💡 Install with: ./scripts/install-local.sh $(pwd)"
+  exit 1
+fi
+```
+
 ## Step 1: DETECTION
 
 Execute the stack detection script:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/project-detection/scripts/detect_stack.py
+python3 ${ACT_ROOT}/skills/project-detection/scripts/detect_stack.py
 ```
 
 Capture and analyze the JSON result containing:
@@ -87,7 +100,7 @@ Generate the 3 priority recommendations:
 Create or update `.epct/state.json`:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py init \
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py init \
   --name "[project-name]" \
   --type "[type]" \
   --stack "[stack-comma-separated]"
@@ -96,7 +109,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py i
 Then update with scores:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/state-management/scripts/state_manager.py update \
+python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py update \
   --updates '{"phase": {"current": [phase], "name": "[phase-name]"}, "scores": {...}}'
 ```
 
@@ -137,7 +150,7 @@ Display preview:
 
 If user confirms:
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/claudemd-generator/scripts/generate_claudemd.py \
+python3 ${ACT_ROOT}/skills/claudemd-generator/scripts/generate_claudemd.py \
   --stack "$(cat .epct/stack.json)" \
   --name "[project-name]" \
   --description "[detected description]" \
