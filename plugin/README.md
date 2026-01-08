@@ -31,25 +31,14 @@ python3 --version  # Must be >= 3.8
 curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
 ```
 
-The installer asks where to install:
-- **Global** (`~/.claude/plugins/cache/manuelturpin/act/`) - All projects
-- **Project** (`./.claude/commands/`, `./.claude/agents/`, etc.) - Current project only
-
-**With arguments**
-
-```bash
-# Global install
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --global
-
-# Project install
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --project
-```
+ACT installs locally in your project at `.claude/plugins/act/`.
 
 **From git clone (for development)**
 
 ```bash
 git clone https://github.com/manuelturpin/ArtChiTech-framework.git
-./ArtChiTech-framework/scripts/install.sh
+cd your-project
+../ArtChiTech-framework/scripts/install.sh
 ```
 
 ### Verify installation
