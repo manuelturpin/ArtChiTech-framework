@@ -1,0 +1,8 @@
+{
+  "hooks": [
+    {
+      "event": "SessionStart",
+      "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session_start.py"
+    }
+  ]
+}
