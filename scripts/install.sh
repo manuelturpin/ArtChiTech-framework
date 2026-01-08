@@ -1,76 +1,64 @@
 #!/bin/bash
-# ACT Framework - Installation Script
+# =============================================================================
+# ACT Framework - Script d'installation unifié
+# Version: 2.0.0
 #
 # Usage:
-#   One-liner (recommended):
+#   One-liner (depuis GitHub):
 #     curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
 #
-#   With arguments:
-#     curl -fsSL .../install.sh | bash -s -- --global
-#     curl -fsSL .../install.sh | bash -s -- --project
-#
-#   From cloned repo:
-#     ./scripts/install.sh [--global|--project]
+#   Depuis le repo cloné (mode dev):
+#     ./scripts/install.sh
+# =============================================================================
 
 set -e
 
-# GitHub repo URL
-GITHUB_REPO="https://github.com/manuelturpin/ArtChiTech-framework.git"
-
-# Plugin identifiers
-PLUGIN_ORG="manuelturpin"
-PLUGIN_NAME="act"
-
-# Where the user is located (their project)
-USER_PWD="$PWD"
-
-# Temp directory for curl mode
-TEMP_DIR=""
-CLEANUP_NEEDED=false
-
-# Installation mode
-INSTALL_MODE=""
-
-# Colors
+# Couleurs
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 BOLD='\033[1m'
-NC='\033[0m'
+NC='\033[0m' # No Color
 
-# Paths
-CLAUDE_SETTINGS="$HOME/.claude/settings.json"
-GLOBAL_CACHE_DIR="$HOME/.claude/plugins/cache/$PLUGIN_ORG"
-GLOBAL_PLUGIN_DIR="$GLOBAL_CACHE_DIR/$PLUGIN_NAME"
+# Configuration
+REPO_URL="https://github.com/manuelturpin/ArtChiTech-framework"
+INSTALL_DIR=".claude/plugins/act"
+VERSION="2.0.0"
 
-# ============================================
-# Source Detection (curl vs local)
-# ============================================
+# Variables globales
+SOURCE_DIR=""
+MODE=""
+TEMP_DIR=""
+CLEANUP_NEEDED=false
 
-detect_source() {
-    if [[ -n "$BASH_SOURCE" && -f "$BASH_SOURCE" ]]; then
-        SCRIPT_DIR="$(cd "$(dirname "$BASH_SOURCE")" && pwd)"
-        if [[ -d "$SCRIPT_DIR/../plugin" ]]; then
-            SOURCE_DIR="$SCRIPT_DIR/../plugin"
-            return
-        fi
-    fi
+# =============================================================================
+# Fonctions utilitaires
+# =============================================================================
 
-    # Running via curl | bash
-    echo -e "${CYAN}Downloading ACT Framework...${NC}"
-    TEMP_DIR=$(mktemp -d)
-    CLEANUP_NEEDED=true
+print_header() {
+    echo ""
+    echo -e "${CYAN}╭─────────────────────────────────────────────────────────────╮${NC}"
+    echo -e "${CYAN}│${NC}  ${BOLD}ACT Framework - Installation v${VERSION}${NC}                       ${CYAN}│${NC}"
+    echo -e "${CYAN}╰─────────────────────────────────────────────────────────────╯${NC}"
+    echo ""
+}
 
-    if ! git clone --depth 1 --quiet "$GITHUB_REPO" "$TEMP_DIR/act" 2>/dev/null; then
-        echo -e "${RED}Error: Failed to clone ACT Framework${NC}"
-        cleanup_temp
-        exit 1
-    fi
+print_success() {
+    echo -e "${GREEN}✅ $1${NC}"
+}
 
-    SOURCE_DIR="$TEMP_DIR/act/plugin"
-    echo -e "${GREEN}✓${NC} Downloaded successfully"
+print_warning() {
+    echo -e "${YELLOW}⚠️  $1${NC}"
+}
+
+print_error() {
+    echo -e "${RED}❌ $1${NC}"
+}
+
+print_info() {
+    echo -e "${BLUE}→${NC} $1"
 }
 
 cleanup_temp() {
@@ -81,65 +69,12 @@ cleanup_temp() {
 
 trap cleanup_temp EXIT
 
-# ============================================
-# Parse Arguments
-# ============================================
-
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        --global|-g)
-            INSTALL_MODE="global"
-            shift
-            ;;
-        --project|-p)
-            INSTALL_MODE="project"
-            shift
-            if [[ $# -gt 0 && ! "$1" =~ ^- ]]; then
-                USER_PWD="$(cd "$1" 2>/dev/null && pwd)" || {
-                    echo -e "${RED}Error: Directory '$1' does not exist${NC}"
-                    exit 1
-                }
-                shift
-            fi
-            ;;
-        --help|-h)
-            cat << 'EOF'
-ACT Framework - Installation Script
-
-Usage: install.sh [OPTIONS]
-
-Options:
-  --global, -g         Install globally (all projects)
-                       Location: ~/.claude/plugins/cache/manuelturpin/act/
-
-  --project, -p [PATH] Install to project only
-                       Location: [project]/.claude/commands/, .claude/agents/
-
-  --help, -h           Show this help
-
-Examples:
-  curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
-  curl ... | bash -s -- --global
-  curl ... | bash -s -- --project
-EOF
-            exit 0
-            ;;
-        *)
-            echo -e "${RED}Unknown option: $1${NC}"
-            exit 1
-            ;;
-    esac
-done
-
-# ============================================
-# Prerequisite Checks
-# ============================================
+# =============================================================================
+# Vérification des prérequis
+# =============================================================================
 
 check_prerequisites() {
-    echo ""
-    echo "=============================================="
-    echo "  ACT Framework - Checking Prerequisites"
-    echo "=============================================="
+    print_info "Vérification des prérequis..."
     echo ""
 
     local failed=0
@@ -150,274 +85,247 @@ check_prerequisites() {
         local major=$(echo $version | cut -d. -f1)
         local minor=$(echo $version | cut -d. -f2)
         if [ "$major" -gt 3 ] || ([ "$major" -eq 3 ] && [ "$minor" -ge 8 ]); then
-            echo -e "${GREEN}✓${NC} Python $version"
+            echo -e "  ${GREEN}✓${NC} Python $version"
         else
-            echo -e "${RED}✗${NC} Python 3.8+ required (found: $version)"
+            echo -e "  ${RED}✗${NC} Python 3.8+ requis (trouvé: $version)"
             failed=1
         fi
     else
-        echo -e "${RED}✗${NC} Python 3.8+ required"
+        echo -e "  ${RED}✗${NC} Python 3.8+ requis"
         failed=1
     fi
 
     # Git
     if command -v git &> /dev/null; then
-        echo -e "${GREEN}✓${NC} Git $(git --version | cut -d' ' -f3)"
+        echo -e "  ${GREEN}✓${NC} Git $(git --version | cut -d' ' -f3)"
     else
-        echo -e "${RED}✗${NC} Git required"
+        echo -e "  ${RED}✗${NC} Git requis"
         failed=1
     fi
 
     # Claude Code
     if command -v claude &> /dev/null; then
-        echo -e "${GREEN}✓${NC} Claude Code installed"
+        echo -e "  ${GREEN}✓${NC} Claude Code installé"
     else
-        echo -e "${RED}✗${NC} Claude Code required"
-        failed=1
-    fi
-
-    # Superpowers plugin
-    if [ -d "$HOME/.claude/plugins/cache/superpowers-marketplace" ]; then
-        echo -e "${GREEN}✓${NC} Superpowers plugin installed"
-    else
-        echo -e "${RED}✗${NC} Superpowers plugin required"
-        echo "  Install: claude plugins:install superpowers-marketplace/superpowers"
+        echo -e "  ${RED}✗${NC} Claude Code requis"
+        echo "     → https://claude.ai/download"
         failed=1
     fi
 
     echo ""
 
     if [ $failed -eq 1 ]; then
-        echo -e "${RED}Prerequisites check FAILED${NC}"
+        print_error "Prérequis manquants"
         exit 1
     fi
 
-    echo -e "${GREEN}All prerequisites OK${NC}"
-    echo ""
+    print_success "Tous les prérequis sont OK"
 }
 
-# ============================================
-# Installation Menu
-# ============================================
+# =============================================================================
+# Détection du mode d'installation
+# =============================================================================
 
-show_menu() {
-    echo ""
-    echo -e "${CYAN}╭─────────────────────────────────────────────────────────────╮${NC}"
-    echo -e "${CYAN}│${NC}  ${BOLD}Where do you want to install ACT?${NC}                          ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}                                                               ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}  ${GREEN}1.${NC} Global (all projects)                                   ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}     → ~/.claude/plugins/cache/manuelturpin/act/              ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}     Commands: /act-project, /act-status, etc.                ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}                                                               ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}  ${BLUE}2.${NC} Project only (current directory)                        ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}     → $USER_PWD/.claude/commands/"
-    echo -e "${CYAN}│${NC}     Available only for THIS project                           ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}                                                               ${CYAN}│${NC}"
-    echo -e "${CYAN}╰─────────────────────────────────────────────────────────────╯${NC}"
-    echo ""
-
-    while true; do
-        read -p "Select option [1/2]: " choice < /dev/tty
-        case $choice in
-            1) INSTALL_MODE="global"; break ;;
-            2) INSTALL_MODE="project"; break ;;
-            *) echo -e "${YELLOW}Please enter 1 or 2${NC}" ;;
-        esac
-    done
-}
-
-# ============================================
-# Global Installation
-# ============================================
-
-install_global() {
-    echo -e "${BLUE}→${NC} Installing globally..."
-
-    # Create directory
-    mkdir -p "$GLOBAL_CACHE_DIR"
-
-    # Remove existing
-    if [ -d "$GLOBAL_PLUGIN_DIR" ]; then
-        rm -rf "$GLOBAL_PLUGIN_DIR"
-    fi
-
-    # Copy plugin
-    cp -r "$SOURCE_DIR" "$GLOBAL_PLUGIN_DIR"
-    echo -e "${GREEN}✓${NC} Plugin installed to $GLOBAL_PLUGIN_DIR"
-
-    # Enable in settings
-    echo -e "${BLUE}→${NC} Enabling plugin in Claude settings..."
-
-    PLUGIN_KEY="${PLUGIN_NAME}@${PLUGIN_ORG}"
-
-    if [ -f "$CLAUDE_SETTINGS" ]; then
-        python3 << PYEOF
-import json
-
-settings_file = "$CLAUDE_SETTINGS"
-plugin_key = "$PLUGIN_KEY"
-
-with open(settings_file, 'r') as f:
-    settings = json.load(f)
-
-if 'enabledPlugins' not in settings:
-    settings['enabledPlugins'] = {}
-
-settings['enabledPlugins'][plugin_key] = True
-
-with open(settings_file, 'w') as f:
-    json.dump(settings, f, indent=2)
-PYEOF
-        echo -e "${GREEN}✓${NC} Plugin enabled ($PLUGIN_KEY)"
+detect_mode() {
+    # Récupérer le répertoire du script
+    if [[ -n "$BASH_SOURCE" && -f "$BASH_SOURCE" ]]; then
+        SCRIPT_DIR="$(cd "$(dirname "$BASH_SOURCE")" 2>/dev/null && pwd)"
     else
-        echo -e "${YELLOW}⚠${NC} Settings not found. Enable manually:"
-        echo "   Add \"$PLUGIN_KEY\": true to enabledPlugins in ~/.claude/settings.json"
+        SCRIPT_DIR=""
     fi
-}
 
-# ============================================
-# Setup CLAUDE.md
-# ============================================
-
-setup_claude_md() {
-    local CLAUDE_MD="$USER_PWD/CLAUDE.md"
-
-    # ACT section content
-    local ACT_SECTION='# ACT Framework
-
-Ce projet utilise le framework ACT (ArtChiTech) pour la gestion de projet.
-
-## Commandes disponibles
-
-| Commande | Description |
-|----------|-------------|
-| `/act-project` | Hub principal - point d entrée |
-| `/act-status` | État du projet |
-| `/act-onboard` | Auditer le projet |
-| `/act-next` | Phase suivante |
-| `/act-fix` | Corriger les erreurs |
-| `/act-help` | Aide contextuelle |
-
-## Utilisation
-
-Tape `/act-project` pour commencer ou voir l état du projet.'
-
-    if [ ! -f "$CLAUDE_MD" ]; then
-        # Create new file
-        echo "$ACT_SECTION" > "$CLAUDE_MD"
-        echo -e "${GREEN}✓${NC} Created CLAUDE.md with ACT section"
+    # Si on est dans le repo ACT (mode dev)
+    if [[ -n "$SCRIPT_DIR" && -f "$SCRIPT_DIR/../plugin/.claude-plugin/plugin.json" ]]; then
+        MODE="local"
+        SOURCE_DIR="$SCRIPT_DIR/../plugin"
+        echo -e "${YELLOW}📍 Mode développeur détecté${NC}"
     else
-        # Check if ACT section already exists
-        if ! grep -q "# ACT Framework" "$CLAUDE_MD"; then
-            # Append to existing file
-            echo -e "\n$ACT_SECTION" >> "$CLAUDE_MD"
-            echo -e "${GREEN}✓${NC} Added ACT section to CLAUDE.md"
-        else
-            echo -e "${YELLOW}⚠${NC} ACT section already exists in CLAUDE.md"
-        fi
+        MODE="remote"
+        echo -e "${BLUE}📍 Installation depuis GitHub${NC}"
     fi
+    echo ""
 }
 
-# ============================================
-# Project Installation
-# ============================================
+# =============================================================================
+# Création de la structure d'installation
+# =============================================================================
 
-install_project() {
-    echo -e "${BLUE}→${NC} Installing to project: $USER_PWD"
+create_structure() {
+    print_info "Création de la structure..."
 
-    local PROJECT_CLAUDE="$USER_PWD/.claude"
+    mkdir -p "$INSTALL_DIR/.claude-plugin"
+    mkdir -p "$INSTALL_DIR/commands"
+    mkdir -p "$INSTALL_DIR/skills"
+    mkdir -p "$INSTALL_DIR/scripts"
+    mkdir -p "$INSTALL_DIR/agents"
+    mkdir -p "$INSTALL_DIR/references"
+    mkdir -p "$INSTALL_DIR/hooks"
 
-    # Create directories
-    mkdir -p "$PROJECT_CLAUDE/commands"
-    mkdir -p "$PROJECT_CLAUDE/agents"
+    print_success "Structure créée: $INSTALL_DIR"
+}
 
-    # Copy commands
+# =============================================================================
+# Copie des fichiers (mode local/dev)
+# =============================================================================
+
+copy_local() {
+    print_info "Copie des fichiers depuis le repo local..."
+
+    # Plugin configuration
+    cp -r "$SOURCE_DIR/.claude-plugin/"* "$INSTALL_DIR/.claude-plugin/"
+
+    # Commands
     if [ -d "$SOURCE_DIR/commands" ]; then
-        cp -r "$SOURCE_DIR/commands/"* "$PROJECT_CLAUDE/commands/" 2>/dev/null || true
-        echo -e "${GREEN}✓${NC} Commands copied to .claude/commands/"
+        cp -r "$SOURCE_DIR/commands/"* "$INSTALL_DIR/commands/" 2>/dev/null || true
     fi
 
-    # Copy agents
-    if [ -d "$SOURCE_DIR/agents" ]; then
-        cp -r "$SOURCE_DIR/agents/"* "$PROJECT_CLAUDE/agents/" 2>/dev/null || true
-        echo -e "${GREEN}✓${NC} Agents copied to .claude/agents/"
-    fi
-
-    # Copy skills if exist
+    # Skills (contient les scripts Python)
     if [ -d "$SOURCE_DIR/skills" ]; then
-        mkdir -p "$PROJECT_CLAUDE/skills"
-        cp -r "$SOURCE_DIR/skills/"* "$PROJECT_CLAUDE/skills/" 2>/dev/null || true
-        echo -e "${GREEN}✓${NC} Skills copied to .claude/skills/"
+        cp -r "$SOURCE_DIR/skills/"* "$INSTALL_DIR/skills/" 2>/dev/null || true
     fi
 
-    # Copy references if exist
+    # Agents
+    if [ -d "$SOURCE_DIR/agents" ]; then
+        cp -r "$SOURCE_DIR/agents/"* "$INSTALL_DIR/agents/" 2>/dev/null || true
+    fi
+
+    # References
     if [ -d "$SOURCE_DIR/references" ]; then
-        mkdir -p "$PROJECT_CLAUDE/references"
-        cp -r "$SOURCE_DIR/references/"* "$PROJECT_CLAUDE/references/" 2>/dev/null || true
-        echo -e "${GREEN}✓${NC} References copied to .claude/references/"
+        cp -r "$SOURCE_DIR/references/"* "$INSTALL_DIR/references/" 2>/dev/null || true
     fi
 
-    # Setup CLAUDE.md automatically for project mode
-    setup_claude_md
+    # Copier le resolver (nouveau dans v2.0.0)
+    if [ -f "$SOURCE_DIR/scripts/act_resolver.py" ]; then
+        cp "$SOURCE_DIR/scripts/act_resolver.py" "$INSTALL_DIR/scripts/"
+        cp "$SOURCE_DIR/scripts/__init__.py" "$INSTALL_DIR/scripts/" 2>/dev/null || true
+        echo -e "  ${GREEN}✓${NC} Resolver copié"
+    fi
+
+    # Hooks (si présents)
+    if [ -d "$SOURCE_DIR/hooks" ]; then
+        cp -r "$SOURCE_DIR/hooks/"* "$INSTALL_DIR/hooks/" 2>/dev/null || true
+    fi
+
+    print_success "Fichiers copiés"
 }
 
-# ============================================
-# Main
-# ============================================
+# =============================================================================
+# Téléchargement des fichiers (mode remote)
+# =============================================================================
 
-detect_source
-check_prerequisites
+download_remote() {
+    print_info "Téléchargement depuis GitHub..."
 
-if [ -z "$INSTALL_MODE" ]; then
-    show_menu
-fi
-
-if [ "$INSTALL_MODE" = "global" ]; then
-    install_global
-
-    # Ask if user wants to add CLAUDE.md to current project
-    echo ""
-    read -p "Add ACT section to CLAUDE.md in current project? [y/N] " add_claude < /dev/tty
-    if [ "$add_claude" = "y" ] || [ "$add_claude" = "Y" ]; then
-        setup_claude_md
+    if ! command -v git &> /dev/null; then
+        print_error "Git est requis pour l'installation"
+        exit 1
     fi
-else
-    install_project
-fi
 
-# ============================================
-# Success Message
-# ============================================
+    TEMP_DIR=$(mktemp -d)
+    CLEANUP_NEEDED=true
 
-echo ""
-echo "=============================================="
-echo -e "${GREEN}  ACT Framework installed successfully!${NC}"
-echo "=============================================="
-echo ""
-echo "Mode: $INSTALL_MODE"
+    # Clone minimal avec sparse checkout
+    if ! git clone --depth 1 --filter=blob:none --sparse "$REPO_URL" "$TEMP_DIR/act" 2>/dev/null; then
+        print_error "Échec du téléchargement du repo"
+        exit 1
+    fi
 
-if [ "$INSTALL_MODE" = "global" ]; then
-    echo "Location: $GLOBAL_PLUGIN_DIR"
+    cd "$TEMP_DIR/act"
+    git sparse-checkout set plugin 2>/dev/null
+    cd - > /dev/null
+
+    SOURCE_DIR="$TEMP_DIR/act/plugin"
+
+    print_success "Téléchargement terminé"
+
+    # Utiliser la même fonction de copie
+    copy_local
+}
+
+# =============================================================================
+# Validation de l'installation
+# =============================================================================
+
+validate_install() {
+    print_info "Validation de l'installation..."
+
+    local valid=true
+
+    # Vérifier les fichiers critiques
+    if [ ! -f "$INSTALL_DIR/.claude-plugin/plugin.json" ]; then
+        print_error "plugin.json manquant"
+        valid=false
+    fi
+
+    if [ ! -d "$INSTALL_DIR/commands" ] || [ -z "$(ls -A "$INSTALL_DIR/commands" 2>/dev/null)" ]; then
+        print_error "Dossier commands vide"
+        valid=false
+    fi
+
+    # Vérifier le resolver (critique pour v2.0.0)
+    if [ -f "$INSTALL_DIR/scripts/act_resolver.py" ]; then
+        echo -e "  ${GREEN}✓${NC} Resolver installé"
+    else
+        print_warning "Resolver non installé (fonctionnalités limitées)"
+    fi
+
+    # Vérifier state_manager (script critique)
+    if [ -f "$INSTALL_DIR/skills/state-management/scripts/state_manager.py" ]; then
+        echo -e "  ${GREEN}✓${NC} State manager installé"
+    else
+        print_warning "State manager manquant"
+    fi
+
+    if [ "$valid" = true ]; then
+        print_success "Installation validée"
+    else
+        print_error "Installation incomplète"
+        exit 1
+    fi
+}
+
+# =============================================================================
+# Affichage du résumé
+# =============================================================================
+
+print_summary() {
     echo ""
-    echo "ACT is now available for ALL your projects."
-else
-    echo "Location: $USER_PWD/.claude/"
+    echo -e "${GREEN}╭─────────────────────────────────────────────────────────────╮${NC}"
+    echo -e "${GREEN}│${NC}  ${BOLD}ACT Framework installé avec succès !${NC}                       ${GREEN}│${NC}"
+    echo -e "${GREEN}╰─────────────────────────────────────────────────────────────╯${NC}"
     echo ""
-    echo "ACT is available for THIS project only."
-    echo -e "${YELLOW}Tip:${NC} Add .claude/ to .gitignore if needed."
-fi
+    echo -e "📍 Emplacement : ${BLUE}$INSTALL_DIR${NC}"
+    echo -e "📦 Version     : ${BLUE}$VERSION${NC}"
+    echo ""
+    echo "Commandes disponibles :"
+    echo -e "  ${YELLOW}/act-project${NC}  → Hub principal"
+    echo -e "  ${YELLOW}/act-onboard${NC}  → Auditer ce projet"
+    echo -e "  ${YELLOW}/act-status${NC}   → Voir l'état"
+    echo -e "  ${YELLOW}/act-next${NC}     → Phase suivante"
+    echo -e "  ${YELLOW}/act-fix${NC}      → Corriger les erreurs"
+    echo ""
+    echo -e "${BOLD}Démarre Claude Code et tape /act-project pour commencer !${NC}"
+    echo ""
+}
 
-echo ""
-echo "Restart Claude Code, then run:"
-echo "  /act-project"
-echo ""
-echo "Available commands:"
-echo "  /act-project   - Main hub"
-echo "  /act-status    - Project status"
-echo "  /act-onboard   - Audit project"
-echo "  /act-next      - Next phase"
-echo "  /act-fix       - Fix issues"
-echo "  /act-help      - Help"
-echo ""
-echo "Documentation: https://github.com/manuelturpin/ArtChiTech-framework"
-echo "=============================================="
+# =============================================================================
+# Main
+# =============================================================================
+
+main() {
+    print_header
+    detect_mode
+    check_prerequisites
+    create_structure
+
+    if [ "$MODE" = "local" ]; then
+        copy_local
+    else
+        download_remote
+    fi
+
+    validate_install
+    print_summary
+}
+
+main "$@"

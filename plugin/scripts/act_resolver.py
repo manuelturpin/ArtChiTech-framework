@@ -23,6 +23,7 @@ Utilisation:
     # Valider l'installation
     status = validate_installation()
 """
+import json
 import os
 from pathlib import Path
 
@@ -169,3 +170,74 @@ def get_script(name: str) -> str:
         f"   - {act_root}/skills/*/scripts/{script_name}\n"
         f"   - {act_root}/scripts/{script_name}"
     )
+
+
+def validate_installation() -> dict:
+    """
+    Valide l'installation ACT et retourne un rapport détaillé.
+
+    Cette fonction vérifie:
+    - Si ACT est trouvé et où
+    - La version installée
+    - Les scripts disponibles
+    - Les erreurs éventuelles
+
+    Returns:
+        dict: Rapport de validation avec les clés:
+            - valid (bool): True si l'installation est fonctionnelle
+            - root (str|None): Chemin vers la racine ACT ou None
+            - version (str|None): Version du plugin ou None
+            - scripts (list[str]): Noms des scripts trouvés
+            - errors (list[str]): Liste des erreurs rencontrées
+
+    Example:
+        >>> status = validate_installation()
+        >>> print(status)
+        {
+            "valid": True,
+            "root": "/path/to/.claude/plugins/act",
+            "version": "2.0.0",
+            "scripts": ["state_manager", "detect_stack"],
+            "errors": []
+        }
+    """
+    result = {
+        "valid": False,
+        "root": None,
+        "version": None,
+        "scripts": [],
+        "errors": []
+    }
+
+    # 1. Trouver ACT
+    try:
+        act_root = Path(find_act_root())
+        result["root"] = str(act_root)
+    except ACTNotFoundError as e:
+        result["errors"].append(str(e))
+        return result
+
+    # 2. Lire la version depuis plugin.json
+    plugin_json = act_root / ".claude-plugin" / "plugin.json"
+    if plugin_json.exists():
+        try:
+            with open(plugin_json, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                result["version"] = data.get("version", "unknown")
+        except json.JSONDecodeError as e:
+            result["errors"].append(f"plugin.json invalide: {e}")
+            result["version"] = None
+
+    # 3. Lister les scripts disponibles
+    scripts_to_check = ["state_manager", "detect_stack", "generate_claudemd"]
+    for script_name in scripts_to_check:
+        try:
+            get_script(script_name)
+            result["scripts"].append(script_name)
+        except ScriptNotFoundError:
+            pass  # Script optionnel, ne pas ajouter d'erreur
+
+    # 4. Valider - state_manager est obligatoire
+    result["valid"] = "state_manager" in result["scripts"]
+
+    return result

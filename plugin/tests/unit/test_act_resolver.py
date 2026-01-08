@@ -16,7 +16,11 @@ from pathlib import Path
 # Add scripts to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../scripts'))
 
-from act_resolver import find_act_root, ACTNotFoundError, get_script, ScriptNotFoundError
+from act_resolver import (
+    find_act_root, ACTNotFoundError,
+    get_script, ScriptNotFoundError,
+    validate_installation
+)
 
 
 # ============================================================================
@@ -288,3 +292,149 @@ class TestScriptNotFoundError:
         # Check for French text
         assert any(word in error_msg.lower() for word in
                    ["introuvable", "solution", "chemins cherchés"])
+
+
+# ============================================================================
+# Tests pour validate_installation()
+# ============================================================================
+
+class TestValidateInstallation:
+    """Tests pour la fonction validate_installation"""
+
+    @pytest.fixture
+    def complete_act_installation(self, monkeypatch, tmp_path):
+        """Fixture qui crée une installation ACT complète avec tous les scripts"""
+        act_root = tmp_path / ".claude" / "plugins" / "act"
+
+        # Create plugin.json with version
+        (act_root / ".claude-plugin").mkdir(parents=True)
+        (act_root / ".claude-plugin" / "plugin.json").write_text(
+            '{"name": "act", "version": "2.0.0"}'
+        )
+
+        # Create commands directory
+        (act_root / "commands").mkdir()
+        (act_root / "commands" / "act-project.md").write_text("# act-project")
+
+        # Create skills with scripts
+        (act_root / "skills" / "state-management" / "scripts").mkdir(parents=True)
+        (act_root / "skills" / "state-management" / "scripts" / "state_manager.py").write_text("")
+
+        (act_root / "skills" / "project-detection" / "scripts").mkdir(parents=True)
+        (act_root / "skills" / "project-detection" / "scripts" / "detect_stack.py").write_text("")
+
+        (act_root / "skills" / "claudemd-generator" / "scripts").mkdir(parents=True)
+        (act_root / "skills" / "claudemd-generator" / "scripts" / "generate_claudemd.py").write_text("")
+
+        # Create direct scripts
+        (act_root / "scripts").mkdir()
+
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.delenv("CLAUDE_PLUGIN_ROOT", raising=False)
+
+        return act_root
+
+    def test_returns_dict_with_expected_keys(self, complete_act_installation):
+        """Should return dict with all expected keys"""
+        result = validate_installation()
+
+        assert isinstance(result, dict)
+        assert "valid" in result
+        assert "root" in result
+        assert "version" in result
+        assert "scripts" in result
+        assert "errors" in result
+
+    def test_valid_installation_returns_true(self, complete_act_installation):
+        """Should return valid=True for complete installation"""
+        result = validate_installation()
+
+        assert result["valid"] is True
+
+    def test_returns_correct_version(self, complete_act_installation):
+        """Should return version from plugin.json"""
+        result = validate_installation()
+
+        assert result["version"] == "2.0.0"
+
+    def test_returns_root_path(self, complete_act_installation, tmp_path):
+        """Should return the root path of ACT installation"""
+        result = validate_installation()
+
+        expected_root = str(tmp_path / ".claude" / "plugins" / "act")
+        assert result["root"] == expected_root
+
+    def test_lists_found_scripts(self, complete_act_installation):
+        """Should list all found scripts"""
+        result = validate_installation()
+
+        assert "state_manager" in result["scripts"]
+        assert "detect_stack" in result["scripts"]
+        assert "generate_claudemd" in result["scripts"]
+
+    def test_errors_empty_for_valid_installation(self, complete_act_installation):
+        """Should have empty errors list for valid installation"""
+        result = validate_installation()
+
+        assert result["errors"] == []
+
+    def test_invalid_when_act_not_found(self, monkeypatch, tmp_path):
+        """Should return valid=False when ACT not installed"""
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.delenv("CLAUDE_PLUGIN_ROOT", raising=False)
+
+        result = validate_installation()
+
+        assert result["valid"] is False
+        assert result["root"] is None
+        assert len(result["errors"]) > 0
+
+    def test_invalid_when_state_manager_missing(self, monkeypatch, tmp_path):
+        """Should be invalid if state_manager.py is missing (critical script)"""
+        # Create minimal installation WITHOUT state_manager
+        act_root = tmp_path / ".claude" / "plugins" / "act"
+        (act_root / ".claude-plugin").mkdir(parents=True)
+        (act_root / ".claude-plugin" / "plugin.json").write_text('{"name": "act", "version": "2.0.0"}')
+        (act_root / "skills").mkdir()
+        (act_root / "scripts").mkdir()
+
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.delenv("CLAUDE_PLUGIN_ROOT", raising=False)
+
+        result = validate_installation()
+
+        assert result["valid"] is False
+        assert "state_manager" not in result["scripts"]
+
+    def test_handles_invalid_plugin_json(self, monkeypatch, tmp_path):
+        """Should handle corrupted plugin.json gracefully"""
+        act_root = tmp_path / ".claude" / "plugins" / "act"
+        (act_root / ".claude-plugin").mkdir(parents=True)
+        (act_root / ".claude-plugin" / "plugin.json").write_text("invalid json {{{")
+        (act_root / "skills" / "state-management" / "scripts").mkdir(parents=True)
+        (act_root / "skills" / "state-management" / "scripts" / "state_manager.py").write_text("")
+        (act_root / "scripts").mkdir()
+
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.delenv("CLAUDE_PLUGIN_ROOT", raising=False)
+
+        result = validate_installation()
+
+        # Should not crash, but report error
+        assert "plugin.json" in str(result["errors"]).lower() or result["version"] is None
+
+    def test_returns_unknown_version_when_missing(self, monkeypatch, tmp_path):
+        """Should return 'unknown' version when not in plugin.json"""
+        act_root = tmp_path / ".claude" / "plugins" / "act"
+        (act_root / ".claude-plugin").mkdir(parents=True)
+        (act_root / ".claude-plugin" / "plugin.json").write_text('{"name": "act"}')  # No version
+        (act_root / "skills" / "state-management" / "scripts").mkdir(parents=True)
+        (act_root / "skills" / "state-management" / "scripts" / "state_manager.py").write_text("")
+        (act_root / "scripts").mkdir()
+
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.delenv("CLAUDE_PLUGIN_ROOT", raising=False)
+
+        result = validate_installation()
+
+        assert result["version"] == "unknown"
