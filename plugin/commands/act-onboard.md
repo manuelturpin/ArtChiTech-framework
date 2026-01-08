@@ -21,26 +21,18 @@ fi
 
 ## Step 0b: Resolve ACT Path
 
-For audit and initialization, resolve the plugin path:
+For audit and initialization, set the ACT path:
 
 ```bash
-# Utiliser le resolver Python pour trouver ACT
-ACT_ROOT=$(python3 -c "
-import sys
-sys.path.insert(0, '${CLAUDE_PLUGIN_ROOT:-$(pwd)/.claude/plugins/act}/scripts')
-from act_resolver import find_act_root
-print(find_act_root())
-" 2>/dev/null)
+ACT_ROOT=".claude/act"
 
-if [ -z "$ACT_ROOT" ]; then
-    echo '❌ Plugin ACT non trouvé.'
+if [ ! -d "$ACT_ROOT" ]; then
+    echo '❌ ACT non installé dans ce projet.'
     echo ''
-    echo '💡 Solution :'
+    echo '💡 Installation :'
     echo '   curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash'
     exit 1
 fi
-
-echo "✅ ACT trouvé: $ACT_ROOT"
 ```
 
 ## Step 1: DETECTION

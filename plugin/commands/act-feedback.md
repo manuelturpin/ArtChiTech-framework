@@ -7,7 +7,13 @@ description: Report a bug, suggestion, or question with automatic context captur
 
 You help the user report issues with ACT by capturing context and creating a GitHub Issue.
 
-## Step 0: Check Local Project State (Optional)
+## Step 0: Set ACT Path
+
+```bash
+ACT_ROOT=".claude/act"
+```
+
+## Step 0b: Check Local Project State (Optional)
 
 **First**, check if an ACT project exists to capture context:
 
@@ -85,7 +91,7 @@ Map to label:
 
 ```bash
 # Get ACT version
-cat ${ACT_ROOT}/.claude-plugin/plugin.json | python3 -c "import sys,json; print(json.load(sys.stdin)['version'])"
+cat ${ACT_ROOT}/version.txt 2>/dev/null || echo "unknown"
 
 # Get state if exists
 python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py read 2>/dev/null || echo "{}"

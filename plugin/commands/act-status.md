@@ -23,26 +23,10 @@ fi
 
 ## Step 0b: Resolve ACT Path (for advanced operations)
 
-For operations requiring the plugin scripts, resolve the path:
+For operations requiring the plugin scripts, set the ACT path:
 
 ```bash
-# Utiliser le resolver Python pour trouver ACT
-ACT_ROOT=$(python3 -c "
-import sys
-sys.path.insert(0, '${CLAUDE_PLUGIN_ROOT:-$(pwd)/.claude/plugins/act}/scripts')
-from act_resolver import find_act_root
-print(find_act_root())
-" 2>/dev/null)
-
-if [ -z "$ACT_ROOT" ]; then
-    echo '❌ Plugin ACT non trouvé.'
-    echo ''
-    echo '💡 Solution :'
-    echo '   curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash'
-    exit 1
-fi
-
-echo "✅ ACT trouvé: $ACT_ROOT"
+ACT_ROOT=".claude/act"
 ```
 
 ## Step 1: Read State

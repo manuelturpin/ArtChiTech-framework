@@ -31,7 +31,9 @@ python3 --version  # Must be >= 3.8
 curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
 ```
 
-ACT installs locally in your project at `.claude/plugins/act/`.
+ACT installs locally in your project:
+- `.claude/commands/` - Commands (Claude Code reads these)
+- `.claude/act/` - ACT resources (scripts, skills, etc.)
 
 **From git clone (for development)**
 

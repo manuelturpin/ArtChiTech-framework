@@ -1,6 +1,6 @@
 # ACT Framework
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![Version](https://img.shields.io/badge/version-2.1.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-purple)
 
@@ -71,11 +71,15 @@ claude plugins:install superpowers-marketplace/superpowers
 
 ## Installation
 
-ACT installs locally in your project at `.claude/plugins/act/`.
+ACT installs locally in your project:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
 ```
+
+Structure created:
+- `.claude/commands/` - Commands (Claude Code reads these)
+- `.claude/act/` - ACT resources (scripts, skills, etc.)
 
 ## How It Works
 
