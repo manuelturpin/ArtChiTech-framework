@@ -66,7 +66,22 @@ Display:
 ╰─────────────────────────────────────────────────────╯
 ```
 
-If choice 1 → Ask for project name, then use `superpowers:brainstorming` for the Discovery phase.
+If choice 1:
+1. Ask for project name
+2. **Initialize EPCT state:**
+   ```bash
+   python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py init \
+     --name "[project-name]" \
+     --type "new" \
+     --stack ""
+   ```
+3. Confirm initialization:
+   ```
+   ✅ Project "[project-name]" initialized!
+   📁 State saved in .epct/state.json
+   🎯 Starting Phase 1: Discovery
+   ```
+4. Use `superpowers:brainstorming` for the Discovery phase.
 
 ### Context B: Existing non-ACT Project (code without .epct/)
 

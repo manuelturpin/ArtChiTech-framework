@@ -30,7 +30,7 @@ description: Generate optimized CLAUDE.md based on project stack
 
 ## Generation Process
 
-1. **Analyze** stack info from `.epct/stack.json`
+1. **Analyze** stack info from detection output (passed as parameter)
 2. **Calculate** complexity score (technologies count)
 3. **Select** strategy (SINGLE, MODULAR, ENHANCE)
 4. **Load** appropriate templates

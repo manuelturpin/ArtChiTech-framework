@@ -110,7 +110,39 @@ Generate the 3 priority recommendations:
    → Add OpenAPI specs
 ```
 
+## Step 4b: USER CONFIRMATION
+
+After displaying recommendations, ask the user:
+
+```
+╭───────────────────────────────────────────────────────────────╮
+│  🎯 Use ACT Framework for this project?                       │
+│                                                               │
+│  ACT will:                                                    │
+│  • Track your progress through 7 phases                       │
+│  • Provide contextual recommendations                         │
+│  • Generate/enhance CLAUDE.md                                 │
+│                                                               │
+│  1. ✅ Yes, initialize ACT                                    │
+│  2. ❌ No, just show the audit                                │
+│                                                               │
+│  Choice? [1/2]                                                │
+╰───────────────────────────────────────────────────────────────╯
+```
+
+**If choice 1:** Continue to Step 5 (INITIALIZATION)
+
+**If choice 2:** Display final message and exit:
+```
+📊 Audit complete!
+💡 Run /act-onboard again if you want to initialize ACT later.
+```
+
+---
+
 ## Step 5: INITIALIZATION
+
+**Only execute if user chose option 1 in Step 4b.**
 
 Create or update `.epct/state.json`:
 
@@ -166,12 +198,14 @@ Display preview:
 If user confirms:
 ```bash
 python3 ${ACT_ROOT}/skills/claudemd-generator/scripts/generate_claudemd.py \
-  --stack "$(cat .epct/stack.json)" \
+  --stack "[stack-comma-separated]" \
   --name "[project-name]" \
   --description "[detected description]" \
   --phase [current-phase] \
   --output "CLAUDE.md"
 ```
+
+> Note: The stack is available from the detection in Step 1, not from a file.
 
 ### If CLAUDE.md EXISTS:
 
