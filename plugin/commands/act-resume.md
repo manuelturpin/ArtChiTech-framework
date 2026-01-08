@@ -27,8 +27,23 @@ fi
 For checkpoint restore operations, resolve the path:
 
 ```bash
-ACT_ROOT="${CLAUDE_PLUGIN_ROOT:-.claude/plugins/act}"
-# Note: ACT_ROOT is only needed for checkpoint restore operations
+# Utiliser le resolver Python pour trouver ACT
+ACT_ROOT=$(python3 -c "
+import sys
+sys.path.insert(0, '${CLAUDE_PLUGIN_ROOT:-$(pwd)/.claude/plugins/act}/scripts')
+from act_resolver import find_act_root
+print(find_act_root())
+" 2>/dev/null)
+
+if [ -z "$ACT_ROOT" ]; then
+    echo '❌ Plugin ACT non trouvé.'
+    echo ''
+    echo '💡 Solution :'
+    echo '   curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash'
+    exit 1
+fi
+
+echo "✅ ACT trouvé: $ACT_ROOT"
 ```
 
 ## Step 1: Read State
