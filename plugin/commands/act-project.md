@@ -134,6 +134,57 @@ Display the menu adapted to the phase:
 | 5 | Execute `/status` |
 | 6 | Execute `/onboard` |
 
+## Step 3b: Handle Free Text Input
+
+When the user types free text instead of a number, detect their intention:
+
+### Intent Detection Keywords
+
+| Intent | Keywords (FR + EN) | Action |
+|--------|-------------------|--------|
+| **Resume phase** | "reprendre", "continuer", "retourner", "travailler sur", "resume", "continue" | Go to Phase Work flow |
+| **Improve/Refine** | "améliorer", "modifier", "affiner", "improve", "refine", "update" | Go to Refinement flow |
+| **Question** | "comment", "pourquoi", "qu'est-ce", "how", "why", "what" | Answer directly |
+
+### Phase Work Flow
+
+When user wants to resume/continue a phase:
+
+1. Read current state to get phase info
+2. Display:
+   ```
+   🔄 Resume phase: [phase-name]
+
+   Would you like to use structured brainstorming to guide your thinking?
+
+   1. ✅ Yes - Launch superpowers:brainstorming
+   2. ⏭️  No - Continue directly with the checklist
+   ```
+3. If choice 1 → Spawn `superpowers:brainstorming` with phase context
+4. If choice 2 → Display phase checklist from `references/phases/`
+
+### Refinement Flow
+
+When user wants to improve/refine something:
+
+1. **Always** spawn `superpowers:brainstorming`
+2. Pass the current phase and user's refinement request as context
+
 ## Dependencies
 
 This hub requires the `superpowers` plugin for advanced workflows.
+
+### Required Skills
+
+| Skill | Usage |
+|-------|-------|
+| `superpowers:brainstorming` | New feature (choice 1), Resume phase (Step 3b), Refinement (Step 3b) |
+
+### Skill Invocation Rules
+
+| Context | Brainstorming |
+|---------|---------------|
+| Choice 1 (Add feature) | **Always** invoke |
+| Resume phase (free text) | **Propose** (user chooses) |
+| Refinement (free text) | **Always** invoke |
+| Choice 2 (Quick fix) | Never invoke |
