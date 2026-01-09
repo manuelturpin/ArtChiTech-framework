@@ -142,8 +142,8 @@ When the user types free text instead of a number, detect their intention:
 
 | Intent | Keywords (FR + EN) | Action |
 |--------|-------------------|--------|
-| **Resume phase** | "reprendre", "continuer", "retourner", "travailler sur", "resume", "continue" | Go to Phase Work flow |
-| **Improve/Refine** | "améliorer", "modifier", "affiner", "improve", "refine", "update" | Go to Refinement flow |
+| **Resume phase** | "repren", "continu", "retourn", "travaill", "resume" | Go to Phase Work flow |
+| **Improve/Refine** | "amélio", "modifi", "affin", "improve", "refine", "update" | Go to Refinement flow |
 | **Question** | "comment", "pourquoi", "qu'est-ce", "how", "why", "what" | Answer directly |
 
 ### Phase Work Flow
