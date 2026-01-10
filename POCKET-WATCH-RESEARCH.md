@@ -1,84 +1,65 @@
-# Pocket Watch AI - Index des Recherches
+# Pocket Watch AI - Accès Recherches
 
-> **Accès rapide à toutes les recherches du projet montre à gousset**
-> Dernière mise à jour : 10 janvier 2026
-
----
-
-## Synthèses Exécutives
-
-| Document | Chemin local |
-|----------|--------------|
-| **Métriques Session** | [docs/executive-summaries/01-multi-agent-research-metrics.md](docs/executive-summaries/01-multi-agent-research-metrics.md) |
-| **Projet Go/No-Go** | [docs/executive-summaries/02-pocket-watch-ai-project.md](docs/executive-summaries/02-pocket-watch-ai-project.md) |
-| **Roadmap Ralph** | [docs/roadmaps/ralph-integration-roadmap.md](docs/roadmaps/ralph-integration-roadmap.md) |
+> **Toutes les recherches consolidées dans un seul dossier**
 
 ---
 
-## Recherche Initiale (Survol - Score 7.6/10)
+## Dossier Principal
 
-| Rapport | Chemin local |
-|---------|--------------|
-| Marché global | [.epct/research/market-analysis.md](.epct/research/market-analysis.md) |
-| Personas | [.epct/research/customer-personas.md](.epct/research/customer-personas.md) |
-| Hardware | [.epct/research/hardware-feasibility.md](.epct/research/hardware-feasibility.md) |
-| Architecture OS | [.epct/research/software-architecture.md](.epct/research/software-architecture.md) |
-| Intégration IA | [.epct/research/ai-integration.md](.epct/research/ai-integration.md) |
-| Business Model | [.epct/research/business-model.md](.epct/research/business-model.md) |
-| **Synthèse Go/No-Go** | [.epct/research/final-synthesis.md](.epct/research/final-synthesis.md) |
+**Local** :
+```
+docs/research/pocket-watch-ai/
+```
 
----
+**GitHub** :
+```
+https://github.com/manuelturpin/ArtChiTech-framework/tree/claude/test-deepsearch-pocket-watch-P5EDF/docs/research/pocket-watch-ai
+```
 
-## Recherche Approfondie (11 Agents - Score 8.0/10)
-
-### Index Principal
-[.epct/research/00-research-index.md](.epct/research/00-research-index.md)
-
-### Rapports Détaillés
-
-| # | Axe | Chemin local | Insight clé |
-|---|-----|--------------|-------------|
-| 01 | Marché | [.epct/research/01-market/report.md](.epct/research/01-market/report.md) | $70-80B, CAGR 13-19% |
-| 02 | Clients | [.epct/research/02-customers/report.md](.epct/research/02-customers/report.md) | 4 personas validées |
-| 03a | OS & Platform | [.epct/research/03-technology/os-choice/report.md](.epct/research/03-technology/os-choice/report.md) | Zephyr RTOS |
-| 03b | Connectivité | [.epct/research/03-technology/connectivity/report.md](.epct/research/03-technology/connectivity/report.md) | BLE 5.4 + NFC |
-| 03c | IA Stack | [.epct/research/03-technology/ai-stack/report.md](.epct/research/03-technology/ai-stack/report.md) | Edge AI + NPU |
-| 04 | Hardware | [.epct/research/04-hardware/report.md](.epct/research/04-hardware/report.md) | BOM $90-120 |
-| 05 | Design | [.epct/research/05-design/report.md](.epct/research/05-design/report.md) | Heritage Reimagined |
-| 06 | Brand | [.epct/research/06-brand/report.md](.epct/research/06-brand/report.md) | "Measured Pause" |
-| 07 | Business | [.epct/research/07-business/report.md](.epct/research/07-business/report.md) | $899-1,299 |
-| 08 | Legal | [.epct/research/08-legal/report.md](.epct/research/08-legal/report.md) | Certifications 6-18 mois |
-| 09 | Operations | [.epct/research/09-operations/report.md](.epct/research/09-operations/report.md) | ODM Shenzhen |
-
----
-
-## Captures Session
-
-| Image | Chemin local |
-|-------|--------------|
-| Début session (19:11) | [ideas/intelligence/inbox/debut, loop.jpg](ideas/intelligence/inbox/debut,%20loop.jpg) |
-| Fin session (19:25) | [ideas/intelligence/inbox/fin, loop.jpg](ideas/intelligence/inbox/fin,%20loop.jpg) |
-
----
-
-## Accès Finder (macOS)
-
+**Ouvrir dans Finder** :
 ```bash
-# Ouvrir le dossier recherche
-open /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/.epct/research/
-
-# Ouvrir les synthèses
-open /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/docs/executive-summaries/
+open /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/docs/research/pocket-watch-ai/
 ```
 
 ---
 
-## Prochaines Étapes
+## Contenu
 
-- [ ] Phase 2 Stratégie (quand forfait rechargé)
-- [ ] Interviews clients (10-15)
-- [ ] Prototype papier UX
-- [ ] Kickstarter préparation
+| Dossier | Contenu |
+|---------|---------|
+| `00-initial-survey/` | 7 rapports - Recherche initiale (survol) |
+| `01-market/` | Analyse marché approfondie |
+| `02-customers/` | Personas et validation clients |
+| `03-technology-os/` | Choix OS (Zephyr RTOS) |
+| `04-technology-connectivity/` | BLE 5.4 + NFC |
+| `05-technology-ai/` | Edge AI + NPU |
+| `06-hardware/` | BOM $90-120 |
+| `07-design/` | Heritage Reimagined |
+| `08-brand/` | "Measured Pause" |
+| `09-business/` | $899-1,299, marge 83-87% |
+| `10-legal/` | Certifications 6-18 mois |
+| `11-operations/` | ODM Shenzhen |
+
+---
+
+## Synthèses
+
+| Document | Chemin |
+|----------|--------|
+| Index recherches | [docs/research/pocket-watch-ai/README.md](docs/research/pocket-watch-ai/README.md) |
+| Métriques session | [docs/executive-summaries/01-multi-agent-research-metrics.md](docs/executive-summaries/01-multi-agent-research-metrics.md) |
+| Projet Go/No-Go | [docs/executive-summaries/02-pocket-watch-ai-project.md](docs/executive-summaries/02-pocket-watch-ai-project.md) |
+| Roadmap Ralph | [docs/roadmaps/ralph-integration-roadmap.md](docs/roadmaps/ralph-integration-roadmap.md) |
+
+---
+
+## Scores
+
+| Phase | Score | Fichiers |
+|-------|:-----:|:--------:|
+| Recherche initiale | 7.6/10 | 7 |
+| Recherche approfondie | 8.0/10 | 11 |
+| **Total** | - | **18 rapports** |
 
 ---
 
