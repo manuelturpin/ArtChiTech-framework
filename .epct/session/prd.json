@@ -1,0 +1,105 @@
+{
+  "project": "ACT-Ralph-Integration",
+  "branchName": "feat/ralph-integration",
+  "description": "Integrer le workflow Ralph Wiggum (boucle autonome) dans ACT pour les phases 3-4-5",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Structure fichiers .epct/loop",
+      "description": "En tant que framework ACT, je veux une structure de fichiers pour la boucle, afin de stocker progress et patterns",
+      "acceptanceCriteria": [
+        "Dossier .epct/loop/ existe",
+        "Dossier .epct/session/ existe",
+        "Fichier progress.md cree au premier lancement",
+        "Fichier patterns.md pour les learnings feature"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Structure creee: .epct/loop/, .epct/session/, progress.md, patterns.md"
+    },
+    {
+      "id": "US-002",
+      "title": "Commande /stories-generate",
+      "description": "En tant que utilisateur, je veux generer prd.json depuis un PRD markdown, afin de structurer mes stories pour la boucle",
+      "acceptanceCriteria": [
+        "Commande /stories-generate existe",
+        "Lit un fichier PRD markdown en input",
+        "Genere .epct/session/prd.json",
+        "Format compatible avec loop.sh"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Commande creee: plugin/commands/stories-generate.md"
+    },
+    {
+      "id": "US-003",
+      "title": "Commande /loop",
+      "description": "En tant que utilisateur, je veux lancer la boucle autonome, afin d'executer mes stories automatiquement",
+      "acceptanceCriteria": [
+        "Commande /loop [max] existe",
+        "Lance loop.sh avec le parametre",
+        "Affiche progression en temps reel",
+        "Gere le signal COMPLETE"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Commande creee: plugin/commands/loop.md - documente usage, output, gestion erreurs"
+    },
+    {
+      "id": "US-004",
+      "title": "Agent loop-executor",
+      "description": "En tant que boucle, je veux un agent specialise pour executer les stories, afin de maintenir le contexte entre iterations",
+      "acceptanceCriteria": [
+        "Agent loop-executor.md cree",
+        "Lit prd.json et selectionne story prioritaire",
+        "Implemente une story par iteration",
+        "Met a jour prd.json (passes: true/false)",
+        "Append a progress.md"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Agent cree: plugin/agents/loop-executor.md - instructions completes pour execution story"
+    },
+    {
+      "id": "US-005",
+      "title": "Commande /loop-status",
+      "description": "En tant que utilisateur, je veux voir la progression de la boucle, afin de suivre l'avancement",
+      "acceptanceCriteria": [
+        "Commande /loop-status existe",
+        "Affiche stories done/pending/skipped",
+        "Affiche iteration courante",
+        "Affiche derniers learnings"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Commande creee: plugin/commands/loop-status.md - affiche progression et learnings"
+    },
+    {
+      "id": "US-006",
+      "title": "Integration /next suggestion",
+      "description": "En tant que framework, je veux suggerer /loop quand pertinent, afin de guider l'utilisateur",
+      "acceptanceCriteria": [
+        "Si > 3 stories dans prd.json, suggerer /loop",
+        "Message clair expliquant pourquoi",
+        "Utilisateur garde le controle"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Integre dans act-next.md: Step 0c detecte > 3 stories et suggere /loop"
+    },
+    {
+      "id": "US-007",
+      "title": "Curation learnings vers AGENTS.md",
+      "description": "En tant que framework, je veux proposer la curation des learnings, afin de capitaliser les patterns",
+      "acceptanceCriteria": [
+        "A la fin de la feature, lire patterns.md",
+        "Proposer les patterns pertinents pour AGENTS.md",
+        "Utilisateur valide avant ajout",
+        "Archiver la feature dans .epct/loop/archive/"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Commande /loop-complete creee. Archive dans .epct/loop/archive/. AGENTS.md au lieu de CLAUDE.md."
+    }
+  ]
+}

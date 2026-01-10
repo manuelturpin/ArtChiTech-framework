@@ -30,6 +30,21 @@ For operations requiring the plugin (checkpoint, update), set the ACT path:
 ACT_ROOT=".claude/act"
 ```
 
+## Step 0c: Check for Loop Opportunity (Phases 3-4-5)
+
+If current phase is 3, 4, or 5 (Design, Development, Quality), check for prd.json:
+
+```bash
+if [ -f ".epct/session/prd.json" ]; then
+  PENDING=$(jq '[.userStories[] | select(.passes == false)] | length' .epct/session/prd.json)
+  if [ "$PENDING" -gt 3 ]; then
+    echo "💡 $PENDING stories pending. Consider using /loop for autonomous execution."
+  fi
+fi
+```
+
+This suggests the autonomous loop when there are multiple stories to implement.
+
 ## Step 1: Read State
 
 Read the state directly from the local JSON file:
