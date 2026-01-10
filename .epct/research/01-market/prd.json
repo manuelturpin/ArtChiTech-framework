@@ -1,64 +1,65 @@
 {
   "project": "PocketWatch-AI-Research",
   "branchName": "sandbox/research-market",
-  "description": "Recherche approfondie sur le marché des montres connectées et positionnement pocket watch AI",
+  "description": "Recherche approfondie sur le marche des montres connectees et positionnement pocket watch AI",
   "researchAxis": "01-market",
+  "completedDate": "2026-01-10",
   "userStories": [
     {
       "id": "MKT-001",
-      "title": "Analyse concurrentielle détaillée",
+      "title": "Analyse concurrentielle detaillee",
       "description": "Identifier et analyser tous les concurrents directs et indirects",
       "acceptanceCriteria": [
         "Liste de 20+ concurrents avec positionnement",
         "Matrice forces/faiblesses pour top 10",
-        "Gaps identifiés dans le marché",
-        "Positionnement différenciant proposé"
+        "Gaps identifies dans le marche",
+        "Positionnement differenciant propose"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Analyse complete des players majeurs (Apple, Samsung, Huawei, Garmin, Xiaomi, Fitbit, TAG Heuer, Montblanc). Gap identifie: aucun concurrent dans le format pocket watch connecte."
     },
     {
       "id": "MKT-002",
-      "title": "Tendances et timing marché",
-      "description": "Analyser les tendances et déterminer le bon timing de lancement",
+      "title": "Tendances et timing marche",
+      "description": "Analyser les tendances et determiner le bon timing de lancement",
       "acceptanceCriteria": [
-        "5 tendances macro identifiées avec données",
-        "Analyse du cycle de vie du marché",
-        "Window of opportunity définie",
-        "Risques de timing documentés"
+        "5 tendances macro identifiees avec donnees",
+        "Analyse du cycle de vie du marche",
+        "Window of opportunity definie",
+        "Risques de timing documentes"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "5 tendances: AI integration, health monitoring, new form factors, subscriptions, vintage revival. Window: Q3-Q4 2026 optimal."
     },
     {
       "id": "MKT-003",
-      "title": "Sizing marché affiné",
-      "description": "Affiner les estimations TAM/SAM/SOM avec données réelles",
+      "title": "Sizing marche affine",
+      "description": "Affiner les estimations TAM/SAM/SOM avec donnees reelles",
       "acceptanceCriteria": [
-        "TAM avec sources vérifiables",
-        "SAM segmenté par région/type",
-        "SOM réaliste années 1-3-5",
-        "Hypothèses documentées"
+        "TAM avec sources verifiables",
+        "SAM segmente par region/type",
+        "SOM realiste annees 1-3-5",
+        "Hypotheses documentees"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "TAM: $70-80B wearables, $55B smartwatches. SAM: $2-5B (premium heritage AI). SOM Y1: $3-6M, Y3: $35-70M, Y5: $150-350M."
     },
     {
       "id": "MKT-004",
-      "title": "Barrières à l'entrée",
-      "description": "Identifier toutes les barrières et comment les surmonter",
+      "title": "Barrieres a l'entree",
+      "description": "Identifier toutes les barrieres et comment les surmonter",
       "acceptanceCriteria": [
-        "Liste barrières techniques",
-        "Liste barrières commerciales",
-        "Liste barrières réglementaires",
-        "Stratégies de contournement"
+        "Liste barrieres techniques",
+        "Liste barrieres commerciales",
+        "Liste barrieres reglementaires",
+        "Strategies de contournement"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Barrieres documentees avec mitigations. FDA 2026 assouplit regles wellness devices. D2C reduit barrieres commerciales."
     }
   ]
 }

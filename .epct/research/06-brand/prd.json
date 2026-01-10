@@ -15,8 +15,8 @@
         "Promesse de marque"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Positionnement 'Heritage AI Wellness' défini. Territoire 'Measured Pause' au croisement heritage/intelligence/wellness/luxury. Différenciation claire vs Apple/TAG/Oura/Garmin."
     },
     {
       "id": "BRD-002",
@@ -29,8 +29,8 @@
         "Tone of voice"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "16 propositions de noms générées. Recommandation primaire: AEVUM. 5 taglines proposées. Tone of voice défini: refined, confident, contemplative, warm, mysterious."
     },
     {
       "id": "BRD-003",
@@ -43,8 +43,8 @@
         "Manifeste de marque"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Framework narratif complet. 5 valeurs définies: Intention, Presence, Craft, Wisdom, Legacy. Manifeste rédigé centré sur 'Time is sacred'."
     },
     {
       "id": "BRD-004",
@@ -57,8 +57,8 @@
         "Éléments graphiques"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Direction logo typographique + symbole. Palette Obsidian/Champagne Gold/Ivory/Midnight Blue. Typo Didone serif + geometric sans. 4 éléments graphiques signature définis."
     },
     {
       "id": "BRD-005",
@@ -71,8 +71,8 @@
         "Partenariats de marque"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "8 touchpoints mappés. 3 rituels de marque (Morning Measure, Pause Protocol, Evening Reflection). Aevum Society définie. Partenariats wellness/hospitality identifiés."
     }
   ]
 }

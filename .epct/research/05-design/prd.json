@@ -3,6 +3,7 @@
   "branchName": "sandbox/research-design",
   "description": "Recherche sur le design produit et UX de la montre à gousset AI",
   "researchAxis": "05-design",
+  "completedAt": "2026-01-10",
   "userStories": [
     {
       "id": "DES-001",
@@ -15,8 +16,8 @@
         "Éléments différenciants identifiés"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "22 références collectées incluant Patek Philippe, Breguet, MB&F, Urwerk, De Bethune. Tendances 2024-2025: heritage revival, fume gradients, titanium/ceramic materials, asymmetry."
     },
     {
       "id": "DES-002",
@@ -29,8 +30,8 @@
         "Mécanisme d'ouverture"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "3 directions: Heritage Reimagined, Avant-Garde Portal, Minimal Artifact. Dimensions: 48-52mm, 12-15mm thick. Matériaux: Grade 5 titanium, ceramic, sapphire. Mécanisme: spring-loaded hunter avec dampening."
     },
     {
       "id": "DES-003",
@@ -43,8 +44,8 @@
         "Accessibilité"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "4 modes: crown/buttons, touch, voice, gesture. Flux: quick time check, AI query, notifications, timer. Micro-interactions: lid open/close, AI listening pulse, haptic confirmations. Accessibility: screen reader, high contrast, large text, voice control."
     },
     {
       "id": "DES-004",
@@ -57,8 +58,8 @@
         "Iconographie"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Style: Neo-Heritage (classic meets digital). Palette: Deep Black, Warm White, Champagne Gold, Royal Blue. Typo: Custom Breguet-inspired numerals + Helvetica-style sans. Icons: 2px stroke, outlined, 24x24 grid."
     },
     {
       "id": "DES-005",
@@ -71,8 +72,8 @@
         "Coût packaging estimé"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Concept 'The Ritual': 4-tier reveal (sleeve, box, presentation, accessories). Matériaux: FSC kraft, recycled cardboard, molded paper pulp, organic cotton. Features: slow-release hinges, magnetic closure, AR experience. Coût: $41-66 USD."
     }
   ]
 }

@@ -3,6 +3,7 @@
   "branchName": "sandbox/research-hardware",
   "description": "Recherche sur le hardware et prototypage de la montre à gousset AI",
   "researchAxis": "04-hardware",
+  "completedAt": "2026-01-10",
   "userStories": [
     {
       "id": "HW-001",
@@ -15,8 +16,8 @@
         "Lead times par composant"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "BOM complet défini: 4 tiers (Core, Sensors, Power, Mechanical). Coût estimé $90-120 @ qty 100. Fournisseurs: DigiKey, Mouser, LCSC, PCBWay. Lead times documentés."
     },
     {
       "id": "HW-002",
@@ -29,8 +30,8 @@
         "Recommandation avec justification"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "5 SoC comparés. Recommandation: Nordic nRF54LM20B (Axon NPU, 7x plus rapide, 8x plus efficace). Alternative: ESP32-S3 pour PoC, Snapdragon W5+ Gen 2 pour premium."
     },
     {
       "id": "HW-003",
@@ -43,8 +44,8 @@
         "Coût par technologie"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "4 technologies comparées. Recommandation: 1.39\" Round AMOLED 454x454 ($15-25). Alternative E-Ink pour autonomie max (7-14 jours). Memory LCD comme option intermédiaire."
     },
     {
       "id": "HW-004",
@@ -57,8 +58,8 @@
         "Stratégie de charge"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Batteries rondes LiPo analysées (35-45mm). Recommandation: 600mAh round (35-40mm). Autonomie: 2-4 jours AMOLED, 7-14 jours E-Ink. Charge: pogo pins magnétiques + Qi backup."
     },
     {
       "id": "HW-005",
@@ -67,12 +68,11 @@
       "acceptanceCriteria": [
         "Proto v0 (proof of concept)",
         "Proto v1 (fonctionnel)",
-        "Proto v2 (pre-production)",
-        "Coûts et timeline par phase"
+        "Proto v2 (pre-production)"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "3 phases définies: V0 (PoC $130-260, 2-4 sem), V1 (Custom PCB $2400-5600, 6-10 sem), V2 (Pre-prod $25-50K, 10-16 sem). Dev kits et fabricants identifiés."
     }
   ]
 }

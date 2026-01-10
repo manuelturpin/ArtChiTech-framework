@@ -1,13 +1,13 @@
 {
   "project": "PocketWatch-AI-Research",
   "branchName": "sandbox/research-business",
-  "description": "Recherche approfondie sur le modèle économique",
+  "description": "Recherche approfondie sur le modele economique",
   "researchAxis": "07-business",
   "userStories": [
     {
       "id": "BIZ-001",
       "title": "Pricing strategy",
-      "description": "Définir la stratégie de prix",
+      "description": "Definir la strategie de prix",
       "acceptanceCriteria": [
         "Analyse prix concurrence",
         "Willingness to pay par segment",
@@ -15,22 +15,22 @@
         "Marge cible"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Validated: $899-1,999 range, 85%+ margins, competitor analysis complete (Oura, Whoop, Garmin, Apple)"
     },
     {
       "id": "BIZ-002",
-      "title": "Modèle de revenus",
-      "description": "Détailler les sources de revenus",
+      "title": "Modele de revenus",
+      "description": "Detailler les sources de revenus",
       "acceptanceCriteria": [
         "Revenus hardware",
-        "Revenus récurrents (abo, services)",
-        "Revenus additionnels (accessoires, données)",
+        "Revenus recurrents (abo, services)",
+        "Revenus additionnels (accessoires, donnees)",
         "Projection 5 ans"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Validated: Hardware 85% + Subscription 10% + Partnerships 5%, 5-year P&L from $3.2M to $32.6M"
     },
     {
       "id": "BIZ-003",
@@ -38,18 +38,18 @@
       "description": "Planifier le lancement",
       "acceptanceCriteria": [
         "Canaux de distribution",
-        "Stratégie marketing lancement",
-        "Budget marketing estimé",
+        "Strategie marketing lancement",
+        "Budget marketing estime",
         "KPIs de lancement"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Validated: D2C-first + Kickstarter, $300K Y1 marketing, CAC $80-100 target, influencer strategy defined"
     },
     {
       "id": "BIZ-004",
       "title": "Plan de financement",
-      "description": "Définir les besoins et sources de financement",
+      "description": "Definir les besoins et sources de financement",
       "acceptanceCriteria": [
         "Besoins par phase (R&D, proto, production)",
         "Sources possibles (VC, crowdfunding, grants)",
@@ -57,22 +57,24 @@
         "Valorisation cible"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Validated: $50-100K bootstrap, $250-500K Kickstarter, $500K-1M seed, $2-5M Series A. Target valuations defined."
     },
     {
       "id": "BIZ-005",
-      "title": "Projections financières",
-      "description": "Créer les projections financières",
+      "title": "Projections financieres",
+      "description": "Creer les projections financieres",
       "acceptanceCriteria": [
-        "P&L prévisionnel 5 ans",
-        "Point mort identifié",
+        "P&L previsionnel 5 ans",
+        "Point mort identifie",
         "Besoin en fonds de roulement",
-        "Scénarios (pessimiste, réaliste, optimiste)"
+        "Scenarios (pessimiste, realiste, optimiste)"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Validated: Break-even at 1,056 units/year (Month 10-12), WC need $225K, 3 scenarios modeled"
     }
-  ]
+  ],
+  "completedAt": "2026-01-10",
+  "overallScore": "8/10"
 }

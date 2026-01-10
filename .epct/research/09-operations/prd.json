@@ -15,8 +15,8 @@
         "Contrôle qualité"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "ODM to OEM path validated. China (Shenzhen) primary for cost. Europe/USA for premium/medical. AQL-based QC with IPC standards."
     },
     {
       "id": "OPS-002",
@@ -29,8 +29,8 @@
         "Conditions de paiement"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "LCSC for prototypes, DigiKey/Mouser for quality. Second sources identified for all critical components. Lead times 1-6 weeks depending on component. Payment 30-100% upfront based on volume."
     },
     {
       "id": "OPS-003",
@@ -43,8 +43,8 @@
         "Coût assemblage unitaire"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "JLCPCB/PCBWay for PCBA. 7-step assembly process defined. AOI + ICT + functional testing. Cost: $8-20/unit depending on volume."
     },
     {
       "id": "OPS-004",
@@ -57,8 +57,8 @@
         "Coûts logistiques"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "ShipBob/ShipMonk for 3PL. Multi-region strategy at scale. RMA process with replace vs repair economics. Shipping $2.50-12/order depending on speed."
     },
     {
       "id": "OPS-005",
@@ -71,8 +71,8 @@
         "Investissements requis"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "4-phase plan: 100 units ($25K) → 1K ($120K) → 5K ($350K) → 10K+ ($600K). Bottlenecks: cash flow, tooling, component supply. Timeline 3-4 months per phase."
     }
   ]
 }

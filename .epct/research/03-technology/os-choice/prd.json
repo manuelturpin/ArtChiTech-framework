@@ -3,6 +3,8 @@
   "branchName": "sandbox/research-os",
   "description": "Choix du système d'exploitation pour la montre à gousset AI",
   "researchAxis": "03-technology/os-choice",
+  "completedAt": "2026-01-10",
+  "recommendation": "Hybrid Architecture: Zephyr RTOS (nRF52840) + FreeRTOS (ESP32-C3)",
   "userStories": [
     {
       "id": "OS-001",
@@ -15,8 +17,8 @@
         "Licensing et coûts"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "7 catégories analysées: Wear OS, AsteroidOS, VEE Wear, Zephyr, FreeRTOS, ThreadX, NuttX, RIOT, Zepp OS, InfiniTime. 50% du marché utilise RTOS/Hybrid."
     },
     {
       "id": "OS-002",
@@ -29,8 +31,8 @@
         "Cas d'usage similaires"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "INCOMPATIBLE: Nécessite ARM 64-bit, 1GB RAM, 8GB storage. Certification GMS: $10-15K/modèle, MADA $10-40/device. Score: 2/10."
     },
     {
       "id": "OS-003",
@@ -43,8 +45,8 @@
         "Intégration IA possible"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Zephyr optimal pour nRF52840 (Nordic SDK), FreeRTOS optimal pour ESP32-C3 (ESP-IDF + TFLite). Dev effort: 7-11 semaines Zephyr vs 15-22 semaines FreeRTOS seul."
     },
     {
       "id": "OS-004",
@@ -57,8 +59,8 @@
         "Roadmap de développement"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "NON RECOMMANDÉ: Bare metal = 6-9 mois, $150-250K. Avantages marginaux vs Zephyr optimisé. Risques élevés (BLE, power, maintenance). Score: 4/10."
     },
     {
       "id": "OS-005",
@@ -71,8 +73,8 @@
         "Prochaines étapes"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "RECOMMANDATION: Hybrid (Zephyr + FreeRTOS) score 8.6/10. Plan B: Pure Zephyr 7.5/10. Plan C: Zepp OS license 6/10. Next: Setup dev env, prototype BLE, test E-Ink."
     }
   ]
 }

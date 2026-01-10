@@ -4,19 +4,21 @@
 
 ## Statut Global
 
-| # | Axe | PRD | Loop | Status |
-|---|-----|:---:|:----:|:------:|
-| 01 | Marché approfondi | ✅ | ⏳ | Prêt |
-| 02 | Validation clients | ✅ | ⏳ | Prêt |
-| 03a | OS & Platform | ✅ | ⏳ | Prêt |
-| 03b | Connectivité | ✅ | ⏳ | Prêt |
-| 03c | IA Embarquée | ✅ | ⏳ | Prêt |
-| 04 | Hardware & Proto | ✅ | ⏳ | Prêt |
-| 05 | Design Produit | ✅ | ⏳ | Prêt |
-| 06 | Brand Identity | ✅ | ⏳ | Prêt |
-| 07 | Business Model | ✅ | ⏳ | Prêt |
-| 08 | Legal & Normes | ✅ | ⏳ | Prêt |
-| 09 | Operations | ✅ | ⏳ | Prêt |
+| # | Axe | PRD | Loop | Status | Rapport |
+|---|-----|:---:|:----:|:------:|---------|
+| 01 | Marché approfondi | ✅ | ✅ | COMPLET | [report.md](01-market/report.md) |
+| 02 | Validation clients | ✅ | ✅ | COMPLET | [report.md](02-customers/report.md) |
+| 03a | OS & Platform | ✅ | ✅ | COMPLET | [report.md](03-technology/os-choice/report.md) |
+| 03b | Connectivité | ✅ | ✅ | COMPLET | [report.md](03-technology/connectivity/report.md) |
+| 03c | IA Embarquée | ✅ | ✅ | COMPLET | [report.md](03-technology/ai-stack/report.md) |
+| 04 | Hardware & Proto | ✅ | ✅ | COMPLET | [report.md](04-hardware/report.md) |
+| 05 | Design Produit | ✅ | ✅ | COMPLET | [report.md](05-design/report.md) |
+| 06 | Brand Identity | ✅ | ✅ | COMPLET | [report.md](06-brand/report.md) |
+| 07 | Business Model | ✅ | ✅ | COMPLET | [report.md](07-business/report.md) |
+| 08 | Legal & Normes | ✅ | ✅ | COMPLET | [report.md](08-legal/report.md) |
+| 09 | Operations | ✅ | ✅ | COMPLET | [report.md](09-operations/report.md) |
+
+**11/11 recherches terminées** - Phase 1 Discovery COMPLÈTE
 
 **Légende** : ✅ Fait | ⏳ En attente | 🔄 En cours | ❌ Bloqué
 

@@ -3,6 +3,7 @@
   "branchName": "sandbox/research-connectivity",
   "description": "Recherche sur les options de connectivité pour la montre à gousset AI",
   "researchAxis": "03-technology/connectivity",
+  "completedAt": "2025-01-10T20:00:00Z",
   "userStories": [
     {
       "id": "CON-001",
@@ -15,8 +16,8 @@
         "Technologies alternatives (LoRa, Sigfox)"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "BLE 5.4 recommandé pour MVP, LTE-M pour version premium. WiFi HaLow prometteur mais adoption limitée. LoRa/Sigfox non adaptés."
     },
     {
       "id": "CON-002",
@@ -29,8 +30,8 @@
         "Benchmarks produits similaires"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "BLE: 14-30 jours, LTE: 2-4 jours. Stratégies PSM/eDRX/TWT documentées. Benchmarks Garmin, Apple, Samsung analysés."
     },
     {
       "id": "CON-003",
@@ -43,8 +44,8 @@
         "Sécurité des communications"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Architecture 3-tier proposée (Watch/Phone/Cloud). MQTT recommandé pour IoT. Hybrid sync strategy. LE Secure Connections obligatoire."
     },
     {
       "id": "CON-004",
@@ -57,8 +58,8 @@
         "Recommandation stratégique"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "MVP: Companion mode (BLE+NFC). V2: Hybrid mode avec LTE-M optionnel. Matrice fonctionnalités par mode documentée."
     }
   ]
 }

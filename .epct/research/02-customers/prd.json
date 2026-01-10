@@ -3,6 +3,7 @@
   "branchName": "sandbox/research-customers",
   "description": "Validation et approfondissement des segments clients cibles",
   "researchAxis": "02-customers",
+  "completedAt": "2026-01-10",
   "userStories": [
     {
       "id": "CUS-001",
@@ -15,8 +16,8 @@
         "Canaux d'acquisition identifiés"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "4 personas validées avec données marché, Reddit, études académiques. WTP: $499-$2499. Canaux: YouTube, Instagram, Kickstarter, forums horologiques."
     },
     {
       "id": "CUS-002",
@@ -29,8 +30,8 @@
         "Opportunités d'enchantement"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "4 customer journeys détaillés (Discovery > Consideration > Decision > Usage > Advocacy). Friction points et WOW moments documentés."
     },
     {
       "id": "CUS-003",
@@ -43,8 +44,8 @@
         "Priorité de ciblage"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "6 segments identifiés: Innovators (5%), Tech-Forward (15%), Style-Seekers (25%), Health-Focused (30%), Status-Conscious (15%), Traditionalists (10%). Matrice de priorisation incluse."
     },
     {
       "id": "CUS-004",
@@ -57,8 +58,8 @@
         "Grille d'analyse des réponses"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Guide complet 45min en 5 parties. Screener questions par persona. Grille d'analyse 5 dimensions (Problem Fit, Solution Fit, Purchase Intent, Price Acceptance, Recommendation)."
     }
   ]
 }
