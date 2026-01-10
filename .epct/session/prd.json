@@ -1,105 +1,117 @@
 {
-  "project": "ACT-Ralph-Integration",
-  "branchName": "feat/ralph-integration",
-  "description": "Integrer le workflow Ralph Wiggum (boucle autonome) dans ACT pour les phases 3-4-5",
+  "project": "DeepSearch-Pocket-Watch-AI",
+  "branchName": "claude/test-deepsearch-pocket-watch-P5EDF",
+  "description": "Recherche approfondie sur la faisabilité d'une montre à gousset connectée propulsée par IA - Exploration marché, clients, technique, architecture OOP et business model",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Structure fichiers .epct/loop",
-      "description": "En tant que framework ACT, je veux une structure de fichiers pour la boucle, afin de stocker progress et patterns",
+      "title": "Analyse du Marché et Positionnement",
+      "description": "En tant que porteur de projet, je veux comprendre le marché des montres connectées de luxe et le segment gousset, afin de valider l'opportunité commerciale.",
       "acceptanceCriteria": [
-        "Dossier .epct/loop/ existe",
-        "Dossier .epct/session/ existe",
-        "Fichier progress.md cree au premier lancement",
-        "Fichier patterns.md pour les learnings feature"
+        "Cartographie du marché actuel des montres connectées haut de gamme",
+        "Analyse des concurrents potentiels (hybrid watches, luxury smartwatches)",
+        "Identification des tendances : néo-vintage, slow tech, digital detox",
+        "Estimation de la taille du marché adressable (TAM/SAM/SOM)",
+        "Rapport documenté dans .epct/research/market-analysis.md"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "Structure creee: .epct/loop/, .epct/session/, progress.md, patterns.md"
+      "notes": "Rapport complet créé. TAM $100B, SAM $18B, SOM $5-200M. Segment vierge, tendances favorables. Score 7.5/10."
     },
     {
       "id": "US-002",
-      "title": "Commande /stories-generate",
-      "description": "En tant que utilisateur, je veux generer prd.json depuis un PRD markdown, afin de structurer mes stories pour la boucle",
+      "title": "Profiling des Clients Cibles",
+      "description": "En tant que équipe produit, je veux identifier et caractériser les segments de clients potentiels, afin de concevoir un produit adapté à leurs besoins.",
       "acceptanceCriteria": [
-        "Commande /stories-generate existe",
-        "Lit un fichier PRD markdown en input",
-        "Genere .epct/session/prd.json",
-        "Format compatible avec loop.sh"
+        "Définition de 3-4 personas détaillés",
+        "Analyse des motivations d'achat (statut, fonctionnalité, nostalgie, différenciation)",
+        "Identification des pain points des smartwatches actuelles pour ce segment",
+        "Mapping du parcours client (discovery → purchase → usage)",
+        "Rapport documenté dans .epct/research/customer-personas.md"
       ],
-      "priority": 2,
+      "priority": 1,
       "passes": true,
-      "notes": "Commande creee: plugin/commands/stories-generate.md"
+      "notes": "4 personas créés: Collectionneur, Gen Z, Professionnel, Early Adopter. Journey client complet. Score 8/10."
     },
     {
       "id": "US-003",
-      "title": "Commande /loop",
-      "description": "En tant que utilisateur, je veux lancer la boucle autonome, afin d'executer mes stories automatiquement",
+      "title": "Faisabilité Technique Hardware",
+      "description": "En tant que équipe technique, je veux évaluer la faisabilité du hardware pour une montre à gousset connectée, afin de comprendre les contraintes et possibilités.",
       "acceptanceCriteria": [
-        "Commande /loop [max] existe",
-        "Lance loop.sh avec le parametre",
-        "Affiche progression en temps reel",
-        "Gere le signal COMPLETE"
+        "Analyse des contraintes de forme (boîtier rond épais, chaîne, ouverture)",
+        "Évaluation des composants nécessaires (écran, batterie, capteurs, connectivité)",
+        "Comparaison des options d'écran (E-ink, OLED, hybrid analogique-digital)",
+        "Analyse de l'autonomie réalisable vs attentes utilisateur",
+        "Estimation des coûts de fabrication (BOM préliminaire)",
+        "Rapport documenté dans .epct/research/hardware-feasibility.md"
       ],
-      "priority": 3,
+      "priority": 2,
       "passes": true,
-      "notes": "Commande creee: plugin/commands/loop.md - documente usage, output, gestion erreurs"
+      "notes": "Architecture nRF52840+ESP32-C3 validée. BOM $60-125. Autonomie 7-14 jours. Score technique 7/10."
     },
     {
       "id": "US-004",
-      "title": "Agent loop-executor",
-      "description": "En tant que boucle, je veux un agent specialise pour executer les stories, afin de maintenir le contexte entre iterations",
+      "title": "Architecture Logicielle Orientée Objet",
+      "description": "En tant que architecte logiciel, je veux concevoir une architecture OOP pour le firmware et l'écosystème, afin de garantir maintenabilité et évolutivité.",
       "acceptanceCriteria": [
-        "Agent loop-executor.md cree",
-        "Lit prd.json et selectionne story prioritaire",
-        "Implemente une story par iteration",
-        "Met a jour prd.json (passes: true/false)",
-        "Append a progress.md"
+        "Diagramme de classes UML pour le firmware embarqué",
+        "Design patterns appropriés identifiés (Observer, State, Strategy, Factory)",
+        "Architecture de l'app companion (mobile)",
+        "API design pour synchronisation cloud",
+        "Séparation des concerns : UI, Sensors, AI, Communication",
+        "Documentation dans .epct/research/software-architecture.md"
       ],
-      "priority": 4,
+      "priority": 2,
       "passes": true,
-      "notes": "Agent cree: plugin/agents/loop-executor.md - instructions completes pour execution story"
+      "notes": "5 patterns implémentés (Observer, State, Strategy, Factory, Singleton). Architecture 5 couches. API REST+WebSocket. Score 8/10."
     },
     {
       "id": "US-005",
-      "title": "Commande /loop-status",
-      "description": "En tant que utilisateur, je veux voir la progression de la boucle, afin de suivre l'avancement",
+      "title": "Intégration IA Embarquée",
+      "description": "En tant que expert IA, je veux définir les capacités IA réalisables sur un dispositif embarqué, afin de différencier le produit par l'intelligence.",
       "acceptanceCriteria": [
-        "Commande /loop-status existe",
-        "Affiche stories done/pending/skipped",
-        "Affiche iteration courante",
-        "Affiche derniers learnings"
+        "Inventaire des use cases IA pertinents (assistant contextuel, health insights, prédictions)",
+        "Analyse edge AI vs cloud AI (latence, privacy, consommation)",
+        "Évaluation des frameworks embarqués (TensorFlow Lite, ONNX Runtime, custom)",
+        "Contraintes de compute/mémoire sur microcontrôleur",
+        "Modèles ML réalistes (taille, précision, inférence time)",
+        "Rapport documenté dans .epct/research/ai-integration.md"
       ],
-      "priority": 5,
+      "priority": 2,
       "passes": true,
-      "notes": "Commande creee: plugin/commands/loop-status.md - affiche progression et learnings"
+      "notes": "TFLite Micro recommandé. 4 use cases faisables (20-100KB models, 5-25ms inference). Approche hybride edge+cloud. Score 7.5/10."
     },
     {
       "id": "US-006",
-      "title": "Integration /next suggestion",
-      "description": "En tant que framework, je veux suggerer /loop quand pertinent, afin de guider l'utilisateur",
+      "title": "Proposition de Valeur et Business Model",
+      "description": "En tant que entrepreneur, je veux définir un business model viable, afin de assurer la pérennité du projet.",
       "acceptanceCriteria": [
-        "Si > 3 stories dans prd.json, suggerer /loop",
-        "Message clair expliquant pourquoi",
-        "Utilisateur garde le controle"
+        "Canvas de proposition de valeur unique",
+        "Pricing strategy (premium positioning, éditions limitées)",
+        "Revenue streams (hardware, services, personnalisation)",
+        "Canaux de distribution adaptés (horlogeries, e-commerce direct, partenariats)",
+        "Projection financière simplifiée (coûts, marges, break-even)",
+        "Rapport documenté dans .epct/research/business-model.md"
       ],
-      "priority": 6,
+      "priority": 3,
       "passes": true,
-      "notes": "Integre dans act-next.md: Step 0c detecte > 3 stories et suggere /loop"
+      "notes": "Business model viable. Prix $899-1999. Marge >80%. Break-even 880 unités. Revenue Y1 $1.6M. Score 7.5/10."
     },
     {
       "id": "US-007",
-      "title": "Curation learnings vers AGENTS.md",
-      "description": "En tant que framework, je veux proposer la curation des learnings, afin de capitaliser les patterns",
+      "title": "Synthèse et Recommandations Go/No-Go",
+      "description": "En tant que décideur, je veux une synthèse avec recommandation claire, afin de décider de la suite du projet.",
       "acceptanceCriteria": [
-        "A la fin de la feature, lire patterns.md",
-        "Proposer les patterns pertinents pour AGENTS.md",
-        "Utilisateur valide avant ajout",
-        "Archiver la feature dans .epct/loop/archive/"
+        "Matrice SWOT consolidée",
+        "Risques majeurs identifiés et mitigations proposées",
+        "Score de faisabilité global (technique, marché, financier)",
+        "Recommandation argumentée : Go / Go with conditions / No-Go",
+        "Roadmap préliminaire si Go",
+        "Rapport final dans .epct/research/final-synthesis.md"
       ],
-      "priority": 7,
+      "priority": 4,
       "passes": true,
-      "notes": "Commande /loop-complete creee. Archive dans .epct/loop/archive/. AGENTS.md au lieu de CLAUDE.md."
+      "notes": "SWOT complète. Score global 7.6/10. Recommandation: GO WITH CONDITIONS. Roadmap 18 mois définie."
     }
   ]
 }
