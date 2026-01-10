@@ -1,0 +1,78 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-hardware",
+  "description": "Recherche sur le hardware et prototypage de la montre à gousset AI",
+  "researchAxis": "04-hardware",
+  "userStories": [
+    {
+      "id": "HW-001",
+      "title": "Bill of Materials (BOM)",
+      "description": "Définir la liste complète des composants",
+      "acceptanceCriteria": [
+        "Liste composants avec specs",
+        "Fournisseurs identifiés par composant",
+        "Coût unitaire estimé",
+        "Lead times par composant"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "HW-002",
+      "title": "Processeur et NPU",
+      "description": "Choisir le processeur avec capacité IA",
+      "acceptanceCriteria": [
+        "Comparaison SoC (Qualcomm, MediaTek, Nordic...)",
+        "Capacité NPU/ML de chaque",
+        "Consommation énergétique",
+        "Recommandation avec justification"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "HW-003",
+      "title": "Écran et interface",
+      "description": "Choisir la technologie d'affichage",
+      "acceptanceCriteria": [
+        "Comparaison OLED/AMOLED/E-ink/LCD",
+        "Forme et taille optimale",
+        "Consommation et lisibilité",
+        "Coût par technologie"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "HW-004",
+      "title": "Batterie et autonomie",
+      "description": "Définir la stratégie batterie",
+      "acceptanceCriteria": [
+        "Technologies batterie disponibles",
+        "Capacité vs taille",
+        "Objectif autonomie défini",
+        "Stratégie de charge"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "HW-005",
+      "title": "Stratégie prototypage",
+      "description": "Planifier les phases de prototypage",
+      "acceptanceCriteria": [
+        "Proto v0 (proof of concept)",
+        "Proto v1 (fonctionnel)",
+        "Proto v2 (pre-production)",
+        "Coûts et timeline par phase"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

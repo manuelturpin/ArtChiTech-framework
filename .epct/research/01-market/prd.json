@@ -1,0 +1,64 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-market",
+  "description": "Recherche approfondie sur le marché des montres connectées et positionnement pocket watch AI",
+  "researchAxis": "01-market",
+  "userStories": [
+    {
+      "id": "MKT-001",
+      "title": "Analyse concurrentielle détaillée",
+      "description": "Identifier et analyser tous les concurrents directs et indirects",
+      "acceptanceCriteria": [
+        "Liste de 20+ concurrents avec positionnement",
+        "Matrice forces/faiblesses pour top 10",
+        "Gaps identifiés dans le marché",
+        "Positionnement différenciant proposé"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "MKT-002",
+      "title": "Tendances et timing marché",
+      "description": "Analyser les tendances et déterminer le bon timing de lancement",
+      "acceptanceCriteria": [
+        "5 tendances macro identifiées avec données",
+        "Analyse du cycle de vie du marché",
+        "Window of opportunity définie",
+        "Risques de timing documentés"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "MKT-003",
+      "title": "Sizing marché affiné",
+      "description": "Affiner les estimations TAM/SAM/SOM avec données réelles",
+      "acceptanceCriteria": [
+        "TAM avec sources vérifiables",
+        "SAM segmenté par région/type",
+        "SOM réaliste années 1-3-5",
+        "Hypothèses documentées"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "MKT-004",
+      "title": "Barrières à l'entrée",
+      "description": "Identifier toutes les barrières et comment les surmonter",
+      "acceptanceCriteria": [
+        "Liste barrières techniques",
+        "Liste barrières commerciales",
+        "Liste barrières réglementaires",
+        "Stratégies de contournement"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

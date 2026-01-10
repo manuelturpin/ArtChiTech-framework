@@ -1,0 +1,64 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-connectivity",
+  "description": "Recherche sur les options de connectivité pour la montre à gousset AI",
+  "researchAxis": "03-technology/connectivity",
+  "userStories": [
+    {
+      "id": "CON-001",
+      "title": "Technologies de connectivité",
+      "description": "Analyser toutes les options de connectivité disponibles",
+      "acceptanceCriteria": [
+        "Comparaison Bluetooth/BLE versions",
+        "Analyse WiFi (2.4/5GHz, WiFi 6)",
+        "Options cellulaires (LTE-M, NB-IoT, 5G)",
+        "Technologies alternatives (LoRa, Sigfox)"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "CON-002",
+      "title": "Impact sur l'autonomie",
+      "description": "Analyser l'impact de chaque technologie sur la batterie",
+      "acceptanceCriteria": [
+        "Consommation par technologie",
+        "Stratégies d'optimisation",
+        "Trade-offs connectivité/autonomie",
+        "Benchmarks produits similaires"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "CON-003",
+      "title": "Architecture réseau",
+      "description": "Définir l'architecture de communication",
+      "acceptanceCriteria": [
+        "Schéma d'architecture réseau",
+        "Protocoles applicatifs (MQTT, HTTP, WebSocket)",
+        "Gestion offline/sync",
+        "Sécurité des communications"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "CON-004",
+      "title": "Dépendance smartphone",
+      "description": "Évaluer le niveau de dépendance au smartphone",
+      "acceptanceCriteria": [
+        "Scénarios standalone vs companion",
+        "Fonctionnalités sans téléphone",
+        "UX pour chaque scénario",
+        "Recommandation stratégique"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

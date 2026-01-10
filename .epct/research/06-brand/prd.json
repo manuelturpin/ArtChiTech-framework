@@ -1,0 +1,78 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-brand",
+  "description": "Recherche sur l'identité de marque et le storytelling",
+  "researchAxis": "06-brand",
+  "userStories": [
+    {
+      "id": "BRD-001",
+      "title": "Positionnement de marque",
+      "description": "Définir le positionnement unique de la marque",
+      "acceptanceCriteria": [
+        "Brand positioning statement",
+        "Territoire de marque",
+        "Différenciation vs concurrence",
+        "Promesse de marque"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "BRD-002",
+      "title": "Naming et identité verbale",
+      "description": "Créer le nom et l'univers verbal",
+      "acceptanceCriteria": [
+        "10+ propositions de noms",
+        "Vérification disponibilité (domaine, marque)",
+        "Tagline/baseline",
+        "Tone of voice"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "BRD-003",
+      "title": "Storytelling et origine",
+      "description": "Créer l'histoire de la marque",
+      "acceptanceCriteria": [
+        "Histoire fondatrice",
+        "Valeurs de marque",
+        "Mission et vision",
+        "Manifeste de marque"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "BRD-004",
+      "title": "Identité visuelle",
+      "description": "Définir les bases de l'identité visuelle",
+      "acceptanceCriteria": [
+        "Direction logo",
+        "Palette de couleurs",
+        "Typographies",
+        "Éléments graphiques"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "BRD-005",
+      "title": "Brand experience",
+      "description": "Définir l'expérience de marque globale",
+      "acceptanceCriteria": [
+        "Points de contact marque",
+        "Rituel de marque",
+        "Communauté et engagement",
+        "Partenariats de marque"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

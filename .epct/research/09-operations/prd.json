@@ -1,0 +1,78 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-operations",
+  "description": "Recherche sur la supply chain, fabrication et opérations",
+  "researchAxis": "09-operations",
+  "userStories": [
+    {
+      "id": "OPS-001",
+      "title": "Stratégie de fabrication",
+      "description": "Définir comment fabriquer le produit",
+      "acceptanceCriteria": [
+        "Make vs buy analysis",
+        "Localisation fabrication (Chine, Europe...)",
+        "Volumes et économies d'échelle",
+        "Contrôle qualité"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "OPS-002",
+      "title": "Sourcing composants",
+      "description": "Identifier les fournisseurs de composants",
+      "acceptanceCriteria": [
+        "Fournisseurs par composant critique",
+        "Second source identifié",
+        "Lead times",
+        "Conditions de paiement"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "OPS-003",
+      "title": "Assemblage et intégration",
+      "description": "Planifier l'assemblage du produit",
+      "acceptanceCriteria": [
+        "Process d'assemblage",
+        "EMS (Electronic Manufacturing Services) identifiés",
+        "Tests en production",
+        "Coût assemblage unitaire"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "OPS-004",
+      "title": "Logistique et distribution",
+      "description": "Planifier la chaîne logistique",
+      "acceptanceCriteria": [
+        "Warehousing strategy",
+        "Shipping et fulfillment",
+        "Retours et SAV",
+        "Coûts logistiques"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "OPS-005",
+      "title": "Scalabilité",
+      "description": "Planifier la montée en charge",
+      "acceptanceCriteria": [
+        "Capacité production initiale",
+        "Plan de scaling",
+        "Goulots d'étranglement identifiés",
+        "Investissements requis"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

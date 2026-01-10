@@ -1,0 +1,78 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-business",
+  "description": "Recherche approfondie sur le modèle économique",
+  "researchAxis": "07-business",
+  "userStories": [
+    {
+      "id": "BIZ-001",
+      "title": "Pricing strategy",
+      "description": "Définir la stratégie de prix",
+      "acceptanceCriteria": [
+        "Analyse prix concurrence",
+        "Willingness to pay par segment",
+        "Structure de prix (hardware + abo)",
+        "Marge cible"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "BIZ-002",
+      "title": "Modèle de revenus",
+      "description": "Détailler les sources de revenus",
+      "acceptanceCriteria": [
+        "Revenus hardware",
+        "Revenus récurrents (abo, services)",
+        "Revenus additionnels (accessoires, données)",
+        "Projection 5 ans"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "BIZ-003",
+      "title": "Go-to-market strategy",
+      "description": "Planifier le lancement",
+      "acceptanceCriteria": [
+        "Canaux de distribution",
+        "Stratégie marketing lancement",
+        "Budget marketing estimé",
+        "KPIs de lancement"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "BIZ-004",
+      "title": "Plan de financement",
+      "description": "Définir les besoins et sources de financement",
+      "acceptanceCriteria": [
+        "Besoins par phase (R&D, proto, production)",
+        "Sources possibles (VC, crowdfunding, grants)",
+        "Pitch deck structure",
+        "Valorisation cible"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "BIZ-005",
+      "title": "Projections financières",
+      "description": "Créer les projections financières",
+      "acceptanceCriteria": [
+        "P&L prévisionnel 5 ans",
+        "Point mort identifié",
+        "Besoin en fonds de roulement",
+        "Scénarios (pessimiste, réaliste, optimiste)"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-ai-stack",
+  "description": "Recherche approfondie sur l'intégration IA dans la montre à gousset",
+  "researchAxis": "03-technology/ai-stack",
+  "userStories": [
+    {
+      "id": "AI-001",
+      "title": "Edge vs Cloud AI",
+      "description": "Analyser les options d'exécution de l'IA",
+      "acceptanceCriteria": [
+        "Comparaison edge/cloud/hybride",
+        "Latence par approche",
+        "Coûts infrastructure cloud",
+        "Contraintes hardware edge"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "AI-002",
+      "title": "Modèles IA embarqués",
+      "description": "Identifier les modèles adaptés à l'embarqué",
+      "acceptanceCriteria": [
+        "Liste modèles edge (TinyML, TFLite...)",
+        "Taille et performance de chaque",
+        "Capacités NLP/LLM embarqué",
+        "Quantization et optimisation"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "AI-003",
+      "title": "Cas d'usage IA prioritaires",
+      "description": "Définir les fonctionnalités IA core du produit",
+      "acceptanceCriteria": [
+        "Liste des 10 cas d'usage IA",
+        "Priorisation par valeur client",
+        "Faisabilité technique par cas",
+        "MVP vs version finale"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "AI-004",
+      "title": "Privacy et données",
+      "description": "Stratégie de gestion des données personnelles",
+      "acceptanceCriteria": [
+        "Données collectées listées",
+        "Traitement local vs cloud",
+        "Conformité RGPD",
+        "Communication transparence"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "AI-005",
+      "title": "Partenariats IA possibles",
+      "description": "Explorer les partenariats avec providers IA",
+      "acceptanceCriteria": [
+        "Liste providers (OpenAI, Anthropic, Google...)",
+        "Modèles de partenariat",
+        "Coûts et conditions",
+        "Avantages/risques dépendance"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

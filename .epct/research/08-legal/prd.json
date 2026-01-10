@@ -1,0 +1,78 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-legal",
+  "description": "Recherche sur les aspects légaux, normes et propriété intellectuelle",
+  "researchAxis": "08-legal",
+  "userStories": [
+    {
+      "id": "LEG-001",
+      "title": "Certifications obligatoires",
+      "description": "Identifier toutes les certifications requises",
+      "acceptanceCriteria": [
+        "CE (Europe)",
+        "FCC (USA)",
+        "Autres marchés cibles",
+        "Processus et coûts par certification"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "LEG-002",
+      "title": "Propriété intellectuelle",
+      "description": "Stratégie de protection IP",
+      "acceptanceCriteria": [
+        "Brevets à déposer",
+        "Marques à protéger",
+        "Designs à enregistrer",
+        "Budget IP estimé"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "LEG-003",
+      "title": "RGPD et données",
+      "description": "Conformité protection des données",
+      "acceptanceCriteria": [
+        "Données collectées catégorisées",
+        "Base légale par traitement",
+        "Mesures de sécurité",
+        "Documentation RGPD"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "LEG-004",
+      "title": "Réglementation wearables",
+      "description": "Normes spécifiques aux wearables",
+      "acceptanceCriteria": [
+        "Normes santé si applicable",
+        "Réglementation batterie",
+        "Réglementation radio",
+        "Évolutions réglementaires prévues"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "LEG-005",
+      "title": "Structure juridique",
+      "description": "Définir la structure légale de l'entreprise",
+      "acceptanceCriteria": [
+        "Forme juridique recommandée",
+        "Juridiction d'incorporation",
+        "Accords fondateurs",
+        "Gouvernance"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

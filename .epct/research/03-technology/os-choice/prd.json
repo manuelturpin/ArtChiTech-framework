@@ -1,0 +1,78 @@
+{
+  "project": "PocketWatch-AI-Research",
+  "branchName": "sandbox/research-os",
+  "description": "Choix du système d'exploitation pour la montre à gousset AI",
+  "researchAxis": "03-technology/os-choice",
+  "userStories": [
+    {
+      "id": "OS-001",
+      "title": "Inventaire des OS disponibles",
+      "description": "Lister et analyser tous les OS possibles pour wearables",
+      "acceptanceCriteria": [
+        "Liste exhaustive des OS (Wear OS, Zephyr, FreeRTOS, Tizen, custom...)",
+        "Tableau comparatif fonctionnalités",
+        "Contraintes hardware de chaque OS",
+        "Licensing et coûts"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "OS-002",
+      "title": "Analyse Wear OS / Android",
+      "description": "Évaluer Wear OS comme option",
+      "acceptanceCriteria": [
+        "Avantages/inconvénients détaillés",
+        "Contraintes Google/certification",
+        "Customisation possible",
+        "Cas d'usage similaires"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "OS-003",
+      "title": "Analyse RTOS (Zephyr/FreeRTOS)",
+      "description": "Évaluer les RTOS comme option",
+      "acceptanceCriteria": [
+        "Comparaison Zephyr vs FreeRTOS",
+        "Effort de développement estimé",
+        "Communauté et support",
+        "Intégration IA possible"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "OS-004",
+      "title": "Option OS custom",
+      "description": "Évaluer la faisabilité d'un OS propriétaire",
+      "acceptanceCriteria": [
+        "Effort estimé (temps, coût, équipe)",
+        "Avantages différenciants",
+        "Risques techniques",
+        "Roadmap de développement"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "OS-005",
+      "title": "Recommandation OS",
+      "description": "Synthèse et recommandation finale",
+      "acceptanceCriteria": [
+        "Matrice de décision pondérée",
+        "Recommandation argumentée",
+        "Plan B identifié",
+        "Prochaines étapes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
