@@ -16,9 +16,9 @@
         "Dépendances techniques notées (versions, packages clés)"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "output": "docs/blog-b974/discovery/01-architecture-audit.md",
-      "notes": ""
+      "notes": "Completed 2026-01-11 - Full audit with integration points"
     },
     {
       "id": "DISC-002",
@@ -31,9 +31,9 @@
         "Éléments UI réutilisables listés"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "output": "docs/blog-b974/discovery/02-brand-analysis.md",
-      "notes": ""
+      "notes": "Completed 2026-01-11 - Full brand identity analysis"
     },
     {
       "id": "DISC-003",
@@ -46,9 +46,9 @@
         "ROI attendu esquissé"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": "deferred",
       "output": "docs/blog-b974/discovery/03-business-objectives.md",
-      "notes": ""
+      "notes": "DEFERRED - Requires interactive brainstorming with user"
     },
     {
       "id": "DISC-004",
@@ -61,9 +61,9 @@
         "Calendrier éditorial de base esquissé (fréquence, formats)"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": "deferred",
       "output": "docs/blog-b974/discovery/04-personas-content.md",
-      "notes": ""
+      "notes": "DEFERRED - Requires interactive brainstorming with user"
     }
   ],
   "metadata": {

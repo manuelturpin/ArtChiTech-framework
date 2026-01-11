@@ -55,3 +55,35 @@ _Patterns reusables decouverts pendant l'implementation_
 **Files**: plugin/commands/loop-complete.md, .epct/loop/archive/
 **Notes**: Commande de finalisation avec curation interactive et archivage automatique.
 
+
+## Phase: discovery - Started 2026-01-11 20:56:24
+
+### DISC-001 - Audit Architecture Site Existant
+
+**Phase**: Discovery
+**Status**: passed
+**Files created**: docs/blog-b974/discovery/01-architecture-audit.md
+**Key findings**:
+- Next.js 16.1.1 avec App Router moderne
+- Tailwind CSS 4 + shadcn/ui + Framer Motion/GSAP
+- Zustand 5.0.8 pour state management
+- PostgreSQL 15 + Prisma ORM 7
+- Monorepo pnpm avec Turbopack
+- Points d'intégration: navigation.ts, Navigation.tsx, Footer.tsx
+- Route recommandée: /blog (namespace dédié)
+**Notes**: Architecture solide, bien structurée pour ajout blog
+
+### DISC-002 - Analyse Brand Guidelines B974
+
+**Phase**: Discovery
+**Status**: passed
+**Files created**: docs/blog-b974/discovery/02-brand-analysis.md
+**Key findings**:
+- Palette complète: Ivoire #F8F5F0, Noir doux #2D2D2D, Orange #E65100, Vert #5D6B4A
+- Typography: Playfair Display (headings) + Source Sans 3 (body)
+- Ton Sage-Artisan: expert humble, patient, authentique
+- Baseline: "L'art du temps"
+- Brand Book complet de 1960 lignes existant
+- Composants UI shadcn/ui + animations Framer/GSAP
+**Notes**: Design system mature et bien documenté, prêt pour blog
+
