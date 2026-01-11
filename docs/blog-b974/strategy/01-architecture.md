@@ -20,6 +20,9 @@ Architecture technique pour le Blog B974 AI-Assisted, basée sur le stack exista
 | **Tailwind CSS** | 4.x | Design system B974 existant |
 | **shadcn/ui** | latest | Composants UI existants |
 | **Framer Motion** | 12.x | Animations Brand (fadeInUp) |
+| **GSAP** | 3.14.2 | Animations avancées (stack existant) |
+| **Lenis** | 1.3.17 | Smooth scroll (stack existant) |
+| **Zustand** | 5.0.8 | State management client (stack existant) |
 
 ### Backend (API & CMS)
 
@@ -35,6 +38,7 @@ Architecture technique pour le Blog B974 AI-Assisted, basée sur le stack exista
 | Technologie | Version | Justification |
 |-------------|---------|---------------|
 | **Next.js** | 14.2.5 | Dashboard 2026 existant |
+| **next-auth** | 5.0.0-beta.30 | Authentification back-office (stack existant) |
 | **gray-matter** | 4.0.3 | Parsing frontmatter (déjà installé) |
 | **react-markdown** | 10.1.0 | Rendu markdown (déjà installé) |
 
@@ -784,6 +788,73 @@ LINKEDIN_ACCESS_TOKEN="..."
 
 ---
 
+## 9. Cohérence avec Site Existant (VPS-b974.fr)
+
+> **Note de révision** : Ajouté suite à vérification de cohérence entre Phase Discovery et Phase Strategy.
+
+### Stack Confirmé depuis DISC-001
+
+| Élément | Version Site | Version Blog | Status |
+|---------|--------------|--------------|--------|
+| Next.js | 16.1.1 | 16.1.1 | ✅ Identique |
+| React | 19.2.0 | 19.2.0 | ✅ Identique |
+| Tailwind | 4.x | 4.x | ✅ Identique |
+| Prisma | 7.0.1 | 7.0.1 | ✅ Identique |
+| PostgreSQL | 15 | 15 | ✅ Identique |
+| Zustand | 5.0.8 | 5.0.8 | ✅ Ajouté |
+| Redis | ioredis 5.8.2 | ioredis 5.8.2 | ✅ Confirmé |
+| next-auth | 5.0.0-beta.30 | 5.0.0-beta.30 | ✅ Ajouté |
+| GSAP | 3.14.2 | 3.14.2 | ✅ Ajouté |
+| Lenis | 1.3.17 | 1.3.17 | ✅ Ajouté |
+
+### Monorepo Integration
+
+Le blog s'intègre dans la structure monorepo existante :
+```
+VPS-b974.fr/
+├── apps/
+│   ├── webapp/          # Site principal (+ /blog)
+│   └── app/             # Application secondaire
+├── packages/
+│   └── @b974/database   # Prisma schema partagé (+ BlogPost model)
+└── pnpm-workspace.yaml
+```
+
+---
+
+## 10. Remarque Workflow ACT
+
+> **AMÉLIORATION SUGGÉRÉE** pour le framework ACT
+
+### Problème Identifié
+
+La Phase 2 Strategy (exécutée par Ralph loop) n'a pas automatiquement vérifié la cohérence avec les livrables de Phase 1 Discovery.
+
+**Éléments manquants initialement :**
+- Zustand (state management existant)
+- next-auth (authentification existante)
+- GSAP, Lenis (animations existantes)
+
+### Recommandation
+
+Ajouter au prompt `loop-prompt-strategy.md` :
+
+```markdown
+## Règle de Cohérence Inter-Phase
+
+Avant de définir le stack technique :
+1. **Lire DISC-001** (Architecture Audit) pour récupérer le stack existant
+2. **Vérifier** que chaque techno proposée est cohérente
+3. **Réutiliser** les packages existants plutôt qu'en ajouter
+4. **Lister explicitement** les packages du site dans le document Strategy
+```
+
+### Impact
+
+Cette vérification aurait évité une révision manuelle post-loop.
+
+---
+
 ## Acceptance Criteria Status
 
 - [x] Stack technique défini (framework, DB, APIs)
@@ -791,3 +862,4 @@ LINKEDIN_ACCESS_TOKEN="..."
 - [x] Workflow Ralph pour génération contenu spécifié
 - [x] Intégrations tierces listées (Whisper, Meta, Email)
 - [x] Décisions techniques justifiées (5 ADRs)
+- [x] Cohérence avec site existant vérifiée (révision manuelle)
