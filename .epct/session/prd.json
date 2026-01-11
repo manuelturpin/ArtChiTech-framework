@@ -1,75 +1,82 @@
 {
-  "project": "Blog B974 - Discovery",
-  "phase": "discovery",
+  "project": "Blog B974",
+  "phase": "strategy",
   "branchName": "test/loop-blog-b974",
   "targetRepo": "/Users/manuelturpin/Desktop/bonsai974/VPS-b974.fr",
-  "description": "Phase Discovery pour l'ajout d'une section blog au site e-commerce B974 (bonsai premium). Objectif: comprendre l'architecture, définir les objectifs business et identifier les personas.",
+  "description": "Phase Strategy pour le Blog B974 AI-Assisted. Définir architecture technique, scope MVP, roadmap et stratégie distribution.",
+  "previousPhase": {
+    "name": "discovery",
+    "status": "complete",
+    "stories": ["DISC-001", "DISC-002", "DISC-003", "DISC-004"],
+    "outputs": [
+      "docs/blog-b974/discovery/01-architecture-audit.md",
+      "docs/blog-b974/discovery/02-brand-analysis.md",
+      "docs/blog-b974/discovery/03-business-objectives.md",
+      "docs/blog-b974/discovery/04-personas-content.md"
+    ]
+  },
   "userStories": [
     {
-      "id": "DISC-001",
-      "title": "Audit Architecture Site Existant",
-      "description": "En tant que framework ACT, je veux comprendre l'architecture du site VPS-b974.fr, afin d'identifier les points d'intégration pour le blog.",
+      "id": "STRAT-001",
+      "title": "Architecture Technique",
+      "description": "En tant que développeur, je veux une architecture technique claire, afin de savoir quels composants construire.",
       "acceptanceCriteria": [
-        "Structure Next.js documentée (App Router, pages, composants)",
-        "Patterns de code existants identifiés (styling, state, data fetching)",
-        "Points d'intégration blog listés (navigation, footer, routes)",
-        "Dépendances techniques notées (versions, packages clés)"
+        "Stack technique défini (framework, DB, APIs)",
+        "Architecture système documentée (diagramme)",
+        "Workflow Ralph pour génération contenu spécifié",
+        "Intégrations tierces listées (Whisper, Meta, Email)",
+        "Décisions techniques justifiées"
       ],
       "priority": 1,
-      "passes": true,
-      "output": "docs/blog-b974/discovery/01-architecture-audit.md",
-      "notes": "Completed 2026-01-11 - Full audit with integration points"
+      "passes": false,
+      "output": "docs/blog-b974/strategy/01-architecture.md"
     },
     {
-      "id": "DISC-002",
-      "title": "Analyse Brand Guidelines B974",
-      "description": "En tant que framework ACT, je veux comprendre l'identité visuelle B974, afin de garantir la cohérence du blog avec la marque.",
+      "id": "STRAT-002",
+      "title": "Scope MVP",
+      "description": "En tant que product owner, je veux un scope MVP clair, afin de livrer rapidement une v1 fonctionnelle.",
       "acceptanceCriteria": [
-        "Palette couleurs documentée (Ivoire, Noir doux, Orange B974, Vert mousse)",
-        "Typographies identifiées (Playfair Display, Source Sans Pro)",
-        "Ton éditorial existant analysé (guides, pages)",
-        "Éléments UI réutilisables listés"
+        "Features must-have vs nice-to-have séparées",
+        "MVP défini en 3-5 features core",
+        "Critères de succès MVP mesurables",
+        "Timeline estimée (semaines)"
       ],
       "priority": 1,
-      "passes": true,
-      "output": "docs/blog-b974/discovery/02-brand-analysis.md",
-      "notes": "Completed 2026-01-11 - Full brand identity analysis"
+      "passes": false,
+      "output": "docs/blog-b974/strategy/02-mvp-scope.md"
     },
     {
-      "id": "DISC-003",
-      "title": "Définir Objectifs Business Blog",
-      "description": "En tant que propriétaire B974, je veux clarifier les objectifs du blog, afin de prioriser les fonctionnalités et contenus.",
+      "id": "STRAT-003",
+      "title": "Roadmap Produit",
+      "description": "En tant que stakeholder, je veux une roadmap claire, afin de planifier les ressources.",
       "acceptanceCriteria": [
-        "Objectifs primaires définis (SEO, autorité, fidélisation, support produit)",
-        "KPIs proposés (trafic, engagement, conversion)",
-        "Alignement avec vision B974 'L'art du temps' documenté",
-        "ROI attendu esquissé"
+        "Roadmap 3-6-12 mois définie",
+        "Milestones clés identifiés",
+        "Dépendances entre features documentées",
+        "Priorités justifiées"
       ],
       "priority": 2,
-      "passes": true,
-      "output": "docs/blog-b974/discovery/03-business-objectives.md",
-      "notes": "Completed 2026-01-11 - Vision AI-Assisted + back-office + ligne éditoriale"
+      "passes": false,
+      "output": "docs/blog-b974/strategy/03-roadmap.md"
     },
     {
-      "id": "DISC-004",
-      "title": "Identifier Personas et Contenus",
-      "description": "En tant que stratège contenu, je veux définir les personas cibles du blog, afin de créer du contenu pertinent.",
+      "id": "STRAT-004",
+      "title": "Stratégie Distribution",
+      "description": "En tant que marketeur, je veux une stratégie de distribution claire, afin de maximiser la portée.",
       "acceptanceCriteria": [
-        "3 personas minimum définis avec caractéristiques",
-        "Types de contenus mappés par persona",
-        "Sujets prioritaires identifiés (bonsai débutant, espèces, entretien, Réunion)",
-        "Calendrier éditorial de base esquissé (fréquence, formats)"
+        "Canaux de distribution priorisés",
+        "Workflow publication → distribution documenté",
+        "Outils/APIs sélectionnés (email, social)",
+        "Fréquence et timing recommandés"
       ],
       "priority": 2,
-      "passes": true,
-      "output": "docs/blog-b974/discovery/04-personas-content.md",
-      "notes": "Completed 2026-01-11 - 3 personas, 5 clusters, calendrier Q1"
+      "passes": false,
+      "output": "docs/blog-b974/strategy/04-distribution.md"
     }
   ],
   "metadata": {
     "created": "2026-01-11",
-    "estimatedLoops": 8,
-    "estimatedDuration": "30 min",
-    "estimatedTokens": "100K"
+    "phaseStarted": "2026-01-11",
+    "estimatedStories": 4
   }
 }
