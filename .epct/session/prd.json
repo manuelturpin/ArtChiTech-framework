@@ -70,7 +70,7 @@
         "Fréquence et timing recommandés"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "output": "docs/blog-b974/strategy/04-distribution.md"
     }
   ],

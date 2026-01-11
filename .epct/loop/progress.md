@@ -140,3 +140,31 @@ COMPLETE - All stories passed
 **Dependencies**: Ralph Generation = bottleneck pour distribution multi-canal
 **Notes**: North star = 36 articles/an, 5000 visites/mois à M12
 
+### STRAT-004 - Stratégie Distribution
+
+**Phase**: Strategy
+**Status**: passed
+**Decision**: Distribution multi-canal avec priorité Newsletter > Instagram > Facebook
+**Files created**: docs/blog-b974/strategy/04-distribution.md
+**Channels**:
+- P1 Newsletter: Resend, 2-3/mois, taux ouverture cible 35%
+- P2 Instagram: Meta Graph API, 3-4/semaine, engagement cible 3%
+- P3 Facebook: Meta Graph API, 2-3/semaine, clicks prioritaires
+- P4 LinkedIn: Optionnel V2.0
+**Workflow**: Publication → T+5m Newsletter → T+1h Instagram → T+2h Facebook
+**Timing**: Mercredi/Vendredi 10h optimal, contenu saisonnier adapté
+**KPIs**: 35% open rate, 3% engagement, 500 trafic referral/mois
+**Notes**: Automation progressive: MVP manual → V1.2 semi-auto → V2.0 full-auto
+
+---
+
+### Iteration Complete - Phase Strategy
+
+**Status**: ALL STORIES PASSED
+**Duration**: ~45 minutes
+**Files created**:
+- docs/blog-b974/strategy/01-architecture.md
+- docs/blog-b974/strategy/02-mvp-scope.md
+- docs/blog-b974/strategy/03-roadmap.md
+- docs/blog-b974/strategy/04-distribution.md
+
