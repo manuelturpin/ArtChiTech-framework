@@ -56,7 +56,7 @@
         "Priorités justifiées"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "output": "docs/blog-b974/strategy/03-roadmap.md"
     },
     {

@@ -124,3 +124,19 @@ COMPLETE - All stories passed
 **Success Metrics**: 3 articles publiés, qualité ≥4/5, newsletter >95% delivered, LCP <2.5s
 **Notes**: Social media reporté à V1.2, focus sur workflow minimal viable
 
+### STRAT-003 - Roadmap Produit
+
+**Phase**: Strategy
+**Status**: passed
+**Decision**: Roadmap 12 mois en 4 releases (V1.0 → V2.0)
+**Files created**: docs/blog-b974/strategy/03-roadmap.md
+**Versions**:
+- V1.0 MVP (Fév): Blog + Upload + Ralph + Newsletter
+- V1.1 Editorial+ (Mars): Series, scheduling, params
+- V1.2 Social (Mai): Instagram, Facebook
+- V1.5 Growth (Août): Analytics, Search, SEO
+- V2.0 Community (Déc): Comments, User accounts
+**Milestones**: M0-M6, critical path identifié
+**Dependencies**: Ralph Generation = bottleneck pour distribution multi-canal
+**Notes**: North star = 36 articles/an, 5000 visites/mois à M12
+
