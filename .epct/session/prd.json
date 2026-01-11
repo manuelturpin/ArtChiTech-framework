@@ -46,9 +46,9 @@
         "ROI attendu esquissé"
       ],
       "priority": 2,
-      "passes": "deferred",
+      "passes": true,
       "output": "docs/blog-b974/discovery/03-business-objectives.md",
-      "notes": "DEFERRED - Requires interactive brainstorming with user"
+      "notes": "Completed 2026-01-11 - Vision AI-Assisted + back-office + ligne éditoriale"
     },
     {
       "id": "DISC-004",
@@ -61,9 +61,9 @@
         "Calendrier éditorial de base esquissé (fréquence, formats)"
       ],
       "priority": 2,
-      "passes": "deferred",
+      "passes": true,
       "output": "docs/blog-b974/discovery/04-personas-content.md",
-      "notes": "DEFERRED - Requires interactive brainstorming with user"
+      "notes": "Completed 2026-01-11 - 3 personas, 5 clusters, calendrier Q1"
     }
   ],
   "metadata": {
