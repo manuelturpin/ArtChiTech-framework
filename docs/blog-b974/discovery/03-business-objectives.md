@@ -33,13 +33,22 @@ Le Blog B974 combine une vision AI-Assisted innovante (capture terrain + génér
 │     ├── Transcription audio (Whisper)                            │
 │     ├── Analyse photos                                           │
 │     ├── Génération article STATE OF THE ART                      │
-│     └── Intégration images optimisées                            │
+│     ├── Intégration images optimisées                            │
+│     ├── Génération posts réseaux sociaux                         │
+│     └── Génération email newsletter                              │
 │              │                                                   │
 │              ▼                                                   │
 │  4. VALIDATION & PUBLICATION                                     │
-│     ├── Review humain                                            │
+│     ├── Review humain (article + posts)                          │
 │     ├── Ajustements si nécessaire                                │
 │     └── Publication programmée                                   │
+│              │                                                   │
+│              ▼                                                   │
+│  5. DISTRIBUTION AUTOMATIQUE                                     │
+│     ├── Newsletter → Abonnés email                               │
+│     ├── Instagram → Visuel + caption                             │
+│     ├── Facebook → Lien + accroche                               │
+│     └── LinkedIn → Post professionnel (optionnel)                │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -53,6 +62,17 @@ Le Blog B974 combine une vision AI-Assisted innovante (capture terrain + génér
 | **Ligne éditoriale paramétrable** | Ton, longueur, style configurables |
 | **Séries/Thèmes** | Ex: "Voyage Japon janvier 2026" |
 | **Back-office intégré** | Réutilisation infrastructure existante |
+| **Distribution automatique** | Newsletter + réseaux sociaux à la publication |
+
+### Outputs Ralph par Article
+
+| Output | Usage | Généré par Ralph |
+|--------|-------|------------------|
+| **Article complet** | Blog | Markdown + images optimisées |
+| **Post Instagram** | Social | Visuel carré + caption (hashtags) |
+| **Post Facebook** | Social | Accroche + lien + image |
+| **Post LinkedIn** | Social (optionnel) | Ton professionnel |
+| **Email Newsletter** | Abonnés | Sujet + preview + CTA |
 
 ---
 
@@ -77,6 +97,16 @@ Le Blog B974 combine une vision AI-Assisted innovante (capture terrain + génér
 | Pages/session | 2.0 | 2.5 |
 | Temps moyen article | 3 min | 4 min |
 | Position moyenne | Top 20 | Top 10 |
+
+### KPIs Distribution
+
+| Métrique | Objectif 6 mois | Objectif 12 mois |
+|----------|-----------------|------------------|
+| Abonnés newsletter | 200 | 1000 |
+| Taux ouverture email | 35% | 40% |
+| Followers Instagram | +500 | +2000 |
+| Engagement social | 3% | 5% |
+| Trafic depuis social | 15% | 25% |
 
 ---
 
@@ -225,7 +255,20 @@ PILIER : "Guide Complet Bonsai" (2500+ mots)
 | Paramètres ligne éditoriale | P1 | Medium |
 | Séries/thèmes | P1 | Low |
 | SEO auto (meta, sitemap) | P1 | Low |
+| **Newsletter notification** | P1 | Medium |
+| **Posts réseaux sociaux** | P1 | Medium |
 | Analytics intégré | P2 | Medium |
+
+### Fonctionnalités Distribution
+
+| Fonctionnalité | Priorité | Description |
+|----------------|----------|-------------|
+| **Newsletter** | P1 | Email automatique aux abonnés à chaque publication |
+| **Instagram** | P1 | Post visuel + caption générés par Ralph |
+| **Facebook** | P1 | Lien + accroche générés |
+| **LinkedIn** | P2 | Post professionnel (optionnel, selon article) |
+| **Scheduling** | P1 | Programmation publication + distribution |
+| **Formulaire inscription** | P1 | Capture emails sur blog + site |
 
 ### Intégrations Techniques
 
@@ -235,6 +278,9 @@ PILIER : "Guide Complet Bonsai" (2500+ mots)
 | **Claude/GPT** | Génération contenu | Anthropic/OpenAI |
 | **Cloudinary** | Optimisation images | Cloudinary |
 | **Prisma** | Persistence articles | PostgreSQL |
+| **Resend / Postmark** | Envoi newsletter | Email API |
+| **Meta Graph API** | Publication Instagram/Facebook | Meta |
+| **LinkedIn API** | Publication LinkedIn | LinkedIn (optionnel) |
 
 ---
 
@@ -256,6 +302,9 @@ PILIER : "Guide Complet Bonsai" (2500+ mots)
 | Ton incohérent | Medium | Paramètres ligne éditoriale stricts |
 | SEO non performant | Medium | Content clusters + refresh régulier |
 | Adoption utilisateur | Low | Interface simple, workflow fluide |
+| APIs Meta/LinkedIn changent | Medium | Abstraction couche publication |
+| Spam / Deliverability email | Medium | Double opt-in, SPF/DKIM configurés |
+| Fatigue audience (trop de posts) | Low | Fréquence contrôlée, qualité > quantité |
 
 ---
 
@@ -263,9 +312,10 @@ PILIER : "Guide Complet Bonsai" (2500+ mots)
 
 1. **Phase 1** : Intégrer `/blog` au Dashboard 2026 existant
 2. **Phase 2** : Implémenter workflow upload + transcription
-3. **Phase 3** : Intégrer Ralph pour génération articles
+3. **Phase 3** : Intégrer Ralph pour génération articles + posts sociaux
 4. **Phase 4** : Paramètres ligne éditoriale dans back-office
-5. **Phase 5** : Analytics et optimisation
+5. **Phase 5** : Distribution automatique (newsletter + réseaux sociaux)
+6. **Phase 6** : Analytics et optimisation
 
 ---
 
@@ -278,3 +328,5 @@ PILIER : "Guide Complet Bonsai" (2500+ mots)
 - [x] Fonctionnalités requises listées
 - [x] Benchmark concurrentiel (Bonsai Empire)
 - [x] Risques identifiés avec mitigations
+- [x] Distribution automatique (newsletter + réseaux sociaux) documentée
+- [x] KPIs distribution définis
