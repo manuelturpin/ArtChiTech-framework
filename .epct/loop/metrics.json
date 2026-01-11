@@ -1,0 +1,94 @@
+{
+  "feature": "blog-b974",
+  "started": "2026-01-11T00:00:00Z",
+  "target_repo": "/Users/manuelturpin/Desktop/bonsai974/VPS-b974.fr",
+  "target_branch": "feat/blog-section",
+  "phases": [
+    {
+      "phase": 0,
+      "name": "setup",
+      "status": "in_progress",
+      "started": "2026-01-11T00:00:00Z",
+      "completed": null,
+      "iterations": 0,
+      "duration_minutes": 0,
+      "tokens_estimated": 0,
+      "stories_total": 3,
+      "stories_completed": 0,
+      "outputs": []
+    },
+    {
+      "phase": 1,
+      "name": "discovery",
+      "status": "pending",
+      "started": null,
+      "completed": null,
+      "iterations": 0,
+      "duration_minutes": 0,
+      "tokens_estimated": 0,
+      "stories_total": 0,
+      "stories_completed": 0,
+      "outputs": []
+    },
+    {
+      "phase": 2,
+      "name": "strategy",
+      "status": "pending",
+      "started": null,
+      "completed": null,
+      "iterations": 0,
+      "duration_minutes": 0,
+      "tokens_estimated": 0,
+      "stories_total": 0,
+      "stories_completed": 0,
+      "outputs": []
+    },
+    {
+      "phase": 3,
+      "name": "design",
+      "status": "pending",
+      "started": null,
+      "completed": null,
+      "iterations": 0,
+      "duration_minutes": 0,
+      "tokens_estimated": 0,
+      "stories_total": 0,
+      "stories_completed": 0,
+      "outputs": []
+    },
+    {
+      "phase": 4,
+      "name": "dev",
+      "status": "pending",
+      "started": null,
+      "completed": null,
+      "iterations": 0,
+      "duration_minutes": 0,
+      "tokens_estimated": 0,
+      "stories_total": 0,
+      "stories_completed": 0,
+      "outputs": []
+    },
+    {
+      "phase": 5,
+      "name": "quality",
+      "status": "pending",
+      "started": null,
+      "completed": null,
+      "iterations": 0,
+      "duration_minutes": 0,
+      "tokens_estimated": 0,
+      "stories_total": 0,
+      "stories_completed": 0,
+      "outputs": []
+    }
+  ],
+  "totals": {
+    "iterations": 0,
+    "duration_minutes": 0,
+    "tokens_estimated": 0,
+    "stories_total": 0,
+    "stories_completed": 0
+  },
+  "learnings": []
+}
