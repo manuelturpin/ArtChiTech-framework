@@ -1,105 +1,75 @@
 {
-  "project": "ACT-Ralph-Integration",
-  "branchName": "feat/ralph-integration",
-  "description": "Integrer le workflow Ralph Wiggum (boucle autonome) dans ACT pour les phases 3-4-5",
+  "project": "Blog B974 - Discovery",
+  "phase": "discovery",
+  "branchName": "test/loop-blog-b974",
+  "targetRepo": "/Users/manuelturpin/Desktop/bonsai974/VPS-b974.fr",
+  "description": "Phase Discovery pour l'ajout d'une section blog au site e-commerce B974 (bonsai premium). Objectif: comprendre l'architecture, définir les objectifs business et identifier les personas.",
   "userStories": [
     {
-      "id": "US-001",
-      "title": "Structure fichiers .epct/loop",
-      "description": "En tant que framework ACT, je veux une structure de fichiers pour la boucle, afin de stocker progress et patterns",
+      "id": "DISC-001",
+      "title": "Audit Architecture Site Existant",
+      "description": "En tant que framework ACT, je veux comprendre l'architecture du site VPS-b974.fr, afin d'identifier les points d'intégration pour le blog.",
       "acceptanceCriteria": [
-        "Dossier .epct/loop/ existe",
-        "Dossier .epct/session/ existe",
-        "Fichier progress.md cree au premier lancement",
-        "Fichier patterns.md pour les learnings feature"
+        "Structure Next.js documentée (App Router, pages, composants)",
+        "Patterns de code existants identifiés (styling, state, data fetching)",
+        "Points d'intégration blog listés (navigation, footer, routes)",
+        "Dépendances techniques notées (versions, packages clés)"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "Structure creee: .epct/loop/, .epct/session/, progress.md, patterns.md"
+      "passes": false,
+      "output": "docs/blog-b974/discovery/01-architecture-audit.md",
+      "notes": ""
     },
     {
-      "id": "US-002",
-      "title": "Commande /stories-generate",
-      "description": "En tant que utilisateur, je veux generer prd.json depuis un PRD markdown, afin de structurer mes stories pour la boucle",
+      "id": "DISC-002",
+      "title": "Analyse Brand Guidelines B974",
+      "description": "En tant que framework ACT, je veux comprendre l'identité visuelle B974, afin de garantir la cohérence du blog avec la marque.",
       "acceptanceCriteria": [
-        "Commande /stories-generate existe",
-        "Lit un fichier PRD markdown en input",
-        "Genere .epct/session/prd.json",
-        "Format compatible avec loop.sh"
+        "Palette couleurs documentée (Ivoire, Noir doux, Orange B974, Vert mousse)",
+        "Typographies identifiées (Playfair Display, Source Sans Pro)",
+        "Ton éditorial existant analysé (guides, pages)",
+        "Éléments UI réutilisables listés"
+      ],
+      "priority": 1,
+      "passes": false,
+      "output": "docs/blog-b974/discovery/02-brand-analysis.md",
+      "notes": ""
+    },
+    {
+      "id": "DISC-003",
+      "title": "Définir Objectifs Business Blog",
+      "description": "En tant que propriétaire B974, je veux clarifier les objectifs du blog, afin de prioriser les fonctionnalités et contenus.",
+      "acceptanceCriteria": [
+        "Objectifs primaires définis (SEO, autorité, fidélisation, support produit)",
+        "KPIs proposés (trafic, engagement, conversion)",
+        "Alignement avec vision B974 'L'art du temps' documenté",
+        "ROI attendu esquissé"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Commande creee: plugin/commands/stories-generate.md"
+      "passes": false,
+      "output": "docs/blog-b974/discovery/03-business-objectives.md",
+      "notes": ""
     },
     {
-      "id": "US-003",
-      "title": "Commande /loop",
-      "description": "En tant que utilisateur, je veux lancer la boucle autonome, afin d'executer mes stories automatiquement",
+      "id": "DISC-004",
+      "title": "Identifier Personas et Contenus",
+      "description": "En tant que stratège contenu, je veux définir les personas cibles du blog, afin de créer du contenu pertinent.",
       "acceptanceCriteria": [
-        "Commande /loop [max] existe",
-        "Lance loop.sh avec le parametre",
-        "Affiche progression en temps reel",
-        "Gere le signal COMPLETE"
+        "3 personas minimum définis avec caractéristiques",
+        "Types de contenus mappés par persona",
+        "Sujets prioritaires identifiés (bonsai débutant, espèces, entretien, Réunion)",
+        "Calendrier éditorial de base esquissé (fréquence, formats)"
       ],
-      "priority": 3,
-      "passes": true,
-      "notes": "Commande creee: plugin/commands/loop.md - documente usage, output, gestion erreurs"
-    },
-    {
-      "id": "US-004",
-      "title": "Agent loop-executor",
-      "description": "En tant que boucle, je veux un agent specialise pour executer les stories, afin de maintenir le contexte entre iterations",
-      "acceptanceCriteria": [
-        "Agent loop-executor.md cree",
-        "Lit prd.json et selectionne story prioritaire",
-        "Implemente une story par iteration",
-        "Met a jour prd.json (passes: true/false)",
-        "Append a progress.md"
-      ],
-      "priority": 4,
-      "passes": true,
-      "notes": "Agent cree: plugin/agents/loop-executor.md - instructions completes pour execution story"
-    },
-    {
-      "id": "US-005",
-      "title": "Commande /loop-status",
-      "description": "En tant que utilisateur, je veux voir la progression de la boucle, afin de suivre l'avancement",
-      "acceptanceCriteria": [
-        "Commande /loop-status existe",
-        "Affiche stories done/pending/skipped",
-        "Affiche iteration courante",
-        "Affiche derniers learnings"
-      ],
-      "priority": 5,
-      "passes": true,
-      "notes": "Commande creee: plugin/commands/loop-status.md - affiche progression et learnings"
-    },
-    {
-      "id": "US-006",
-      "title": "Integration /next suggestion",
-      "description": "En tant que framework, je veux suggerer /loop quand pertinent, afin de guider l'utilisateur",
-      "acceptanceCriteria": [
-        "Si > 3 stories dans prd.json, suggerer /loop",
-        "Message clair expliquant pourquoi",
-        "Utilisateur garde le controle"
-      ],
-      "priority": 6,
-      "passes": true,
-      "notes": "Integre dans act-next.md: Step 0c detecte > 3 stories et suggere /loop"
-    },
-    {
-      "id": "US-007",
-      "title": "Curation learnings vers AGENTS.md",
-      "description": "En tant que framework, je veux proposer la curation des learnings, afin de capitaliser les patterns",
-      "acceptanceCriteria": [
-        "A la fin de la feature, lire patterns.md",
-        "Proposer les patterns pertinents pour AGENTS.md",
-        "Utilisateur valide avant ajout",
-        "Archiver la feature dans .epct/loop/archive/"
-      ],
-      "priority": 7,
-      "passes": true,
-      "notes": "Commande /loop-complete creee. Archive dans .epct/loop/archive/. AGENTS.md au lieu de CLAUDE.md."
+      "priority": 2,
+      "passes": false,
+      "output": "docs/blog-b974/discovery/04-personas-content.md",
+      "notes": ""
     }
-  ]
+  ],
+  "metadata": {
+    "created": "2026-01-11",
+    "estimatedLoops": 8,
+    "estimatedDuration": "30 min",
+    "estimatedTokens": "100K"
+  }
 }
