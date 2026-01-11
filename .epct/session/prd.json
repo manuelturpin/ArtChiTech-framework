@@ -28,7 +28,7 @@
         "Décisions techniques justifiées"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "output": "docs/blog-b974/strategy/01-architecture.md"
     },
     {

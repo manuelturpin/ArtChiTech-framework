@@ -91,3 +91,21 @@ _Patterns reusables decouverts pendant l'implementation_
 ### Iteration 1 - 21:03:34 - 430s
 
 COMPLETE - All stories passed
+
+## Phase: strategy - Started 2026-01-11 21:39:01
+
+### STRAT-001 - Architecture Technique
+
+**Phase**: Strategy
+**Status**: passed
+**Decision**: Architecture monorepo Next.js 16 + PostgreSQL + Prisma, avec Ralph (Claude API) pour génération contenu
+**Files created**: docs/blog-b974/strategy/01-architecture.md
+**Key decisions**:
+- ADR-001: Intégration monorepo (vs separate blog)
+- ADR-002: Prisma + PostgreSQL pour articles (vs MDX files)
+- ADR-003: Claude API pour Ralph (vs GPT-4)
+- ADR-004: Resend pour newsletter (vs SendGrid)
+- ADR-005: Meta Graph API direct (vs Buffer/Hootsuite)
+**Integrations**: Whisper (transcription), Claude (génération), Cloudinary (images), Resend (email), Meta Graph (social)
+**Notes**: Architecture cohérente avec stack existant, 5 ADRs justifiées
+
