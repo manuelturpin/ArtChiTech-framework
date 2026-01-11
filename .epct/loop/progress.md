@@ -109,3 +109,18 @@ COMPLETE - All stories passed
 **Integrations**: Whisper (transcription), Claude (génération), Cloudinary (images), Resend (email), Meta Graph (social)
 **Notes**: Architecture cohérente avec stack existant, 5 ADRs justifiées
 
+### STRAT-002 - Scope MVP
+
+**Phase**: Strategy
+**Status**: passed
+**Decision**: MVP = 4 features core en 4-6 semaines
+**Files created**: docs/blog-b974/strategy/02-mvp-scope.md
+**MVP Features**:
+- F1: Blog Public (route /blog, liste, article, SEO)
+- F2: Upload Audio/Photos (back-office)
+- F3: Génération Ralph (Whisper + Claude)
+- F4: Newsletter (inscription + envoi auto)
+**Out of Scope**: Réseaux sociaux, commentaires, multi-auteur, search
+**Success Metrics**: 3 articles publiés, qualité ≥4/5, newsletter >95% delivered, LCP <2.5s
+**Notes**: Social media reporté à V1.2, focus sur workflow minimal viable
+

@@ -42,7 +42,7 @@
         "Timeline estimée (semaines)"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "output": "docs/blog-b974/strategy/02-mvp-scope.md"
     },
     {
