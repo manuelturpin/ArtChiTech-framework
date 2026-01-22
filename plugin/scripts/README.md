@@ -34,7 +34,7 @@ print(status)
 # {
 #   "valid": True,
 #   "root": "/path/to/act",
-#   "version": "2.0.0",
+#   "version": "2.1.0",
 #   "scripts": ["state_manager", "detect_stack"],
 #   "errors": []
 # }
