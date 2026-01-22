@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artchitech.dev/schemas/prd.schema.json",
+  "title": "ACT PRD (Product Requirements Document)",
+  "description": "Schema for .epct/session/prd.json - the PRD file used by ACT loop",
+  "type": "object",
+  "required": ["project", "phase", "userStories"],
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Project name",
+      "minLength": 1
+    },
+    "phase": {
+      "type": "string",
+      "description": "Current phase name (lowercase)",
+      "enum": ["discovery", "strategy", "design", "dev", "quality", "launch", "growth"]
+    },
+    "branchName": {
+      "type": "string",
+      "description": "Git branch name for this work"
+    },
+    "targetRepo": {
+      "type": "string",
+      "description": "Path to target repository (if different from current)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of the phase goals"
+    },
+    "previousPhase": {
+      "type": "object",
+      "description": "Information about the previous phase",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Previous phase name"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["complete", "incomplete", "skipped"]
+        },
+        "stories": {
+          "type": "array",
+          "description": "Story IDs from previous phase",
+          "items": { "type": "string" }
+        },
+        "outputs": {
+          "type": "array",
+          "description": "Output files from previous phase",
+          "items": { "type": "string" }
+        },
+        "keyDecisions": {
+          "type": "object",
+          "description": "Key decisions made in previous phase"
+        }
+      }
+    },
+    "referenceDocuments": {
+      "type": "object",
+      "description": "Reference documents for this phase",
+      "additionalProperties": {
+        "type": "string",
+        "description": "Path to reference document"
+      }
+    },
+    "userStories": {
+      "type": "array",
+      "description": "User stories to implement in this phase",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "description", "acceptanceCriteria", "priority", "passes"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Story identifier (e.g., US-001, DESIGN-001)",
+            "pattern": "^[A-Z]+-[0-9]+$"
+          },
+          "title": {
+            "type": "string",
+            "description": "Story title",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "description": "User story format: As a [role], I want [goal], so that [benefit]"
+          },
+          "acceptanceCriteria": {
+            "type": "array",
+            "description": "List of acceptance criteria",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
+          "priority": {
+            "type": "integer",
+            "description": "Priority (1 = highest)",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "output": {
+            "type": "string",
+            "description": "Expected output file path"
+          },
+          "passes": {
+            "type": "boolean",
+            "description": "Whether the story passes all acceptance criteria"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Implementation notes or failure reasons"
+          },
+          "attempts": {
+            "type": "integer",
+            "description": "Number of implementation attempts",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "PRD metadata",
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date",
+          "description": "Creation date"
+        },
+        "phaseStarted": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when phase started"
+        },
+        "estimatedStories": {
+          "type": "integer",
+          "description": "Estimated number of stories",
+          "minimum": 1
+        },
+        "completedStories": {
+          "type": "integer",
+          "description": "Number of completed stories",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project": "My Project",
+      "phase": "dev",
+      "branchName": "feature/my-feature",
+      "description": "Development phase for core features",
+      "userStories": [
+        {
+          "id": "US-001",
+          "title": "User authentication",
+          "description": "As a user, I want to login, so that I can access my account",
+          "acceptanceCriteria": [
+            "Login form with email/password",
+            "JWT token generation",
+            "Protected routes"
+          ],
+          "priority": 1,
+          "passes": false
+        }
+      ],
+      "metadata": {
+        "created": "2026-01-01",
+        "estimatedStories": 5
+      }
+    }
+  ]
+}

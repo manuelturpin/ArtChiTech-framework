@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artchitech.dev/schemas/state.schema.json",
+  "title": "ACT Project State",
+  "description": "Schema for .epct/state.json - the project state file used by ACT framework",
+  "type": "object",
+  "required": ["project", "currentPhase", "phaseName"],
+  "properties": {
+    "project": {
+      "type": "object",
+      "description": "Project metadata",
+      "required": ["name", "type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Project name (kebab-case recommended)",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "description": "Project type",
+          "enum": ["webapp", "mobile", "api", "library", "cli", "feature", "refactor"]
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 creation timestamp"
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief project description"
+        },
+        "stack": {
+          "type": "array",
+          "description": "Technology stack",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "currentPhase": {
+      "type": "integer",
+      "description": "Current phase number (1-7)",
+      "minimum": 1,
+      "maximum": 7
+    },
+    "phaseName": {
+      "type": "string",
+      "description": "Current phase name",
+      "enum": ["Discovery", "Strategy", "Design", "Development", "Quality", "Launch", "Growth"]
+    },
+    "mode": {
+      "type": "string",
+      "description": "Project mode",
+      "enum": ["COMPLET", "FEATURE", "QUICK"],
+      "default": "COMPLET"
+    },
+    "progress": {
+      "type": "object",
+      "description": "Progress tracking",
+      "properties": {
+        "phase": {
+          "type": "integer",
+          "description": "Progress in current phase (0-100)",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "overall": {
+          "type": "integer",
+          "description": "Overall project progress (0-100)",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "currentChunk": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "properties": {
+            "file": { "type": "string" },
+            "method": { "type": "string" },
+            "status": {
+              "type": "string",
+              "enum": ["pending", "in_progress", "completed", "failed"]
+            }
+          }
+        }
+      ],
+      "description": "Current chunk being worked on (null if none)"
+    },
+    "completedChunks": {
+      "type": "array",
+      "description": "List of completed chunk identifiers",
+      "items": { "type": "string" }
+    },
+    "errors": {
+      "type": "object",
+      "description": "Error tracking",
+      "properties": {
+        "active": {
+          "type": "integer",
+          "description": "Count of active errors",
+          "minimum": 0
+        },
+        "blocking": {
+          "type": "boolean",
+          "description": "Whether errors are blocking progression"
+        }
+      }
+    },
+    "lastAction": {
+      "type": "string",
+      "description": "Last action performed"
+    },
+    "session": {
+      "type": "object",
+      "description": "Session information for context management",
+      "properties": {
+        "tokensEstimated": {
+          "type": "integer",
+          "description": "Estimated tokens used",
+          "minimum": 0
+        },
+        "contextRemaining": {
+          "type": "string",
+          "description": "Remaining context as percentage string (e.g., '80%')"
+        }
+      }
+    },
+    "phases": {
+      "type": "object",
+      "description": "Phase completion status",
+      "patternProperties": {
+        "^[1-7]$": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["pending", "in_progress", "completed", "skipped"]
+            },
+            "completedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "document": {
+              "type": "string",
+              "description": "Path to phase document"
+            },
+            "metrics": {
+              "type": "object",
+              "description": "Phase-specific metrics"
+            }
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Project metrics",
+      "properties": {
+        "tests": {
+          "type": "object",
+          "properties": {
+            "total": { "type": "integer", "minimum": 0 },
+            "passed": { "type": "integer", "minimum": 0 },
+            "failed": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "chunks": {
+          "type": "object",
+          "properties": {
+            "completed": { "type": "integer", "minimum": 0 },
+            "total": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "scores": {
+      "type": "object",
+      "description": "Phase scores (percentage)",
+      "patternProperties": {
+        "^[a-z]+$": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "project": {
+        "name": "my-project",
+        "type": "webapp",
+        "created": "2026-01-01T10:00:00Z",
+        "description": "A web application"
+      },
+      "currentPhase": 4,
+      "phaseName": "Development",
+      "mode": "COMPLET",
+      "progress": {
+        "phase": 50,
+        "overall": 45
+      },
+      "errors": {
+        "active": 0,
+        "blocking": false
+      }
+    }
+  ]
+}

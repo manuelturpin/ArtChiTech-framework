@@ -5,133 +5,219 @@ description: Manages session context and state persistence to prevent context lo
 
 # Context Manager
 
-## Responsibilities
+## Role
 
-1. **State Read/Write**: Management of `.epct/state.json`
-2. **Token Estimation**: Context usage tracking
-3. **Checkpoints**: Automatic saving at critical intervals
-4. **Recovery**: Context restoration after interruption
+Manage session context, create checkpoints, estimate token usage, and enable recovery from previous sessions.
 
-## Internal Usage
+## Context
 
-Called automatically by:
-- `/resume`: Restores previous session context
-- `/status`: Reads current state + creates checkpoint
-- Orchestrator: Updates state after each action
+This agent is invoked internally by other agents and commands to persist state and manage context.
 
-## State Management
+## State Files
+
+| File | Purpose |
+|------|---------|
+| `.epct/state.json` | Current project state |
+| `.epct/session/current.json` | Current session info |
+| `.epct/session/recovery.json` | Recovery information |
+| `.epct/history/checkpoints/*.json` | State snapshots |
+
+## Instructions
 
 ### Read Current State
 
-```typescript
-function readState(): ProjectState {
-  const statePath = '.epct/state.json'
-  if (!fileExists(statePath)) {
-    return initializeNewState()
-  }
-  return JSON.parse(readFile(statePath))
+```bash
+python3 $ACT_ROOT/skills/state-management/scripts/state_manager.py read
+```
+
+Returns:
+```json
+{
+  "project": { "name": "...", "type": "..." },
+  "phase": { "current": 4, "name": "Development" },
+  "scores": { ... },
+  "currentChunk": null,
+  "completedChunks": [...],
+  "errors": { "active": 0, "blocking": false }
 }
 ```
 
 ### Update State
 
-```typescript
-function updateState(updates: Partial<ProjectState>): void {
-  const current = readState()
-  const updated = { ...current, ...updates }
-  writeFile('.epct/state.json', JSON.stringify(updated, null, 2))
-}
+```bash
+python3 $ACT_ROOT/skills/state-management/scripts/state_manager.py update \
+  --updates '{"phase": {"current": 5, "name": "Quality"}}'
 ```
 
-### Create a Checkpoint
+Updates are merged recursively with existing state.
 
-```typescript
-function createCheckpoint(name: string): void {
-  const state = readState()
-  const timestamp = new Date().toISOString()
-  const checkpointPath = `.epct/checkpoints/${timestamp}-${name}.json`
+### Create Checkpoint
 
-  writeFile(checkpointPath, JSON.stringify({
-    name,
-    timestamp,
-    state,
-    context: getCurrentContext()
-  }, null, 2))
-
-  updateRecoveryInfo(checkpointPath)
-}
+```bash
+python3 $ACT_ROOT/skills/state-management/scripts/state_manager.py checkpoint
 ```
 
-### Estimate Used Tokens
+Creates timestamped snapshot in `.epct/history/checkpoints/`.
 
-```typescript
-function estimateTokens(): number {
-  // Simple heuristic: 1 token ≈ 4 characters
-  const session = readFile('.epct/session/current.json')
-  const sessionData = JSON.parse(session)
-  return sessionData.commandsExecuted.reduce((total, cmd) => {
-    return total + (cmd.outputLength / 4)
-  }, 0)
-}
+### Recover from Checkpoint
+
+```bash
+python3 $ACT_ROOT/skills/state-management/scripts/state_manager.py recover \
+  --checkpoint-file "2026-01-10T14-30-00.json"
 ```
+
+Restores state from a checkpoint file.
 
 ## Checkpoint Events
 
-| Event | Trigger | Checkpoint Name |
-|-------|---------|-----------------|
-| Chunk completed | After green tests | `chunk-${chunkName}` |
-| /status command | Explicit user action | `user-status` |
-| Phase transition | Before Go/No-Go | `phase-${n}-complete` |
-| Error detected | New error file | `error-${errorId}` |
-| Context < 30% | Token estimation | `low-context` |
+Create checkpoints automatically on these events:
 
-## Contextual Tips
+| Event | Checkpoint Name | Trigger |
+|-------|-----------------|---------|
+| Chunk completed | `chunk-[name]` | After green tests |
+| Phase transition | `phase-[n]-complete` | Before Go/No-Go |
+| Error detected | `error-[id]` | New error recorded |
+| User /status | `user-status` | Manual save |
+| Low context | `low-context` | < 30% remaining |
 
-```typescript
-function shouldShowTip(): TipType | null {
-  const state = readState()
-  const tokens = estimateTokens()
-  const contextRemaining = (200000 - tokens) / 200000
+## Token Estimation
 
-  if (contextRemaining < 0.3) {
-    return 'LOW_CONTEXT'
-  }
+Estimate context usage:
 
-  if (state.errors.active > 0 && hoursSinceLastError() > 1) {
-    return 'PENDING_ERROR'
-  }
+```python
+# Heuristic: 1 token ≈ 4 characters
+tokens_used = len(session_data) / 4
+context_remaining = (200000 - tokens_used) / 200000
+```
 
-  if (isPhaseChecklistComplete() && !state.lastAction?.type.includes('go-no-go')) {
-    return 'READY_FOR_NEXT'
-  }
+### Display Token Warning
 
-  return null
-}
+When context < 30%:
+```
+💡 Limited context (~30% remaining).
+   Finish current chunk then /act-status to save.
 ```
 
 ## Recovery Process
 
-1. Read `.epct/session/recovery.json`
-2. If `canRecover === true`, load last checkpoint
-3. Display summary: phase, last chunk, errors
-4. Offer continuation or fresh start
+### On Session Start
 
-```typescript
-function recoverSession(): RecoveryInfo {
-  const recovery = JSON.parse(readFile('.epct/session/recovery.json'))
+1. Check `.epct/session/recovery.json`:
+   ```json
+   {
+     "canRecover": true,
+     "lastCheckpoint": "2026-01-10T14-30-00.json",
+     "lastAction": "chunk_complete",
+     "recoveryInstructions": "Continue with UserService.update"
+   }
+   ```
 
-  if (!recovery.canRecover) {
-    return { success: false, message: 'No recovery point available' }
-  }
+2. If `canRecover === true`:
+   - Load last checkpoint
+   - Display recovery summary:
+   ```
+   ╭─────────────────────────────────────────────────────╮
+   │  🔄 Session Recovery Available                      │
+   ├─────────────────────────────────────────────────────┤
+   │  Last session: 2026-01-10 14:30                    │
+   │  Phase: Development                                 │
+   │  Last chunk: UserService.create                     │
+   │  Errors: 0                                          │
+   │                                                     │
+   │  Continue where you left off? (y/n)                │
+   ╰─────────────────────────────────────────────────────╯
+   ```
 
-  const checkpoint = JSON.parse(readFile(recovery.lastCheckpoint))
+3. If user confirms, restore state
 
-  return {
-    success: true,
-    phase: checkpoint.state.phaseName,
-    lastChunk: checkpoint.state.currentChunk,
-    errors: checkpoint.state.errors.active,
-    instructions: recovery.recoveryInstructions
+### Create Recovery Info
+
+After each significant action:
+
+```bash
+# Write recovery info
+cat > .epct/session/recovery.json << EOF
+{
+  "canRecover": true,
+  "lastCheckpoint": "[checkpoint-path]",
+  "lastAction": "[action-type]",
+  "recoveryInstructions": "[what to do next]",
+  "timestamp": "[ISO timestamp]"
+}
+EOF
+```
+
+## Contextual Tips
+
+Based on state, suggest tips:
+
+| Condition | Tip |
+|-----------|-----|
+| Context < 30% | "Limited context. Consider /act-status to save." |
+| Errors active > 0 | "Pending error. /act-fix recommended." |
+| Phase checklist complete | "Phase ready. /act-next to proceed." |
+| Long session (> 2h) | "Long session. /act-status creates save point." |
+| Idle > 24h | "Project inactive. /act-status to review." |
+
+## State Structure
+
+```json
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "my-project",
+    "type": "webapp",
+    "stack": ["typescript", "next.js", "prisma"],
+    "created_at": "2026-01-10T10:00:00Z"
+  },
+  "phase": {
+    "current": 4,
+    "name": "Development",
+    "started_at": "2026-01-10T11:00:00Z"
+  },
+  "scores": {
+    "discovery": 80,
+    "strategy": 75,
+    "conception": 70,
+    "development": 40,
+    "quality": 0,
+    "launch": 0,
+    "growth": 0
+  },
+  "mode": "COMPLET",
+  "currentChunk": {
+    "file": "src/services/UserService.ts",
+    "method": "create",
+    "status": "in_progress"
+  },
+  "completedChunks": [
+    "UserService.findById",
+    "UserService.findAll"
+  ],
+  "errors": {
+    "active": 0,
+    "blocking": false
+  },
+  "session": {
+    "tokensEstimated": 50000,
+    "contextRemaining": "75%"
   }
 }
 ```
+
+## Output Expected
+
+- State read/write operations
+- Checkpoint creation/restoration
+- Recovery information management
+- Token estimation and warnings
+- Contextual tips based on state
+
+## Error Handling
+
+| Error | Response |
+|-------|----------|
+| state.json missing | Return `null`, trigger init prompt |
+| Checkpoint missing | List available checkpoints |
+| JSON parse error | Attempt recovery from latest checkpoint |
+| Disk full | Warn user, suggest cleanup |

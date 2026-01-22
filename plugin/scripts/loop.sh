@@ -1,15 +1,22 @@
 #!/bin/bash
 # ACT Loop Script - Adapted from Ralph Wiggum
-# Usage: ./loop.sh [--phase PHASE] [--max N] [--target DIR]
+# Usage: ./loop.sh [--phase PHASE] [--max N] [--target DIR] [--force]
 #
 # Options:
 #   --phase PHASE   Phase to run: discovery, strategy, design, dev, quality (default: dev)
 #   --max N         Max iterations (default: 10)
 #   --target DIR    Target directory to run in (default: current directory)
+#   --force         Bypass protected branch check (DANGEROUS - use with caution)
+#
+# Safety Features:
+#   - Protected branch detection (main, master, prod, staging, release)
+#   - Build verification after each story
+#   - TypeScript type checking (if applicable)
 #
 # Examples:
 #   ./loop.sh --phase discovery --max 5
 #   ./loop.sh --phase dev --target /path/to/project
+#   ./loop.sh --phase dev --force  # Bypass branch protection (dangerous!)
 
 set -e
 
@@ -42,16 +49,23 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         -h|--help)
-            echo "Usage: ./loop.sh [--phase PHASE] [--max N] [--target DIR]"
+            echo "Usage: ./loop.sh [--phase PHASE] [--max N] [--target DIR] [--force]"
             echo ""
             echo "Options:"
             echo "  --phase PHASE   Phase: discovery, strategy, design, dev, quality (default: dev)"
             echo "  --max N         Max iterations (default: 10)"
             echo "  --target DIR    Target directory (default: current)"
+            echo "  --force         Bypass protected branch check (DANGEROUS)"
+            echo ""
+            echo "Safety Features:"
+            echo "  - Protected branch detection (main, master, prod, staging)"
+            echo "  - Build verification after each story"
+            echo "  - TypeScript type checking (if applicable)"
             echo ""
             echo "Examples:"
             echo "  ./loop.sh --phase discovery --max 5"
             echo "  ./loop.sh --phase dev --target /path/to/project"
+            echo "  ./loop.sh --phase dev --force  # Bypass branch protection"
             exit 0
             ;;
         *)
@@ -93,6 +107,154 @@ if [[ ! " ${valid_phases[@]} " =~ " ${PHASE} " ]]; then
     exit 1
 fi
 
+# Protected branches that should never run loop directly
+PROTECTED_BRANCHES=("main" "master" "prod" "production" "staging" "release")
+FORCE_MODE=false
+
+# Check if --force flag was passed
+for arg in "$@"; do
+    if [[ "$arg" == "--force" ]]; then
+        FORCE_MODE=true
+    fi
+done
+
+# Detect protected branch
+detect_protected_branch() {
+    cd "$PROJECT_DIR"
+    CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "")
+
+    if [ -z "$CURRENT_BRANCH" ]; then
+        echo -e "${YELLOW}⚠️  Not a git repository or no branch detected${NC}"
+        return 0
+    fi
+
+    for branch in "${PROTECTED_BRANCHES[@]}"; do
+        if [[ "$CURRENT_BRANCH" == "$branch" ]]; then
+            if [ "$FORCE_MODE" = true ]; then
+                echo -e "${YELLOW}⚠️  WARNING: Running on protected branch '$CURRENT_BRANCH' with --force${NC}"
+                echo -e "${YELLOW}   This is dangerous! Make sure you know what you're doing.${NC}"
+                sleep 3
+                return 0
+            else
+                echo -e "${RED}╭─────────────────────────────────────────────────────╮${NC}"
+                echo -e "${RED}│  ❌ PROTECTED BRANCH DETECTED                       │${NC}"
+                echo -e "${RED}╠─────────────────────────────────────────────────────╣${NC}"
+                echo -e "${RED}│  Branch: ${CURRENT_BRANCH}${NC}"
+                echo -e "${RED}│                                                     │${NC}"
+                echo -e "${RED}│  Running loop on protected branches is dangerous.   │${NC}"
+                echo -e "${RED}│  Create a feature branch first:                     │${NC}"
+                echo -e "${RED}│                                                     │${NC}"
+                echo -e "${RED}│  git checkout -b feature/your-feature               │${NC}"
+                echo -e "${RED}│                                                     │${NC}"
+                echo -e "${RED}│  Or use --force to bypass (NOT recommended)         │${NC}"
+                echo -e "${RED}╰─────────────────────────────────────────────────────╯${NC}"
+                exit 1
+            fi
+        fi
+    done
+
+    echo -e "${GREEN}✓ Branch '$CURRENT_BRANCH' is safe for loop execution${NC}"
+}
+
+# Verify build passes (for TypeScript/JavaScript projects)
+verify_build() {
+    cd "$PROJECT_DIR"
+
+    # Detect package manager
+    if [ -f "pnpm-lock.yaml" ]; then
+        PM="pnpm"
+    elif [ -f "yarn.lock" ]; then
+        PM="yarn"
+    elif [ -f "package-lock.json" ] || [ -f "package.json" ]; then
+        PM="npm"
+    else
+        # Not a Node.js project, skip build verification
+        return 0
+    fi
+
+    # Check if build script exists
+    if [ -f "package.json" ]; then
+        if ! grep -q '"build"' package.json 2>/dev/null; then
+            return 0  # No build script, skip
+        fi
+    else
+        return 0
+    fi
+
+    echo -e "${BLUE}🔨 Verifying build...${NC}"
+
+    BUILD_OUTPUT=$($PM run build 2>&1)
+    BUILD_STATUS=$?
+
+    if [ $BUILD_STATUS -ne 0 ]; then
+        echo -e "${RED}╭─────────────────────────────────────────────────────╮${NC}"
+        echo -e "${RED}│  ❌ BUILD FAILED                                    │${NC}"
+        echo -e "${RED}╠─────────────────────────────────────────────────────╣${NC}"
+        echo -e "${RED}│  The build must pass before marking story complete. │${NC}"
+        echo -e "${RED}│                                                     │${NC}"
+        echo -e "${RED}│  Check .epct/loop/build-errors.log for details      │${NC}"
+        echo -e "${RED}╰─────────────────────────────────────────────────────╯${NC}"
+
+        # Save build errors for debugging
+        mkdir -p "$PROJECT_DIR/.epct/loop"
+        echo "$BUILD_OUTPUT" > "$PROJECT_DIR/.epct/loop/build-errors.log"
+
+        return 1
+    fi
+
+    echo -e "${GREEN}✓ Build passed${NC}"
+    return 0
+}
+
+# Verify TypeScript types (if applicable)
+verify_types() {
+    cd "$PROJECT_DIR"
+
+    # Check if TypeScript is used
+    if [ ! -f "tsconfig.json" ]; then
+        return 0  # Not a TypeScript project
+    fi
+
+    # Detect package manager
+    if [ -f "pnpm-lock.yaml" ]; then
+        PM="pnpm"
+    elif [ -f "yarn.lock" ]; then
+        PM="yarn"
+    else
+        PM="npm"
+    fi
+
+    echo -e "${BLUE}🔍 Checking TypeScript types...${NC}"
+
+    # Try tsc --noEmit first, fallback to type-check script if exists
+    if command -v npx &> /dev/null; then
+        TYPE_OUTPUT=$(npx tsc --noEmit 2>&1)
+        TYPE_STATUS=$?
+    else
+        TYPE_OUTPUT=$($PM run type-check 2>&1 || $PM run typecheck 2>&1)
+        TYPE_STATUS=$?
+    fi
+
+    if [ $TYPE_STATUS -ne 0 ]; then
+        echo -e "${RED}╭─────────────────────────────────────────────────────╮${NC}"
+        echo -e "${RED}│  ❌ TYPE ERRORS DETECTED                            │${NC}"
+        echo -e "${RED}╠─────────────────────────────────────────────────────╣${NC}"
+        echo -e "${RED}│  TypeScript types must pass before continuing.      │${NC}"
+        echo -e "${RED}│                                                     │${NC}"
+        echo -e "${RED}│  Check .epct/loop/type-errors.log for details       │${NC}"
+        echo -e "${RED}╰─────────────────────────────────────────────────────╯${NC}"
+
+        # Save type errors for debugging
+        mkdir -p "$PROJECT_DIR/.epct/loop"
+        echo "$TYPE_OUTPUT" > "$PROJECT_DIR/.epct/loop/type-errors.log"
+
+        return 1
+    fi
+
+    echo -e "${GREEN}✓ Types OK${NC}"
+    return 0
+}
+
 # Check prerequisites
 check_prerequisites() {
     if ! command -v claude &> /dev/null; then
@@ -111,6 +273,9 @@ check_prerequisites() {
         echo -e "${RED}Error: Prompt file not found at $PROMPT_FILE${NC}"
         exit 1
     fi
+
+    # Check protected branch
+    detect_protected_branch
 }
 
 # Initialize progress file
@@ -234,7 +399,28 @@ main() {
         # Check for completion signal
         if echo "$OUTPUT" | grep -q "<signal>COMPLETE</signal>"; then
             echo -e "${GREEN}✓ All stories complete!${NC}"
-            log_progress $i "COMPLETE - All stories passed" $iter_duration
+
+            # Verify build before accepting completion
+            if ! verify_build; then
+                echo -e "${RED}❌ Build failed - stories may have introduced errors${NC}"
+                log_progress $i "COMPLETE BLOCKED - Build failed" $iter_duration
+                create_log_file $i "BLOCKED" $iter_duration
+                update_metrics $i $iter_duration "blocked"
+                # Continue to next iteration to fix
+                continue
+            fi
+
+            # Verify types for TypeScript projects
+            if ! verify_types; then
+                echo -e "${RED}❌ Type errors - stories may have introduced errors${NC}"
+                log_progress $i "COMPLETE BLOCKED - Type errors" $iter_duration
+                create_log_file $i "BLOCKED" $iter_duration
+                update_metrics $i $iter_duration "blocked"
+                # Continue to next iteration to fix
+                continue
+            fi
+
+            log_progress $i "COMPLETE - All stories passed + build verified" $iter_duration
             create_log_file $i "COMPLETE" $iter_duration
             update_metrics $i $iter_duration "complete"
 
@@ -246,12 +432,22 @@ main() {
             echo -e "${GREEN}╠════════════════════════════════════════╣${NC}"
             echo -e "${GREEN}║${NC} Iterations: ${i}"
             echo -e "${GREEN}║${NC} Total time: ${total_duration}s"
+            echo -e "${GREEN}║${NC} Build: ✅ VERIFIED"
             echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
             exit 0
         fi
 
-        # Log progress
-        log_progress $i "In progress..." $iter_duration
+        # Verify build after each iteration (fail early)
+        if ! verify_build; then
+            echo -e "${YELLOW}⚠️  Build failed after iteration - will attempt fix in next iteration${NC}"
+            log_progress $i "In progress - BUILD FAILED" $iter_duration
+        elif ! verify_types; then
+            echo -e "${YELLOW}⚠️  Type errors after iteration - will attempt fix in next iteration${NC}"
+            log_progress $i "In progress - TYPE ERRORS" $iter_duration
+        else
+            # Log progress
+            log_progress $i "In progress - Build OK" $iter_duration
+        fi
         local log_file=$(create_log_file $i "in_progress" $iter_duration)
         update_metrics $i $iter_duration "in_progress"
 

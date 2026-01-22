@@ -80,6 +80,49 @@
 
 ---
 
+---
+
+## Règles de Vérification Automatique
+
+### 12. Vérification avant affirmation de succès
+
+**CRITIQUE** : Ne jamais affirmer qu'une action est réussie sans vérification automatique.
+
+- Après écriture de code → exécuter `npm run build` (ou équivalent)
+- Après modification TypeScript → exécuter `tsc --noEmit`
+- Après ajout de test → exécuter les tests
+- Ne pas se fier à l'absence d'erreurs visibles
+
+**Mauvais** :
+```
+"J'ai implémenté la fonction, elle devrait fonctionner."
+```
+
+**Bon** :
+```
+"J'ai implémenté la fonction. Build vérifié ✅ Tests passent ✅"
+```
+
+### 13. Protection de production (CRITICAL)
+
+**OBLIGATOIRE** : Protéger les branches de production.
+
+- Ne JAMAIS exécuter de loop autonome sur `main`, `master`, `prod`, `staging`
+- Toujours créer une branche feature avant de modifier
+- Vérifier la branche courante avant toute opération destructive
+
+**Vérification** :
+```bash
+git branch --show-current  # Doit être feature/* ou fix/*
+```
+
+**Si sur branche protégée** :
+```bash
+git checkout -b feature/my-feature
+```
+
+---
+
 ## Checklist Avant Affirmation
 
 Avant de dire "c'est fait" ou "ça fonctionne" :
@@ -88,6 +131,7 @@ Avant de dire "c'est fait" ou "ça fonctionne" :
 - [ ] J'ai vérifié le résultat
 - [ ] Le fichier/code existe réellement
 - [ ] Les tests passent (si applicable)
+- [ ] Le build passe (si applicable)
 - [ ] Je peux prouver ce que j'affirme
 
 ## Checklist Avant d'Utiliser une Bibliothèque
@@ -95,3 +139,12 @@ Avant de dire "c'est fait" ou "ça fonctionne" :
 - [ ] J'ai recherché la lib avec Context7 (`resolve-library-id`)
 - [ ] J'ai lu la documentation à jour (`query-docs`)
 - [ ] J'utilise la syntaxe/API actuelle (pas obsolète)
+- [ ] La bibliothèque est déjà dans les dépendances du projet
+
+## Checklist Avant Loop Autonome
+
+- [ ] Je suis sur une branche feature (pas main/master/prod)
+- [ ] Le projet compile (`npm run build`)
+- [ ] Les tests passent (`npm test`)
+- [ ] J'ai lu le PRD (`.epct/session/prd.json`)
+- [ ] J'ai analysé les patterns existants du codebase

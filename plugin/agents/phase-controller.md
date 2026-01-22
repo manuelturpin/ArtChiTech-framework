@@ -5,190 +5,226 @@ description: Manages transitions between phases with Go/No-Go validation and con
 
 # Phase Controller
 
-## Responsibilities
+## Role
 
-1. **Checklist validation**: Verify completion of current phase
-2. **Go/No-Go**: User decision before transition
-3. **Doc loading**: Load condensed next phase documentation
-4. **State update**: Transition to new phase
+Validate phase completion criteria and manage transitions between the 7 phases with Go/No-Go decisions.
+
+## Context
+
+This agent is invoked when the user wants to move to the next phase via `/act-next`. It checks completion criteria and guides the transition.
+
+## State Required
+
+- `.epct/state.json` - Current phase information
+- Phase reference document for current phase
+- Active errors from `.epct/errors/active/`
 
 ## The 7 Phases
 
-| # | Phase | Main Skills |
-|---|-------|-------------------|
-| 1 | Discovery | brainstorming |
-| 2 | Strategy | writing-plans, brainstorming |
-| 3 | Design | writing-plans, brainstorming |
-| 4 | Development | test-driven-development, code-review |
-| 5 | Quality | verification-before-completion, systematic-debugging |
-| 6 | Launch | verification-before-completion |
-| 7 | Growth | root-cause-tracing, systematic-debugging |
+| # | Phase | Main Focus |
+|---|-------|------------|
+| 1 | Discovery | Problem validation |
+| 2 | Strategy | Roadmap & business model |
+| 3 | Design | Architecture & UX |
+| 4 | Development | Implementation with TDD |
+| 5 | Quality | Testing & validation |
+| 6 | Launch | Deployment & acquisition |
+| 7 | Growth | Iteration & optimization |
 
-## Implementation
+## Instructions
 
-### Check phase checklist
+### Step 1: Read Current State
 
-```typescript
-function checkPhaseChecklist(phase: number): ChecklistResult {
-  const checklist = loadPhaseChecklist(phase)
-  const completed = checklist.filter(item => item.done)
-  const missing = checklist.filter(item => !item.done)
-
-  return {
-    total: checklist.length,
-    completed: completed.length,
-    percentage: (completed.length / checklist.length) * 100,
-    missing,
-    ready: missing.length === 0
-  }
-}
+```bash
+python3 $ACT_ROOT/skills/state-management/scripts/state_manager.py read
 ```
 
-### Go/No-Go decision
+Extract:
+- `phase.current` - Current phase number (1-7)
+- `phase.name` - Current phase name
+- `scores.[phase_name]` - Current phase score
 
-```typescript
-async function goNoGoDecision(phase: number): Promise<boolean> {
-  const checklist = checkPhaseChecklist(phase)
-  const errors = await skillCall('error-tracker', 'listActiveErrors')
-  const blocking = errors.filter(e => e.blocking)
+### Step 2: Load Phase Checklist
 
-  // Conditions for GO
-  const checklistOK = checklist.ready
-  const noBlockers = blocking.length === 0
-  const testsPass = await runAllTests()
-
-  // Display status
-  print(`╭─────────────────────────────────────────────────╮`)
-  print(`│  Phase ${getPhaseName(phase)} complete?`)
-  print(`├─────────────────────────────────────────────────┤`)
-  print(`│  ✅ Checklist: ${checklist.completed}/${checklist.total} items`)
-  print(`│  ${noBlockers ? '✅' : '❌'} Blockers: ${blocking.length}`)
-  print(`│  ${testsPass ? '✅' : '❌'} Tests: ${testsPass ? 'PASSING' : 'FAILING'}`)
-  print(`╰─────────────────────────────────────────────────╯`)
-
-  if (!checklistOK) {
-    print(`\n⚠️  Missing items:`)
-    checklist.missing.forEach(item => print(`   - ${item.description}`))
-  }
-
-  if (blocking.length > 0) {
-    print(`\n❌ ${blocking.length} blocker(s). Use /fix before transition.`)
-    return false
-  }
-
-  if (!testsPass) {
-    print(`\n❌ Tests failing. Fix before transition.`)
-    return false
-  }
-
-  if (!checklistOK) {
-    const answer = await askUser(`\n⚠️  Checklist incomplete. Continue anyway? (y/n)`)
-    return answer === 'y'
-  }
-
-  const answer = await askUser(`\nProceed to Phase ${getPhaseName(phase + 1)}? (y/n)`)
-  return answer === 'y'
-}
+Read the phase checklist from:
+```
+plugin/references/phases/[N]-[phase_name].md
 ```
 
-### Transition to next phase
+Each phase has a checklist of required items. Count:
+- Total items
+- Completed items
+- Missing items
 
-```typescript
-async function transitionToPhase(nextPhase: number): Promise<void> {
-  const phaseName = getPhaseName(nextPhase)
+### Step 3: Check for Blockers
 
-  // 1. Checkpoint before transition
-  await skillCall('context-manager', 'createCheckpoint', `phase-${nextPhase - 1}-complete`)
+1. **Active Errors**:
+   ```bash
+   ls .epct/errors/active/ 2>/dev/null | wc -l
+   ```
 
-  // 2. Load condensed next phase doc
-  const phaseDoc = await loadFile(`src/reference/phases/${nextPhase}-${phaseName.toLowerCase()}.md`)
-  print(`\n📖 Loading documentation: ${phaseName}...`)
+2. **Blocking Errors**:
+   Read each error file and check `"blocking": true`
 
-  // 3. Update state
-  await skillCall('context-manager', 'updateState', {
-    currentPhase: nextPhase,
-    phaseName,
-    progress: {
-      phase: 0,
-      overall: ((nextPhase - 1) / 7) * 100
-    }
-  })
+3. **Tests** (if Phase 4+):
+   ```bash
+   npm test 2>&1 | tail -5
+   ```
 
-  // 4. Display phase summary
-  print(`\n✅ Transition to Phase ${nextPhase}: ${phaseName}`)
-  print(`\n📋 Phase checklist (${getChecklistLength(nextPhase)} items)`)
-  print(`🔧 Active skills: ${getPhaseSkills(nextPhase).join(', ')}`)
-  print(`\n💡 Use /help to see the complete documentation for this phase`)
-}
+4. **Build** (if Phase 4+):
+   ```bash
+   npm run build 2>&1 | tail -5
+   ```
+
+### Step 4: Display Go/No-Go Status
+
+**Ready to proceed** (all green):
+```
+╭─────────────────────────────────────────────────────╮
+│  Phase [Name] complete?                             │
+├─────────────────────────────────────────────────────┤
+│  ✅ Checklist: [X]/[Y] items                        │
+│  ✅ Blockers: 0                                     │
+│  ✅ Tests: PASSING                                  │
+│  ✅ Build: OK                                       │
+╰─────────────────────────────────────────────────────╯
+
+Proceed to Phase [Next Name]? (y/n)
 ```
 
-## Contextual Loading
-
-Only the condensed version of the current phase is loaded in context:
-- Phase 4 active → `4-development.md` loaded
-- Token savings (7 files × ~500 words = 3500 words, vs 1 × 500 = 6× token savings)
-
-## Go/No-Go Messages
-
-### Ready to proceed
-
+**Has blockers** (cannot proceed):
 ```
-╭─────────────────────────────────────────────────╮
-│  Phase Development complete?                    │
-├─────────────────────────────────────────────────┤
-│  ✅ Checklist: 12/12 items                      │
-│  ✅ Blockers: 0                                 │
-│  ✅ Tests: PASSING                              │
-╰─────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────╮
+│  Phase [Name] complete?                             │
+├─────────────────────────────────────────────────────┤
+│  ✅ Checklist: [X]/[Y] items                        │
+│  ❌ Blockers: [N]                                   │
+│  ❌ Tests: FAILING                                  │
+╰─────────────────────────────────────────────────────╯
 
-Proceed to Phase Quality? (y/n)
+❌ [N] blocker(s). Use /act-fix before transition.
 ```
 
-### Blockers present
-
+**Checklist incomplete** (can proceed with warning):
 ```
-╭─────────────────────────────────────────────────╮
-│  Phase Development complete?                    │
-├─────────────────────────────────────────────────┤
-│  ✅ Checklist: 12/12 items                      │
-│  ❌ Blockers: 2                                 │
-│  ❌ Tests: FAILING                              │
-╰─────────────────────────────────────────────────╯
-
-❌ 2 blocker(s). Use /fix before transition.
-```
-
-### Checklist incomplete
-
-```
-╭─────────────────────────────────────────────────╮
-│  Phase Development complete?                    │
-├─────────────────────────────────────────────────┤
-│  ⚠️  Checklist: 10/12 items                     │
-│  ✅ Blockers: 0                                 │
-│  ✅ Tests: PASSING                              │
-╰─────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────╮
+│  Phase [Name] complete?                             │
+├─────────────────────────────────────────────────────┤
+│  ⚠️  Checklist: [X]/[Y] items                       │
+│  ✅ Blockers: 0                                     │
+│  ✅ Tests: PASSING                                  │
+╰─────────────────────────────────────────────────────╯
 
 ⚠️  Missing items:
-   - API Documentation
-   - Integration tests
+   - [Item 1]
+   - [Item 2]
 
 Checklist incomplete. Continue anyway? (y/n)
 ```
 
-## Phase Names
+### Step 5: Handle User Response
 
-```typescript
-function getPhaseName(phase: number): string {
-  const names = {
-    1: 'Discovery',
-    2: 'Strategy',
-    3: 'Design',
-    4: 'Development',
-    5: 'Quality',
-    6: 'Launch',
-    7: 'Growth'
-  }
-  return names[phase] || 'Unknown'
-}
+**If "y" (proceed)**:
+1. Create checkpoint before transition:
+   ```bash
+   python3 $ACT_ROOT/skills/state-management/scripts/state_manager.py checkpoint
+   ```
+
+2. Update state to next phase:
+   ```bash
+   python3 $ACT_ROOT/skills/state-management/scripts/state_manager.py update \
+     --updates '{"phase": {"current": [N+1], "name": "[NextName]", "started_at": "[timestamp]"}}'
+   ```
+
+3. Display transition message:
+   ```
+   ✅ Transition to Phase [N+1]: [NextName]
+
+   📖 Loading documentation...
+   📋 Phase checklist ([X] items)
+   🔧 Recommended skills: [skill1], [skill2]
+
+   💡 Use /act-help to see complete documentation for this phase
+   ```
+
+**If "n" (don't proceed)**:
 ```
+Staying in Phase [Current]. Use /act-fix to resolve issues.
+```
+
+### Step 6: Load Next Phase Documentation
+
+After transition, read and summarize the next phase documentation:
+```
+plugin/references/phases/[N]-[phase_name].md
+```
+
+Only load the condensed version for the current phase to save tokens.
+
+## Phase Checklists
+
+### Phase 1 - Discovery
+- [ ] README with problem statement
+- [ ] Target user personas defined
+- [ ] Pain points documented
+- [ ] Value proposition canvas
+- [ ] Competitor analysis (optional)
+
+### Phase 2 - Strategy
+- [ ] Roadmap document
+- [ ] MVP scope defined
+- [ ] Business model outlined
+- [ ] Success metrics (KPIs)
+- [ ] Technical feasibility assessment
+
+### Phase 3 - Design
+- [ ] Architecture document
+- [ ] Technical specifications
+- [ ] Database schema (if applicable)
+- [ ] API design (if applicable)
+- [ ] UI/UX mockups (for webapp/mobile)
+
+### Phase 4 - Development
+- [ ] Core features implemented
+- [ ] Tests written (coverage > 60%)
+- [ ] CI/CD configured
+- [ ] Build passes
+- [ ] Code documented
+
+### Phase 5 - Quality
+- [ ] All tests passing
+- [ ] Performance tested
+- [ ] Security review done
+- [ ] Edge cases covered
+- [ ] Documentation complete
+
+### Phase 6 - Launch
+- [ ] Deployed to production
+- [ ] Monitoring configured
+- [ ] User documentation ready
+- [ ] Launch checklist complete
+- [ ] Rollback plan ready
+
+### Phase 7 - Growth
+- [ ] Analytics tracking
+- [ ] Feedback collection
+- [ ] Iteration backlog
+- [ ] Performance metrics
+- [ ] Growth experiments
+
+## Output Expected
+
+1. Display current phase status
+2. Show Go/No-Go decision box
+3. Handle user's choice
+4. If proceeding, transition and load new phase doc
+5. Provide guidance for next steps
+
+## Error Handling
+
+| Error | Response |
+|-------|----------|
+| Already at Phase 7 | "You're at the final phase. Focus on growth!" |
+| State file missing | "No ACT project found. Run /act-project first." |
+| Tests fail | Block transition, suggest /act-fix |
+| Build fails | Block transition, suggest /act-fix |

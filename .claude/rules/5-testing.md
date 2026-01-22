@@ -109,3 +109,70 @@ Après toute modification, même mineure :
 - [ ] Pas de régression sur les tests existants
 - [ ] Comportement vérifié manuellement
 - [ ] Impact sur le projet global évalué
+
+---
+
+## Tests dans le Loop Autonome
+
+### Contexte
+
+Le loop autonome (`loop.sh`) exécute du code sans supervision. Les tests deviennent critiques pour détecter les erreurs avant qu'elles ne s'accumulent.
+
+### Vérifications Automatiques
+
+Le loop vérifie automatiquement après chaque story :
+
+1. **Build** : `npm run build` doit passer
+2. **Types** : `tsc --noEmit` doit passer (si TypeScript)
+
+### Workflow de Test
+
+```
+Avant story → Analyser patterns existants
+    ↓
+Pendant story → Suivre les conventions
+    ↓
+Après story → Build vérifié automatiquement
+    ↓
+Si échec → Story marquée `passes: false`
+    ↓
+Itération suivante → Tenter de corriger
+```
+
+### Ne JAMAIS marquer `passes: true` si :
+
+- Le build échoue
+- Des erreurs TypeScript existent
+- Les tests existants échouent
+- Le schema DB ne correspond pas au code
+
+### Logs de Vérification
+
+Le loop écrit les erreurs dans :
+- `.epct/loop/build-errors.log` - Erreurs de build
+- `.epct/loop/type-errors.log` - Erreurs TypeScript
+
+### Récupération
+
+Si des erreurs s'accumulent :
+
+```bash
+# Voir les erreurs de build
+cat .epct/loop/build-errors.log
+
+# Voir les erreurs de type
+cat .epct/loop/type-errors.log
+
+# Revenir à un état sain
+git checkout -- .
+```
+
+### Best Practices Loop
+
+| DO | DON'T |
+|----|-------|
+| Analyser patterns avant de coder | Coder sans comprendre le contexte |
+| Vérifier le schema avant queries DB | Supposer les noms de champs |
+| Utiliser dépendances installées | Installer de nouvelles dépendances |
+| Marquer failed si build échoue | Marquer passed sans vérification |
+| Logger les erreurs rencontrées | Ignorer les warnings |

@@ -5,206 +5,173 @@ description: Main orchestrator that coordinates all skills and manages the /proj
 
 # Project Orchestrator
 
-## Responsibilities
+## Role
 
-1. **Interactive menu**: Main /project interface
-2. **Skills coordination**: Activates skills based on phase and context
-3. **Global workflow**: Manages flow from discovery to growth
-4. **Project initialization**: New project setup
+Coordinate the ACT framework workflow and provide an interactive menu for project management.
 
-## /project Menu
+## Context
+
+This agent is invoked when the user runs `/act-project`. It reads the project state and presents appropriate options based on the current phase and project status.
+
+## State Required
+
+- `.epct/state.json` (if exists)
+- Project detection results (if new project)
+
+## Instructions
+
+### Step 1: Check Project State
+
+```bash
+# Check if ACT project exists
+if [ -f ".epct/state.json" ]; then
+  cat .epct/state.json
+fi
+```
+
+**Decision tree**:
+- If `.epct/state.json` does NOT exist → Show **New Project Menu**
+- If `.epct/state.json` exists → Show **Active Project Menu**
+
+### Step 2A: New Project Menu (No .epct/)
+
+Display this menu:
 
 ```
 ╭─────────────────────────────────────────────────────╮
 │  What would you like to do?                         │
 │                                                     │
 │  1. 🆕 Start a new project                          │
-│  2. ➕ Add a feature                                │
-│  3. 🔧 Refactoring/optimization                     │
-│  4. 📋 View current phase checklist                 │
-│  5. ⏭️  Move to next phase                          │
+│  2. 📖 Learn more about the framework               │
 │                                                     │
 │  Type a number or describe your need...             │
 ╰─────────────────────────────────────────────────────╯
 ```
 
-## Implementation
+**Option 1: Start new project**
+1. Ask for project name
+2. Ask for project type (webapp/mobile/api/library/cli)
+3. Run stack detection:
+   ```bash
+   python3 $ACT_ROOT/skills/project-detection/scripts/detect_stack.py
+   ```
+4. Initialize state:
+   ```bash
+   python3 $ACT_ROOT/skills/state-management/scripts/state_manager.py init \
+     --name "project-name" \
+     --type "webapp" \
+     --stack "react,typescript"
+   ```
+5. Display: "Project initialized! Starting Phase 1: Discovery"
+6. Invoke skill: `superpowers:brainstorming` with context about validating the problem
 
-### Main menu
+**Option 2: Learn more**
+- Display framework overview from `plugin/references/framework-overview.md`
+- Explain the 7 phases briefly
 
-```typescript
-async function showProjectMenu() {
-  const state = await skillCall('context-manager', 'readState')
-  const hasProject = state.project.name !== ''
+### Step 2B: Active Project Menu (Has .epct/)
 
-  const options = hasProject ?
-    getActiveProjectOptions(state) :
-    getNewProjectOptions()
+Read the state and display:
 
-  displayMenu(options)
-
-  const choice = await getUserInput()
-  await handleMenuChoice(choice, state)
-}
-
-function getActiveProjectOptions(state: ProjectState): MenuOption[] {
-  return [
-    { id: 1, label: '➕ Add a feature', action: 'add_feature' },
-    { id: 2, label: '🔧 Refactoring/optimization', action: 'refactor' },
-    { id: 3, label: '📋 View current phase checklist', action: 'show_checklist' },
-    { id: 4, label: '⏭️  Move to next phase', action: 'next_phase' },
-    { id: 5, label: '📊 View full status', action: 'status' }
-  ]
-}
-
-function getNewProjectOptions(): MenuOption[] {
-  return [
-    { id: 1, label: '🆕 Start a new project', action: 'new_project' },
-    { id: 2, label: '📖 Learn more about the framework', action: 'help' }
-  ]
-}
+```
+╭─────────────────────────────────────────────────────╮
+│  🎯 Project: [project-name]                         │
+│  📍 Phase [N]: [phase-name] | Score: [score]%       │
+│                                                     │
+│  1. ➕ Add a feature                                │
+│  2. 🔧 Refactoring/optimization                     │
+│  3. 📋 View current phase checklist                 │
+│  4. ⏭️  Move to next phase                          │
+│  5. 📊 View full status                             │
+│                                                     │
+│  Type a number or describe your need...             │
+╰─────────────────────────────────────────────────────╯
 ```
 
-### New project (Discovery)
+**Handle each option**:
 
-```typescript
-async function startNewProject() {
-  print("🆕 New Project\n")
+| Option | Action |
+|--------|--------|
+| 1. Add feature | Ask feature name → Invoke `superpowers:brainstorming` for design |
+| 2. Refactoring | Ask what to improve → Invoke `superpowers:brainstorming` for approach |
+| 3. View checklist | Display checklist from current phase reference doc |
+| 4. Next phase | Invoke `/act-next` command flow |
+| 5. Full status | Invoke `/act-status` command flow |
 
-  // 1. Collect basic info
-  const name = await askUser("Project name?")
-  const type = await askUser("Type? (webapp/mobile/feature/refactor)")
+### Step 3: Handle Free Text Input
 
-  // 2. Initialize state
-  await skillCall('context-manager', 'updateState', {
-    project: {
-      name,
-      type,
-      created: new Date().toISOString()
-    },
-    currentPhase: 1,
-    phaseName: 'Discovery'
-  })
+If user types something that doesn't match a menu option:
 
-  // 3. Activate brainstorming for Discovery
-  print("\n🎯 Discovery Phase: Problem Validation\n")
-  print("Activating brainstorming skill...\n")
+**Keyword detection**:
+| Keywords | Action |
+|----------|--------|
+| new, create, start | → Option 1 (new project) |
+| add, feature, implement | → Option 1 (add feature) |
+| refactor, optimize, improve | → Option 2 |
+| checklist, check, list | → Option 3 |
+| next, advance, proceed | → Option 4 |
+| status, state, progress | → Option 5 |
+| help, ? | → Show help |
 
-  await skillCall('superpowers:brainstorming', {
-    context: `New ${type} project: ${name}`,
-    goal: 'Validate the problem and define the value proposition'
-  })
-
-  // Brainstorming will guide towards JTBD, Value Proposition Canvas, etc.
-}
+**If no match**: Ask for clarification
+```
+I didn't understand. Can you clarify?
+Examples: "add a feature", "view status", "move to next phase"
 ```
 
-### Add feature (current phase)
+## Skills Activation by Phase
 
-```typescript
-async function addFeature() {
-  const state = await skillCall('context-manager', 'readState')
+Based on current phase, recommend appropriate skills:
 
-  print(`\n➕ Add Feature - ${state.phaseName} Phase\n`)
+| Phase | Recommended Skills |
+|-------|-------------------|
+| 1 Discovery | `superpowers:brainstorming` |
+| 2 Strategy | `superpowers:writing-plans`, `superpowers:brainstorming` |
+| 3 Design | `superpowers:writing-plans`, `superpowers:brainstorming` |
+| 4 Development | `superpowers:test-driven-development`, `superpowers:code-review` |
+| 5 Quality | `superpowers:verification-before-completion`, `superpowers:systematic-debugging` |
+| 6 Launch | `superpowers:verification-before-completion` |
+| 7 Growth | `superpowers:systematic-debugging` |
 
-  const featureName = await askUser("Feature name?")
-  const featureDesc = await askUser("Short description?")
+## Output Expected
 
-  // Activate skills based on phase
-  const phaseSkills = getPhaseSkills(state.currentPhase)
+1. Display appropriate menu based on state
+2. Handle user selection
+3. Invoke relevant skill or command
+4. Update state if needed
+5. Provide next step guidance
 
-  if (state.currentPhase <= 3) {
-    // Discovery/Strategy/Design: brainstorming
-    await skillCall('superpowers:brainstorming', {
-      feature: featureName,
-      description: featureDesc
-    })
-  } else if (state.currentPhase === 4) {
-    // Development: chunk-manager + TDD
-    await skillCall('chunk-manager', 'planFeature', {
-      name: featureName,
-      description: featureDesc
-    })
-  }
-}
+## Error Handling
+
+| Error | Response |
+|-------|----------|
+| state.json corrupted | Offer to re-initialize or recover from checkpoint |
+| Stack detection fails | Ask user to provide stack manually |
+| Skill not available | Suggest alternative or manual approach |
+
+## Example Flow
+
+**New project**:
+```
+User: /act-project
+Assistant: [Shows new project menu]
+User: 1
+Assistant: What's your project name?
+User: my-saas
+Assistant: What type? (webapp/mobile/api/library/cli)
+User: webapp
+Assistant: Detecting stack... Found: TypeScript, Next.js, Prisma
+         Project initialized! Starting Phase 1: Discovery
+         [Invokes brainstorming for problem validation]
 ```
 
-## Automatic Skills Activation
-
-```typescript
-function getPhaseSkills(phase: number): string[] {
-  const skillMap = {
-    1: ['superpowers:brainstorming'],
-    2: ['superpowers:writing-plans', 'superpowers:brainstorming'],
-    3: ['superpowers:writing-plans', 'superpowers:brainstorming'],
-    4: ['superpowers:test-driven-development', 'superpowers:code-review'],
-    5: ['superpowers:verification-before-completion', 'superpowers:systematic-debugging'],
-    6: ['superpowers:verification-before-completion'],
-    7: ['superpowers:root-cause-tracing', 'superpowers:systematic-debugging']
-  }
-  return skillMap[phase] || []
-}
-
-async function activatePhaseSkills(phase: number) {
-  const skills = getPhaseSkills(phase)
-  for (const skill of skills) {
-    await skillCall(skill, 'activate')
-  }
-}
+**Existing project**:
 ```
-
-## Action Handling
-
-```typescript
-async function handleMenuChoice(choice: string, state: ProjectState) {
-  const actions = {
-    'new_project': startNewProject,
-    'add_feature': addFeature,
-    'refactor': startRefactoring,
-    'show_checklist': showPhaseChecklist,
-    'next_phase': () => skillCall('phase-controller', 'goNoGoDecision', state.currentPhase),
-    'status': executeStatusCommand,
-    'help': executeHelpCommand
-  }
-
-  // Search by number or text
-  const action = findAction(choice, actions)
-
-  if (action) {
-    await action()
-  } else {
-    // Free text → interpret as need description
-    await interpretUserNeed(choice, state)
-  }
-}
-```
-
-## Need Interpretation
-
-```typescript
-async function interpretUserNeed(description: string, state: ProjectState) {
-  // Analyze text to determine intent
-  const keywords = {
-    'new': 'new_project',
-    'create': 'new_project',
-    'add': 'add_feature',
-    'feature': 'add_feature',
-    'refactor': 'refactor',
-    'optimize': 'refactor',
-    'status': 'status',
-    'state': 'status',
-    'next': 'next_phase',
-    'advance': 'next_phase'
-  }
-
-  for (const [keyword, action] of Object.entries(keywords)) {
-    if (description.toLowerCase().includes(keyword)) {
-      return handleMenuChoice(action, state)
-    }
-  }
-
-  // No match → ask for clarification
-  print("I didn't understand. Can you clarify?")
-  print("Examples: 'add a feature', 'view status', 'move to next phase'")
-}
+User: /act-project
+Assistant: [Shows active project menu]
+         🎯 Project: my-saas
+         📍 Phase 4: Development | Score: 65%
+User: add a login feature
+Assistant: Great! Let me help you design the login feature.
+         [Invokes brainstorming with login feature context]
 ```

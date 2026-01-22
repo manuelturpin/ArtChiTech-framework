@@ -5,167 +5,224 @@ description: Generates contextual tips and anti-patterns based on phase and situ
 
 # Tips Engine
 
-## Responsibilities
+## Role
 
-1. **Contextual tips**: Display help based on situation
-2. **Anti-patterns**: Alert on common mistakes
-3. **Recommendations**: Suggest next action
+Generate contextual tips, warnings, and anti-pattern alerts based on the current project state and phase.
 
-## Tips by Situation
+## Context
 
-```typescript
-type TipSituation =
-  | 'LOW_CONTEXT'
-  | 'PENDING_ERROR'
-  | 'READY_FOR_NEXT'
-  | 'LONG_SESSION'
-  | 'FIRST_SESSION'
-  | 'BLOCKED'
-  | 'IDLE'
+This agent is invoked internally by other agents and commands to provide helpful guidance to the user.
 
-const tips: Record<TipSituation, Tip> = {
-  LOW_CONTEXT: {
-    icon: '💡',
-    message: "Limited context (~30% remaining). Finish current chunk then /status to save.",
-    priority: 'high'
-  },
-  PENDING_ERROR: {
-    icon: '⚠️',
-    message: "Pending error. /fix recommended before continuing.",
-    priority: 'high'
-  },
-  READY_FOR_NEXT: {
-    icon: '✅',
-    message: "Phase checklist complete. /next to validate and proceed.",
-    priority: 'medium'
-  },
-  LONG_SESSION: {
-    icon: '⏰',
-    message: "Long session (> 2h). A /status will create a save point.",
-    priority: 'low'
-  },
-  FIRST_SESSION: {
-    icon: '👋',
-    message: "Welcome! Type /resume to continue or /projet to start.",
-    priority: 'medium'
-  },
-  BLOCKED: {
-    icon: '🚫',
-    message: "Blocked by critical errors. Resolve with /fix before continuing.",
-    priority: 'high'
-  },
-  IDLE: {
-    icon: '💤',
-    message: "Project inactive for 24h. /status to see where you left off.",
-    priority: 'low'
-  }
-}
+## State Required
+
+- `.epct/state.json` - Current project state
+- Session duration (estimated from conversation)
+- Last activity timestamp
+
+## Instructions
+
+### Detect Current Situation
+
+Evaluate conditions in priority order:
+
+```
+┌─────────────────────────────────────────────────────┐
+│               Situation Detection                    │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  HIGH PRIORITY (check first):                       │
+│  ├─ errors.blocking = true → BLOCKED               │
+│  ├─ contextRemaining < 30% → LOW_CONTEXT           │
+│  └─ errors.active > 0 → PENDING_ERROR              │
+│                                                     │
+│  MEDIUM PRIORITY:                                   │
+│  ├─ Phase checklist complete → READY_FOR_NEXT      │
+│  └─ First session ever → FIRST_SESSION             │
+│                                                     │
+│  LOW PRIORITY:                                      │
+│  ├─ Session > 2 hours → LONG_SESSION               │
+│  └─ Last action > 24h → IDLE                       │
+│                                                     │
+└─────────────────────────────────────────────────────┘
 ```
 
-## Situation Detection
+### Display Tip Based on Situation
 
-```typescript
-function detectSituation(state: ProjectState): TipSituation | null {
-  // Priority: HIGH > MEDIUM > LOW
+| Situation | Icon | Message | Priority |
+|-----------|------|---------|----------|
+| `BLOCKED` | 🚫 | "Blocked by critical errors. Resolve with /act-fix before continuing." | High |
+| `LOW_CONTEXT` | 💡 | "Limited context (~30% remaining). Finish current chunk then /act-status to save." | High |
+| `PENDING_ERROR` | ⚠️ | "Pending error. /act-fix recommended before continuing." | High |
+| `READY_FOR_NEXT` | ✅ | "Phase checklist complete. /act-next to validate and proceed." | Medium |
+| `FIRST_SESSION` | 👋 | "Welcome! Type /act-resume to continue or /act-project to start." | Medium |
+| `LONG_SESSION` | ⏰ | "Long session (> 2h). A /act-status will create a save point." | Low |
+| `IDLE` | 💤 | "Project inactive for 24h. /act-status to see where you left off." | Low |
 
-  // HIGH priority
-  if (state.errors.blocking) {
-    return 'BLOCKED'
-  }
+### Format Output
 
-  if (getContextRemaining() < 0.3) {
-    return 'LOW_CONTEXT'
-  }
+**High priority** (requires immediate attention):
+```
+┌─────────────────────────────────────────────────────┐
+│  🚫 BLOCKED                                          │
+│                                                     │
+│  Blocked by critical errors.                        │
+│  Resolve with /act-fix before continuing.           │
+└─────────────────────────────────────────────────────┘
+```
 
-  if (state.errors.active > 0) {
-    return 'PENDING_ERROR'
-  }
-
-  // MEDIUM priority
-  if (isPhaseChecklistComplete(state.currentPhase)) {
-    return 'READY_FOR_NEXT'
-  }
-
-  if (isFirstSession()) {
-    return 'FIRST_SESSION'
-  }
-
-  // LOW priority
-  if (getSessionDuration() > 2 * 60 * 60 * 1000) {
-    return 'LONG_SESSION'
-  }
-
-  if (hoursSinceLastAction() > 24) {
-    return 'IDLE'
-  }
-
-  return null
-}
+**Medium/Low priority** (informational):
+```
+💡 Limited context (~30% remaining). Finish current chunk then /act-status to save.
 ```
 
 ## Anti-Patterns by Phase
 
-```typescript
-function getPhaseAntiPatterns(phase: number): string[] {
-  const antiPatterns = {
-    1: [
-      "Building before validation",
-      "Solution-first thinking",
-      "Skipping user research"
-    ],
-    2: [
-      "Feature creep in MVP",
-      "Unrealistic timelines",
-      "Vague success metrics"
-    ],
-    3: [
-      "Over-engineering",
-      "Shiny object syndrome",
-      "Skipping security planning"
-    ],
-    4: [
-      "Skipping tests",
-      "Big bang commits",
-      "Cowboy coding"
-    ],
-    5: [
-      "Testing in production only",
-      "Ignoring edge cases",
-      "Manual testing only"
-    ],
-    6: [
-      "Big bang launch",
-      "No rollback plan",
-      "Ignoring metrics"
-    ],
-    7: [
-      "Vanity metrics focus",
-      "Ignoring churn",
-      "Feature factory mode"
-    ]
-  }
+Display anti-patterns based on current phase to help users avoid common mistakes.
 
-  return antiPatterns[phase] || []
-}
+### Phase 1 - Discovery
+
+| Anti-Pattern | Why It's Bad |
+|--------------|--------------|
+| Building before validation | May build wrong thing |
+| Solution-first thinking | Miss root problem |
+| Skipping user research | Assume wrong needs |
+
+**Tip**: "Focus on understanding the problem, not designing the solution yet."
+
+### Phase 2 - Strategy
+
+| Anti-Pattern | Why It's Bad |
+|--------------|--------------|
+| Feature creep in MVP | Delays launch |
+| Unrealistic timelines | Burnout, missed deadlines |
+| Vague success metrics | Can't measure success |
+
+**Tip**: "Define measurable KPIs before moving forward."
+
+### Phase 3 - Design
+
+| Anti-Pattern | Why It's Bad |
+|--------------|--------------|
+| Over-engineering | Complexity without need |
+| Shiny object syndrome | Technology over requirements |
+| Skipping security planning | Vulnerabilities later |
+
+**Tip**: "Design for what you need now, not what you might need."
+
+### Phase 4 - Development
+
+| Anti-Pattern | Why It's Bad |
+|--------------|--------------|
+| Skipping tests | Regressions, bugs |
+| Big bang commits | Hard to debug |
+| Cowboy coding | Inconsistent codebase |
+
+**Tip**: "Write tests first. Small commits. Follow existing patterns."
+
+### Phase 5 - Quality
+
+| Anti-Pattern | Why It's Bad |
+|--------------|--------------|
+| Testing in production only | User-facing bugs |
+| Ignoring edge cases | Unexpected failures |
+| Manual testing only | Not repeatable |
+
+**Tip**: "Automate tests. Cover edge cases. Document test scenarios."
+
+### Phase 6 - Launch
+
+| Anti-Pattern | Why It's Bad |
+|--------------|--------------|
+| Big bang launch | High risk |
+| No rollback plan | Stuck if issues |
+| Ignoring metrics | Blind to problems |
+
+**Tip**: "Launch incrementally. Have a rollback plan. Monitor closely."
+
+### Phase 7 - Growth
+
+| Anti-Pattern | Why It's Bad |
+|--------------|--------------|
+| Vanity metrics focus | Misleading success |
+| Ignoring churn | Losing users |
+| Feature factory mode | No user validation |
+
+**Tip**: "Focus on retention. Validate before building. Measure impact."
+
+## Integration Points
+
+### With /act-status
+
+After displaying status, add relevant tip:
+```
+📊 Status displayed...
+
+💡 Tip: You're in Phase 4 (Development).
+   Anti-pattern to avoid: "Big bang commits"
+   Instead: Small, tested commits with clear messages.
 ```
 
-## Tip Display
+### With /act-project
 
-```typescript
-function displayTip(situation: TipSituation): void {
-  const tip = tips[situation]
+After showing menu, if situation detected:
+```
+[Menu displayed...]
 
-  if (tip.priority === 'high') {
-    print(`\n${tip.icon} ${tip.message}\n`)
-  } else {
-    print(`${tip.icon} ${tip.message}`)
-  }
-}
+⚠️ Note: You have 2 pending errors.
+   Consider using /act-fix before adding new features.
 ```
 
-## Integration
+### With phase transition
 
-Automatically called by:
-- `/status`: Displays relevant tip
-- `/projet`: Displays tip if situation detected
-- After each action: Checks conditions
+After successful transition:
+```
+✅ Transitioned to Phase 5: Quality
+
+💡 Common anti-patterns in this phase:
+   - Testing in production only
+   - Ignoring edge cases
+
+   Focus on automated, comprehensive testing.
+```
+
+## Output Expected
+
+1. Detect current situation
+2. Display appropriate tip with correct priority formatting
+3. Include phase-specific anti-patterns when relevant
+4. Provide actionable next steps
+
+## Tip Selection Logic
+
+```
+function selectTip(state):
+  // Check high priority first
+  if state.errors.blocking:
+    return BLOCKED
+  if estimateContext() < 0.3:
+    return LOW_CONTEXT
+  if state.errors.active > 0:
+    return PENDING_ERROR
+
+  // Check medium priority
+  if isPhaseChecklistComplete(state.phase.current):
+    return READY_FOR_NEXT
+  if isFirstSession():
+    return FIRST_SESSION
+
+  // Check low priority
+  if getSessionDuration() > 2_HOURS:
+    return LONG_SESSION
+  if hoursSinceLastAction() > 24:
+    return IDLE
+
+  return null  // No tip needed
+```
+
+## Error Handling
+
+| Error | Response |
+|-------|----------|
+| State missing | Default to FIRST_SESSION |
+| Invalid phase | Use generic tips |
+| Calculation error | Skip tip, log warning |
