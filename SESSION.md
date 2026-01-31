@@ -1,9 +1,9 @@
 # SESSION.md - ACT Framework (lab23)
 
 ## État courant
-- **Phase :** 1 - Recherche approfondie
-- **Tâche active :** Analyse approfondie terminée ✅
-- **Dernière action :** Analyse détaillée de 9 frameworks majeurs
+- **Phase :** 1 - Recherche approfondie ✅ COMPLÈTE
+- **Tâche active :** Prêt pour Phase 2
+- **Dernière action :** Analyse approfondie de 17+ frameworks/ressources
 
 ## Contexte rapide
 - On améliore ACT pour le rendre autonome (virer Superpowers)
@@ -12,15 +12,20 @@
 
 ## Fichiers modifiés récemment
 - `research/frameworks-list.md` — liste des 29 frameworks
-- `research/competitors.md` — **NOUVEAU** analyse approfondie (14KB)
+- `research/competitors.md` — analyse approfondie complète (~25KB)
 - `PLAN.md` — roadmap du projet
 
-## Recommandations identifiées
-1. **Context Engineering** (GSD/Planning Files) — fichiers persistants
-2. **Compound Learning** (Everything CC) — apprendre des erreurs
-3. **Scale-Adaptive** (BMAD) — adapter à la complexité
-4. **Native Skills** — remplacer Superpowers par du natif
-5. **Multi-IDE Support** — Claude Code + Cursor + autres
+## Features Tier 1 (MVP)
+1. **Context Engineering** — fichiers persistants (GSD, Planning Files)
+2. **Session Recovery** — récupérer contexte perdu
+3. **Scale-Adaptive** — simple vs full path (BMAD)
+4. **Native Skills** — remplacer Superpowers
+
+## Features Tier 2
+5. **Reflexion/Self-Refinement** (Context Eng Kit)
+6. **Generator/Validator pattern** (cc-devops-skills)
+7. **Compound Learning** (Everything CC)
+8. **Multi-IDE Support**
 
 ## Prochaines étapes
 1. Créer grille comparative détaillée
@@ -28,4 +33,9 @@
 3. Commencer Phase 2 : Analyse comparative
 
 ---
-*Dernière mise à jour : 2026-01-31 04:55 UTC*
+## Git
+- **Branche :** `feature/act-v2-research`
+- **Règle :** Ne jamais push sur main directement !
+
+---
+*Dernière mise à jour : 2026-01-31 05:00 UTC*
