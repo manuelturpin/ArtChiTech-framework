@@ -2,12 +2,12 @@
 
 ## État courant
 - **Phase :** 2b - Analyse approfondie des frameworks
-- **Tâche active :** Deep analysis 1/9 ✅
-- **Dernière action :** Analyse complète de Superpowers v4.1.1
+- **Tâche active :** Deep analysis 2/9 ✅
+- **Dernière action :** Analyse complète de BMAD-METHOD v6.0.0
 
 ## Frameworks à analyser (9)
 1. ✅ Superpowers — `research/deep-analysis/01-superpowers.md`
-2. ⏳ BMAD-METHOD
+2. ✅ BMAD-METHOD — `research/deep-analysis/02-bmad-method.md`
 3. ⏳ GSD (Get Shit Done)
 4. ⏳ Planning with Files
 5. ⏳ Everything Claude Code
