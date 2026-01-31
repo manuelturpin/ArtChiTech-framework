@@ -1,9 +1,9 @@
 # SESSION.md - ACT Framework (lab23)
 
 ## État courant
-- **Phase :** 1 - Recherche approfondie ✅ COMPLÈTE
-- **Tâche active :** Prêt pour Phase 2
-- **Dernière action :** Analyse approfondie de 17+ frameworks/ressources
+- **Phase :** 2 - Audit ACT ✅ COMPLÈTE
+- **Tâche active :** Prêt pour Phase 3 (Roadmap)
+- **Dernière action :** Audit complet d'ACT (architecture, forces, faiblesses, gaps)
 
 ## Contexte rapide
 - On améliore ACT pour le rendre autonome (virer Superpowers)
@@ -12,7 +12,8 @@
 
 ## Fichiers modifiés récemment
 - `research/frameworks-list.md` — liste des 29 frameworks
-- `research/competitors.md` — analyse approfondie complète (~25KB)
+- `research/competitors.md` — analyse concurrents (~25KB)
+- `research/act-audit.md` — **NOUVEAU** audit ACT (~9KB)
 - `PLAN.md` — roadmap du projet
 
 ## Features Tier 1 (MVP)
