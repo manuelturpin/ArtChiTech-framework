@@ -2,52 +2,68 @@
 
 ## État courant
 - **Phase :** 2b - Analyse approfondie des frameworks
-- **Tâche active :** Deep analysis 3/9 ✅
-- **Dernière action :** Analyse complète de GSD (Get Shit Done)
+- **Tâche active :** Analyse framework #5 (Everything Claude Code)
+- **Dernière action :** Analyse profonde de Planning with Files (#4) terminée
 
-## Frameworks à analyser (9)
+## Frameworks analysés (4/9 profonds)
 1. ✅ Superpowers — `research/deep-analysis/01-superpowers.md`
 2. ✅ BMAD-METHOD — `research/deep-analysis/02-bmad-method.md`
 3. ✅ GSD — `research/deep-analysis/03-gsd.md`
-4. ⏳ Planning with Files
-5. ⏳ Everything Claude Code
-6. ⏳ Context Engineering Kit
-7. ⏳ TÂCHES CC Resources
-8. ⏳ Claude-Flow
-9. ⏳ CCPM
+4. ✅ Planning with Files — `research/deep-analysis/04-planning-with-files.md`
+5. ⏳ Everything Claude Code — À ANALYSER MAINTENANT
+6. ⏳ Context Engineering Kit — À refaire
+7. ⏳ TÂCHES CC Resources — À refaire
+8. ⏳ Claude-Flow — À refaire
+9. ⏳ CCPM — À refaire
+
+## Prochain framework : #5 Everything Claude Code
+
+**Repo cloné :** `research/repos/everything-claude-code/`
+**URL :** https://github.com/affaan-m/everything-claude-code
+**Auteur :** Anthropic hackathon winner
+
+### Fichiers clés à lire
+- `README.md` — Vue d'ensemble
+- `agents/` — 12 agents spécialisés
+- `skills/continuous-learning-v2/SKILL.md` — Killer feature
+- `hooks/hooks.json` — Configuration hooks
+- `rules/` — Rules modulaires
+
+### Points d'attention
+- Continuous Learning v2 (instincts avec confidence scoring)
+- Model selection per agent (opus/sonnet/haiku)
+- Cross-platform hooks (Node.js)
+- 22 skills, 23 commands
 
 ## Contexte rapide
 - On améliore ACT pour le rendre autonome (virer Superpowers)
 - Objectif : framework généraliste (Claude Code → Cursor/Copilot/Aider)
-- Phase 1 = recherche des concurrents ✅
+- Phase 1 (recherche concurrents) ✅
+- Phase 2b (analyse profonde) EN COURS
 
 ## Fichiers modifiés récemment
-- `research/frameworks-list.md` — liste des 29 frameworks
-- `research/competitors.md` — analyse concurrents (~25KB)
-- `research/act-audit.md` — **NOUVEAU** audit ACT (~9KB)
-- `PLAN.md` — roadmap du projet
+- `research/deep-analysis/04-planning-with-files.md` — Rapport profond
+- `HANDOFF.md` — Fichier de continuité
 
-## Features Tier 1 (MVP)
-1. **Context Engineering** — fichiers persistants (GSD, Planning Files)
-2. **Session Recovery** — récupérer contexte perdu
-3. **Scale-Adaptive** — simple vs full path (BMAD)
-4. **Native Skills** — remplacer Superpowers
-
-## Features Tier 2
-5. **Reflexion/Self-Refinement** (Context Eng Kit)
-6. **Generator/Validator pattern** (cc-devops-skills)
-7. **Compound Learning** (Everything CC)
-8. **Multi-IDE Support**
-
-## Prochaines étapes
-1. Créer grille comparative détaillée
-2. Prioriser les features à implémenter
-3. Commencer Phase 2 : Analyse comparative
-
----
 ## Git
 - **Branche :** `feature/act-v2-research`
 - **Règle :** Ne jamais push sur main directement !
 
 ---
-*Dernière mise à jour : 2026-01-31 05:00 UTC*
+
+## Instructions pour reprendre
+
+1. Lire ce fichier SESSION.md
+2. Lire HANDOFF.md pour le protocole
+3. Analyser Everything Claude Code en profondeur :
+   - Structure fichiers complète
+   - Agents (12) avec model selection
+   - Continuous Learning v2 (instincts)
+   - Hooks cross-platform
+   - Skills/Commands
+4. Créer rapport `research/deep-analysis/05-everything-claude-code.md`
+5. Mettre à jour HANDOFF.md et SESSION.md
+6. Commit
+
+---
+*Dernière mise à jour : 2026-01-31 12:00 UTC*
