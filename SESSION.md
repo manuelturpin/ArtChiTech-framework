@@ -1,9 +1,20 @@
 # SESSION.md - ACT Framework (lab23)
 
 ## État courant
-- **Phase :** 2 - Audit ACT ✅ COMPLÈTE
-- **Tâche active :** Prêt pour Phase 3 (Roadmap)
-- **Dernière action :** Audit complet d'ACT (architecture, forces, faiblesses, gaps)
+- **Phase :** 2b - Analyse approfondie des frameworks
+- **Tâche active :** Deep analysis 1/9 ✅
+- **Dernière action :** Analyse complète de Superpowers v4.1.1
+
+## Frameworks à analyser (9)
+1. ✅ Superpowers — `research/deep-analysis/01-superpowers.md`
+2. ⏳ BMAD-METHOD
+3. ⏳ GSD (Get Shit Done)
+4. ⏳ Planning with Files
+5. ⏳ Everything Claude Code
+6. ⏳ Context Engineering Kit
+7. ⏳ TÂCHES CC Resources
+8. ⏳ Claude-Flow
+9. ⏳ CCPM
 
 ## Contexte rapide
 - On améliore ACT pour le rendre autonome (virer Superpowers)
