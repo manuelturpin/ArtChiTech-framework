@@ -769,3 +769,54 @@ Now ACT automatically uses snake_case without asking.
 - [x] Context Handoff format
 - [x] Reflexion Pattern (+8-21% quality)
 - [x] Continuous Learning (Pattern detection & confidence scoring)
+- [x] Party Mode (Multi-perspective discussions)
+
+---
+
+## Party Mode
+
+Explore decisions through **multiple perspectives** with simulated expert personas.
+
+### The 5 Personas
+
+| Emoji | Persona | Perspective |
+|-------|---------|-------------|
+| 🏛️ | Architect | System view, patterns, scalability |
+| 💻 | Developer | Implementation, pragmatism, effort |
+| 🔍 | Reviewer | Quality, edge cases, tests |
+| 👤 | User Advocate | UX, simplicity, adoption |
+| 😈 | Devil's Advocate | Risks, alternatives, challenges |
+
+### Usage
+
+```bash
+# Full discussion (5 agents, 3 rounds)
+/act:party "Should we migrate to microservices?"
+
+# Select specific agents
+/act:party "REST vs GraphQL" --agents architect,developer
+
+# Quick single round
+/act:party "Naming convention" --rounds 1
+
+# With summary synthesis
+/act:party "Is this refactoring worth it?" --summary
+```
+
+### Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--agents <list>` | Agents to include | All 5 |
+| `--rounds <n>` | Number of discussion rounds | 3 |
+| `--summary` | Generate synthesis at end | false |
+| `--format <type>` | Output format (discussion/table/summary) | discussion |
+
+### When to Use
+
+- Architecture decisions with trade-offs
+- Technical choices needing exploration
+- Challenging your own assumptions
+- Before irreversible decisions
+
+**Details:** See `skills/party-mode/SKILL.md` and `specs/SPEC-party-mode.md`

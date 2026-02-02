@@ -334,6 +334,72 @@ Apply structured mental models to improve decision-making and problem-solving.
 
 ---
 
+## 🎭 Party Mode
+
+Explore decisions through **multiple perspectives** with simulated expert personas.
+
+### The 5 Personas
+
+| Emoji | Persona | Perspective |
+|-------|---------|-------------|
+| 🏛️ | Architect | System view, patterns, scalability |
+| 💻 | Developer | Implementation, pragmatism, effort |
+| 🔍 | Reviewer | Quality, edge cases, tests |
+| 👤 | User Advocate | UX, simplicity, adoption |
+| 😈 | Devil's Advocate | Risks, alternatives, challenges |
+
+### Command
+
+```bash
+/act:party "<topic>" [--agents <list>] [--rounds <n>] [--summary] [--format <type>]
+```
+
+### Quick Reference
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--agents` | Agents to include (comma-separated) | All 5 |
+| `--rounds` | Number of discussion rounds | 3 |
+| `--summary` | Generate synthesis at end | false |
+| `--format` | Output: discussion, table, summary | discussion |
+
+### Examples
+
+```bash
+# Full discussion
+/act:party "Should we use microservices or monolith?"
+
+# Targeted discussion
+/act:party "Error handling strategy" --agents architect,developer,reviewer
+
+# Quick exploration
+/act:party "Variable naming" --rounds 1
+
+# Decision-focused
+/act:party "Is this refactoring worth it?" --summary --format summary
+```
+
+### When to Use
+
+| Situation | Recommended |
+|-----------|-------------|
+| Architecture decision | Full party (all 5) |
+| Implementation choice | architect, developer |
+| Quality concern | developer, reviewer |
+| UX question | developer, user-advocate |
+| Risk assessment | All + devil's advocate focus |
+
+### Rules of Discussion
+
+1. Each persona responds **independently** (no cross-influence)
+2. Responses are **2-4 sentences** (concise)
+3. **Disagreements welcome** (reveal trade-offs)
+4. No **forced consensus**
+
+**Full details:** @skills/party-mode/SKILL.md, @specs/SPEC-party-mode.md
+
+---
+
 ## Rules
 
 @.claude/rules/0-behavior.md
@@ -392,6 +458,85 @@ git commit -m "feat: description"
 | `/act:reflect` | Reflect on task to improve quality (+8-21%) |
 | `/act:memorize` | Save important insights for future reference |
 | `/act:evolve` | Analyze observations and evolve the system |
+| `/act:sync-github` | Sync project state with GitHub Issues |
+
+---
+
+## 🐙 GitHub Integration
+
+Synchronize your ACT project state with GitHub Issues for integrated project management.
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| **Phase → Issues** | Each phase becomes a GitHub Issue |
+| **Tasks → Checkboxes** | Tasks sync bidirectionally |
+| **State → Labels** | `in-progress`, `pending`, `completed` |
+| **Progress → Comments** | Session updates as Issue comments |
+| **Handoff → PR** | Generate PR descriptions from context |
+
+### Quick Start
+
+```bash
+# 1. Configure token
+export GITHUB_TOKEN=ghp_xxxxx
+
+# 2. Initialize labels and Issues
+/act:sync-github --push --labels
+
+# 3. After working, sync state
+/act:sync-github --push
+```
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:sync-github` | Show diff between local and GitHub |
+| `/act:sync-github --push` | Push local state to GitHub Issues |
+| `/act:sync-github --pull` | Pull GitHub state to local |
+| `/act:sync-github --dry-run` | Preview changes without applying |
+| `/act:sync-github --labels` | Create/update ACT labels |
+
+### Configuration
+
+In `.act/config.yaml`:
+
+```yaml
+github:
+  enabled: true
+  repo: owner/repo  # Auto-detected if not set
+  sync:
+    issues: true
+    labels: true
+    milestones: false
+    comments: false
+```
+
+### Labels Created
+
+| Label | Description |
+|-------|-------------|
+| `phase-1` to `phase-7` | Phase identification |
+| `in-progress` | Currently active phase |
+| `pending` | Phase not yet started |
+| `blocked` | Phase blocked |
+| `act-managed` | Managed by ACT Framework |
+
+### Workflow
+
+```
+Local plan.md ──push──► GitHub Issues
+                          │
+                          │ (team edits)
+                          ▼
+Local plan.md ◄──pull─── GitHub Issues
+```
+
+**Full details:** @skills/github-integration/SKILL.md  
+**Spec:** @specs/SPEC-github-integration.md  
+**Templates:** @templates/github/
 
 ---
 
