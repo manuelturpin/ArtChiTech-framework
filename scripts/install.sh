@@ -307,8 +307,9 @@ install_global() {
     # Créer la structure
     mkdir -p "$INSTALL_DIR"
 
-    # Copier tout le plugin
+    # Copier tout le plugin (inclut les fichiers cachés)
     cp -r "$SOURCE_DIR/"* "$INSTALL_DIR/"
+    cp -r "$SOURCE_DIR/".* "$INSTALL_DIR/" 2>/dev/null || true
 
     # Compter les fichiers
     local cmd_count=$(find "$INSTALL_DIR/commands" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
