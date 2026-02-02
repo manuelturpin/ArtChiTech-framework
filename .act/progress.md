@@ -376,9 +376,59 @@
 
 ---
 
-## 🎉 Tier 1 + Model Selection Complete!
+---
 
-All 7 features implemented:
+## 2026-02-02 (continued)
+
+### Phase 8: Session History
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Session History (3.8)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Model Selection complete (v2.5.0-alpha.7)
+
+### Implementation
+
+#### Specification
+- Created specs/SPEC-session-history.md
+- Documented session log format
+- Defined rotation algorithm
+- Documented auto-save triggers
+
+#### Structure
+- Created .act/history/ directory with .gitkeep
+- Added history config to .act/config.yaml
+
+#### Template
+- Created templates/session-log.md for session logs
+
+#### Commands
+- Created commands/act/history.md for /act:history
+- Created commands/act/replay.md for /act:replay
+
+#### Integration
+- Updated skills/session-recovery/SKILL.md with history integration
+- Added enhanced catchup report format
+- Documented auto-save on session end
+
+### Phase 8 Complete! 🎉
+- All 5 commits done
+- Tag v2.5.0-alpha.8 created
+
+---
+
+## Commits Made (Phase 8)
+1. `feat(act-v2.5): [3.8.1] Add session history spec and structure`
+2. `feat(act-v2.5): [3.8.2] Add session log template and config`
+3. `feat(act-v2.5): [3.8.3] Add /act:history command`
+4. `feat(act-v2.5): [3.8.4] Add /act:replay command`
+5. `feat(act-v2.5): [3.8.5] Integrate history with session recovery`
+
+---
+
+## 🎉🎉🎉 TIER 1 COMPLETE! 🎉🎉🎉
+
+All 8 features implemented:
 1. ✅ Context Engineering (3-File Pattern)
 2. ✅ Hooks System (Pre/Post/Stop)
 3. ✅ Iron Laws (TDD, Debug, Verification)
@@ -386,7 +436,24 @@ All 7 features implemented:
 5. ✅ Deviation Rules (Controlled autonomy)
 6. ✅ Session Recovery (Catchup reports)
 7. ✅ Model Selection (Agent system)
+8. ✅ Session History (Auto-save, /act:history, /act:replay)
+
+**Total commits:** 28
+**Tags created:** 8 (v2.5.0-alpha.1 through v2.5.0-alpha.8)
+
+### ACT v2.5 Tier 1 Features Summary
+
+| Feature | Purpose | Key Files |
+|---------|---------|-----------|
+| Context Engineering | 3-File Pattern, .act/ structure | config.yaml, state.md, plan.md |
+| Hooks System | Pre/Post/Stop automation | hooks.json, hooks/*.md |
+| Iron Laws | TDD, Debug, Verification rules | rules/iron-laws.md |
+| Scale-Adaptive | Quick vs Full mode | commands/act/quick.md, full.md |
+| Deviation Rules | Controlled autonomy | rules/deviation-rules.md |
+| Session Recovery | Catchup reports | skills/session-recovery/SKILL.md |
+| Model Selection | Agent-model mapping | agents/*.md, config.yaml |
+| Session History | Session persistence | .act/history/, commands/act/history.md |
 
 ---
 
-*Session log - ACT v2.5 Implementation*
+*Session log - ACT v2.5 Implementation - TIER 1 COMPLETE!*
