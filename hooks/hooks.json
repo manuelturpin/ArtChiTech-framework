@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "description": "ACT v2.5 Hooks System - Automated triggers for reliable agent behavior",
+  
+  "hooks": {
+    "PreToolUse": {
+      "enabled": true,
+      "description": "Refresh goals before taking action to prevent drift",
+      "triggers": ["Write", "Edit", "Bash"],
+      "action": "refresh_plan",
+      "config": {
+        "planFile": ".act/plan.md",
+        "stateFile": ".act/state.md",
+        "checkAlignment": true,
+        "deviationRules": {
+          "bugs": "auto-fix",
+          "missing-critical": "auto-add",
+          "blockers": "auto-fix",
+          "architectural": "ask-user",
+          "enhancements": "log-and-continue"
+        }
+      },
+      "message": "🎯 Before modifying files: Re-read .act/plan.md to refresh current phase goals. Verify this action aligns with the current phase."
+    },
+
+    "PostToolUse": {
+      "enabled": true,
+      "description": "Maintain progress log for session continuity",
+      "triggers": ["Write", "Edit"],
+      "action": "update_progress",
+      "config": {
+        "progressFile": ".act/progress.md",
+        "stateFile": ".act/state.md",
+        "trackFiles": true
+      },
+      "message": "📝 File modified. Remember to update .act/progress.md with what was done. If this is a significant milestone, also update .act/state.md."
+    },
+
+    "Stop": {
+      "enabled": true,
+      "description": "Verify completion before stopping to prevent premature claims",
+      "triggers": ["complete", "done", "finished", "stop", "task complete"],
+      "action": "verify_completion",
+      "config": {
+        "planFile": ".act/plan.md",
+        "progressFile": ".act/progress.md",
+        "requireEvidence": true,
+        "evidenceTypes": ["commit", "test", "documentation", "review"]
+      },
+      "message": "⚠️ Before claiming completion: Read .act/plan.md and verify ALL phases have completion evidence. No completion claims without verification."
+    }
+  },
+
+  "global": {
+    "actDirectory": ".act",
+    "logHooks": true,
+    "strictMode": false
+  }
+}
