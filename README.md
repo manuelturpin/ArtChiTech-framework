@@ -197,9 +197,16 @@ ACT v2.5 includes skills that provide detailed guidance:
 
 | Skill | Purpose |
 |-------|---------|
-| `context-engineering` | 3-File Pattern, session recovery |
-| (coming) `hooks` | Automated context refresh |
-| (coming) `iron-laws` | Quality enforcement |
+| [`context-engineering`](skills/context-engineering/) | 3-File Pattern, session recovery |
+| [`session-recovery`](skills/session-recovery/) | Resume work after context reset |
+| [`iron-laws`](skills/iron-laws/) | Quality enforcement (TDD, Debug, Verify) |
+
+### Hooks System
+
+ACT v2.5 includes a [hooks system](hooks/) for automated context refresh:
+- **PreToolUse** — Refresh goals before actions
+- **PostToolUse** — Update progress after changes
+- **Stop** — Verify completion before exit
 
 ---
 
