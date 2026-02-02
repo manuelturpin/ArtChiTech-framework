@@ -70,6 +70,46 @@ Can I fix this in < 5 min without changing how things work together?
 
 ---
 
+## 🔄 Session Recovery
+
+When starting a new session, use `/act:resume` to detect and recover previous context.
+
+### Automatic Detection
+ACT detects existing `.act/` directory and generates a **Catchup Report**:
+
+```markdown
+## 🔄 Session Recovery
+
+**Projet :** [project name]
+**Dernière session :** [date/time]
+**Phase actuelle :** [X/Y] ([phase name])
+**Progression :** [X%]
+
+### Dernières actions
+- [recent action 1]
+- [recent action 2]
+
+### Prochaines étapes
+- [next step 1]
+- [next step 2]
+```
+
+### 5-Question Reboot Test
+Verify context is complete by answering:
+
+| Question | Source |
+|----------|--------|
+| Where am I? | `state.md` |
+| Where am I going? | `plan.md` |
+| What's the goal? | `config.yaml` |
+| What have I learned? | `findings.md` |
+| What have I done? | `progress.md` |
+
+**Full details:** @skills/session-recovery/SKILL.md  
+**Command:** `/act:resume`
+
+---
+
 ## Rules
 
 @.claude/rules/0-behavior.md

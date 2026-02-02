@@ -117,7 +117,7 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | `/act:quick` | Start quick mode (small tasks) |
 | `/act:full` | Start full mode (complex projects) |
 | `/act:status` | Show current state |
-| `/act:recover` | Recovery from previous session |
+| `/act:resume` | Recovery from previous session |
 | `/act:handoff` | Generate handoff for session transfer |
 
 ### Legacy Commands (v2.1)
@@ -371,4 +371,4 @@ Can I fix this in < 5 min without changing how things work together?
 - [x] Iron Laws (TDD, Debug, Verification)
 - [x] Scale-Adaptive (Quick vs Full mode)
 - [x] Deviation Rules (Controlled autonomy)
-- [ ] Session Recovery automation
+- [x] Session Recovery automation
