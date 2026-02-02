@@ -156,6 +156,12 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | `/act:diff` | Show changes since last session |
 | `/act:reflect` | Reflect on task to improve quality (+8-21%) |
 | `/act:memorize` | Save important insights for future reference |
+| `/act:sync-github` | Sync project state with GitHub Issues |
+| `/act:audit-skill` | Audit a specific skill |
+| `/act:audit-command` | Audit a specific command |
+| `/act:audit-agent` | Audit a specific agent |
+| `/act:audit-all` | Full framework audit |
+| `/act:heal` | Auto-repair audit issues |
 
 ### Legacy Commands (v2.1)
 
@@ -273,6 +279,8 @@ ACT v2.5 includes skills that provide detailed guidance:
 | [`session-recovery`](skills/session-recovery/) | Resume work after context reset |
 | [`iron-laws`](skills/iron-laws/) | Quality enforcement (TDD, Debug, Verify) |
 | [`reflexion`](skills/reflexion/) | Improve output quality through reflection (+8-21%) |
+| [`auditor`](skills/auditor/) | Audit and repair framework components |
+| [`github-integration`](skills/github-integration/) | Sync with GitHub Issues |
 
 ### Hooks System
 
@@ -757,6 +765,120 @@ Now ACT automatically uses snake_case without asking.
 
 ---
 
+## GitHub Integration
+
+Synchronize your ACT project with GitHub Issues for integrated project management.
+
+### Quick Start
+
+```bash
+# Configure token
+export GITHUB_TOKEN=ghp_xxxxx
+
+# Initialize labels and Issues
+/act:sync-github --push --labels
+```
+
+### Commands
+
+```bash
+/act:sync-github              # Show diff local ↔ GitHub
+/act:sync-github --push       # Push local state to GitHub Issues
+/act:sync-github --pull       # Pull GitHub state to local
+/act:sync-github --dry-run    # Preview changes
+/act:sync-github --labels     # Create/update labels
+```
+
+### Features
+
+| Local | → | GitHub |
+|-------|---|--------|
+| Phase in `plan.md` | → | Issue `[Phase N] Name` |
+| Tasks `- [ ]` / `- [x]` | ↔ | Checkboxes in Issue body |
+| Phase state (✅🔄⏳) | → | Labels + open/closed |
+| Session in `progress.md` | → | Issue comment |
+| Context handoff | → | PR description |
+
+### Configuration
+
+```yaml
+# .act/config.yaml
+github:
+  enabled: true
+  repo: owner/repo  # Auto-detected if not set
+  sync:
+    issues: true
+    labels: true
+```
+
+### Labels Created
+
+- `phase-1` through `phase-7` — Phase identification
+- `in-progress` — Currently active
+- `pending` — Not yet started
+- `blocked` — Blocked
+- `act-managed` — Managed by ACT
+
+**Details:** See `skills/github-integration/SKILL.md` and `specs/SPEC-github-integration.md`
+
+---
+
+## Multi-IDE Support
+
+ACT methodology works with any AI coding assistant. Export your configuration to other IDEs.
+
+### Supported IDEs
+
+| IDE | Config Directory | Format |
+|-----|-----------------|--------|
+| Claude Code | `.claude/` | CLAUDE.md (native) |
+| Cursor | `.cursor/rules/` | Markdown rules |
+| Windsurf | `.windsurf/rules/` | Markdown rules |
+| Aider | `.aider/` | YAML + conventions |
+| Continue | `.continue/` | JSON config |
+| Copilot | `.github/` | copilot-instructions.md |
+
+### Export Command
+
+```bash
+# Export for specific IDE
+/act:export --ide cursor
+
+# Export for all supported IDEs
+/act:export --all
+
+# Preview without writing
+/act:export --ide aider --dry-run
+
+# Force overwrite existing files
+/act:export --ide cursor --force
+```
+
+### What Gets Exported
+
+Each export includes:
+- **Iron Laws** — TDD, Debugging, Verification rules
+- **Deviation Rules** — Autonomous vs human decision rules
+- **Session Recovery** — 5-question context check
+- **Reflexion Pattern** — Quality improvement process
+
+### Example: Export to Cursor
+
+```bash
+/act:export --ide cursor
+```
+
+Creates:
+```
+.cursor/
+└── rules/
+    └── act-rules.md
+```
+
+**Details:** See `specs/SPEC-multi-ide.md` and `tools/ide-export/`
+
+---
+
 ## Roadmap to v2.5 Final
 
 - [x] Context Engineering (3-File Pattern)
@@ -769,7 +891,9 @@ Now ACT automatically uses snake_case without asking.
 - [x] Context Handoff format
 - [x] Reflexion Pattern (+8-21% quality)
 - [x] Continuous Learning (Pattern detection & confidence scoring)
+- [x] GitHub Integration (Issues sync, PR templates)
 - [x] Party Mode (Multi-perspective discussions)
+- [x] Multi-IDE Support (Export to Cursor, Windsurf, Aider, etc.)
 
 ---
 

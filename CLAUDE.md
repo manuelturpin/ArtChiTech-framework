@@ -459,6 +459,7 @@ git commit -m "feat: description"
 | `/act:memorize` | Save important insights for future reference |
 | `/act:evolve` | Analyze observations and evolve the system |
 | `/act:sync-github` | Sync project state with GitHub Issues |
+| `/act:export` | Export ACT config to other IDEs (Cursor, Windsurf, etc.) |
 
 ---
 
