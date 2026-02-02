@@ -110,6 +110,60 @@ Verify context is complete by answering:
 
 ---
 
+## 🪝 Hooks System
+
+Hooks provide **100% reliable** automated triggers (vs skills ~50-80% reliability).
+
+### The 3 Essential Hooks
+
+| Hook | Trigger | Action |
+|------|---------|--------|
+| **PreToolUse** | Before Write/Edit/Bash | Refresh goals from `plan.md`, check alignment |
+| **PostToolUse** | After Write/Edit | Remind to update `progress.md`, log changes |
+| **Stop** | Before completion claim | Verify all phases have evidence |
+
+### Why Hooks Matter
+
+```
+Agents often forget to:
+- Re-check the plan before modifying code
+- Update progress after completing work  
+- Verify all phases before declaring done
+
+Hooks make these checks AUTOMATIC and MANDATORY.
+```
+
+**Full details:** @hooks/
+
+---
+
+## 📜 Session History
+
+Session History saves a summary of each work session for traceability.
+
+### Features
+- **Auto-save** on session end (Stop Hook)
+- **Rotation** to limit stored sessions (default: 10)
+- **Replay** past sessions for context
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:history` | List past sessions |
+| `/act:replay <date>` | View details of a specific session |
+
+### History Location
+```
+.act/
+└── history/
+    ├── 2026-02-01-1430.md
+    ├── 2026-02-01-1830.md
+    └── 2026-02-02-0330.md
+```
+
+**Full details:** @skills/session-recovery/SKILL.md
+
 ---
 
 ## 🤖 Model Selection
@@ -182,3 +236,14 @@ git commit -m "feat: description"
 | `/fix` | Fix issues |
 | `/resume` | Resume session |
 | `/help` | Contextual help |
+
+### ACT v2.5 Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:init` | Initialize ACT in a project |
+| `/act:quick` | Start quick mode (small tasks) |
+| `/act:full` | Start full mode (complex projects) |
+| `/act:resume` | Recover from previous session |
+| `/act:history` | List past sessions |
+| `/act:replay` | View details of a past session |
