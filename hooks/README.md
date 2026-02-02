@@ -8,10 +8,11 @@
 
 The Hooks System provides automated triggers that fire at specific points during agent execution. Unlike skills which depend on the agent remembering to use them, hooks are **mandatory** and **automatic**.
 
-## The 3 Essential Hooks
+## The 4 Essential Hooks
 
 | Hook | Trigger | Purpose |
 |------|---------|---------|
+| **PreSession** | Session start/context reset | Load context, enable recovery |
 | **PreToolUse** | Before Write/Edit/Bash | Refresh goals, prevent drift |
 | **PostToolUse** | After Write/Edit | Update progress, enable recovery |
 | **Stop** | Completion claims | Verify before allowing done |
@@ -68,6 +69,24 @@ Hooks are configured in `hooks/hooks.json`. They work with the `.act/` context f
 ---
 
 ## Hook Details
+
+### PreSession Hook
+
+**When:** Session start, context reset
+
+**Action:**
+1. Read `.act/state.md` for current state
+2. Read `.act/plan.md` for goals
+3. Generate catchup report if enabled
+
+**Message:**
+```
+🔄 Reading project context... Check .act/state.md for current status.
+```
+
+📖 [Full documentation](./pre-session.md)
+
+---
 
 ### PreToolUse Hook
 
@@ -214,6 +233,7 @@ They work together to create a reliable, autonomous agent that:
 hooks/
 ├── README.md           # This file
 ├── hooks.json          # Configuration
+├── pre-session.md      # PreSession documentation
 ├── pre-tool-use.md     # PreToolUse documentation
 ├── post-tool-use.md    # PostToolUse documentation
 └── stop.md             # Stop documentation
