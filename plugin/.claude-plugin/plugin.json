@@ -1,7 +1,7 @@
 {
   "name": "act",
-  "version": "2.5.0",
-  "description": "ACT (ArtChiTech) Framework v2.5 - 7-phase project management with context engineering, hooks, model selection, and continuous learning.",
+  "version": "2.6.0",
+  "description": "ACT (ArtChiTech) Framework v2.6 - 7-phase project management with consolidated architecture, hooks system, model selection, and 36+ commands.",
   "author": {
     "name": "Manuel Turpin",
     "email": "manuel.turpin@gmail.com",
