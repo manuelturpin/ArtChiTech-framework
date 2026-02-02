@@ -213,4 +213,61 @@
 
 ---
 
+## 2026-02-02 (continued)
+
+### Phase 5: Deviation Rules
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Deviation Rules (3.5)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Scale-Adaptive complete (v2.5.0-alpha.4)
+
+### Implementation
+
+#### Specification
+- Created specs/SPEC-deviation-rules.md
+- Documented the 5 deviation rules from GSD and TÂCHES frameworks
+- Defined autonomy distribution (Rules 1-3, 5 = auto, Rule 4 = human)
+- Included decision flowchart
+- Documented integration points with hooks, scale-adaptive, iron laws
+
+#### Rules
+- Created rules/deviation-rules.md with comprehensive documentation:
+  - Rule 1: Bug Auto-Fix 🔧
+  - Rule 2: Missing Critical Auto-Add ➕
+  - Rule 3: Blocker Auto-Fix 🚧
+  - Rule 4: Architectural STOP ⛔ (human required)
+  - Rule 5: Enhancement Logging 📝
+- Detailed examples for each rule
+- Decision flowchart (ASCII art)
+- Quick decision guide
+- Common mistakes to avoid
+
+#### Template
+- Created templates/ISSUES.md for Rule 5 (enhancement logging)
+- Includes issue format, priority guide, type guide
+- Documents when to log vs when other rules apply
+
+#### Integration
+- Updated CLAUDE.md with Deviation Rules section
+- Updated README.md with:
+  - Full Deviation Rules section
+  - Examples table
+  - Autonomy distribution diagram
+  - Quick decision guide
+- Updated roadmap (Deviation Rules complete)
+
+### Phase 5 Complete! 🎉
+- All 3 commits done
+- Tag v2.5.0-alpha.5 created
+
+---
+
+## Commits Made (Phase 5)
+1. `feat(act-v2.5): [3.5.2] Add deviation rules`
+2. `feat(act-v2.5): [3.5.3] Add ISSUES.md template`
+3. `feat(act-v2.5): [3.5.4] Integrate deviation rules`
+
+---
+
 *Session log - ACT v2.5 Implementation*
