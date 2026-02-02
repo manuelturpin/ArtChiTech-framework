@@ -110,6 +110,39 @@ Verify context is complete by answering:
 
 ---
 
+---
+
+## 🤖 Model Selection
+
+ACT uses specialized agents with appropriate models for each task type.
+
+### Strategy
+```
+Opus = PENSE et DÉCIDE (architectural, planning, review)
+Sonnet = EXÉCUTE (implementation, testing)
+Haiku = LIT et DOCUMENTE (documentation, simple tasks)
+```
+
+### Agents
+
+| Agent | Model | Use When |
+|-------|-------|----------|
+| `planner` | opus | Starting a new feature, planning phases |
+| `architect` | opus | Design decisions, architecture changes |
+| `executor` | sonnet | Writing code, implementing features |
+| `reviewer` | opus | Code review, quality validation |
+| `tester` | sonnet | Writing and running tests |
+| `documenter` | haiku | Updating docs, READMEs |
+
+### Quick Reference
+- **Deviation Rule 4** (architectural) → triggers `architect`
+- **Implementation task** → use `executor`
+- **Before merge** → call `reviewer`
+
+**Full details:** @agents/README.md
+
+---
+
 ## Rules
 
 @.claude/rules/0-behavior.md

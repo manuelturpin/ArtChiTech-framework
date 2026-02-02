@@ -364,6 +364,64 @@ Can I fix this in < 5 min without changing how things work together?
 
 ---
 
+## Model Selection
+
+ACT v2.5 optimizes cost/quality by selecting the right model for each task through specialized agents.
+
+### Strategy
+
+```
+Opus = PENSE et DÉCIDE ($$$ - for critical decisions)
+Sonnet = EXÉCUTE ($$ - for implementation)
+Haiku = LIT et DOCUMENTE ($ - for simple tasks)
+```
+
+### Agent System
+
+| Agent | Model | Role |
+|-------|-------|------|
+| `planner` | opus | Planning, task decomposition |
+| `architect` | opus | System design, technical decisions |
+| `executor` | sonnet | Implementation, code writing |
+| `reviewer` | opus | Code review, quality validation |
+| `tester` | sonnet | Test writing and execution |
+| `documenter` | haiku | Documentation updates |
+
+### Configuration
+
+In `.act/config.yaml`:
+
+```yaml
+models:
+  default: sonnet
+  
+  agents:
+    planner: opus
+    architect: opus
+    executor: sonnet
+    reviewer: opus
+    tester: sonnet
+    documenter: haiku
+```
+
+### Workflow
+
+```
+Full Mode:  planner → architect → executor ↔ tester → reviewer → documenter
+Quick Mode: executor → tester → documenter
+```
+
+### Cost Savings
+
+| Mode | Distribution | Savings vs Opus-only |
+|------|--------------|----------------------|
+| Quick | 80% sonnet, 20% haiku | ~60% |
+| Full | 50% sonnet, 30% opus, 20% haiku | ~40% |
+
+**Details:** See `agents/README.md`
+
+---
+
 ## Roadmap to v2.5 Final
 
 - [x] Context Engineering (3-File Pattern)
@@ -372,3 +430,4 @@ Can I fix this in < 5 min without changing how things work together?
 - [x] Scale-Adaptive (Quick vs Full mode)
 - [x] Deviation Rules (Controlled autonomy)
 - [x] Session Recovery automation
+- [x] Model Selection (Agent system)
