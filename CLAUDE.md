@@ -602,3 +602,38 @@ Temporary patterns in `instincts/`:
 - Can be deleted if wrong
 
 **Full details:** @skills/continuous-learning/SKILL.md, @specs/SPEC-continuous-learning.md
+
+---
+
+## 🔌 Multi-IDE Support
+
+Export ACT configuration to other AI coding assistants.
+
+### Supported IDEs
+
+| IDE | Config Directory | Format |
+|-----|-----------------|--------|
+| Claude Code | `.claude/` | CLAUDE.md (native) |
+| Cursor | `.cursor/rules/` | Markdown rules |
+| Windsurf | `.windsurf/rules/` | Markdown rules |
+| Aider | `.aider/` | YAML + conventions |
+| Continue | `.continue/` | JSON config |
+| Copilot | `.github/` | copilot-instructions.md |
+
+### Commands
+
+```bash
+/act:export --ide cursor       # Export for Cursor
+/act:export --ide aider        # Export for Aider
+/act:export --all              # Export for all IDEs
+/act:export --ide cursor --force  # Overwrite existing
+```
+
+### What Gets Exported
+
+- **Iron Laws** — TDD, Debugging, Verification
+- **Deviation Rules** — Autonomous vs human decisions
+- **Session Recovery** — 5-question context check
+- **Reflexion Pattern** — Quality improvement
+
+**Full details:** @specs/SPEC-multi-ide.md, @commands/act/export.md

@@ -894,6 +894,7 @@ Creates:
 - [x] GitHub Integration (Issues sync, PR templates)
 - [x] Party Mode (Multi-perspective discussions)
 - [x] Multi-IDE Support (Export to Cursor, Windsurf, Aider, etc.)
+- [x] Agent Auditors (Framework health & auto-repair)
 
 ---
 
@@ -944,3 +945,72 @@ Explore decisions through **multiple perspectives** with simulated expert person
 - Before irreversible decisions
 
 **Details:** See `skills/party-mode/SKILL.md` and `specs/SPEC-party-mode.md`
+
+---
+
+## Agent Auditors
+
+Keep your ACT framework healthy with automated audits and repairs.
+
+### Audit Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:audit-skill <name>` | Audit a specific skill |
+| `/act:audit-command <name>` | Audit a specific command |
+| `/act:audit-agent <name>` | Audit a specific agent |
+| `/act:audit-all` | Comprehensive framework audit |
+| `/act:heal <target>` | Auto-repair identified issues |
+
+### Audit Checks
+
+Each audit performs 5 checks:
+
+| Check | What It Verifies |
+|-------|-----------------|
+| **Structure** | Required files present |
+| **Format** | Valid markdown, required sections |
+| **References** | Internal links functional |
+| **Consistency** | Coherence with other files |
+| **Completeness** | No TODO/FIXME forgotten |
+
+### Example Report
+
+```markdown
+## Audit Report: skill/context-engineering
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Structure | ✅ | SKILL.md present |
+| Format | ✅ | All sections found |
+| References | ⚠️ | 1 broken link |
+| Consistency | ✅ | Listed in README |
+| Completeness | ✅ | No TODOs found |
+
+**Score: 4/5** (80%)
+**Issues:** 1 warning
+```
+
+### Healing
+
+Fix issues automatically:
+
+```bash
+# Preview fixes
+/act:heal skills/context-engineering --dry-run
+
+# Apply safe fixes only
+/act:heal skills/context-engineering --auto
+
+# Apply all fixes (including templates)
+/act:heal skills/context-engineering --force
+```
+
+### Best Practices
+
+1. **Run audits regularly** — At least before major releases
+2. **Fix warnings promptly** — They tend to accumulate
+3. **Use `--dry-run` first** — Before auto-healing
+4. **Integrate with CI** — Catch issues early
+
+**Details:** See `specs/SPEC-agent-auditors.md` and `skills/auditor/SKILL.md`
