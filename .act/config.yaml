@@ -38,12 +38,18 @@ context:
     - ".act/plan.md"
     - ".act/findings.md"
 
-agents:
-  # Modèles par rôle
-  planner: "opus"
-  executor: "sonnet"
-  reviewer: "opus"
-  documenter: "haiku"
+# Model Selection - Stratégie de sélection par agent
+# Opus = PENSE et DÉCIDE | Sonnet = EXÉCUTE | Haiku = LIT et DOCUMENTE
+models:
+  default: sonnet        # Modèle par défaut si pas d'agent spécifié
+  
+  agents:
+    planner: opus        # Planification, architecture
+    architect: opus      # Design système
+    executor: sonnet     # Implémentation
+    reviewer: opus       # Code review
+    tester: sonnet       # Tests
+    documenter: haiku    # Documentation
 
 deviation_rules:
   # 1-3, 5 = auto, 4 = human
