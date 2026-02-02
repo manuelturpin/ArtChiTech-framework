@@ -18,14 +18,15 @@ Implémenter ACT v2.5 en intégrant les meilleurs patterns issus de l'analyse de
 - [x] 3.1.6 - Session recovery (documented in skill)
 - [x] 3.1.7 - Documentation
 
-### Phase 2: Hooks System [TODO]
+### Phase 2: Hooks System [DONE] ✅
 > Automatisation fiable - Hooks = 100% reliable vs skills ~50-80%
 
-- [ ] 3.2.1 - Spec hooks system
-- [ ] 3.2.2 - PreToolUse hook
-- [ ] 3.2.3 - PostToolUse hook
-- [ ] 3.2.4 - Stop hook
-- [ ] 3.2.5 - hooks.json config
+- [x] 3.2.1 - Spec hooks system
+- [x] 3.2.2 - hooks.json structure
+- [x] 3.2.3 - PreToolUse hook
+- [x] 3.2.4 - PostToolUse hook
+- [x] 3.2.5 - Stop hook
+- [x] 3.2.7 - Documentation
 
 ### Phase 3: Iron Laws & Rules [TODO]
 > Qualité garantie - Evidence before claims
@@ -69,4 +70,4 @@ Context Engineering → Hooks → Iron Laws → Scale-Adaptive → Release
 ---
 
 *Plan created: 2026-02-01*
-*Last updated: 2026-02-01*
+*Last updated: 2026-02-02*
