@@ -10,6 +10,12 @@
 - **Last Update:** {{DATE}}
 - **Progress:** 0%
 
+## Velocity
+- **Sessions completed:** {{SESSIONS_COUNT}}
+- **Average session duration:** {{AVG_DURATION}}
+- **Phases completed:** {{PHASES_DONE}}/{{PHASES_TOTAL}}
+- **Estimated remaining:** {{ESTIMATE}}
+
 ## Next Action
 {{NEXT_ACTION}}
 

@@ -155,6 +155,78 @@ Quand il faut passer le relais (context full, timeout, etc.) :
 
 ---
 
+## Velocity & Time Estimation
+
+### How Velocity is Calculated
+
+ACT tracks work velocity to provide time estimates for remaining phases.
+
+#### Data Collection
+
+```
+For each session in .act/history/:
+  - start_time: extracted from filename or content
+  - end_time: last update timestamp
+  - phase_at_start: phase when session started
+  - phase_at_end: phase when session ended
+```
+
+#### Metrics
+
+| Metric | Formula |
+|--------|---------|
+| Sessions count | `count(.act/history/*.md)` |
+| Total duration | `sum(session_end - session_start)` |
+| Avg session duration | `total_duration / sessions_count` |
+| Phases completed | `current_phase - 1` |
+| Avg phase duration | `total_duration / phases_completed` |
+| Estimated remaining | `(total_phases - current_phase + 1) × avg_phase_duration` |
+
+#### Confidence Levels
+
+| Data Points | Confidence | Note |
+|-------------|------------|------|
+| 1-2 sessions | Low | Rough estimate, high variance |
+| 3-5 sessions | Medium | Reasonable estimate |
+| 6+ sessions | High | Reliable, ±20% accuracy |
+
+#### Example Calculation
+
+```
+Given:
+- Total sessions: 4
+- Total time invested: 10h
+- Current phase: 3/5
+
+Calculations:
+- Avg session duration = 10h / 4 = 2.5h
+- Phases completed = 2 (phases 1 and 2)
+- Avg phase duration = 10h / 2 = 5h
+- Remaining phases = 5 - 3 + 1 = 3
+- Estimated remaining = 3 × 5h = 15h
+
+Estimate: ~15h (6 sessions at 2.5h each)
+```
+
+#### Display in state.md
+
+```markdown
+## Velocity
+- Sessions completed: 4
+- Average session duration: 2.5h
+- Phases completed: 2/5
+- Estimated remaining: ~15h
+```
+
+### Best Practices for Accurate Estimation
+
+1. **End sessions cleanly** — Use Stop hook to save session data
+2. **Work in focused sessions** — Short, focused sessions give better data
+3. **Don't inflate sessions** — Break if stepping away for >30min
+4. **Update progress regularly** — More data points = better estimates
+
+---
+
 ## Best Practices
 
 ### DO ✅
