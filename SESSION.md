@@ -1,69 +1,21 @@
 # SESSION.md - ACT Framework (lab23)
 
 ## État courant
-- **Phase :** 2c - Synthèse ✅ TERMINÉE
-- **Tâche active :** Prêt pour Phase 3 (Implémentation)
-- **Dernière action :** Synthèse complète créée (SYNTHESIS.md)
+- **Phase :** Release v2.5.0 🎉
+- **Tâche active :** Finalisation
+- **Dernière action :** Tous les Tiers implémentés et testés
 
-## Frameworks analysés (4/9 profonds)
-1. ✅ Superpowers — `research/deep-analysis/01-superpowers.md`
-2. ✅ BMAD-METHOD — `research/deep-analysis/02-bmad-method.md`
-3. ✅ GSD — `research/deep-analysis/03-gsd.md`
-4. ✅ Planning with Files — `research/deep-analysis/04-planning-with-files.md`
-5. ⏳ Everything Claude Code — À ANALYSER MAINTENANT
-6. ⏳ Context Engineering Kit — À refaire
-7. ⏳ TÂCHES CC Resources — À refaire
-8. ⏳ Claude-Flow — À refaire
-9. ⏳ CCPM — À refaire
+## Résumé
+- ✅ Tier 1 : 8 features (alpha.1 → alpha.8)
+- ✅ Tier 1 Améliorations : 11 corrections
+- ✅ Tier 2 : 5 features (beta.1 → beta.5)
+- ✅ Tier 3 : 4 features (rc.1 → rc.4)
 
-## Prochain framework : #5 Everything Claude Code
-
-**Repo cloné :** `research/repos/everything-claude-code/`
-**URL :** https://github.com/affaan-m/everything-claude-code
-**Auteur :** Anthropic hackathon winner
-
-### Fichiers clés à lire
-- `README.md` — Vue d'ensemble
-- `agents/` — 12 agents spécialisés
-- `skills/continuous-learning-v2/SKILL.md` — Killer feature
-- `hooks/hooks.json` — Configuration hooks
-- `rules/` — Rules modulaires
-
-### Points d'attention
-- Continuous Learning v2 (instincts avec confidence scoring)
-- Model selection per agent (opus/sonnet/haiku)
-- Cross-platform hooks (Node.js)
-- 22 skills, 23 commands
-
-## Contexte rapide
-- On améliore ACT pour le rendre autonome (virer Superpowers)
-- Objectif : framework généraliste (Claude Code → Cursor/Copilot/Aider)
-- Phase 1 (recherche concurrents) ✅
-- Phase 2b (analyse profonde) EN COURS
-
-## Fichiers modifiés récemment
-- `research/deep-analysis/04-planning-with-files.md` — Rapport profond
-- `HANDOFF.md` — Fichier de continuité
+## Prochaines étapes
+- [ ] Merge dans main (après validation Manu)
+- [ ] Tag v2.5.0 release
+- [ ] Publication
 
 ## Git
-- **Branche :** `feature/act-v2-research`
-- **Règle :** Ne jamais push sur main directement !
-
----
-
-## Instructions pour reprendre
-
-1. Lire ce fichier SESSION.md
-2. Lire HANDOFF.md pour le protocole
-3. Analyser Everything Claude Code en profondeur :
-   - Structure fichiers complète
-   - Agents (12) avec model selection
-   - Continuous Learning v2 (instincts)
-   - Hooks cross-platform
-   - Skills/Commands
-4. Créer rapport `research/deep-analysis/05-everything-claude-code.md`
-5. Mettre à jour HANDOFF.md et SESSION.md
-6. Commit
-
----
-*Dernière mise à jour : 2026-01-31 12:00 UTC*
+- **Branche :** `feature/act-v2.5-implementation`
+- **Tags :** v2.5.0-alpha.1 → v2.5.0-rc.4
