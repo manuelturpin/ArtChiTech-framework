@@ -1,0 +1,92 @@
+# ACT Framework Configuration for Aider
+# Exported from ACT (ArtChiTech Framework) - {{date}}
+# Project: {{project_name}}
+
+# ============================================================
+# CONVENTIONS FILE
+# ============================================================
+# ACT methodology is defined in conventions.md
+# Aider will read this file for coding guidelines
+read:
+  - .aider/conventions.md
+
+# ============================================================
+# MODEL SELECTION (ACT Strategy)
+# ============================================================
+# Opus = PENSE et DÉCIDE (architectural, planning)
+# Sonnet = EXÉCUTE (implementation)
+# Haiku = LIT et DOCUMENTE (documentation)
+
+# Default model for implementation
+model: claude-sonnet-4-20250514
+
+# For architectural decisions, manually switch:
+# aider --model claude-opus-4-0-20250514
+
+# ============================================================
+# EDITOR SETTINGS
+# ============================================================
+# Use whole-file editing for better context
+edit-format: whole
+
+# Auto-commit changes
+auto-commits: true
+
+# Commit message format
+attribute-author: false
+attribute-committer: false
+
+# ============================================================
+# CONTEXT SETTINGS
+# ============================================================
+# Map tokens for context management
+map-tokens: 1024
+
+# Include git history for context
+subtree-only: false
+
+# ============================================================
+# BEHAVIOR SETTINGS
+# ============================================================
+# Confirm before large changes
+yes: false
+
+# Show diffs before applying
+show-diffs: true
+
+# ============================================================
+# ACT IRON LAWS (embedded in workflow)
+# ============================================================
+# 1. TDD: Always write tests first
+# 2. Debug: Investigate before fixing
+# 3. Verify: Evidence before claims
+#
+# See .aider/conventions.md for full details
+
+---
+# ACT Conventions for Aider
+# Save this content to .aider/conventions.md
+
+# ## ⚖️ Iron Laws
+#
+# ### 1. TDD Iron Law
+# NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
+# Write test → Run (FAIL) → Write code → Run (PASS)
+#
+# ### 2. Debugging Iron Law
+# NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
+# Investigate → Understand → Fix
+#
+# ### 3. Verification Iron Law
+# NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
+# Run → Read output → THEN claim
+#
+# ## 🔀 Deviation Rules
+#
+# | Rule | Trigger | Action |
+# |:----:|---------|--------|
+# | 1 | Bug discovered | Auto-fix |
+# | 2 | Missing critical | Auto-add |
+# | 3 | Blocker | Auto-fix |
+# | 4 | Architectural change | STOP & ASK |
+# | 5 | Enhancement | Log, continue |
