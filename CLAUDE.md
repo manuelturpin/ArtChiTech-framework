@@ -300,6 +300,40 @@ After completing a task, ask yourself:
 
 ---
 
+## 🧠 Thinking Models
+
+Apply structured mental models to improve decision-making and problem-solving.
+
+### The /consider Commands
+
+| Command | Description |
+|---------|-------------|
+| `/consider:first-principles` | Break down to fundamentals |
+| `/consider:5-whys` | Root cause analysis |
+| `/consider:pareto` | Focus 80/20 |
+| `/consider:inversion` | Solve backwards |
+| `/consider:second-order` | Consequences of consequences |
+| `/consider:regret-minimization` | Long-term decision making |
+| `/consider:opportunity-cost` | Cost of alternatives |
+| `/consider:circle-of-competence` | Know your limits |
+| `/consider:map-territory` | Model vs reality |
+| `/consider:probabilistic` | Reason in probabilities |
+| `/consider:pre-mortem` | Anticipate failure |
+| `/consider:reversibility` | Reversible vs irreversible decisions |
+
+### Quick Reference
+
+| Situation | Use |
+|-----------|-----|
+| Architecture decision | `first-principles`, `second-order` |
+| Bug investigation | `5-whys`, `inversion` |
+| Feature prioritization | `pareto`, `opportunity-cost` |
+| Risk assessment | `pre-mortem`, `reversibility` |
+
+**Full details:** @skills/thinking/SKILL.md
+
+---
+
 ## Rules
 
 @.claude/rules/0-behavior.md
