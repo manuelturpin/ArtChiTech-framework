@@ -52,6 +52,24 @@ ACT v2.5 introduces the **3-File Pattern** — persistent files that maintain co
 
 This creates the `.act/` directory with all context files.
 
+### Project Types
+
+When initializing, specify the type that best matches your project:
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `product` | Nouveau produit complet | SaaS app |
+| `cli` | Application ligne de commande | TaskFlow |
+| `app` | Application desktop/mobile | Electron app |
+| `library` | Package réutilisable | npm package |
+| `service` | Microservice/API | REST API |
+| `refactor` | Refactoring existant | Migration v2 |
+| `bugfix` | Correction de bug | Hotfix |
+
+```bash
+/act:init --type cli --name "my-tool"
+```
+
 ### Check status
 
 ```bash
