@@ -58,3 +58,9 @@ deviation_rules:
   blockers: "auto-fix"
   architectural: "ask-human"
   enhancements: "log-continue"
+
+# Session History - Historique des sessions de travail
+history:
+  enabled: true        # Activer/désactiver l'historique
+  maxSessions: 10      # Nombre max de sessions à conserver
+  autoSave: true       # Sauvegarde automatique en fin de session
