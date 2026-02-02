@@ -211,6 +211,193 @@ observe:
 - `/act:evolve` - Analyse les observations et fait évoluer le système
 - `/act:status` - Voir les patterns détectés
 
+## Confidence Scoring
+
+Le confidence scoring est au cœur du système d'apprentissage. Il détermine comment l'IA doit réagir à chaque pattern détecté.
+
+### Échelle de confiance
+
+| Score | Niveau | Action | Comportement IA |
+|-------|--------|--------|-----------------|
+| **0.0-0.3** | Bruit | Ignorer | Ne pas agir, continuer d'observer |
+| **0.3-0.5** | Tentative | Suggérer | Mentionner en passant, demander confirmation |
+| **0.5-0.7** | Probable | Proposer | Proposer activement, appliquer si pas d'objection |
+| **0.7-0.9** | Certain | Appliquer | Appliquer automatiquement, informer |
+| **0.9-1.0** | Établi | Règle | Toujours appliquer, ne plus mentionner |
+
+### Calcul du score
+
+#### Formule de base
+
+```
+confidence_final = confidence_base × recency_weight × frequency_bonus - contradictions_penalty
+```
+
+#### Composants
+
+**1. Confidence de base (par type)**
+
+| Type | Range | Justification |
+|------|-------|---------------|
+| `pattern` | 0.3-0.5 | Détection automatique, besoin de validation |
+| `correction` | 0.5-0.7 | Feedback explicite de l'utilisateur |
+| `preference` | 0.3-0.5 | Souvent déduit, pas toujours explicite |
+| `error` | 0.6-0.8 | Erreur factuelle, signal fort |
+| `success` | 0.5-0.7 | Validation positive explicite |
+
+**2. Recency weight (décroissance temporelle)**
+
+```
+recency_weight = e^(-days_old / 30)
+```
+
+| Âge | Weight | Interprétation |
+|-----|--------|----------------|
+| 0 jours | 1.00 | Poids maximum |
+| 7 jours | 0.79 | Encore très pertinent |
+| 14 jours | 0.63 | Pertinent |
+| 30 jours | 0.37 | Poids réduit |
+| 60 jours | 0.14 | Faible influence |
+| 90 jours | 0.05 | Quasi-ignoré |
+
+**3. Frequency bonus (répétition)**
+
+```
+frequency_bonus = min(1.3, 1 + occurrences × 0.05)
+```
+
+| Occurrences | Bonus | Total multiplier |
+|-------------|-------|------------------|
+| 1 | +0% | ×1.00 |
+| 3 | +15% | ×1.15 |
+| 5 | +25% | ×1.25 |
+| 6+ | +30% | ×1.30 (cap) |
+
+**4. Contradictions penalty**
+
+```
+contradictions_penalty = 0.15 × recent_contradictions
+```
+
+Une contradiction récente (< 14 jours) réduit significativement le score.
+
+### Exemples de calcul
+
+#### Exemple 1: Pattern récent avec répétitions
+
+```
+Type: pattern (base: 0.4)
+Âge: 3 jours (recency: 0.90)
+Occurrences: 4 (bonus: 1.20)
+Contradictions: 0
+
+confidence = 0.4 × 0.90 × 1.20 - 0 = 0.43
+→ Niveau: Tentative (suggérer)
+```
+
+#### Exemple 2: Correction explicite
+
+```
+Type: correction (base: 0.6)
+Âge: 1 jour (recency: 0.97)
+Occurrences: 2 (bonus: 1.10)
+Contradictions: 0
+
+confidence = 0.6 × 0.97 × 1.10 - 0 = 0.64
+→ Niveau: Probable (proposer)
+```
+
+#### Exemple 3: Pattern établi mais ancien
+
+```
+Type: success (base: 0.7)
+Âge: 45 jours (recency: 0.22)
+Occurrences: 8 (bonus: 1.30)
+Contradictions: 0
+
+confidence = 0.7 × 0.22 × 1.30 - 0 = 0.20
+→ Niveau: Bruit (ignorer ou re-valider)
+```
+
+#### Exemple 4: Pattern avec contradiction
+
+```
+Type: pattern (base: 0.5)
+Âge: 5 jours (recency: 0.85)
+Occurrences: 5 (bonus: 1.25)
+Contradictions: 1 (penalty: 0.15)
+
+confidence = 0.5 × 0.85 × 1.25 - 0.15 = 0.38
+→ Niveau: Tentative (besoin de clarification)
+```
+
+### Ajustements manuels
+
+Certains événements ajustent directement le score:
+
+| Événement | Ajustement |
+|-----------|------------|
+| Validation explicite ("oui, fais ça") | +0.20 |
+| Rejet explicite ("non, pas ça") | -0.30 |
+| Réutilisation du pattern | +0.10 |
+| Modification silencieuse (rollback) | -0.15 |
+| Demande de rappel ("rappelle-moi") | +0.15 |
+
+### Agrégation pour patterns similaires
+
+Quand plusieurs observations concernent le même pattern:
+
+```
+confidence_aggregated = weighted_average(confidences) × consistency_factor
+
+Où:
+- weighted_average: moyenne pondérée par recency
+- consistency_factor: 1.0 si tous alignés, 0.7 si variations
+```
+
+### Seuils de décision
+
+```
+if confidence < 0.3:
+    # Bruit - ne rien faire
+    pass
+
+elif confidence < 0.5:
+    # Tentative - suggérer discrètement
+    "Au fait, j'ai remarqué que tu préfères X. Veux-tu que je continue ainsi?"
+
+elif confidence < 0.7:
+    # Probable - proposer activement
+    "Basé sur tes préférences, je propose de faire X. OK?"
+
+elif confidence < 0.9:
+    # Certain - appliquer et informer
+    "J'applique X comme d'habitude."
+
+else:
+    # Établi - appliquer silencieusement
+    # (pas besoin de mentionner)
+```
+
+### Évolution des seuils
+
+Les seuils peuvent être ajustés par projet dans `.act/config.yaml`:
+
+```yaml
+confidence:
+  thresholds:
+    ignore: 0.3
+    suggest: 0.5
+    apply: 0.7
+    permanent: 0.9
+  
+  decay:
+    half_life_days: 30
+  
+  bonus:
+    max_frequency: 1.3
+```
+
 ## Métriques
 
 Suivre:
@@ -218,3 +405,4 @@ Suivre:
 - Distribution par type
 - Taux de conversion en instincts
 - Précision des patterns (feedback)
+- Distribution des confidence scores
