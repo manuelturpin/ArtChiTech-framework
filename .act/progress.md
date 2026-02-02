@@ -125,4 +125,35 @@
 
 ---
 
+## 2026-02-02 (continued)
+
+### Phase 3: Iron Laws
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Iron Laws (3.3)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Hooks System complete (v2.5.0-alpha.2)
+
+### Implementation
+- Created specs/SPEC-iron-laws.md
+- Created rules/iron-laws.md with all 3 iron laws:
+  - TDD Iron Law: No production code without failing test first
+  - Debugging Iron Law: No fixes without root cause investigation
+  - Verification Iron Law: No completion claims without evidence
+- Updated CLAUDE.md with Iron Laws section (prominent placement)
+- Created templates/verification-checklist.md
+
+### Phase 3 Complete! 🎉
+- All 3 commits done
+- Tag v2.5.0-alpha.3 created
+
+---
+
+## Commits Made (Phase 3)
+1. `feat(act-v2.5): [3.3.2] Add iron laws rules`
+2. `feat(act-v2.5): [3.3.3] Integrate iron laws in CLAUDE.md`
+3. `feat(act-v2.5): [3.3.4] Add verification checklist`
+
+---
+
 *Session log - ACT v2.5 Implementation*
