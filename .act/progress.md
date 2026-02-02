@@ -324,15 +324,68 @@
 
 ---
 
-## 🎉 Tier 1 Complete!
+---
 
-All 6 Tier 1 features implemented:
+## 2026-02-02 (continued)
+
+### Phase 7: Model Selection
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Model Selection (3.7)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Session Recovery complete (v2.5.0-alpha.6)
+
+### Implementation
+
+#### Specification
+- Created specs/SPEC-model-selection.md
+- Documented model strategy (Opus/Sonnet/Haiku)
+- Defined agent-to-model mapping
+- Documented cost optimization rationale
+
+#### Configuration
+- Updated .act/config.yaml with models section:
+  - default: sonnet
+  - 6 agents with model assignments
+
+#### Agents
+- Created agents/ directory with 6 specialized agents:
+  - planner.md (opus) - Planning, task decomposition
+  - architect.md (opus) - System design, decisions
+  - executor.md (sonnet) - Implementation
+  - reviewer.md (opus) - Code review
+  - tester.md (sonnet) - Testing
+  - documenter.md (haiku) - Documentation
+- Created agents/README.md with workflow diagrams
+
+#### Documentation
+- Updated README.md with Model Selection section
+- Updated CLAUDE.md with Model Selection section
+- Added cost savings documentation (40-60% vs Opus-only)
+
+### Phase 7 Complete! 🎉
+- All 3 commits done
+- Tag v2.5.0-alpha.7 created
+
+---
+
+## Commits Made (Phase 7)
+1. `feat(act-v2.5): [3.7.2] Add model selection config`
+2. `feat(act-v2.5): [3.7.3] Add base agents`
+3. `feat(act-v2.5): [3.7.4] Document model selection`
+
+---
+
+## 🎉 Tier 1 + Model Selection Complete!
+
+All 7 features implemented:
 1. ✅ Context Engineering (3-File Pattern)
 2. ✅ Hooks System (Pre/Post/Stop)
 3. ✅ Iron Laws (TDD, Debug, Verification)
 4. ✅ Scale-Adaptive (Quick vs Full mode)
 5. ✅ Deviation Rules (Controlled autonomy)
 6. ✅ Session Recovery (Catchup reports)
+7. ✅ Model Selection (Agent system)
 
 ---
 
