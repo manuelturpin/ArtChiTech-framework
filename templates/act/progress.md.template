@@ -1,0 +1,57 @@
+# Session Progress
+
+## {{DATE}}
+
+### Session Start
+- **Objective:** {{OBJECTIVE}}
+- **Branch:** {{BRANCH}}
+- **Starting point:** {{STARTING_POINT}}
+
+---
+
+## Progress Log
+
+> **⏰ Timestamp Format:** `[YYYY-MM-DD HH:mm] Action description`
+> All entries MUST include a timestamp for chronological tracking.
+
+### [{{DATE}} {{TIME}}] Session Started
+- Objective: {{OBJECTIVE}}
+- Branch: {{BRANCH}}
+
+### [{{DATE}} {{TIME}}] Work Item
+<!-- Log your progress with timestamps -->
+- **File(s):** path/to/file
+- **Change:** Brief description
+- **Phase:** Current phase
+
+<!-- Example entries:
+### [2026-02-01 14:30] Created User model
+- **File(s):** src/models/user.py
+- **Change:** Added User class with id, email, name fields
+- **Phase:** Database Design
+
+### [2026-02-01 15:15] Fixed validation bug
+- **File(s):** src/validators/user.py
+- **Change:** Added email format validation
+- **Phase:** Database Design
+-->
+
+---
+
+## Next Steps
+- [ ] 
+- [ ] 
+- [ ] 
+
+---
+
+## Checkpoints
+
+| Timestamp | Progress | Notes |
+|-----------|----------|-------|
+| [{{DATE}} {{TIME}}] | 0% | Starting |
+
+---
+
+*Session log - {{PROJECT_NAME}}*
+*Format: [YYYY-MM-DD HH:mm] for all entries*

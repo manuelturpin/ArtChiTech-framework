@@ -1,0 +1,459 @@
+# Session Progress
+
+## 2026-02-01
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Context Engineering (3.1)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Research complete, synthesis available
+
+### 10:00 - Phase 1 Kickoff
+- Created SPEC-context-engineering.md
+- Documented the 3-File Pattern
+- Defined all 5 .act/ files
+
+### 10:15 - Structure Creation
+- Created .act/ directory
+- Created config.yaml with project settings
+- Created state.md for quick status
+- Created plan.md with implementation phases
+- Created findings.md with research summary
+- Created progress.md (this file)
+
+### 10:30 - Templates Created
+- Created templates/act/ with 5 template files
+- config.yaml.template
+- state.md.template
+- plan.md.template
+- findings.md.template
+- progress.md.template
+
+### 10:45 - Skill Created
+- Created skills/context-engineering/SKILL.md
+- Documented 3-File Pattern
+- Documented Session Recovery
+- Documented 5-Question Reboot Test
+
+### 11:00 - Command Created
+- Created commands/act/init.md
+- Documented /act:init usage
+- Added execution steps
+
+### 11:15 - Documentation Updated
+- Updated README.md for v2.5
+- Added Context Engineering section
+- Added roadmap
+
+### 11:30 - Phase 1 Complete! 🎉
+- All commits done
+- Ready for tag v2.5.0-alpha.1
+
+---
+
+## Checkpoints
+
+| Time | Progress | Notes |
+|------|----------|-------|
+| 10:00 | 10% | Spec done |
+| 10:15 | 20% | .act/ structure done |
+| 10:30 | 40% | Templates done |
+| 10:45 | 60% | Skill done |
+| 11:00 | 80% | Command done |
+| 11:15 | 90% | Docs done |
+| 11:30 | 100% | Phase 1 complete! |
+
+---
+
+## Commits Made
+1. `feat(act-v2.5): [3.1.2] Add .act/ directory structure`
+2. `feat(act-v2.5): [3.1.3] Add planning file templates`
+3. `feat(act-v2.5): [3.1.4] Add context-engineering skill`
+4. `feat(act-v2.5): [3.1.5] Add /act:init command`
+5. `feat(act-v2.5): [3.1.7] Document context engineering`
+
+---
+
+## 2026-02-02
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Hooks System (3.2)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Context Engineering complete (v2.5.0-alpha.1)
+
+### 03:50 - Phase 2 Kickoff
+- Created SPEC-hooks-system.md
+- Documented the 3 essential hooks pattern
+- Defined hook configuration schema
+
+### 03:55 - Structure Creation
+- Created hooks/ directory
+- Created hooks.json with full configuration
+- Defined PreToolUse, PostToolUse, Stop hooks
+
+### 04:00 - PreToolUse Hook
+- Created pre-tool-use.md
+- Documented triggers (Write, Edit, Bash)
+- Implemented deviation rules integration
+
+### 04:05 - PostToolUse Hook
+- Created post-tool-use.md
+- Documented progress logging
+- Defined progress entry format
+
+### 04:10 - Stop Hook
+- Created stop.md
+- Documented verification matrix
+- Implemented Iron Law enforcement
+
+### 04:15 - Documentation
+- Created hooks/README.md
+- Documented complete workflow
+- Added comparison hooks vs skills
+
+### 04:20 - Phase 2 Complete! 🎉
+- All 5 commits done
+- Ready for tag v2.5.0-alpha.2
+
+---
+
+## Commits Made (Phase 2)
+1. `feat(act-v2.5): [3.2.2] Add hooks.json structure`
+2. `feat(act-v2.5): [3.2.3] Implement PreToolUse hook`
+3. `feat(act-v2.5): [3.2.4] Implement PostToolUse hook`
+4. `feat(act-v2.5): [3.2.5] Implement Stop hook`
+5. `feat(act-v2.5): [3.2.7] Document hooks system`
+
+---
+
+## 2026-02-02 (continued)
+
+### Phase 3: Iron Laws
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Iron Laws (3.3)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Hooks System complete (v2.5.0-alpha.2)
+
+### Implementation
+- Created specs/SPEC-iron-laws.md
+- Created rules/iron-laws.md with all 3 iron laws:
+  - TDD Iron Law: No production code without failing test first
+  - Debugging Iron Law: No fixes without root cause investigation
+  - Verification Iron Law: No completion claims without evidence
+- Updated CLAUDE.md with Iron Laws section (prominent placement)
+- Created templates/verification-checklist.md
+
+### Phase 3 Complete! 🎉
+- All 3 commits done
+- Tag v2.5.0-alpha.3 created
+
+---
+
+## Commits Made (Phase 3)
+1. `feat(act-v2.5): [3.3.2] Add iron laws rules`
+2. `feat(act-v2.5): [3.3.3] Integrate iron laws in CLAUDE.md`
+3. `feat(act-v2.5): [3.3.4] Add verification checklist`
+
+---
+
+## 2026-02-02 (continued)
+
+### Phase 4: Scale-Adaptive Mode
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Scale-Adaptive Mode (3.4)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Iron Laws complete (v2.5.0-alpha.3)
+
+### Implementation
+
+#### Specification
+- Created specs/SPEC-scale-adaptive.md
+- Defined Quick Mode (3 phases) vs Full Mode (7 phases)
+- Documented selection criteria and decision flowchart
+- Defined mode switching (escalation/de-escalation)
+
+#### Rules
+- Created rules/scale-adaptive.md
+- Comprehensive selection criteria checklists
+- Decision flowchart for mode selection
+- Integration with Iron Laws (both modes enforce)
+- Integration with Hooks (adapt to mode)
+- Integration with Deviation Rules (Rule 4 triggers escalation)
+
+#### Commands
+- Created commands/act/quick.md for /act:quick
+  - 3-phase workflow: Plan → Execute → Verify
+  - Auto-escalation on complexity
+  - Iron Laws still apply
+  
+- Created commands/act/full.md for /act:full
+  - All 7 ACT phases with deliverables
+  - Phase gates with Go/No-Go
+  - Architectural decisions require user input
+
+#### Documentation
+- Updated README.md with Scale-Adaptive section
+- Added mode comparison table
+- Added decision criteria
+- Updated commands table
+- Updated roadmap
+
+### Phase 4 Complete! 🎉
+- All 4 commits done
+- Tag v2.5.0-alpha.4 created
+
+---
+
+## Commits Made (Phase 4)
+1. `feat(act-v2.5): [3.4.2] Add scale-adaptive rules`
+2. `feat(act-v2.5): [3.4.3] Add /act:quick command`
+3. `feat(act-v2.5): [3.4.4] Add /act:full command`
+4. `feat(act-v2.5): [3.4.5] Document scale-adaptive modes`
+
+---
+
+## 2026-02-02 (continued)
+
+### Phase 5: Deviation Rules
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Deviation Rules (3.5)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Scale-Adaptive complete (v2.5.0-alpha.4)
+
+### Implementation
+
+#### Specification
+- Created specs/SPEC-deviation-rules.md
+- Documented the 5 deviation rules from GSD and TÂCHES frameworks
+- Defined autonomy distribution (Rules 1-3, 5 = auto, Rule 4 = human)
+- Included decision flowchart
+- Documented integration points with hooks, scale-adaptive, iron laws
+
+#### Rules
+- Created rules/deviation-rules.md with comprehensive documentation:
+  - Rule 1: Bug Auto-Fix 🔧
+  - Rule 2: Missing Critical Auto-Add ➕
+  - Rule 3: Blocker Auto-Fix 🚧
+  - Rule 4: Architectural STOP ⛔ (human required)
+  - Rule 5: Enhancement Logging 📝
+- Detailed examples for each rule
+- Decision flowchart (ASCII art)
+- Quick decision guide
+- Common mistakes to avoid
+
+#### Template
+- Created templates/ISSUES.md for Rule 5 (enhancement logging)
+- Includes issue format, priority guide, type guide
+- Documents when to log vs when other rules apply
+
+#### Integration
+- Updated CLAUDE.md with Deviation Rules section
+- Updated README.md with:
+  - Full Deviation Rules section
+  - Examples table
+  - Autonomy distribution diagram
+  - Quick decision guide
+- Updated roadmap (Deviation Rules complete)
+
+### Phase 5 Complete! 🎉
+- All 3 commits done
+- Tag v2.5.0-alpha.5 created
+
+---
+
+## Commits Made (Phase 5)
+1. `feat(act-v2.5): [3.5.2] Add deviation rules`
+2. `feat(act-v2.5): [3.5.3] Add ISSUES.md template`
+3. `feat(act-v2.5): [3.5.4] Integrate deviation rules`
+
+---
+
+---
+
+## 2026-02-02 (continued)
+
+### Phase 6: Session Recovery
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Session Recovery (3.6)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Deviation Rules complete (v2.5.0-alpha.5)
+
+### Implementation
+
+#### Specification
+- Created specs/SPEC-session-recovery.md
+- Documented session detection logic
+- Defined catchup report format
+- Documented 5-Question Reboot Test integration
+- Included workflow diagrams
+
+#### Skill
+- Created skills/session-recovery/SKILL.md with:
+  - Session detection instructions
+  - Catchup report generation
+  - Error handling for missing/partial files
+  - Decision flow diagrams
+  - Examples for normal and blocker scenarios
+
+#### Command
+- Created commands/act/resume.md for /act:resume
+  - Full usage documentation
+  - Output formats for all scenarios
+  - Integration with other commands
+
+#### Integration
+- Updated CLAUDE.md with Session Recovery section
+- Updated README.md:
+  - Renamed /act:recover to /act:resume
+  - Marked Session Recovery as complete in roadmap
+
+### Phase 6 Complete! 🎉
+- All 4 commits done
+- Tag v2.5.0-alpha.6 created
+
+---
+
+## Commits Made (Phase 6)
+1. `feat(act-v2.5): [3.6.1] Add session-recovery spec`
+2. `feat(act-v2.5): [3.6.2] Add session-recovery skill`
+3. `feat(act-v2.5): [3.6.3] Add /act:resume command`
+4. `feat(act-v2.5): [3.6.4] Integrate session recovery in docs`
+
+---
+
+---
+
+## 2026-02-02 (continued)
+
+### Phase 7: Model Selection
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Model Selection (3.7)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Session Recovery complete (v2.5.0-alpha.6)
+
+### Implementation
+
+#### Specification
+- Created specs/SPEC-model-selection.md
+- Documented model strategy (Opus/Sonnet/Haiku)
+- Defined agent-to-model mapping
+- Documented cost optimization rationale
+
+#### Configuration
+- Updated .act/config.yaml with models section:
+  - default: sonnet
+  - 6 agents with model assignments
+
+#### Agents
+- Created agents/ directory with 6 specialized agents:
+  - planner.md (opus) - Planning, task decomposition
+  - architect.md (opus) - System design, decisions
+  - executor.md (sonnet) - Implementation
+  - reviewer.md (opus) - Code review
+  - tester.md (sonnet) - Testing
+  - documenter.md (haiku) - Documentation
+- Created agents/README.md with workflow diagrams
+
+#### Documentation
+- Updated README.md with Model Selection section
+- Updated CLAUDE.md with Model Selection section
+- Added cost savings documentation (40-60% vs Opus-only)
+
+### Phase 7 Complete! 🎉
+- All 3 commits done
+- Tag v2.5.0-alpha.7 created
+
+---
+
+## Commits Made (Phase 7)
+1. `feat(act-v2.5): [3.7.2] Add model selection config`
+2. `feat(act-v2.5): [3.7.3] Add base agents`
+3. `feat(act-v2.5): [3.7.4] Document model selection`
+
+---
+
+---
+
+## 2026-02-02 (continued)
+
+### Phase 8: Session History
+
+### Session Start
+- **Objective:** Implement ACT v2.5 Session History (3.8)
+- **Branch:** feature/act-v2.5-implementation
+- **Starting point:** Model Selection complete (v2.5.0-alpha.7)
+
+### Implementation
+
+#### Specification
+- Created specs/SPEC-session-history.md
+- Documented session log format
+- Defined rotation algorithm
+- Documented auto-save triggers
+
+#### Structure
+- Created .act/history/ directory with .gitkeep
+- Added history config to .act/config.yaml
+
+#### Template
+- Created templates/session-log.md for session logs
+
+#### Commands
+- Created commands/act/history.md for /act:history
+- Created commands/act/replay.md for /act:replay
+
+#### Integration
+- Updated skills/session-recovery/SKILL.md with history integration
+- Added enhanced catchup report format
+- Documented auto-save on session end
+
+### Phase 8 Complete! 🎉
+- All 5 commits done
+- Tag v2.5.0-alpha.8 created
+
+---
+
+## Commits Made (Phase 8)
+1. `feat(act-v2.5): [3.8.1] Add session history spec and structure`
+2. `feat(act-v2.5): [3.8.2] Add session log template and config`
+3. `feat(act-v2.5): [3.8.3] Add /act:history command`
+4. `feat(act-v2.5): [3.8.4] Add /act:replay command`
+5. `feat(act-v2.5): [3.8.5] Integrate history with session recovery`
+
+---
+
+## 🎉🎉🎉 TIER 1 COMPLETE! 🎉🎉🎉
+
+All 8 features implemented:
+1. ✅ Context Engineering (3-File Pattern)
+2. ✅ Hooks System (Pre/Post/Stop)
+3. ✅ Iron Laws (TDD, Debug, Verification)
+4. ✅ Scale-Adaptive (Quick vs Full mode)
+5. ✅ Deviation Rules (Controlled autonomy)
+6. ✅ Session Recovery (Catchup reports)
+7. ✅ Model Selection (Agent system)
+8. ✅ Session History (Auto-save, /act:history, /act:replay)
+
+**Total commits:** 28
+**Tags created:** 8 (v2.5.0-alpha.1 through v2.5.0-alpha.8)
+
+### ACT v2.5 Tier 1 Features Summary
+
+| Feature | Purpose | Key Files |
+|---------|---------|-----------|
+| Context Engineering | 3-File Pattern, .act/ structure | config.yaml, state.md, plan.md |
+| Hooks System | Pre/Post/Stop automation | hooks.json, hooks/*.md |
+| Iron Laws | TDD, Debug, Verification rules | rules/iron-laws.md |
+| Scale-Adaptive | Quick vs Full mode | commands/act/quick.md, full.md |
+| Deviation Rules | Controlled autonomy | rules/deviation-rules.md |
+| Session Recovery | Catchup reports | skills/session-recovery/SKILL.md |
+| Model Selection | Agent-model mapping | agents/*.md, config.yaml |
+| Session History | Session persistence | .act/history/, commands/act/history.md |
+
+---
+
+*Session log - ACT v2.5 Implementation - TIER 1 COMPLETE!*

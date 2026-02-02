@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACT v2.5 - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            color: #888;
+            margin-top: 5px;
+        }
+        .phase-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .phase-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-done { background: #10b981; }
+        .badge-current { background: #f59e0b; }
+        .badge-pending { background: #6b7280; }
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #00d4ff);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            margin: 30px 0 15px;
+            color: #00d4ff;
+        }
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .framework-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        .framework-item .icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .framework-item.done { border-left: 3px solid #10b981; }
+        .tier-section {
+            margin-bottom: 20px;
+        }
+        .tier-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .tier-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .tier-1 { background: #ef4444; }
+        .tier-2 { background: #f59e0b; }
+        .tier-3 { background: #22c55e; }
+        .pattern-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .pattern-item {
+            background: rgba(255,255,255,0.08);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .pattern-item.pending { opacity: 0.6; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+        }
+        .source-tag {
+            font-size: 0.65rem;
+            color: #666;
+            margin-left: 5px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #666;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏗️ ACT v2.5</h1>
+            <p class="subtitle">Agentic Coding Toolkit - Lab 23</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">9/9</div>
+                <div class="stat-label">Frameworks analysés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">17</div>
+                <div class="stat-label">Patterns identifiés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">75%</div>
+                <div class="stat-label">Phase Research</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0%</div>
+                <div class="stat-label">Implémentation</div>
+            </div>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-header">
+                <span class="phase-title">Phase 1 — Recherche concurrents</span>
+                <span class="badge badge-done">✓ DONE</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+            <p class="progress-text">9 frameworks identifiés et documentés</p>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-header">
+                <span class="phase-title">Phase 2a — Analyse légère</span>
+                <span class="badge badge-done">✓ DONE</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+            <p class="progress-text">Vue d'ensemble de chaque framework</p>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-header">
+                <span class="phase-title">Phase 2b — Analyse profonde</span>
+                <span class="badge badge-done">✓ DONE</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+            <p class="progress-text">9/9 rapports détaillés créés</p>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-header">
+                <span class="phase-title">Phase 2c — Synthèse</span>
+                <span class="badge badge-done">✓ DONE</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+            <p class="progress-text">Grille comparative + priorisation</p>
+        </div>
+
+        <div class="phase-card">
+            <div class="phase-header">
+                <span class="phase-title">Phase 3 — Implémentation</span>
+                <span class="badge badge-current">⏳ NEXT</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+            <p class="progress-text">Prêt à démarrer</p>
+        </div>
+
+        <h2 class="section-title">📚 Frameworks Analysés</h2>
+        <div class="framework-grid">
+            <div class="framework-item done">
+                <div class="icon">🦸</div>
+                <div>Superpowers</div>
+            </div>
+            <div class="framework-item done">
+                <div class="icon">📊</div>
+                <div>BMAD</div>
+            </div>
+            <div class="framework-item done">
+                <div class="icon">⚡</div>
+                <div>GSD</div>
+            </div>
+            <div class="framework-item done">
+                <div class="icon">📁</div>
+                <div>Planning Files</div>
+            </div>
+            <div class="framework-item done">
+                <div class="icon">🧠</div>
+                <div>Everything CC</div>
+            </div>
+            <div class="framework-item done">
+                <div class="icon">🔄</div>
+                <div>CEK</div>
+            </div>
+            <div class="framework-item done">
+                <div class="icon">🤔</div>
+                <div>TÂCHES</div>
+            </div>
+            <div class="framework-item done">
+                <div class="icon">🔗</div>
+                <div>Claude-Flow</div>
+            </div>
+            <div class="framework-item done">
+                <div class="icon">📋</div>
+                <div>CCPM</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">🎯 Patterns à Implémenter</h2>
+
+        <div class="tier-section">
+            <div class="tier-header">
+                <span class="tier-badge tier-1">TIER 1</span>
+                <span style="color: #888; font-size: 0.85rem;">MUST HAVE</span>
+            </div>
+            <div class="pattern-list">
+                <div class="pattern-item pending">⬜ Context Engineering <span class="source-tag">(Planning Files)</span></div>
+                <div class="pattern-item pending">⬜ Hooks System <span class="source-tag">(Everything CC)</span></div>
+                <div class="pattern-item pending">⬜ Iron Laws <span class="source-tag">(Superpowers)</span></div>
+                <div class="pattern-item pending">⬜ Scale-Adaptive <span class="source-tag">(BMAD + GSD)</span></div>
+                <div class="pattern-item pending">⬜ Deviation Rules <span class="source-tag">(GSD)</span></div>
+                <div class="pattern-item pending">⬜ Session Recovery <span class="source-tag">(Planning Files)</span></div>
+                <div class="pattern-item pending">⬜ Model Selection <span class="source-tag">(Everything CC)</span></div>
+            </div>
+        </div>
+
+        <div class="tier-section">
+            <div class="tier-header">
+                <span class="tier-badge tier-2">TIER 2</span>
+                <span style="color: #888; font-size: 0.85rem;">SHOULD HAVE</span>
+            </div>
+            <div class="pattern-list">
+                <div class="pattern-item pending">⬜ Continuous Learning <span class="source-tag">(Everything CC)</span></div>
+                <div class="pattern-item pending">⬜ Reflexion Pattern <span class="source-tag">(CEK)</span></div>
+                <div class="pattern-item pending">⬜ Thinking Models <span class="source-tag">(TÂCHES)</span></div>
+                <div class="pattern-item pending">⬜ Context Handoff <span class="source-tag">(TÂCHES)</span></div>
+                <div class="pattern-item pending">⬜ 5-Question Reboot <span class="source-tag">(Planning Files)</span></div>
+            </div>
+        </div>
+
+        <div class="tier-section">
+            <div class="tier-header">
+                <span class="tier-badge tier-3">TIER 3</span>
+                <span style="color: #888; font-size: 0.85rem;">NICE TO HAVE</span>
+            </div>
+            <div class="pattern-list">
+                <div class="pattern-item pending">⬜ Multi-IDE Support <span class="source-tag">(Planning Files)</span></div>
+                <div class="pattern-item pending">⬜ GitHub Integration <span class="source-tag">(CCPM)</span></div>
+                <div class="pattern-item pending">⬜ Party Mode <span class="source-tag">(BMAD)</span></div>
+                <div class="pattern-item pending">⬜ Agent Auditors <span class="source-tag">(TÂCHES)</span></div>
+            </div>
+        </div>
+
+        <footer>
+            Lab 23 • ACT v2.5 Research • Dernière MAJ: 2026-02-01<br>
+            🏗️ Built by Archi
+        </footer>
+    </div>
+</body>
+</html>

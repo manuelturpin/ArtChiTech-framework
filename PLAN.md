@@ -15,25 +15,28 @@
 
 ## 📋 Phases
 
-### Phase 1 : Recherche approfondie ✅ TERMINÉE
+### Phase 1 : Recherche concurrents ✅ TERMINÉE
 - [x] Lister tous les frameworks/plugins IA → `research/frameworks-list.md` (29 frameworks)
-- [x] Analyser leurs features en profondeur → 9 frameworks majeurs analysés
-- [x] Documenter dans `research/competitors.md` (14KB, grille comparative incluse)
+- [x] Analyser leurs features en profondeur → 17 frameworks analysés
+- [x] Documenter dans `research/competitors.md` (~25KB)
 
-### Phase 2 : Analyse comparative
-- [ ] Grille de comparaison avec ACT
-- [ ] Identifier forces/faiblesses
-- [ ] `research/comparison.md`
+### Phase 2 : Audit ACT ✅ TERMINÉE
+- [x] Analyser architecture actuelle (7 agents, 14 commands, 4 skills)
+- [x] Identifier forces (7 phases, gestion état, TDD)
+- [x] Identifier faiblesses (dépendance Superpowers, pas de context engineering)
+- [x] Gap analysis ACT actuel → ACT cible
+- [x] Documenter dans `research/act-audit.md`
 
-### Phase 3 : Plan d'amélioration
-- [ ] Prioriser les features
-- [ ] Remplacer Superpowers par du natif
-- [ ] `research/improvement-roadmap.md`
+### Phase 3 : Roadmap d'amélioration ⬅️ PROCHAINE
+- [ ] Définir sprints (S1: skills natifs, S2: scale-adaptive, S3: learning)
+- [ ] Créer `research/improvement-roadmap.md`
+- [ ] Valider avec Manu
 
 ### Phase 4 : Implémentation
-- [ ] Exécuter les améliorations
-- [ ] Tester
-- [ ] Documenter
+- [ ] Sprint 1 : Skills natifs (remplacer Superpowers)
+- [ ] Sprint 2 : Context engineering + Scale-adaptive
+- [ ] Sprint 3 : Multi-IDE + Compound learning
+- [ ] Tester et documenter
 
 ---
 

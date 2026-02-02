@@ -1,0 +1,106 @@
+{
+  "$schema": "https://continue.dev/schemas/config.json",
+  "name": "ACT Framework Configuration",
+  "version": "1.0.0",
+  "description": "Continue configuration exported from ACT (ArtChiTech Framework) - {{date}}",
+  
+  "models": [
+    {
+      "title": "Claude Sonnet (Executor)",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-20250514",
+      "apiKey": "${ANTHROPIC_API_KEY}",
+      "contextLength": 200000,
+      "completionOptions": {
+        "temperature": 0.3
+      }
+    },
+    {
+      "title": "Claude Opus (Architect)",
+      "provider": "anthropic", 
+      "model": "claude-opus-4-0-20250514",
+      "apiKey": "${ANTHROPIC_API_KEY}",
+      "contextLength": 200000,
+      "completionOptions": {
+        "temperature": 0.2
+      }
+    },
+    {
+      "title": "Claude Haiku (Documenter)",
+      "provider": "anthropic",
+      "model": "claude-3-5-haiku-20241022",
+      "apiKey": "${ANTHROPIC_API_KEY}",
+      "contextLength": 200000,
+      "completionOptions": {
+        "temperature": 0.4
+      }
+    }
+  ],
+
+  "tabAutocompleteModel": {
+    "title": "Claude Haiku",
+    "provider": "anthropic",
+    "model": "claude-3-5-haiku-20241022",
+    "apiKey": "${ANTHROPIC_API_KEY}"
+  },
+
+  "customCommands": [
+    {
+      "name": "act-reflect",
+      "description": "Reflect on completed task using ACT Reflexion Pattern",
+      "prompt": "Reflect on the recent work using these 4 questions:\n1. What worked well?\n2. What could be improved?\n3. What did I learn?\n4. What would I do differently?\n\nProvide actionable insights."
+    },
+    {
+      "name": "act-deviation",
+      "description": "Evaluate a deviation using ACT Deviation Rules",
+      "prompt": "Evaluate this situation using ACT Deviation Rules:\n- Rule 1: Bug → Auto-fix\n- Rule 2: Missing critical → Auto-add\n- Rule 3: Blocker → Auto-fix\n- Rule 4: Architectural → STOP & ASK\n- Rule 5: Enhancement → Log\n\nWhich rule applies and what action should be taken?"
+    }
+  ],
+
+  "contextProviders": [
+    {
+      "name": "code",
+      "params": {}
+    },
+    {
+      "name": "docs",
+      "params": {}
+    },
+    {
+      "name": "diff",
+      "params": {}
+    },
+    {
+      "name": "terminal",
+      "params": {}
+    },
+    {
+      "name": "problems",
+      "params": {}
+    },
+    {
+      "name": "folder",
+      "params": {}
+    }
+  ],
+
+  "slashCommands": [
+    {
+      "name": "tdd",
+      "description": "Generate test following TDD Iron Law"
+    },
+    {
+      "name": "verify",
+      "description": "Verify with evidence (Verification Iron Law)"
+    }
+  ],
+
+  "docs": [
+    {
+      "name": "ACT Instructions",
+      "startUrl": ".continue/act-instructions.md"
+    }
+  ],
+
+  "systemMessage": "You follow the ACT (ArtChiTech Framework) methodology:\n\n## Iron Laws (NON-NEGOTIABLE)\n1. TDD: No production code without failing test first\n2. Debug: No fixes without root cause investigation\n3. Verify: No claims without fresh evidence\n\n## Deviation Rules\n- Bugs, missing deps, blockers: Auto-fix (< 5 min)\n- Architectural changes: STOP and ask user\n- Enhancements: Log and continue\n\n## Session Recovery\nAlways check: Where am I? Where going? Goal? Learned? Done?\n\n## Reflexion\nAfter complex tasks: What worked? Improve? Learned? Different?"
+}

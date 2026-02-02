@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Context Handoff Template
+  Version: 1.0.0
+  
+  Usage:
+    Generate via /act:handoff command or manually fill placeholders.
+    
+  Placeholders:
+    {{PROJECT_NAME}}     - Name of the project
+    {{TIMESTAMP}}        - ISO 8601 timestamp (e.g., 2026-02-02T10:30:00Z)
+    {{SESSION_ID}}       - Current session identifier
+    {{TARGET_AGENT}}     - Target agent (optional)
+    {{PHASE_CURRENT}}    - Current phase number
+    {{PHASE_TOTAL}}      - Total number of phases
+    {{PROGRESS}}         - Progress percentage (0-100)
+    {{BRANCH}}           - Current git branch
+    {{LAST_COMMIT}}      - Last commit hash
+-->
+
+<context_handoff>
+  <!-- ═══════════════════════════════════════════════════════════════════
+       METADATA - Required identification information
+       ═══════════════════════════════════════════════════════════════════ -->
+  <metadata>
+    <project>{{PROJECT_NAME}}</project>
+    <timestamp>{{TIMESTAMP}}</timestamp>
+    <from_session>{{SESSION_ID}}</from_session>
+    <to_agent>{{TARGET_AGENT}}</to_agent>
+    <format_version>1.0</format_version>
+  </metadata>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ORIGINAL TASK - What was the initial goal?
+       Be specific. Include any constraints or requirements.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <original_task>
+    <!-- 
+    Example:
+    Implement Context Handoff Format (Section 4.4) for ACT v2.5 framework.
+    Requirements:
+    - Create spec document
+    - Create XML template
+    - Create /act:handoff command
+    - Integrate with session recovery
+    -->
+  </original_task>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       WORK COMPLETED - What has been done?
+       List with timestamps if available. Mark commit hashes.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <work_completed>
+    <!--
+    Example:
+    - [10:00] Created specs/SPEC-context-handoff.md
+    - [10:15] Created templates/context-handoff.xml
+    - [10:30] Committed: abc1234 "feat(act-v2.5): Add handoff spec"
+    -->
+  </work_completed>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       WORK REMAINING - What still needs to be done?
+       List in priority order. Include estimates if known.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <work_remaining>
+    <!--
+    Example:
+    - Create commands/act/handoff.md (priority: high, ~15min)
+    - Update session-recovery skill (priority: high, ~10min)
+    - Update documentation (priority: medium, ~10min)
+    - Create tag v2.5.0-beta.4 (priority: low, ~2min)
+    -->
+  </work_remaining>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ATTEMPTED APPROACHES - What was tried? What worked/failed?
+       This prevents the next agent from repeating failed attempts.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <attempted_approaches>
+    <!--
+    Example:
+    - JSON format: ❌ Too verbose, switched to XML
+    - Single file template: ✅ Works well
+    - Auto-generation from state.md: ⚠️ Partial, needs enhancement
+    -->
+  </attempted_approaches>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CRITICAL CONTEXT - Information that MUST NOT be lost
+       Key decisions, constraints, user preferences, gotchas.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <critical_context>
+    <!--
+    Example:
+    - User wants XML as primary format, MD as fallback
+    - Must integrate with existing /act:resume command
+    - Keep template simple - avoid over-engineering
+    - Commit message format: feat(act-v2.5): [X.Y.Z] Description
+    -->
+  </critical_context>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CURRENT STATE - Snapshot of where things stand
+       Phase, progress, branch, blockers, last commit.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <current_state>
+    Phase: {{PHASE_CURRENT}}/{{PHASE_TOTAL}}
+    Progress: {{PROGRESS}}%
+    Branch: {{BRANCH}}
+    Last Commit: {{LAST_COMMIT}}
+    Blockers: 
+    <!--
+    Example blockers:
+    - None
+    - Waiting for user decision on X
+    - Dependency Y not yet available
+    -->
+  </current_state>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FILES TOUCHED - Files created or modified this session
+       Helps next agent understand scope of changes.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <files_touched>
+    <!--
+    Example:
+    - specs/SPEC-context-handoff.md (created)
+    - templates/context-handoff.xml (created)
+    - skills/session-recovery/SKILL.md (modified)
+    - README.md (modified)
+    -->
+  </files_touched>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       RECOMMENDATIONS - Advice for the next agent
+       Suggestions, warnings, tips for continuing the work.
+       ═══════════════════════════════════════════════════════════════════ -->
+  <recommendations>
+    <!--
+    Example:
+    - Start with commands/act/handoff.md - most critical remaining piece
+    - Test handoff generation before updating docs
+    - Remember to create the tag after all commits
+    - Check IMPLEMENTATION-PLAN.md for full context
+    -->
+  </recommendations>
+</context_handoff>

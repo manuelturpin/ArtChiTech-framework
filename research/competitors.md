@@ -464,5 +464,240 @@ Curated list de tout l'écosystème Claude Code :
 
 ---
 
+## 📦 Collections de Skills Spécialisées
+
+### TÂCHES CC Resources ⭐⭐⭐⭐
+
+**Repo :** https://github.com/glittercowboy/taches-cc-resources
+
+**Contenu :**
+- **27 commands** : Meta-prompting, Todo Management, Thinking Models
+- **9 skills** : Create Plans, Create MCP Servers, Create Agent Skills, Debug Like Expert
+- **3 agents** : skill-auditor, slash-command-auditor, subagent-auditor
+
+**Features uniques :**
+- **Meta-Prompting** : Sépare analyse de exécution
+- **Todo Management** : Capture context mid-work, resume later
+- **Context Handoff** : `/whats-next` pour fresh context
+- **Thinking Models** : `/consider:pareto`, `/consider:first-principles`, `/consider:inversion`, etc.
+- **Self-Healing** : `/heal-skill` fixe les skills basé sur erreurs
+
+**🔥 À retenir :** Meta-prompting, thinking models, self-healing skills
+
+---
+
+### Context Engineering Kit ⭐⭐⭐⭐⭐
+
+**Repo :** https://github.com/NeoLabHQ/context-engineering-kit
+
+**Philosophie :** Token-efficient, quality-focused, scientifically proven techniques.
+
+**Plugins disponibles :**
+| Plugin | Description |
+|--------|-------------|
+| Reflexion | Feedback loops, self-refinement |
+| Code Review | Multi-agent specialized review |
+| TDD | Test-driven development |
+| Subagent-Driven Dev | Fresh subagent per task |
+| Domain-Driven Dev | Clean Architecture, SOLID |
+| Spec-Driven Dev | Based on GitHub Spec Kit, OpenSpec, BMad |
+| FPF | First Principles Framework (ADI cycle) |
+| Kaizen | Continuous improvement (5 Whys, etc.) |
+| Customaize Agent | Write commands, hooks, skills |
+
+**Base scientifique :**
+- Self-Refine paper (8-21% quality improvement)
+- Reflexion paper
+- Constitutional AI
+
+**Multi-IDE :** Claude Code, Cursor, Windsurf, Cline, OpenCode
+
+**🔥 À retenir :** Reflexion pattern, scientifically proven, multi-IDE, Kaizen
+
+---
+
+### cc-devops-skills ⭐⭐⭐⭐
+
+**Repo :** https://github.com/akin-ozer/cc-devops-skills
+
+**31 skills DevOps :**
+
+| Category | Skills |
+|----------|--------|
+| IaC | Terraform, Terragrunt, Ansible (generator + validator) |
+| Containers | Dockerfile, Kubernetes, Helm |
+| CI/CD | GitHub Actions, GitLab CI, Jenkins, Azure Pipelines |
+| Observability | PromQL, LogQL, Fluent Bit, Loki |
+| Scripting | Bash, Makefile |
+
+**Pattern Generator + Validator :**
+- Generator crée la ressource
+- Validator vérifie syntax, security, best practices
+- Generator fixe les erreurs
+- Output = production-ready
+
+**🔥 À retenir :** Generator/Validator pattern, version-aware docs
+
+---
+
+### Trail of Bits Security Skills ⭐⭐⭐⭐⭐
+
+**Repo :** https://github.com/trailofbits/skills
+
+**Security-focused plugins :**
+
+| Category | Plugins |
+|----------|---------|
+| Smart Contracts | building-secure-contracts, entry-point-analyzer |
+| Code Auditing | audit-context-building, differential-review, static-analysis |
+| Detection | semgrep-rule-creator, variant-analysis, insecure-defaults |
+| Verification | constant-time-analysis, property-based-testing |
+| Audit Lifecycle | fix-review |
+
+**Trophy Case :** Real bugs found (timing side-channel in ML-DSA signing)
+
+**🔥 À retenir :** Security patterns, audit workflows, variant analysis
+
+---
+
+### Agentic AI Systems (Workflow Patterns) ⭐⭐⭐⭐
+
+**Repo :** https://github.com/ThibautMelen/agentic-ai-systems
+
+**Taxonomie des patterns :**
+
+**Workflows (code controls) :**
+| # | Pattern | Use When |
+|---|---------|----------|
+| 0 | Baseline | Simple, 1-step |
+| 1 | Prompt Chaining | Sequential steps |
+| 2 | Routing | Classify & dispatch |
+| 3 | Parallelization | Independent tasks |
+| 4 | Orchestrator-Workers | Expert delegation |
+| 5 | Evaluator-Optimizer | Quality iteration |
+
+**Agents (LLM controls) :**
+- Autonomous Agent — Open-ended problems
+- Multi-Window — Cross-session state
+
+**Decision Flow :**
+```
+Destructive? → Wizard
+Complex? No → Baseline
+Predictable? No → Autonomous Agent
+Need specialists? No → Chain, Yes → Orchestrator
+```
+
+**Critical Rule :** Subagents CANNOT spawn subagents (one level only)
+
+**🔥 À retenir :** Workflow taxonomy, decision tree, Anthropic-aligned patterns
+
+---
+
+### awesome-claude-skills ⭐⭐⭐
+
+**Repo :** https://github.com/ComposioHQ/awesome-claude-skills
+
+**Directory de 100+ skills catégorisés :**
+- Document Processing (docx, pdf, pptx, xlsx)
+- Development & Code Tools
+- Data & Analysis
+- Business & Marketing
+- Communication & Writing
+- Creative & Media
+- Productivity & Organization
+- Security & Systems
+
+**Connect Apps Plugin :** Claude + 500+ apps (Gmail, Slack, GitHub, Notion...)
+
+---
+
+### Claude Codex Settings ⭐⭐⭐
+
+**Repo :** https://github.com/fcakyon/claude-codex-settings
+
+**Plugins modulaires :**
+- azure-tools (40+ Azure services)
+- github-dev (Git workflow + agents)
+- mongodb-tools, supabase-tools
+- playwright-tools (E2E)
+- slack-tools, linear-tools
+- notification-tools (OS notifications)
+- statusline-tools
+
+**🔥 À retenir :** Modular plugin approach, MCP integrations
+
+---
+
+### Claude Session Restore ⭐⭐⭐⭐
+
+**Repo :** https://github.com/ZENG3LD/claude-session-restore
+
+**Features :**
+- Multi-vector data collection (tasks, messages, tools, bash, web searches)
+- Time-based filtering (12-24h)
+- Efficient parsing (tail-based, handles 2GB+ files)
+- CLI + Claude Code skill
+
+**Commands :**
+```bash
+session-summary list          # List recent sessions
+session-summary load "path"   # Load full context
+```
+
+**🔥 À retenir :** Session recovery pattern, multi-vector extraction
+
+---
+
+## 🎯 Synthèse Finale - Features à Intégrer dans ACT
+
+### Tier 1 : Essentielles (MVP)
+
+| Feature | Source | Priorité |
+|---------|--------|----------|
+| Context Engineering (fichiers persistants) | GSD, Planning Files | 🔴 Critique |
+| Session Recovery | Planning Files, Session Restore | 🔴 Critique |
+| Scale-Adaptive (simple vs full path) | BMAD | 🔴 Critique |
+| Native Skills (remplacer Superpowers) | Superpowers | 🔴 Critique |
+
+### Tier 2 : Importantes
+
+| Feature | Source | Priorité |
+|---------|--------|----------|
+| Reflexion/Self-Refinement | Context Engineering Kit | 🟠 High |
+| Generator/Validator pattern | cc-devops-skills | 🟠 High |
+| Compound Learning | Everything CC, Compound | 🟠 High |
+| Multi-IDE Support | Planning Files, GSD | 🟠 High |
+| Thinking Models | TÂCHES | 🟡 Medium |
+
+### Tier 3 : Nice-to-Have
+
+| Feature | Source | Priorité |
+|---------|--------|----------|
+| Workflow Taxonomy | Agentic AI Systems | 🟢 Low |
+| Security Skills | Trail of Bits | 🟢 Low |
+| DevOps Skills | cc-devops-skills | 🟢 Low |
+| Party Mode (multi-agent session) | BMAD | 🟢 Low |
+
+---
+
+## 📊 Grille Comparative Étendue
+
+| Framework | Phases | Agents | Skills | Multi-IDE | Zero-Dep | Learning | Scale-Adaptive | Reflexion |
+|-----------|--------|--------|--------|-----------|----------|----------|----------------|-----------|
+| BMAD | ✅ | 21+ | ✅ | ❌ | ✅ | ❌ | ✅ | ❌ |
+| GSD | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Claude-Flow | ❌ | 60+ | 42+ | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Superpowers | ✅ | ❌ | 11+ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Planning Files | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Everything CC | ❌ | 10+ | 10+ | ❌ | ✅ | ✅ | ❌ | ❌ |
+| Context Eng Kit | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| TÂCHES | ❌ | 3 | 9 | ❌ | ✅ | ✅ | ❌ | ❌ |
+| Trail of Bits | ❌ | ❌ | 20+ | ❌ | ✅ | ❌ | ❌ | ❌ |
+| **ACT (target)** | ✅ (7) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+---
+
 *Document généré le 2026-01-31 par Archi*
-*Phase 1 : Recherche approfondie — En cours*
+*Phase 1 : Recherche approfondie — COMPLÈTE*
+*Prochaine étape : Phase 2 — Analyse comparative détaillée*

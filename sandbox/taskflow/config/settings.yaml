@@ -1,0 +1,14 @@
+# TaskFlow Configuration
+# RULE 3: Auto-created (was causing FileNotFoundError blocker)
+
+app:
+  name: TaskFlow
+  version: "0.1.0"
+
+storage:
+  type: file
+  path: ./data/tasks.json
+
+output:
+  format: text
+  colors: false

@@ -1,0 +1,55 @@
+# ACT Project Configuration
+# Version: 2.5
+# Created by: /act:init
+
+version: "2.5"
+
+project:
+  name: "taskflow"
+  description: "A CLI tool for task management"
+  type: "cli"  # feature | product | refactor | bugfix
+  scale: "quick"        # quick | full
+
+settings:
+  # Commit après chaque phase
+  auto_commit: true
+  
+  # Vérification requise avant completion
+  verification_required: true
+  
+  # Mode TDD : strict | relaxed | off
+  tdd_mode: "relaxed"
+  
+  # Hooks actifs
+  hooks:
+    pre_tool_use: true
+    post_tool_use: true
+    stop: true
+
+context:
+  # Refresh le plan avant chaque action tool
+  refresh_on_tool_use: true
+  
+  # Activer la session recovery
+  session_recovery: true
+  
+  # Fichiers à inclure dans le contexte
+  context_files:
+    - ".act/state.md"
+    - ".act/plan.md"
+    - ".act/findings.md"
+
+agents:
+  # Modèles par rôle (opus = planning, sonnet = execution, haiku = simple)
+  planner: "opus"
+  executor: "sonnet"
+  reviewer: "opus"
+  documenter: "haiku"
+
+deviation_rules:
+  # Règles de déviation (auto vs demander)
+  bugs: "auto-fix"           # Auto-fix immediately
+  missing_critical: "auto-add"  # Auto-add immediately
+  blockers: "auto-fix"       # Auto-fix immediately
+  architectural: "ask-human" # STOP, ask user
+  enhancements: "log-continue"  # Log to ISSUES.md, continue
