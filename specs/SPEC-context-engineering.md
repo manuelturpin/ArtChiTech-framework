@@ -301,7 +301,7 @@ Initialise la structure `.act/` dans un projet.
 ### 8.2 /act:status
 Affiche l'état courant (lit `state.md`).
 
-### 8.3 /act:recover
+### 8.3 /act:resume
 Force une session recovery avec catchup report.
 
 ### 8.4 /act:handoff

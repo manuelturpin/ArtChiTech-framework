@@ -189,7 +189,7 @@ Cette skill est renforcée par les hooks :
 |---------|-------------|
 | `/act:init` | Initialiser .act/ dans un projet |
 | `/act:status` | Afficher l'état courant |
-| `/act:recover` | Forcer une session recovery |
+| `/act:resume` | Forcer une session recovery |
 | `/act:handoff` | Générer un handoff complet |
 
 ---

@@ -205,7 +205,7 @@ Use /act:status for current status.
 | Command | Description |
 |---------|-------------|
 | `/act:status` | Show current ACT status |
-| `/act:recover` | Recover from previous session |
+| `/act:resume` | Recover from previous session |
 | `/act:reset` | Reset ACT (delete and recreate .act/) |
 | `/act:start` | Start working on current phase |
 
