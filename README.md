@@ -114,6 +114,8 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | Command | Description |
 |---------|-------------|
 | `/act:init` | Initialize ACT in a project |
+| `/act:quick` | Start quick mode (small tasks) |
+| `/act:full` | Start full mode (complex projects) |
 | `/act:status` | Show current state |
 | `/act:recover` | Recovery from previous session |
 | `/act:handoff` | Generate handoff for session transfer |
@@ -262,10 +264,59 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
+## Scale-Adaptive Mode
+
+Not every task needs the same process depth. ACT v2.5 introduces **Scale-Adaptive Mode**.
+
+### Quick Mode (`/act:quick`)
+
+For small, well-defined tasks:
+
+```bash
+/act:quick Fix the login timeout bug
+```
+
+| Aspect | Quick Mode |
+|--------|------------|
+| **When** | Bug fixes, small features, refactoring |
+| **Phases** | Plan → Execute → Verify (3 phases) |
+| **Duration** | < 1 day |
+| **Research** | Skip |
+
+### Full Mode (`/act:full`)
+
+For complex projects:
+
+```bash
+/act:full Build user authentication system
+```
+
+| Aspect | Full Mode |
+|--------|-----------|
+| **When** | New products, major features, migrations |
+| **Phases** | All 7 ACT phases |
+| **Duration** | Days to weeks |
+| **Research** | Full discovery phase |
+
+### When to Use Which?
+
+```
+Is it well-defined + known solution + < 1 day + no architecture?
+├── YES → /act:quick
+└── NO  → /act:full
+```
+
+### Mode Switching
+
+- **Escalation:** If Quick Mode reveals complexity → auto-switch to Full Mode
+- **De-escalation:** If Full Mode is overkill after Strategy → can switch to Quick Mode
+
+---
+
 ## Roadmap to v2.5 Final
 
 - [x] Context Engineering (3-File Pattern)
-- [ ] Hooks System (Pre/Post/Stop)
-- [ ] Iron Laws (TDD, Debug, Verification)
-- [ ] Scale-Adaptive (Quick vs Full mode)
+- [x] Hooks System (Pre/Post/Stop)
+- [x] Iron Laws (TDD, Debug, Verification)
+- [x] Scale-Adaptive (Quick vs Full mode)
 - [ ] Session Recovery automation
