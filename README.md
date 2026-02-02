@@ -119,6 +119,8 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | `/act:status` | Show current state |
 | `/act:resume` | Recovery from previous session |
 | `/act:handoff` | Generate handoff for session transfer |
+| `/act:history` | List past sessions (Session History) |
+| `/act:replay` | View details of a past session |
 
 ### Legacy Commands (v2.1)
 
