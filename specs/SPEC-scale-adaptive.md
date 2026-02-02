@@ -377,4 +377,13 @@ Example:
 
 ---
 
+## Acceptance Criteria
+- [x] Critères Quick vs Full définis
+- [x] Command /act:quick documentée
+- [x] Command /act:full documentée
+- [x] Rules scale-adaptive créées
+- [x] Section dans README.md
+
+---
+
 *Scale-Adaptive: Right-sized process for every task.*

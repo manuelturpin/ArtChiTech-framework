@@ -254,4 +254,14 @@ Agent: Task complete! All phases done.
 
 ---
 
+## Acceptance Criteria
+- [x] hooks.json structure définie
+- [x] PreToolUse hook documenté
+- [x] PostToolUse hook documenté
+- [x] Stop hook documenté
+- [x] README hooks créé
+- [x] Section dans CLAUDE.md
+
+---
+
 *Specification for ACT v2.5 Hooks System*

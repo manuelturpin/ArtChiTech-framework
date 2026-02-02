@@ -353,4 +353,14 @@ Fixing things without documenting.
 
 ---
 
+## Acceptance Criteria
+- [x] 5 règles de déviation définies
+- [x] Flowchart de décision documenté
+- [x] Template ISSUES.md créé
+- [x] Intégration avec hooks documentée
+- [x] Section dans CLAUDE.md
+- [x] Section dans README.md
+
+---
+
 *Specification for ACT v2.5 Deviation Rules*

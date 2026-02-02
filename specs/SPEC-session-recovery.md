@@ -232,4 +232,13 @@ def generate_catchup_report(session_data):
 
 ---
 
+## Acceptance Criteria
+- [x] Skill session-recovery créé
+- [x] Command /act:resume documentée
+- [x] Catchup report format défini
+- [x] 5-Question Reboot Test intégré
+- [x] Section dans CLAUDE.md
+
+---
+
 *Specification for ACT v2.5 Session Recovery*

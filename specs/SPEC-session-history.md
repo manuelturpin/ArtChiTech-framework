@@ -279,4 +279,14 @@ Le Stop Hook déclenche l'auto-save :
 
 ---
 
+## Acceptance Criteria
+- [x] Structure .act/history/ créée
+- [x] Config history dans config.yaml
+- [x] Template session-log.md créé
+- [x] Command /act:history documentée
+- [x] Command /act:replay documentée
+- [x] Intégration avec Session Recovery
+
+---
+
 *SPEC for ACT v2.5 Session History*
