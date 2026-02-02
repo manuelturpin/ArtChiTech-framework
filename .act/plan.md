@@ -7,16 +7,16 @@ Implémenter ACT v2.5 en intégrant les meilleurs patterns issus de l'analyse de
 
 ## Phases
 
-### Phase 1: Context Engineering [IN PROGRESS]
+### Phase 1: Context Engineering [DONE] ✅
 > Fondation du système - Sans ça, tout le reste s'effondre
 
 - [x] 3.1.1 - Spec context engineering
-- [ ] 3.1.2 - Structure .act/ ← CURRENT
-- [ ] 3.1.3 - Templates planning files
-- [ ] 3.1.4 - Skill context-engineering
-- [ ] 3.1.5 - Command /act:init
-- [ ] 3.1.6 - Session recovery
-- [ ] 3.1.7 - Documentation
+- [x] 3.1.2 - Structure .act/
+- [x] 3.1.3 - Templates planning files
+- [x] 3.1.4 - Skill context-engineering
+- [x] 3.1.5 - Command /act:init
+- [x] 3.1.6 - Session recovery (documented in skill)
+- [x] 3.1.7 - Documentation
 
 ### Phase 2: Hooks System [TODO]
 > Automatisation fiable - Hooks = 100% reliable vs skills ~50-80%
