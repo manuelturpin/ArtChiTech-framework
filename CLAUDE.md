@@ -244,6 +244,7 @@ git commit -m "feat: description"
 | `/act:init` | Initialize ACT in a project |
 | `/act:quick` | Start quick mode (small tasks) |
 | `/act:full` | Start full mode (complex projects) |
+| `/act:validate` | Validate .act/ file conformity |
 | `/act:resume` | Recover from previous session |
 | `/act:history` | List past sessions |
 | `/act:replay` | View details of a past session |

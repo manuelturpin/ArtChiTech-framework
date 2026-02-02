@@ -135,6 +135,7 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | `/act:quick` | Start quick mode (small tasks) |
 | `/act:full` | Start full mode (complex projects) |
 | `/act:status` | Show current state |
+| `/act:validate` | Validate .act/ file conformity |
 | `/act:resume` | Recovery from previous session |
 | `/act:handoff` | Generate handoff for session transfer |
 | `/act:history` | List past sessions (Session History) |
