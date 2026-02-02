@@ -116,15 +116,93 @@ For Quick Mode sessions, use condensed format:
 
 ## 5-Question Reboot Test
 
-Ensure the catchup report answers these 5 questions:
+The 5-Question Reboot Test is a **mandatory verification step** after context recovery. It ensures the agent can answer fundamental questions about the project before resuming work.
 
-| Question | How to Answer |
-|----------|---------------|
-| **1. Where am I?** | Current phase from state.md |
-| **2. Where am I going?** | Remaining phases from plan.md |
-| **3. What's the goal?** | Goal from config.yaml |
-| **4. What have I learned?** | Key points from findings.md |
-| **5. What have I done?** | Recent actions from progress.md |
+### The 5 Questions
+
+| # | Question | Source | Expected Answer |
+|---|----------|--------|-----------------|
+| 1 | **Where am I?** | `.act/state.md` | Current phase, task, progress |
+| 2 | **Where am I going?** | `.act/plan.md` | Remaining phases, next steps |
+| 3 | **What's the goal?** | `.act/config.yaml` | Project objective |
+| 4 | **What have I learned?** | `.act/findings.md` | Key discoveries, decisions |
+| 5 | **What have I done?** | `.act/progress.md` | Recent actions, commits |
+
+### Checklist
+
+Before resuming work, verify each question:
+
+- [ ] **Q1: Where am I?**
+  - Read `state.md` → Extract current phase
+  - Verify phase number and name
+  - Check for active blockers
+  - Status: ✅ if phase found, ❌ if file missing
+
+- [ ] **Q2: Where am I going?**
+  - Read `plan.md` → Find unchecked items
+  - List next 2-3 tasks
+  - Identify remaining phases
+  - Status: ✅ if tasks found, ⚠️ if all complete
+
+- [ ] **Q3: What's the goal?**
+  - Read `config.yaml` → Extract project name/goal
+  - Verify goal is clear and actionable
+  - Status: ✅ if goal found, ❌ if config missing
+
+- [ ] **Q4: What have I learned?**
+  - Read `findings.md` → Extract key discoveries
+  - Look for important decisions
+  - Note technical choices made
+  - Status: ✅ if findings exist, ⚠️ if empty (normal for early phases)
+
+- [ ] **Q5: What have I done?**
+  - Read `progress.md` → Get last 3-5 entries
+  - Cross-reference with git log if available
+  - Status: ✅ if recent actions found, ⚠️ if empty
+
+### Validation
+
+| Score | Status | Action |
+|-------|--------|--------|
+| 5/5 | ✅ Complete | Ready to continue |
+| 3-4/5 | ⚠️ Partial | Proceed with caution |
+| 0-2/5 | ❌ Incomplete | Run `/act:init --repair` |
+
+### What If an Answer Is Missing?
+
+| Question | If Missing | Recovery |
+|----------|------------|----------|
+| Q1 | state.md not found | Run `/act:init --repair` |
+| Q2 | plan.md not found | Run `/act:init --repair` |
+| Q3 | config.yaml not found | Run `/act:init --repair` |
+| Q4 | findings.md empty | Normal early on, continue |
+| Q5 | progress.md empty | Check git log for history |
+
+### Output Format
+
+```markdown
+## 🔄 5-Question Reboot Test
+
+| # | Question | Answer | Status |
+|---|----------|--------|--------|
+| 1 | Where am I? | Phase 3/5 - Implementation | ✅ |
+| 2 | Where am I going? | Testing, Verification | ✅ |
+| 3 | What's the goal? | Build TaskFlow CLI | ✅ |
+| 4 | What have I learned? | argparse > click, UUIDs | ✅ |
+| 5 | What have I done? | CLI parser, add_task | ✅ |
+
+**Context Status:** ✅ Complete (5/5)
+```
+
+### Command
+
+Use `/act:where-am-i` to execute the 5-Question Test on demand:
+
+```bash
+/act:where-am-i
+```
+
+**Full specification:** [SPEC-reboot-test.md](../../specs/SPEC-reboot-test.md)
 
 ## Decision Flow
 
@@ -437,14 +515,145 @@ ls -la .act/history/
 cat .act/history/2026-02-01-1430.md
 ```
 
+## Context Handoff Integration
+
+Session Recovery works seamlessly with the Context Handoff format for richer recovery.
+
+### What is Context Handoff?
+
+A standardized XML/Markdown format for transferring context between sessions or agents. Contains:
+- Original task description
+- Completed and remaining work
+- Attempted approaches (what worked/failed)
+- Critical context (must-not-lose info)
+- Current state snapshot
+
+### Enhanced Recovery with Handoff
+
+When a handoff file exists (`.act/handoffs/latest.xml`), recovery is enhanced:
+
+```markdown
+## 🔄 Session Recovery (with Handoff)
+
+**Projet :** ACT v2.5
+**Dernière session :** 2026-02-02 10:30 UTC
+**Handoff trouvé :** ✅ Recent (< 24h)
+
+### Contexte du handoff
+**Tâche originale :** Implement Phase 4 of ACT v2.5
+
+### Travail effectué (depuis handoff)
+- Created specs/SPEC-context-handoff.md
+- Created templates/context-handoff.xml
+
+### Travail restant (depuis handoff)
+- Create commands/act/handoff.md
+- Update session-recovery skill
+
+### Approches tentées
+- JSON format: ❌ Trop verbeux
+- XML format: ✅ Adopté
+
+### Contexte critique
+- User prefers XML as primary format
+- Must integrate with /act:resume
+```
+
+### Recovery Decision Flow
+
+```
+┌─────────────────────────────────┐
+│ /act:resume                     │
+└───────────────┬─────────────────┘
+                │
+                ▼
+        ┌───────────────┐
+        │  .act/ exists? │
+        └───────┬───────┘
+                │
+        ┌───────┴───────┐
+        │               │
+       Yes              No
+        │               │
+        ▼               ▼
+┌───────────────┐ ┌───────────────┐
+│ Check for     │ │ No recovery   │
+│ handoff       │ │ needed        │
+└───────┬───────┘ └───────────────┘
+        │
+        ▼
+┌─────────────────────────────────┐
+│ handoffs/latest.xml exists      │
+│ AND < 24h old?                  │
+└───────────────┬─────────────────┘
+        │
+┌───────┴───────┐
+│               │
+Yes             No
+│               │
+▼               ▼
+┌───────────────┐ ┌───────────────┐
+│ Enhanced      │ │ Standard      │
+│ recovery      │ │ recovery      │
+│ (with handoff)│ │ (state only)  │
+└───────────────┘ └───────────────┘
+```
+
+### Generating Handoff for Recovery
+
+Before ending a session, generate a handoff:
+
+```
+/act:handoff --save
+```
+
+Or automatically with stop:
+
+```
+/act:stop --handoff
+```
+
+### Using Handoff with /act:resume
+
+The `/act:resume` command automatically:
+
+1. Checks for `.act/handoffs/latest.xml`
+2. If recent (< 24h), parses handoff content
+3. Enriches catchup report with handoff data
+4. Prioritizes `work_remaining` from handoff
+
+### Handoff vs State Files
+
+| Aspect | State Files | Handoff |
+|--------|-------------|---------|
+| Purpose | Current state | Transfer context |
+| Scope | Project snapshot | Session summary |
+| Created | Continuously | On demand/session end |
+| Includes | Phase, progress | + Approaches, recommendations |
+| Format | Markdown | XML or Markdown |
+
+**Use both together:**
+- State files: Always up-to-date snapshot
+- Handoff: Rich context for transitions
+
+### Commands
+
+| Command | Recovery Role |
+|---------|---------------|
+| `/act:resume` | Uses handoff if available |
+| `/act:handoff` | Generates handoff |
+| `/act:handoff --save` | Saves for later recovery |
+
 ## Related
 
 - [Context Engineering Skill](../context-engineering/SKILL.md)
 - [/act:init Command](../../commands/act/init.md)
 - [/act:resume Command](../../commands/act/resume.md)
+- [/act:handoff Command](../../commands/act/handoff.md)
 - [/act:history Command](../../commands/act/history.md)
 - [/act:replay Command](../../commands/act/replay.md)
 - [Session History SPEC](../../specs/SPEC-session-history.md)
+- [Context Handoff SPEC](../../specs/SPEC-context-handoff.md)
 
 ---
 
