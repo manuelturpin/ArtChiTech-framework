@@ -588,6 +588,127 @@ Quick Mode: executor → tester → documenter
 
 ---
 
+## Reflexion Pattern
+
+Improve output quality through structured self-reflection. Research shows **+8-21% improvement** in task quality.
+
+### Process
+
+```
+1. Complete task
+2. /act:reflect (analyze what worked/didn't)
+3. Improve output based on insights
+4. /act:memorize (save important lessons)
+```
+
+### The 4 Questions
+
+After completing a task, ask yourself:
+
+1. **What worked well?** — Identify successful patterns
+2. **What could be improved?** — Find quality gaps
+3. **What did I learn?** — Extract insights
+4. **What would I do differently?** — Consider alternatives
+
+### Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/act:reflect [topic]` | Trigger reflection on a topic or recent task |
+| `/act:memorize <insight>` | Save insight to `.act/findings.md` or CLAUDE.md |
+
+### When to Reflect
+
+| Trigger | Action |
+|---------|--------|
+| Complex task completed | Always reflect |
+| User requests review | Always reflect |
+| "reflect" in prompt | Auto-triggered |
+| Simple mechanical task | Skip (overhead > benefit) |
+
+### Example
+
+```markdown
+## Reflexion: API Implementation
+
+### What Worked Well ✅
+- Clean separation of concerns
+- Good test coverage (87%)
+
+### What Could Be Improved 🔧
+- Response time on search (800ms → target 200ms)
+- Missing rate limiting docs
+
+### What I Learned 💡
+- Database indexes are 10x impact on search
+- Early performance testing prevents late surprises
+
+### What I'd Do Differently 🔄
+- Add performance benchmarks from day 1
+```
+
+**Details:** See `skills/reflexion/SKILL.md`
+
+---
+
+## Continuous Learning
+
+ACT v2.5 introduces a **Continuous Learning** system that observes your work patterns and improves automatically over time.
+
+### How It Works
+
+```
+Session → Observe → Log → Detect Patterns → Generate Instincts → Evolve Skills
+```
+
+1. **Observation** — ACT observes corrections, preferences, errors, and successes
+2. **Pattern Detection** — Recurring behaviors (≥3 occurrences) are identified
+3. **Confidence Scoring** — Each pattern gets a confidence score (0.0-1.0)
+4. **Instincts** — Low-confidence patterns become suggestions
+5. **Skills** — High-confidence patterns become automatic rules
+
+### Confidence Levels
+
+| Score | Level | AI Behavior |
+|-------|-------|-------------|
+| 0.0-0.3 | Noise | Ignore |
+| 0.3-0.5 | Tentative | Suggest, ask confirmation |
+| 0.5-0.7 | Probable | Propose, apply if no objection |
+| 0.7-0.9 | Certain | Apply automatically |
+| 0.9-1.0 | Established | Always apply, don't mention |
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:evolve` | Analyze observations and evolve the system |
+| `/act:evolve --dry-run` | Preview changes without applying |
+
+### Instincts vs Skills
+
+| Aspect | Instinct | Skill |
+|--------|----------|-------|
+| Confidence | 0.5-0.7 | ≥0.7 |
+| Application | Suggestion | Automatic |
+| Location | `instincts/` | `skills/` |
+| Lifespan | Temporary | Permanent |
+
+### Example
+
+```
+Day 1: You correct camelCase → snake_case (observation logged)
+Day 2: You correct again (pattern detected)
+Day 3: You correct a third time (instinct created: "prefer snake_case")
+Day 5: You validate the suggestion (confidence +0.2)
+Day 7: /act:evolve promotes instinct to skill (confidence ≥0.7)
+```
+
+Now ACT automatically uses snake_case without asking.
+
+**Details:** See `specs/SPEC-continuous-learning.md`
+
+---
+
 ## Roadmap to v2.5 Final
 
 - [x] Context Engineering (3-File Pattern)
@@ -598,3 +719,5 @@ Quick Mode: executor → tester → documenter
 - [x] Session Recovery automation
 - [x] Model Selection (Agent system)
 - [x] Context Handoff format
+- [x] Reflexion Pattern (+8-21% quality)
+- [x] Continuous Learning (Pattern detection & confidence scoring)

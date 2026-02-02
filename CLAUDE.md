@@ -255,6 +255,51 @@ Haiku = LIT et DOCUMENTE (documentation, simple tasks)
 
 ---
 
+## 🪞 Reflexion Pattern
+
+Improve output quality through structured self-reflection (**+8-21% quality improvement** proven by CEK).
+
+### Process
+```
+1. Complete task
+2. /act:reflect (auto-triggered by "reflect" in prompt)
+3. Improve output
+4. /act:memorize (save insights)
+```
+
+### The 4 Questions
+
+After completing a task, ask yourself:
+1. **What worked well?** — Identify successful patterns
+2. **What could be improved?** — Find quality gaps
+3. **What did I learn?** — Extract insights
+4. **What would I do differently?** — Consider alternatives
+
+### Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/act:reflect [topic]` | Reflect on task or topic |
+| `/act:memorize <insight>` | Save insight to findings or CLAUDE.md |
+
+### When to Use
+
+| Situation | Action |
+|-----------|--------|
+| Complex task completed | Always reflect |
+| "reflect" in prompt | Auto-triggered |
+| User requests review | Always reflect |
+| Simple mechanical task | Skip |
+
+### Storage
+
+- **`.act/findings.md`** — All reflexion insights (default)
+- **`CLAUDE.md`** — Important, reusable insights (`--important` flag)
+
+**Full details:** @skills/reflexion/SKILL.md
+
+---
+
 ## Rules
 
 @.claude/rules/0-behavior.md
@@ -310,3 +355,5 @@ git commit -m "feat: description"
 | `/act:diff` | Show changes since last session |
 | `/act:status` | Show current state with velocity |
 | `/act:handoff` | Generate context handoff for transfer |
+| `/act:reflect` | Reflect on task to improve quality (+8-21%) |
+| `/act:memorize` | Save important insights for future reference |
