@@ -1,0 +1,5 @@
+{"timestamp":"2025-02-02T10:15:00Z","type":"pattern","observation":"User always runs tests before committing","context":{"task":"Implementation","file":"src/cli.py"},"confidence":0.5,"tags":["testing","workflow"]}
+{"timestamp":"2025-02-02T11:30:00Z","type":"pattern","observation":"User always runs tests before committing","context":{"task":"Bug fix","file":"src/task.py"},"confidence":0.55,"tags":["testing","workflow"]}
+{"timestamp":"2025-02-02T13:00:00Z","type":"pattern","observation":"User always runs tests before committing","context":{"task":"Feature implementation","file":"src/storage.py"},"confidence":0.6,"tags":["testing","workflow"]}
+{"timestamp":"2025-02-02T09:00:00Z","type":"correction","observation":"Prefer argparse over click for simple CLIs","context":{"task":"CLI setup"},"confidence":0.7,"tags":["cli","tooling"]}
+{"timestamp":"2025-02-02T12:00:00Z","type":"success","observation":"JSON file storage works well for MVP","context":{"task":"Storage implementation"},"confidence":0.65,"tags":["storage","mvp"]}
