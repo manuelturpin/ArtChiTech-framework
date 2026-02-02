@@ -263,3 +263,5 @@ git commit -m "feat: description"
 | `/act:resume` | Recover from previous session |
 | `/act:history` | List past sessions |
 | `/act:replay` | View details of a past session |
+| `/act:diff` | Show changes since last session |
+| `/act:status` | Show current state with velocity |

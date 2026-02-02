@@ -52,6 +52,12 @@ ACT v2.5 introduces the **3-File Pattern** — persistent files that maintain co
 
 This creates the `.act/` directory with all context files.
 
+Use `--gitignore` to add a template `.gitignore` for sensitive data:
+
+```bash
+/act:init --gitignore
+```
+
 ### Project Types
 
 When initializing, specify the type that best matches your project:
@@ -105,6 +111,12 @@ Edit `.act/plan.md` to define your goal and phases, then begin!
 ## Quick Stats
 - **Progress:** 60%
 - **Last Update:** 2026-02-01 14:30
+
+## Velocity
+- Sessions completed: 4
+- Average session duration: 2.5h
+- Phases completed: 2/5
+- Estimated remaining: ~15h
 ```
 
 ---
@@ -140,6 +152,7 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | `/act:handoff` | Generate handoff for session transfer |
 | `/act:history` | List past sessions (Session History) |
 | `/act:replay` | View details of a past session |
+| `/act:diff` | Show changes since last session |
 
 ### Legacy Commands (v2.1)
 
