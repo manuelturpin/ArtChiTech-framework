@@ -289,11 +289,84 @@ System: No previous session found. Use /act:init to start a new project.
 4. **Trust the files** - they're the source of truth
 5. **Update state.md** when resuming work
 
+## Session History Integration
+
+Session Recovery s'intègre avec Session History pour offrir un contexte plus riche.
+
+### Enhanced Catchup Report
+
+Quand l'historique est activé, le catchup report peut inclure les sessions récentes :
+
+```markdown
+## 🔄 Session Recovery
+
+**Projet :** ACT v2.5
+**Dernière session :** 2026-02-02 03:30
+
+### Sessions récentes
+| Date | Durée | Résultat |
+|------|-------|----------|
+| 2026-02-02 03:30 | 45min | ✅ Model Selection |
+| 2026-02-01 18:30 | 1h20 | ✅ Session Recovery |
+| 2026-02-01 14:30 | 30min | ✅ Deviation Rules |
+
+### Prochaines étapes
+...
+```
+
+### Auto-Save on Session End
+
+Quand une session se termine (via Stop Hook ou `/act:stop`) :
+
+1. Collecter les données de session :
+   - Heure de début/fin
+   - Actions effectuées (depuis progress.md)
+   - Commits créés (depuis git log)
+   - État final (depuis state.md)
+
+2. Générer le session log avec le template
+
+3. Sauvegarder dans `.act/history/YYYY-MM-DD-HHmm.md`
+
+4. Appliquer la rotation si nécessaire
+
+### Rotation
+
+Avant de sauvegarder une nouvelle session :
+
+```
+files = list(.act/history/*.md)
+if len(files) >= config.history.maxSessions:
+    oldest = sort_by_date(files)[0]
+    delete(oldest)
+save(new_session)
+```
+
+### Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/act:history` | Lister les sessions |
+| `/act:replay <session>` | Voir une session passée |
+
+### Configuration
+
+```yaml
+# In .act/config.yaml
+history:
+  enabled: true      # Activer/désactiver
+  maxSessions: 10    # Nombre max de sessions
+  autoSave: true     # Sauvegarde auto en fin de session
+```
+
 ## Related
 
 - [Context Engineering Skill](../context-engineering/SKILL.md)
 - [/act:init Command](../../commands/act/init.md)
 - [/act:resume Command](../../commands/act/resume.md)
+- [/act:history Command](../../commands/act/history.md)
+- [/act:replay Command](../../commands/act/replay.md)
+- [Session History SPEC](../../specs/SPEC-session-history.md)
 
 ---
 
