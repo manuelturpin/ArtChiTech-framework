@@ -21,10 +21,16 @@ Initialise la structure ACT v2.5 dans un projet. Crée le dossier `.act/` avec t
 | `--quick` | Shortcut pour `--scale quick` | - |
 
 ### Project Types
-- `feature` - Nouvelle feature
-- `product` - Nouveau produit
-- `refactor` - Refactoring
-- `bugfix` - Correction de bug
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `product` | Nouveau produit complet | SaaS app |
+| `cli` | Application ligne de commande | TaskFlow |
+| `app` | Application desktop/mobile | Electron app |
+| `library` | Package réutilisable | npm package |
+| `service` | Microservice/API | REST API |
+| `refactor` | Refactoring existant | Migration v2 |
+| `bugfix` | Correction de bug | Hotfix |
 
 ### Scale
 - `quick` - Mode rapide (bugs, small features)
