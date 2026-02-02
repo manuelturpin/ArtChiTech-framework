@@ -460,6 +460,74 @@ git commit -m "feat: description"
 | `/act:evolve` | Analyze observations and evolve the system |
 | `/act:sync-github` | Sync project state with GitHub Issues |
 | `/act:export` | Export ACT config to other IDEs (Cursor, Windsurf, etc.) |
+| `/act:audit-skill` | Audit a specific skill |
+| `/act:audit-command` | Audit a specific command |
+| `/act:audit-agent` | Audit a specific agent |
+| `/act:audit-all` | Full framework audit |
+| `/act:heal` | Auto-repair audit issues |
+
+---
+
+## 🔍 Agent Auditors
+
+Audit and repair framework components to maintain health and consistency.
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:audit-skill <name>` | Audit a specific skill |
+| `/act:audit-command <name>` | Audit a specific command |
+| `/act:audit-agent <name>` | Audit a specific agent |
+| `/act:audit-all` | Comprehensive framework audit |
+| `/act:heal <target>` | Auto-repair identified issues |
+
+### Audit Checks
+
+| Check | What It Verifies |
+|-------|-----------------|
+| **Structure** | Required files present |
+| **Format** | Valid markdown, required sections |
+| **References** | Internal links functional |
+| **Consistency** | Coherence with other files |
+| **Completeness** | No TODO/FIXME forgotten |
+
+### Report Format
+
+```markdown
+## Audit Report: skill/<name>
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Structure | ✅ | SKILL.md present |
+| Format | ✅ | All required sections found |
+| References | ⚠️ | 1 broken link found |
+| Consistency | ✅ | Consistent with docs |
+| Completeness | ✅ | No TODOs found |
+
+**Score: 4/5** (80%)
+**Issues:** 1 warning
+```
+
+### Healing Options
+
+| Option | Description |
+|--------|-------------|
+| `--dry-run` | Preview fixes without applying |
+| `--auto` | Apply safe fixes only |
+| `--force` | Apply all fixes including templates |
+| `--backup` | Create backup before modifying |
+
+### When to Audit
+
+| Trigger | Action |
+|---------|--------|
+| Before release | `/act:audit-all` |
+| After refactoring | `/act:audit-all --quick` |
+| New component added | Audit that component |
+| CI/CD pipeline | `/act:audit-all --fail-on-error` |
+
+**Full details:** @specs/SPEC-agent-auditors.md, @skills/auditor/SKILL.md
 
 ---
 
