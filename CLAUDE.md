@@ -357,3 +357,68 @@ git commit -m "feat: description"
 | `/act:handoff` | Generate context handoff for transfer |
 | `/act:reflect` | Reflect on task to improve quality (+8-21%) |
 | `/act:memorize` | Save important insights for future reference |
+| `/act:evolve` | Analyze observations and evolve the system |
+
+---
+
+## 🧬 Continuous Learning
+
+ACT learns from your interactions to improve automatically.
+
+### Observation Types
+
+| Type | When | Example |
+|------|------|---------|
+| `pattern` | Recurring behavior detected | "Always uses atomic commits" |
+| `correction` | User corrects AI | "Use camelCase not snake_case" |
+| `preference` | Explicit or implicit preference | "Prefers inline docs" |
+| `error` | AI mistake identified | "Tests not run before commit" |
+| `success` | User validates action | "Format appreciated" |
+
+### Confidence Levels
+
+| Score | Level | AI Behavior |
+|-------|-------|-------------|
+| **0.3-0.5** | Tentative | 💬 Suggest (ask confirmation) |
+| **0.5-0.7** | Probable | 📝 Propose (apply if no objection) |
+| **0.7-0.9** | Certain | ✅ Apply automatically |
+| **0.9-1.0** | Established | 🔒 Always apply (no mention) |
+
+### Observation Logging
+
+When observing a significant event, log to `.act/observations.jsonl`:
+
+```json
+{"timestamp": "2026-02-02T06:00:00Z", "type": "correction", "context": {"task": "naming"}, "observation": "Prefers camelCase", "confidence": 0.5}
+```
+
+### Pattern Detection
+
+Log an observation when:
+- User corrects an AI action
+- User validates positively ("parfait", "bien")
+- Same behavior repeats ≥3 times
+- Error identified after AI action
+
+### /act:evolve
+
+Analyzes observations and evolves the system:
+
+```bash
+/act:evolve              # Standard analysis (7 days)
+/act:evolve --dry-run    # Preview without changes
+/act:evolve --since=30d  # Extended period
+```
+
+**Results:**
+- **Confidence 0.5-0.7** → Creates instinct in `instincts/`
+- **Confidence ≥0.7** → Updates skill in `skills/`
+
+### Instincts
+
+Temporary patterns in `instincts/`:
+- Suggestions, not rules
+- Can evolve into skills
+- Can be deleted if wrong
+
+**Full details:** @skills/continuous-learning/SKILL.md, @specs/SPEC-continuous-learning.md
