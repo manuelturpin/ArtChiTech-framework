@@ -18,9 +18,9 @@ ACT_ROOT=".claude/act"
 **First**, check if an ACT project exists to capture context:
 
 ```bash
-if [ -f ".epct/state.json" ]; then
+if [ -d ".act" ]; then
   echo "✅ ACT project found - context will be captured"
-  cat .epct/state.json
+  cat .act/state.md
 else
   echo "ℹ️  No ACT project found - feedback will be created without ACT context"
 fi
@@ -195,7 +195,7 @@ https://github.com/manuelturpin/ArtChiTech-framework/issues/new
 
 ### No ACT project initialized
 
-If no `.epct/` exists, still allow feedback but note in context:
+If no `.act/` exists, still allow feedback but note in context:
 ```
 **ACT Context (auto-captured)**
 - Version: v1.1.0

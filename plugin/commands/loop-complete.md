@@ -16,7 +16,7 @@ Finaliser une feature apres completion de la boucle : curer les learnings vers A
 
 ## Prerequis
 
-- Toutes stories de `.epct/session/prd.json` ont `passes: true`
+- Toutes stories de `.act/session/prd.json` ont `passes: true`
 - Ou l'utilisateur decide de terminer manuellement
 
 ## Comportement
@@ -24,7 +24,7 @@ Finaliser une feature apres completion de la boucle : curer les learnings vers A
 ### 1. Verifier Completion
 
 ```bash
-PENDING=$(jq '[.userStories[] | select(.passes == false)] | length' .epct/session/prd.json)
+PENDING=$(jq '[.userStories[] | select(.passes == false)] | length' .act/session/prd.json)
 if [ "$PENDING" -gt 0 ]; then
   echo "⚠️ $PENDING stories encore pending. Voulez-vous terminer quand meme? [y/n]"
 fi
@@ -32,7 +32,7 @@ fi
 
 ### 2. Lire les Patterns
 
-Analyser `.epct/loop/patterns.md` et extraire les patterns generaux.
+Analyser `.act/logs/patterns.md` et extraire les patterns generaux.
 
 ### 3. Proposer Curation
 
@@ -69,20 +69,20 @@ Pour chaque pattern valide par l'utilisateur :
 ### 5. Archiver la Session
 
 ```bash
-ARCHIVE_DIR=".epct/loop/archive/$(date +%Y-%m-%d)-$(basename $BRANCH)"
+ARCHIVE_DIR=".act/logs/archive/$(date +%Y-%m-%d)-$(basename $BRANCH)"
 mkdir -p "$ARCHIVE_DIR"
-mv .epct/session/prd.json "$ARCHIVE_DIR/"
-mv .epct/loop/progress.md "$ARCHIVE_DIR/"
-mv .epct/loop/patterns.md "$ARCHIVE_DIR/"
+mv .act/session/prd.json "$ARCHIVE_DIR/"
+mv .act/logs/progress.md "$ARCHIVE_DIR/"
+mv .act/logs/patterns.md "$ARCHIVE_DIR/"
 ```
 
 ### 6. Reset pour Prochaine Feature
 
 ```bash
 # Garder la structure, vider le contenu
-echo "# Loop Progress" > .epct/loop/progress.md
-echo "# Patterns" > .epct/loop/patterns.md
-rm -f .epct/session/prd.json
+echo "# Loop Progress" > .act/logs/progress.md
+echo "# Patterns" > .act/logs/patterns.md
+rm -f .act/session/prd.json
 ```
 
 ## Output Final
@@ -95,7 +95,7 @@ Stories: 7/7 passed
 Duration: 2h30
 
 Learnings curated: 3 patterns added to AGENTS.md
-Archive: .epct/loop/archive/2026-01-10-ralph-integration/
+Archive: .act/logs/archive/2026-01-10-ralph-integration/
 
 Ready for next feature!
 ```

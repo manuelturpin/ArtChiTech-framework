@@ -16,7 +16,7 @@ Afficher l'etat actuel de la boucle : stories done/pending/skipped, progression,
 
 ## Comportement
 
-1. **Lire** `.epct/session/prd.json`
+1. **Lire** `.act/session/prd.json`
 2. **Calculer** les statistiques
 3. **Lire** les derniers entries de `progress.md`
 4. **Afficher** le resume
@@ -69,6 +69,6 @@ Recent learnings:
 
 ## Fichiers Lus
 
-- `.epct/session/prd.json` - Etat des stories
-- `.epct/loop/progress.md` - Historique iterations
-- `.epct/loop/patterns.md` - Learnings (optionnel)
+- `.act/session/prd.json` - Etat des stories
+- `.act/logs/progress.md` - Historique iterations
+- `.act/logs/patterns.md` - Learnings (optionnel)

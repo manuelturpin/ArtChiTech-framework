@@ -12,9 +12,9 @@ You audit the current project and initialize it in ACT.
 **First**, check if an ACT project already exists:
 
 ```bash
-if [ -f ".epct/state.json" ]; then
+if [ -d ".act" ]; then
   echo "⚠️  ACT project already initialized"
-  echo "💡 Use /act-status to see current state, or delete .epct/ to re-audit"
+  echo "💡 Use /act:status to see current state, or delete .act/ to re-audit"
   # Continue anyway for re-audit scenario
 fi
 ```
@@ -135,7 +135,7 @@ After displaying recommendations, ask the user:
 **If choice 2:** Display final message and exit:
 ```
 📊 Audit complete!
-💡 Run /act-onboard again if you want to initialize ACT later.
+💡 Run /act:onboard again if you want to initialize ACT later.
 ```
 
 ---
@@ -144,21 +144,42 @@ After displaying recommendations, ask the user:
 
 **Only execute if user chose option 1 in Step 4b.**
 
-Create or update `.epct/state.json`:
+Create the `.act/` directory structure:
 
 ```bash
-python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py init \
-  --name "[project-name]" \
-  --type "[type]" \
-  --stack "[stack-comma-separated]"
+mkdir -p .act/history .act/handoffs
 ```
 
-Then update with scores:
+Create `.act/config.yaml`:
 
-```bash
-python3 ${ACT_ROOT}/skills/state-management/scripts/state_manager.py update \
-  --updates '{"phase": {"current": [phase], "name": "[phase-name]"}, "scores": {...}}'
+```yaml
+project:
+  name: "[project-name]"
+  type: "[type]"
+  stack: "[stack-comma-separated]"
+  created: "[date]"
+
+settings:
+  mode: full  # full or quick
 ```
+
+Create `.act/state.md`:
+
+```markdown
+# ACT State
+
+## Current
+- **Phase:** [phase]/7 ([phase-name])
+- **Progress:** [score]%
+- **Last Update:** [timestamp]
+- **Blocker:** None
+
+## Quick Stats
+- Sessions: 0
+- Commits: 0
+```
+
+Create `.act/plan.md`, `.act/progress.md`, `.act/findings.md` from templates.
 
 ## Step 6: CLAUDE.md GENERATION
 
@@ -238,10 +259,10 @@ Display:
 ```
 ✅ Project initialized in ACT!
 
-📁 State saved in .epct/state.json
+📁 State saved in .act/
 📝 CLAUDE.md [created/updated/unchanged]
 🎯 Current phase: [phase-name]
 💡 Next action: [first recommendation]
 
-Type /act-project to access the main menu.
+Type /act:status to see current state, or /act:quick or /act:full to start working.
 ```

@@ -4,7 +4,7 @@ description: List and fix priority errors in the project
 argument-hint: [error-id]
 ---
 
-# /act-fix - Error Correction
+# /act:fix - Error Correction
 
 You help fix problems blocking project progress.
 
@@ -29,13 +29,13 @@ Analyze the project using the `phase-scoring` skill and list problems by priorit
 │  🟢 Suggestions:                                            │
 │  [5] Add TypeScript strict mode                             │
 │                                                             │
-│  Type /act-fix [number] to fix a problem.                   │
+│  Type /act:fix [number] to fix a problem.                   │
 ╰─────────────────────────────────────────────────────────────╯
 ```
 
 ## With Argument: Fix the Problem
 
-`/act-fix 1` → Focus on problem #1
+`/act:fix 1` → Focus on problem #1
 
 ---
 
@@ -104,7 +104,7 @@ jobs:
 **Detection**: `npm run build` fails
 
 **Solution**:
-1. Check `.epct/loop/build-errors.log` for details
+1. Check `.act/logs/build-errors.log` for details
 2. Fix TypeScript errors first
 3. Verify all imports resolve
 4. Check for missing dependencies
@@ -123,7 +123,7 @@ npm install -D @types/[package]
 **Detection**: `tsc --noEmit` returns errors
 
 **Solution**:
-1. Check `.epct/loop/type-errors.log`
+1. Check `.act/logs/type-errors.log`
 2. Fix errors from top to bottom (earlier errors may cause later ones)
 3. Common patterns:
 
@@ -382,7 +382,7 @@ Recalculate the phase score and display:
 ```
 ✅ Problem fixed!
 📊 New phase [name] score: [new-score]%
-[If score >= 70] 💡 You can now use /act-next
+[If score >= 70] 💡 You can now use /act:next
 ```
 
 ## If No Problems
@@ -390,15 +390,15 @@ Recalculate the phase score and display:
 ```
 ✅ No problems detected. Everything is green!
 
-💡 Continue with /act-next to move forward
+💡 Continue with /act:next to move forward
 ```
 
 ## Error Resolution Workflow
 
 ```
-/act-fix → List problems
+/act:fix → List problems
     ↓
-/act-fix [n] → Focus on problem n
+/act:fix [n] → Focus on problem n
     ↓
 superpowers:systematic-debugging (if code issue)
 superpowers:test-driven-development (if test issue)
@@ -407,5 +407,5 @@ Fix implemented
     ↓
 Verify: npm run build && npm test
     ↓
-/act-fix → Verify problem resolved
+/act:fix → Verify problem resolved
 ```

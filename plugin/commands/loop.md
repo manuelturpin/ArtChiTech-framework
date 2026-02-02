@@ -18,7 +18,7 @@ Lancer la boucle autonome qui execute les user stories une par une jusqu'a compl
 
 ## Prerequis
 
-- Fichier `.epct/session/prd.json` existant
+- Fichier `.act/session/prd.json` existant
 - Au moins une story avec `passes: false`
 
 ## Comportement
@@ -56,7 +56,7 @@ Status: PASSED
 
 === COMPLETE ===
 All 5 stories passed in 5 iterations.
-See progress: .epct/loop/progress.md
+See progress: .act/logs/progress.md
 ```
 
 ## Gestion des Erreurs
@@ -79,7 +79,7 @@ See progress: .epct/loop/progress.md
 
 | Fichier | Modification |
 |---------|--------------|
-| `.epct/session/prd.json` | `passes: true/false`, `notes` |
-| `.epct/loop/progress.md` | Append iterations |
-| `.epct/loop/patterns.md` | Patterns decouverts |
+| `.act/session/prd.json` | `passes: true/false`, `notes` |
+| `.act/logs/progress.md` | Append iterations |
+| `.act/logs/patterns.md` | Patterns decouverts |
 | Code source | Implementation des stories |

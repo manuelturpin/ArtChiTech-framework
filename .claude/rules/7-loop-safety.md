@@ -50,8 +50,8 @@ $ ./loop.sh --phase dev
 4. Si succès → `passes: true` autorisé
 
 **Fichiers de log** :
-- `.epct/loop/build-errors.log` - Erreurs de build
-- `.epct/loop/type-errors.log` - Erreurs TypeScript
+- `.act/logs/build-errors.log` - Erreurs de build
+- `.act/logs/type-errors.log` - Erreurs TypeScript
 
 ### 3. Vérification des Types
 
@@ -73,7 +73,7 @@ npx tsc --noEmit
 Avant de lancer `./loop.sh` :
 
 - [ ] Je suis sur une branche feature (pas main/master/prod)
-- [ ] Le PRD existe (`.epct/session/prd.json`)
+- [ ] Le PRD existe (`.act/config.yaml/prd.json`)
 - [ ] Le projet compile (`npm run build` passe)
 - [ ] Les tests passent (`npm test` passe)
 - [ ] J'ai fait un commit de sauvegarde
@@ -171,7 +171,7 @@ git log --oneline -20
 
 ```bash
 # Voir les erreurs
-cat .epct/loop/build-errors.log
+cat .act/logs/build-errors.log
 
 # Corriger manuellement puis relancer
 npm run build
@@ -181,7 +181,7 @@ npm run build
 
 ## Métriques de Sécurité
 
-Le loop track ces métriques dans `.epct/loop/metrics.json` :
+Le loop track ces métriques dans `.act/logs/metrics.json` :
 
 ```json
 {
@@ -201,7 +201,7 @@ Le loop track ces métriques dans `.epct/loop/metrics.json` :
 1. **STOP** le loop immédiatement (Ctrl+C)
 2. **VERIFY** l'état du projet (`git status`, `npm run build`)
 3. **REVERT** si nécessaire (`git checkout -- .`)
-4. **REPORT** l'incident via `/act-feedback`
+4. **REPORT** l'incident via `/act:feedback`
 5. **DOCUMENT** ce qui s'est passé dans `docs/handoffs/`
 
 ---

@@ -15,7 +15,7 @@ Convertir un PRD markdown en fichier `prd.json` structure pour la boucle autonom
 ```
 
 Si aucun fichier specifie, cherche dans l'ordre :
-1. `.epct/prd.md`
+1. `.act/prd.md`
 2. `docs/prd.md`
 3. `PRD.md`
 
@@ -26,7 +26,7 @@ Si aucun fichier specifie, cherche dans l'ordre :
    - Nom du projet (titre H1)
    - Description (premier paragraphe)
    - User Stories (sections ## ou listes)
-3. **Generer** `.epct/session/prd.json`
+3. **Generer** `.act/session/prd.json`
 4. **Afficher** resume des stories creees
 
 ## Format PRD Markdown Attendu
@@ -74,7 +74,7 @@ En tant que [role], je veux [action], afin de [benefice].
 
 ```
 Stories generees: 5
-Fichier: .epct/session/prd.json
+Fichier: .act/session/prd.json
 
 US-001 [P1] Titre story 1
 US-002 [P2] Titre story 2

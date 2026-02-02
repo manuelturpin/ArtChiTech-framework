@@ -2,6 +2,17 @@
 
 > Claude Code plugin for 7-phase project management.
 
+## Hooks Behavior (MANDATORY)
+
+**@.claude/rules/9-hooks-behavior.md**
+
+Claude MUST apply these hooks automatically:
+- **PreToolUse**: Refresh plan before Write/Edit/Bash
+- **PostToolUse**: Update progress.md after modifications
+- **Stop**: Verify all phases before declaring complete
+
+---
+
 ## Language
 
 - **Project language**: English (all code, docs, comments)

@@ -1,103 +1,207 @@
-# Architecture du Projet
+# Architecture du Projet - ACT v2.5
 
 ## Structure des Dossiers
 
 ```
 lab-13/
-├── CLAUDE.md                  # Quick reference + @imports
-├── README.md                  # Documentation du plugin
+├── CLAUDE.md                   # Entry point + @imports
+├── README.md                   # Documentation du framework
 ├── .gitignore
-├── .github/                   # CI/CD workflows
+├── .github/                    # CI/CD workflows
 │
-├── .claude/                   # Configuration Claude
-│   ├── CLAUDE.local.md        # Préférences locales (gitignored)
-│   └── rules/                 # Source of truth
-│       ├── 0-behavior.md
+├── .claude/                    # Configuration Claude
+│   ├── CLAUDE.local.md         # Préférences locales (gitignored)
+│   └── rules/                  # Source of truth
+│       ├── 0-behavior.md       # Règles anti-hallucination
 │       ├── 1-framework-overview.md
-│       ├── 2-architecture.md
-│       └── ...
+│       ├── 2-architecture.md   # Ce fichier
+│       ├── 3-command-development.md
+│       ├── 4-conventions.md
+│       ├── 5-testing.md
+│       ├── 6-troubleshooting.md
+│       ├── 7-loop-safety.md
+│       └── 9-hooks-behavior.md # Hooks ACT v2.5
 │
-├── plugin/                    # Source du plugin ACT
-│   ├── .claude-plugin/        # Configuration plugin
-│   │   └── plugin.json
-│   ├── commands/              # Commandes slash
-│   ├── agents/                # Agents spécialisés
-│   ├── references/            # Documentation de référence
-│   │   ├── phases/            # Définition des 7 phases
-│   │   ├── scoring/           # Critères de scoring
-│   │   ├── recommendations/   # Recommandations par type
-│   │   └── templates/         # Templates de rapports
-│   └── scripts/               # Scripts utilitaires
+├── plugin/                     # Framework ACT distribuable
+│   ├── .claude-plugin/
+│   │   └── plugin.json         # v2.5.0
+│   ├── commands/
+│   │   ├── act/                # Commandes v2.5 (23 fichiers)
+│   │   │   ├── init.md
+│   │   │   ├── quick.md
+│   │   │   ├── full.md
+│   │   │   ├── status.md
+│   │   │   ├── resume.md
+│   │   │   ├── where-am-i.md
+│   │   │   ├── validate.md
+│   │   │   ├── diff.md
+│   │   │   ├── history.md
+│   │   │   ├── replay.md
+│   │   │   ├── handoff.md
+│   │   │   ├── reflect.md
+│   │   │   ├── memorize.md
+│   │   │   ├── evolve.md
+│   │   │   ├── party.md
+│   │   │   ├── sync-github.md
+│   │   │   ├── export.md
+│   │   │   ├── audit-*.md      # 4 audit commands
+│   │   │   ├── heal.md
+│   │   │   └── verify-hooks.md
+│   │   ├── consider/           # Thinking models (12)
+│   │   ├── act-onboard.md      # Legacy migrated
+│   │   ├── act-fix.md
+│   │   ├── act-fix-issue.md
+│   │   ├── act-feedback.md
+│   │   ├── act-triage.md
+│   │   └── loop*.md            # Loop commands
+│   ├── workflows/              # BMAD workflows
+│   ├── agents/                 # Agent definitions
+│   └── references/             # Phases, scoring
 │
-├── test-apps/                 # Applications de test (dev interne)
-│   └── [app-name]/            # Application de référence
+├── rules/                      # Iron Laws, Deviation Rules
+│   ├── iron-laws.md
+│   └── deviation-rules.md
 │
-├── docs/                      # Documentation développement
-│   ├── sources/               # Fichiers sources originaux
-│   ├── plans/                 # Plans d'implémentation
-│   ├── handoffs/              # Handoffs de sessions
-│   └── architecture/          # Documentation architecture
+├── skills/                     # 8 Skills
+│   ├── auditor/
+│   ├── continuous-learning/
+│   ├── context-engineering/
+│   ├── github-integration/
+│   ├── party-mode/
+│   ├── reflexion/
+│   ├── session-recovery/
+│   └── thinking/
 │
-└── scripts/                   # Scripts de build/installation
+├── agents/                     # 6 Agents v2.5
+│   ├── README.md
+│   ├── planner.md
+│   ├── architect.md
+│   ├── executor.md
+│   ├── reviewer.md
+│   ├── tester.md
+│   └── documenter.md
+│
+├── hooks/                      # Hooks documentation
+│   ├── hooks.json
+│   ├── pre-tool-use.md
+│   ├── post-tool-use.md
+│   └── stop.md
+│
+├── specs/                      # Specifications
+│   ├── SPEC-*.md               # 10+ specs
+│
+├── templates/                  # Templates
+│   ├── act/                    # .act/ templates
+│   ├── context-handoff.xml
+│   ├── verification-checklist.md
+│   └── ISSUES.md
+│
+├── test-apps/                  # Test applications
+│   └── [app-name]/
+│
+├── docs/                       # Development docs
+│   ├── sources/
+│   ├── plans/
+│   ├── handoffs/
+│   └── audits/
+│
+└── scripts/                    # Build/install scripts
     └── install-local.sh
 ```
 
 ---
 
-## Rôle de Chaque Dossier
+## Structure `.act/` (User Project)
 
-### `plugin/` - Le Framework ACT
+Quand ACT est initialisé dans un projet utilisateur :
 
-C'est le **cœur du produit** à distribuer.
-
-| Sous-dossier | Contenu |
-|--------------|---------|
-| `.claude-plugin/` | Configuration (plugin.json) |
-| `commands/` | Les 7 commandes slash |
-| `agents/` | 6 agents spécialisés |
-| `references/` | Documentation des phases, scoring |
-| `scripts/` | Utilitaires (detect_stack.py) |
-
-### `test-apps/` - Applications de Test
-
-**Usage** : Développement et validation uniquement.
-
-- Contient des applications de référence pour tester le framework
-- **N'est PAS documenté dans le plugin** lui-même
-- Permet de valider que ACT fonctionne sur des cas réels
-
-### `docs/` - Documentation Développement
-
-| Sous-dossier | Contenu |
-|--------------|---------|
-| `sources/` | Recherches originales, extractions |
-| `plans/` | Plans d'implémentation |
-| `handoffs/` | Résumés de sessions de dev |
-| `architecture/` | Documentation technique |
-
-### `.claude/rules/` - Source of Truth
-
-Fichiers de configuration pour Claude :
-- Règles de comportement
-- Architecture et conventions
-- Workflow de développement
+```
+user-project/
+├── .act/
+│   ├── config.yaml             # Configuration projet
+│   ├── state.md                # État courant
+│   ├── plan.md                 # Plan d'implémentation
+│   ├── progress.md             # Journal de progression
+│   ├── findings.md             # Découvertes et insights
+│   ├── history/                # Historique des sessions
+│   │   └── YYYY-MM-DD-HHmm.md
+│   ├── handoffs/               # Context handoffs
+│   │   └── latest.xml
+│   ├── logs/                   # Logs d'exécution
+│   │   ├── build-errors.log
+│   │   └── type-errors.log
+│   └── observations.jsonl      # Continuous learning
+└── CLAUDE.md
+```
 
 ---
 
-## Séparation Framework vs Outils de Dev
+## Composants Clés v2.5
 
-| Type | Dossier | Distribution |
-|------|---------|--------------|
-| **Framework** | `plugin/` | Distribué aux utilisateurs |
-| **Dev tools** | `test-apps/`, `docs/`, `scripts/` | Usage interne |
-| **Config Claude** | `.claude/` | Peut être partagé comme template |
+### Commands (`plugin/commands/act/`)
 
-### Règle importante
+| Catégorie | Commandes |
+|-----------|-----------|
+| **Init** | `init`, `quick`, `full` |
+| **State** | `status`, `resume`, `where-am-i`, `validate` |
+| **History** | `diff`, `history`, `replay`, `handoff` |
+| **Quality** | `reflect`, `memorize`, `evolve` |
+| **Multi-perspective** | `party` |
+| **GitHub** | `sync-github` |
+| **Portability** | `export` |
+| **Audit** | `audit-skill`, `audit-command`, `audit-agent`, `audit-all`, `heal` |
+| **Hooks** | `verify-hooks` |
 
-Le contenu de `plugin/` ne doit **jamais référencer** :
+### Skills (`skills/`)
+
+| Skill | Rôle |
+|-------|------|
+| `auditor` | Audit et réparation |
+| `continuous-learning` | Apprentissage adaptatif |
+| `context-engineering` | Gestion du contexte |
+| `github-integration` | Sync GitHub Issues |
+| `party-mode` | Multi-perspective |
+| `reflexion` | Amélioration qualité |
+| `session-recovery` | Récupération contexte |
+| `thinking` | Mental models |
+
+### Agents (`agents/`)
+
+| Agent | Model | Rôle |
+|-------|-------|------|
+| `planner` | opus | Planification |
+| `architect` | opus | Design |
+| `executor` | sonnet | Implémentation |
+| `reviewer` | opus | Code review |
+| `tester` | sonnet | Tests |
+| `documenter` | haiku | Documentation |
+
+### Hooks (`hooks/`)
+
+| Hook | Trigger | Action |
+|------|---------|--------|
+| PreToolUse | Write/Edit/Bash | Refresh plan |
+| PostToolUse | Write/Edit | Update progress |
+| Stop | Completion | Verify all phases |
+
+---
+
+## Séparation Framework vs User
+
+| Composant | Location | Distribution |
+|-----------|----------|--------------|
+| Plugin code | `plugin/` | Distribué |
+| Rules | `rules/`, `skills/`, `specs/` | Distribué |
+| Templates | `templates/` | Distribué |
+| User state | `.act/` | Créé par user |
+| Dev tools | `test-apps/`, `docs/` | Interne |
+
+### Règle Importante
+
+Le contenu de `plugin/` ne doit **jamais** référencer :
 - Les applications de test (`test-apps/`)
 - La documentation de développement (`docs/`)
-- Les configurations locales
+- Les configurations locales (`.claude/CLAUDE.local.md`)
 
 ---
 
@@ -105,7 +209,12 @@ Le contenu de `plugin/` ne doit **jamais référencer** :
 
 | Fichier | Rôle |
 |---------|------|
-| `plugin/.claude-plugin/plugin.json` | Manifeste du plugin |
-| `plugin/README.md` | Documentation utilisateur |
-| `.claude/rules/0-behavior.md` | Règles de conduite Claude |
-| `CLAUDE.md` | Quick reference pour Claude |
+| `plugin/.claude-plugin/plugin.json` | Manifeste v2.5.0 |
+| `CLAUDE.md` | Entry point + hooks |
+| `rules/iron-laws.md` | TDD, Debug, Verify |
+| `rules/deviation-rules.md` | Autonomy rules |
+| `.claude/rules/9-hooks-behavior.md` | Hook injection |
+
+---
+
+*Architecture ACT v2.5*

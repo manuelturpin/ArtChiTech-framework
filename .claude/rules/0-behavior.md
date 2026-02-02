@@ -146,5 +146,5 @@ Avant de dire "c'est fait" ou "ça fonctionne" :
 - [ ] Je suis sur une branche feature (pas main/master/prod)
 - [ ] Le projet compile (`npm run build`)
 - [ ] Les tests passent (`npm test`)
-- [ ] J'ai lu le PRD (`.epct/session/prd.json`)
+- [ ] J'ai lu la configuration (`.act/config.yaml`)
 - [ ] J'ai analysé les patterns existants du codebase

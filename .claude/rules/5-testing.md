@@ -149,8 +149,8 @@ Itération suivante → Tenter de corriger
 ### Logs de Vérification
 
 Le loop écrit les erreurs dans :
-- `.epct/loop/build-errors.log` - Erreurs de build
-- `.epct/loop/type-errors.log` - Erreurs TypeScript
+- `.act/logs/build-errors.log` - Erreurs de build
+- `.act/logs/type-errors.log` - Erreurs TypeScript
 
 ### Récupération
 
@@ -158,10 +158,10 @@ Si des erreurs s'accumulent :
 
 ```bash
 # Voir les erreurs de build
-cat .epct/loop/build-errors.log
+cat .act/logs/build-errors.log
 
 # Voir les erreurs de type
-cat .epct/loop/type-errors.log
+cat .act/logs/type-errors.log
 
 # Revenir à un état sain
 git checkout -- .
