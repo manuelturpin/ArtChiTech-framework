@@ -253,6 +253,33 @@ ACT v2.5 includes a [hooks system](hooks/) for automated context refresh:
 - **PostToolUse** — Update progress after changes
 - **Stop** — Verify completion before exit
 
+#### Local Hooks
+
+Projects can customize hooks via `.act/hooks.json`:
+
+```bash
+/act:init --with-hooks
+```
+
+This creates a local hooks file that can:
+- **Extend** framework hooks (inherit base behavior)
+- **Override** specific hook configurations
+- **Add** project-specific custom hooks
+
+Example: Add extra context files to PreToolUse:
+```json
+{
+  "extends": "framework",
+  "overrides": {
+    "PreToolUse": {
+      "config": { "additionalFiles": ["docs/API.md"] }
+    }
+  }
+}
+```
+
+See [SPEC-hooks-system.md](specs/SPEC-hooks-system.md) for full documentation.
+
 ---
 
 ## Requirements

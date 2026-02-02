@@ -133,7 +133,22 @@ Agents often forget to:
 Hooks make these checks AUTOMATIC and MANDATORY.
 ```
 
-**Full details:** @hooks/
+### Local Hooks
+
+Projects can customize hooks via `.act/hooks.json`:
+
+```bash
+/act:init --with-hooks
+```
+
+| Capability | Example |
+|------------|---------|
+| Extend framework hooks | `"extends": "framework"` |
+| Add context files | `"overrides": { "PreToolUse": { "config": { "additionalFiles": ["docs/API.md"] }}}` |
+| Custom project hooks | `"hooks": { "PreDeploy": {...} }` |
+| Disable hooks (prototype mode) | `"overrides": { "PostToolUse": { "enabled": false }}` |
+
+**Full details:** @hooks/ and @specs/SPEC-hooks-system.md
 
 ---
 

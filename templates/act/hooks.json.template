@@ -1,0 +1,22 @@
+{
+  "$schema": "../../hooks/hooks-schema.json",
+  "version": "1.0",
+  "description": "Project-specific hooks for {{PROJECT_NAME}}",
+  "extends": "framework",
+  "hooks": {
+    "CustomHook": {
+      "enabled": false,
+      "description": "Add your custom hook here",
+      "triggers": [],
+      "action": "",
+      "config": {}
+    }
+  },
+  "overrides": {
+    "PreToolUse": {
+      "config": {
+        "additionalFiles": []
+      }
+    }
+  }
+}

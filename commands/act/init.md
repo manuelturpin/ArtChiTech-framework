@@ -19,6 +19,8 @@ Initialise la structure ACT v2.5 dans un projet. Crée le dossier `.act/` avec t
 | `--type` | Type de projet | "feature" |
 | `--scale` | Échelle | "full" |
 | `--quick` | Shortcut pour `--scale quick` | - |
+| `--gitignore` | Crée un `.gitignore` pour `.act/` | false |
+| `--with-hooks` | Créer `.act/hooks.json` local | - |
 
 ### Project Types
 
@@ -52,6 +54,12 @@ Initialise la structure ACT v2.5 dans un projet. Crée le dossier `.act/` avec t
 
 # Full product
 /act:init --name "new-api" --type product --scale full
+
+# With local hooks for customization
+/act:init --with-hooks
+
+# Full product with local hooks
+/act:init --name "my-api" --type product --with-hooks
 ```
 
 ---
@@ -158,7 +166,41 @@ Define the project goal and phases.
 - [ ] Start Phase 1: Context
 ```
 
-### Step 5: Confirm
+#### 4.6 hooks.json (if --with-hooks)
+```json
+{
+  "$schema": "../../hooks/hooks-schema.json",
+  "version": "1.0",
+  "description": "Project-specific hooks for {project_name}",
+  "extends": "framework",
+  "hooks": {
+    "CustomHook": {
+      "enabled": false,
+      "description": "Add your custom hook here",
+      "triggers": [],
+      "action": "",
+      "config": {}
+    }
+  },
+  "overrides": {
+    "PreToolUse": {
+      "config": {
+        "additionalFiles": []
+      }
+    }
+  }
+}
+```
+
+### Step 5: Create Gitignore (if --gitignore)
+
+```
+IF --gitignore THEN
+  COPY templates/act/gitignore.template → .act/.gitignore
+  OUTPUT: "📋 Created .act/.gitignore (edit to customize)"
+```
+
+### Step 6: Confirm
 ```
 OUTPUT:
 ✅ ACT v2.5 initialized!
@@ -169,7 +211,8 @@ OUTPUT:
   ├── state.md
   ├── plan.md
   ├── findings.md
-  └── progress.md
+  ├── progress.md
+  └── hooks.json      # (if --with-hooks)
 
 🎯 Next: Edit .act/plan.md to define your goal and phases.
 ```

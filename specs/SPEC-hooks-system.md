@@ -264,4 +264,147 @@ Agent: Task complete! All phases done.
 
 ---
 
+## Local Hooks
+
+### Overview
+
+Beyond framework-level hooks, ACT v2.5 supports **project-local hooks** defined in `.act/hooks.json`. This allows projects to customize hook behavior without modifying the framework.
+
+### Hierarchy
+
+```
+┌─────────────────────────────────────┐
+│ Project Hooks (.act/hooks.json)     │ ← Highest priority
+├─────────────────────────────────────┤
+│ Framework Hooks (hooks/hooks.json)  │ ← Base configuration
+└─────────────────────────────────────┘
+```
+
+**Resolution order:**
+1. Load framework hooks (base configuration)
+2. If `extends: "framework"` in local hooks, merge with framework
+3. Apply local overrides on top
+4. Custom hooks are added to the hook registry
+
+### Local hooks.json Structure
+
+```json
+{
+  "$schema": "../../hooks/hooks-schema.json",
+  "version": "1.0",
+  "description": "Project-specific hooks",
+  "extends": "framework",
+  "hooks": {
+    "CustomHook": {
+      "enabled": true,
+      "description": "Custom hook for this project",
+      "triggers": ["custom-event"],
+      "action": "custom_action",
+      "config": {}
+    }
+  },
+  "overrides": {
+    "PreToolUse": {
+      "config": {
+        "additionalFiles": [".act/custom-context.md"]
+      }
+    }
+  }
+}
+```
+
+### Configuration Options
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `extends` | string | Base config to extend (`"framework"` or `"none"`) |
+| `hooks` | object | Custom hooks specific to this project |
+| `overrides` | object | Override config for framework hooks |
+
+### Extends Modes
+
+| Mode | Behavior |
+|------|----------|
+| `"framework"` | Inherit all framework hooks, apply overrides |
+| `"none"` | Start fresh, no framework hooks inherited |
+
+### Override Capabilities
+
+You can override specific config values for framework hooks:
+
+```json
+{
+  "overrides": {
+    "PreToolUse": {
+      "config": {
+        "additionalFiles": ["docs/CONTEXT.md"],
+        "checkAlignment": false
+      }
+    },
+    "Stop": {
+      "enabled": false
+    }
+  }
+}
+```
+
+### Use Cases
+
+1. **Project-specific context files**
+   ```json
+   "overrides": {
+     "PreToolUse": {
+       "config": {
+         "additionalFiles": [".act/api-context.md"]
+       }
+     }
+   }
+   ```
+
+2. **Disable hooks for quick iterations**
+   ```json
+   "overrides": {
+     "PostToolUse": { "enabled": false }
+   }
+   ```
+
+3. **Custom project hooks**
+   ```json
+   "hooks": {
+     "PreDeploy": {
+       "enabled": true,
+       "triggers": ["deploy", "release"],
+       "action": "run_checks",
+       "config": { "checkList": ["tests", "lint", "build"] }
+     }
+   }
+   ```
+
+### Creating Local Hooks
+
+Use the init command with `--with-hooks`:
+
+```bash
+/act:init --with-hooks
+```
+
+This creates `.act/hooks.json` from the template with:
+- `extends: "framework"` (inherit base hooks)
+- Empty `hooks` section for custom hooks
+- Empty `overrides` section for customization
+
+### Best Practices
+
+**DO ✅**
+- Use `extends: "framework"` to keep base protections
+- Only override what you need
+- Document why you disabled/modified a hook
+
+**DON'T ❌**
+- Disable Stop hook without good reason (removes completion verification)
+- Use `extends: "none"` unless you really know what you're doing
+- Create hooks that duplicate framework functionality
+
+---
+
 *Specification for ACT v2.5 Hooks System*
