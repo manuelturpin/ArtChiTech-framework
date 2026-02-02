@@ -38,7 +38,7 @@ ACT v2.5 introduces the **3-File Pattern** — persistent files that maintain co
 
 - **Session Recovery** — Automatic "catchup report" when resuming
 - **5-Question Reboot Test** — Verify context is complete
-- **Context Handoff** — Seamless transfer between sessions
+- **Context Handoff** — Standardized format for transferring context between sessions or agents
 
 ---
 
@@ -149,10 +149,13 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | `/act:status` | Show current state |
 | `/act:validate` | Validate .act/ file conformity |
 | `/act:resume` | Recovery from previous session |
+| `/act:where-am-i` | Quick 5-question context check |
 | `/act:handoff` | Generate handoff for session transfer |
 | `/act:history` | List past sessions (Session History) |
 | `/act:replay` | View details of a past session |
 | `/act:diff` | Show changes since last session |
+| `/act:reflect` | Reflect on task to improve quality (+8-21%) |
+| `/act:memorize` | Save important insights for future reference |
 
 ### Legacy Commands (v2.1)
 
@@ -194,15 +197,26 @@ When you start a new session, ACT automatically:
 
 ### 5-Question Reboot Test
 
-To verify context is complete, answer these:
+To verify context is complete, use `/act:where-am-i`:
 
-| Question | Source |
-|----------|--------|
-| Where am I? | `state.md` |
-| Where am I going? | `plan.md` |
-| What's the goal? | `plan.md` |
-| What have I learned? | `findings.md` |
-| What have I done? | `progress.md` |
+```
+/act:where-am-i
+```
+
+This runs a quick check against the 5 essential questions:
+
+| # | Question | Source | Status |
+|---|----------|--------|--------|
+| 1 | Where am I? | `state.md` | Current phase |
+| 2 | Where am I going? | `plan.md` | Remaining phases |
+| 3 | What's the goal? | `config.yaml` | Project objective |
+| 4 | What have I learned? | `findings.md` | Key discoveries |
+| 5 | What have I done? | `progress.md` | Recent actions |
+
+**Context Status:**
+- ✅ Complete (5/5) → Ready to continue
+- ⚠️ Partial (3-4/5) → Proceed with caution
+- ❌ Incomplete (0-2/5) → Run `/act:init --repair`
 
 ### Session History
 
@@ -258,6 +272,7 @@ ACT v2.5 includes skills that provide detailed guidance:
 | [`context-engineering`](skills/context-engineering/) | 3-File Pattern, session recovery |
 | [`session-recovery`](skills/session-recovery/) | Resume work after context reset |
 | [`iron-laws`](skills/iron-laws/) | Quality enforcement (TDD, Debug, Verify) |
+| [`reflexion`](skills/reflexion/) | Improve output quality through reflection (+8-21%) |
 
 ### Hooks System
 
@@ -458,6 +473,63 @@ Can I fix this in < 5 min without changing how things work together?
 
 ---
 
+## Context Handoff
+
+Transfer context seamlessly between sessions or agents with a standardized format.
+
+### What is Context Handoff?
+
+A structured document (XML or Markdown) that captures:
+- Original task description
+- Completed and remaining work
+- Attempted approaches (what worked/failed)
+- Critical context (must-not-lose information)
+- Current state snapshot
+
+### Generate Handoff
+
+```bash
+/act:handoff              # Output to stdout
+/act:handoff --save       # Save to .act/handoffs/
+/act:handoff --format md  # Use markdown format
+/act:handoff --to agent   # Specify target agent
+```
+
+### Example Output
+
+```xml
+<context_handoff>
+  <metadata>
+    <project>ACT v2.5</project>
+    <timestamp>2026-02-02T10:30:00Z</timestamp>
+  </metadata>
+  <original_task>Implement Phase 4</original_task>
+  <work_completed>
+    - Created spec document
+    - Created template
+  </work_completed>
+  <work_remaining>
+    - Create command
+    - Update documentation
+  </work_remaining>
+  <current_state>
+    Phase: 4/6
+    Progress: 60%
+  </current_state>
+</context_handoff>
+```
+
+### Integration with Session Recovery
+
+When resuming (`/act:resume`), if a recent handoff exists:
+1. Handoff is automatically detected
+2. Enriches the catchup report
+3. Prioritizes remaining work from handoff
+
+**Details:** See `specs/SPEC-context-handoff.md`
+
+---
+
 ## Model Selection
 
 ACT v2.5 optimizes cost/quality by selecting the right model for each task through specialized agents.
@@ -525,3 +597,4 @@ Quick Mode: executor → tester → documenter
 - [x] Deviation Rules (Controlled autonomy)
 - [x] Session Recovery automation
 - [x] Model Selection (Agent system)
+- [x] Context Handoff format

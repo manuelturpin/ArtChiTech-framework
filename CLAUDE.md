@@ -95,18 +95,24 @@ ACT detects existing `.act/` directory and generates a **Catchup Report**:
 ```
 
 ### 5-Question Reboot Test
-Verify context is complete by answering:
+Verify context is complete using `/act:where-am-i`:
 
-| Question | Source |
-|----------|--------|
-| Where am I? | `state.md` |
-| Where am I going? | `plan.md` |
-| What's the goal? | `config.yaml` |
-| What have I learned? | `findings.md` |
-| What have I done? | `progress.md` |
+| # | Question | Source | Status |
+|---|----------|--------|--------|
+| 1 | Where am I? | `state.md` | ✅/❌ |
+| 2 | Where am I going? | `plan.md` | ✅/❌ |
+| 3 | What's the goal? | `config.yaml` | ✅/❌ |
+| 4 | What have I learned? | `findings.md` | ✅/❌ |
+| 5 | What have I done? | `progress.md` | ✅/❌ |
+
+**Context Status:**
+- 5/5 → ✅ Complete, ready to continue
+- 3-4/5 → ⚠️ Partial, proceed with caution
+- 0-2/5 → ❌ Incomplete, run `/act:init --repair`
 
 **Full details:** @skills/session-recovery/SKILL.md  
-**Command:** `/act:resume`
+**Spec:** @specs/SPEC-reboot-test.md  
+**Commands:** `/act:resume`, `/act:where-am-i`
 
 ---
 
@@ -178,6 +184,43 @@ Session History saves a summary of each work session for traceability.
 ```
 
 **Full details:** @skills/session-recovery/SKILL.md
+
+---
+
+## 📤 Context Handoff
+
+Transfer context between sessions or agents with a standardized format.
+
+### Generate Handoff
+
+```bash
+/act:handoff              # Output to stdout
+/act:handoff --save       # Save to .act/handoffs/
+/act:handoff --format md  # Markdown instead of XML
+/act:handoff --to agent   # Specify target agent
+```
+
+### Handoff Content
+
+| Section | Contains |
+|---------|----------|
+| `metadata` | Project, timestamp, session ID |
+| `original_task` | What was the goal |
+| `work_completed` | Actions done |
+| `work_remaining` | Tasks left |
+| `attempted_approaches` | What worked/failed |
+| `critical_context` | Must-not-lose info |
+| `current_state` | Phase, progress, blockers |
+
+### Integration with Recovery
+
+When `/act:resume` finds a recent handoff (< 24h), it:
+1. Parses handoff content
+2. Enriches catchup report
+3. Prioritizes `work_remaining`
+
+**Full details:** @specs/SPEC-context-handoff.md  
+**Template:** @templates/context-handoff.xml
 
 ---
 
@@ -261,7 +304,9 @@ git commit -m "feat: description"
 | `/act:full` | Start full mode (complex projects) |
 | `/act:validate` | Validate .act/ file conformity |
 | `/act:resume` | Recover from previous session |
+| `/act:where-am-i` | Quick 5-question context check |
 | `/act:history` | List past sessions |
 | `/act:replay` | View details of a past session |
 | `/act:diff` | Show changes since last session |
 | `/act:status` | Show current state with velocity |
+| `/act:handoff` | Generate context handoff for transfer |
