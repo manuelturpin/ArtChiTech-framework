@@ -42,6 +42,34 @@
 
 ---
 
+## 🔀 Deviation Rules
+
+When you discover something unexpected during execution, apply these rules:
+
+| Rule | Trigger | Action |
+|:----:|---------|--------|
+| **1** | Bug discovered | 🔧 Auto-fix immediately |
+| **2** | Missing critical (deps, config) | ➕ Auto-add immediately |
+| **3** | Blocker (prevents progress) | 🚧 Auto-fix immediately |
+| **4** | Architectural change | ⛔ **STOP & ASK USER** |
+| **5** | Enhancement (nice-to-have) | 📝 Log to ISSUES.md, continue |
+
+**Principle:** Rules 1-3, 5 = autonomous. Rule 4 = human decision required.
+
+### Quick Decision
+```
+Can I fix this in < 5 min without changing how things work together?
+├── YES → Rules 1, 2, or 3 (auto-handle)
+└── NO  → Does it need a design decision?
+          ├── YES → Rule 4 (STOP and ASK)
+          └── NO  → Rule 5 (Log and continue)
+```
+
+**Full details:** @rules/deviation-rules.md  
+**Enhancement log:** @templates/ISSUES.md
+
+---
+
 ## Rules
 
 @.claude/rules/0-behavior.md

@@ -313,10 +313,62 @@ Is it well-defined + known solution + < 1 day + no architecture?
 
 ---
 
+## Deviation Rules
+
+When you encounter something unexpected during execution, ACT has clear rules for how to handle it:
+
+### The 5 Rules
+
+| Rule | Trigger | Action |
+|:----:|---------|--------|
+| **1** | Bug discovered | 🔧 Auto-fix immediately |
+| **2** | Missing critical (deps, config) | ➕ Auto-add immediately |
+| **3** | Blocker (prevents progress) | 🚧 Auto-fix immediately |
+| **4** | Architectural change | ⛔ **STOP & ASK** |
+| **5** | Enhancement (nice-to-have) | 📝 Log to ISSUES.md |
+
+### Autonomy Distribution
+
+```
+┌─────────────────────────────────────┐
+│  AUTONOMOUS (just do it):           │
+│  ├── Rule 1: Bug → Fix it           │
+│  ├── Rule 2: Missing → Add it       │
+│  ├── Rule 3: Blocker → Unblock it   │
+│  └── Rule 5: Enhancement → Log it   │
+│                                     │
+│  HUMAN REQUIRED (stop and ask):     │
+│  └── Rule 4: Architectural change   │
+└─────────────────────────────────────┘
+```
+
+### Quick Decision Guide
+
+```
+Can I fix this in < 5 min without changing how things work together?
+├── YES → Rules 1, 2, or 3 (auto-handle)
+└── NO  → Does it need a design decision?
+          ├── YES → Rule 4 (STOP and ASK)
+          └── NO  → Rule 5 (Log and continue)
+```
+
+### Examples
+
+| Situation | Rule | Action |
+|-----------|------|--------|
+| Typo causing bug | 1 | Fix immediately |
+| Missing npm package | 2 | Install immediately |
+| Build won't compile | 3 | Fix immediately |
+| "Should we use Redux or Context?" | 4 | STOP, ask user |
+| "This could be more readable" | 5 | Log to ISSUES.md |
+
+---
+
 ## Roadmap to v2.5 Final
 
 - [x] Context Engineering (3-File Pattern)
 - [x] Hooks System (Pre/Post/Stop)
 - [x] Iron Laws (TDD, Debug, Verification)
 - [x] Scale-Adaptive (Quick vs Full mode)
+- [x] Deviation Rules (Controlled autonomy)
 - [ ] Session Recovery automation
