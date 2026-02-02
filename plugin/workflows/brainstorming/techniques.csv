@@ -1,0 +1,76 @@
+id,name,category,phases,duration_min,group_size,description,when_to_use,output_type
+BT-001,Classic Brainstorming,CREATIVE,1;2;3,15,1-10,Free-form idea generation with no criticism allowed,Starting a new topic or exploring possibilities,idea_list
+BT-002,Brainwriting 6-3-5,CREATIVE,1;2;3,15,3-6,6 people write 3 ideas in 5 minutes then pass to next person,When group dynamics hinder verbal brainstorming,idea_list
+BT-003,SCAMPER,CREATIVE,1;2;3;7,15,1-5,Substitute Combine Adapt Modify Put-to-other-use Eliminate Reverse,Improving existing products or features,idea_list
+BT-004,Mind Mapping,CREATIVE,1;2;3;4,20,1-5,Visual diagram branching from a central concept,Exploring relationships between ideas,mind_map
+BT-005,Reverse Brainstorming,CREATIVE,1;2;5,15,1-10,Generate ways to cause the problem then reverse them,When stuck on solving a problem directly,idea_list
+BT-006,Random Word Stimulus,CREATIVE,1;2;3,10,1-5,Use a random word to trigger unexpected connections,When ideas have dried up or thinking is too narrow,idea_list
+BT-007,Worst Possible Idea,CREATIVE,1;2,10,1-10,Generate the worst ideas then flip them into good ones,Breaking creative blocks and reducing fear of judgment,idea_list
+BT-008,TRIZ,CREATIVE,3;4,30,1-3,Theory of Inventive Problem Solving with 40 principles,Solving technical contradictions in design,solution_framework
+BT-009,Analogical Thinking,CREATIVE,1;2;3,15,1-5,Draw parallels from other industries or nature,Finding innovative solutions from different domains,idea_list
+BT-010,What If Scenarios,CREATIVE,1;2;6;7,15,1-10,Explore hypothetical scenarios to uncover opportunities,Stress-testing ideas or exploring edge cases,scenario_list
+BT-011,Crazy Eights,CREATIVE,3,8,1-5,Sketch 8 ideas in 8 minutes on a folded paper,Rapid visual ideation for UI/UX design,sketches
+BT-012,Round Robin,CREATIVE,1;2,15,3-10,Each person adds one idea in turn around the group,Ensuring equal participation in idea generation,idea_list
+BT-013,Brain Netting,CREATIVE,1;2;3,20,2-10,Online collaborative brainstorming using shared documents,Remote teams or asynchronous ideation,idea_list
+BT-014,Starbursting,CREATIVE,1;2,15,1-5,Generate questions (Who What Where When Why How) about an idea,Exploring all dimensions of a concept before deciding,question_list
+BT-015,Role Storming,CREATIVE,1;2;3;7,20,1-10,Brainstorm from the perspective of different personas,Breaking personal biases and exploring diverse viewpoints,idea_list
+BT-016,Forced Connections,CREATIVE,1;3,10,1-5,Combine two unrelated concepts to spark new ideas,When conventional thinking yields no new ideas,idea_list
+BT-017,Attribute Listing,CREATIVE,3;4,15,1-5,List all attributes of a product then modify each one,Systematic improvement of existing features,attribute_matrix
+BT-018,Provocation (PO),CREATIVE,1;2;3,10,1-5,Make deliberately provocative statements to disrupt thinking,When thinking is stuck in established patterns,idea_list
+BT-019,Rapid Ideation Sprint,CREATIVE,1;2,10,1-10,Time-boxed burst of ideas with quantity over quality,Generating maximum volume of ideas quickly,idea_list
+BT-020,Story Cubes,CREATIVE,1;7,15,1-5,Use random story elements to trigger narrative-based ideas,Creating user stories or marketing narratives,story_list
+BT-021,Six Thinking Hats,ANALYTICAL,1;2;3,30,1-6,Examine topic from 6 perspectives (facts emotions risks benefits creative process),Evaluating complex decisions with multiple viewpoints,analysis_report
+BT-022,SWOT Analysis,ANALYTICAL,1;2;7,20,1-5,Map Strengths Weaknesses Opportunities Threats,Strategic assessment of project or feature,swot_matrix
+BT-023,Five Whys,ANALYTICAL,1;5;7,15,1-3,Ask why 5 times to find root cause,Diagnosing root causes of problems,root_cause
+BT-024,Fishbone (Ishikawa),ANALYTICAL,5;7,20,1-5,Diagram showing causes categorized by type leading to an effect,Analyzing complex problems with multiple contributing factors,cause_diagram
+BT-025,PESTEL Analysis,ANALYTICAL,1;2,25,1-5,Analyze Political Economic Social Technological Environmental Legal factors,Understanding external macro-environment impact,analysis_report
+BT-026,Value Proposition Canvas,ANALYTICAL,1;2,20,1-5,Map customer jobs pains gains against product features,Ensuring product-market fit,canvas
+BT-027,Business Model Canvas,ANALYTICAL,2,30,1-5,9-block canvas covering key business model components,Defining or refining the business model,canvas
+BT-028,Lean Canvas,ANALYTICAL,2,20,1-3,Simplified business model canvas focused on lean startup,Quick business model validation for startups,canvas
+BT-029,Jobs-To-Be-Done (JTBD),ANALYTICAL,1;2,25,1-5,Identify functional emotional social jobs customers hire products for,Understanding true customer motivations,job_statements
+BT-030,Kano Model,ANALYTICAL,2;3,20,1-5,Categorize features as Must-be Performance Delighter,Prioritizing features by customer satisfaction impact,feature_matrix
+BT-031,MoSCoW Prioritization,ANALYTICAL,2;3;4,15,1-5,Categorize as Must-have Should-have Could-have Wont-have,Quick prioritization of features or requirements,priority_list
+BT-032,Empathy Map,ANALYTICAL,1,20,1-5,Map what users Think Feel Say Do,Building deep understanding of user perspective,empathy_canvas
+BT-033,Assumption Mapping,ANALYTICAL,1;2,20,1-5,List and rank assumptions by risk and uncertainty,Identifying which assumptions to test first,risk_matrix
+BT-034,Decision Matrix,ANALYTICAL,2;3;4,20,1-5,Score options against weighted criteria,Making objective decisions between alternatives,scored_matrix
+BT-035,Cost-Benefit Analysis,ANALYTICAL,2;6,20,1-3,Compare expected costs against expected benefits,Evaluating ROI of features or initiatives,analysis_report
+BT-036,Risk Assessment Matrix,ANALYTICAL,2;5;6,20,1-5,Map risks by probability and impact,Identifying and prioritizing project risks,risk_matrix
+BT-037,Trade-off Analysis,ANALYTICAL,3;4,20,1-5,Explicitly compare what you gain vs lose with each option,Choosing between competing architectural or design options,comparison_table
+BT-038,Competitive Analysis Grid,ANALYTICAL,1;2,25,1-3,Structured comparison of competitors on key dimensions,Understanding competitive landscape and positioning,comparison_table
+BT-039,Pre-Mortem,ANALYTICAL,2;5;6,20,1-10,Imagine the project failed then work backwards to find causes,Proactively identifying risks before they happen,risk_list
+BT-040,Opportunity Solution Tree,ANALYTICAL,1;2,25,1-5,Tree mapping desired outcome to opportunities to solutions to experiments,Connecting customer needs to actionable experiments,tree_diagram
+BT-041,Customer Journey Map,VISUAL,1;3;7,30,1-5,Visual timeline of customer touchpoints emotions and pain points,Understanding end-to-end user experience,journey_map
+BT-042,Service Blueprint,VISUAL,3;4,30,1-5,Detailed map of service delivery including frontstage and backstage,Designing complex service interactions,blueprint
+BT-043,User Story Mapping,VISUAL,2;3;4,25,1-5,2D map with user activities across top and priority depth below,Planning releases and understanding user workflow,story_map
+BT-044,Wardley Map,VISUAL,2;3,30,1-3,Value chain positioned on evolution axis from genesis to commodity,Strategic technology and component decisions,wardley_map
+BT-045,Impact Map,VISUAL,2;3,20,1-5,Goal → Actors → Impacts → Deliverables tree,Connecting business goals to product features,impact_tree
+BT-046,C4 Model Diagram,VISUAL,3;4,25,1-3,4-level architecture diagram (Context Container Component Code),Documenting and communicating software architecture,architecture_diagram
+BT-047,Event Storming,VISUAL,3;4,30,2-10,Collaborative modeling using domain events on sticky notes,Discovering domain model and bounded contexts,event_model
+BT-048,Affinity Diagram,VISUAL,1;5;7,20,1-10,Group related ideas into clusters after brainstorming,Organizing large numbers of ideas into themes,theme_clusters
+BT-049,Concept Map,VISUAL,1;3,20,1-5,Diagram showing relationships between concepts with labeled links,Understanding and communicating complex knowledge domains,concept_diagram
+BT-050,Flowchart / Process Map,VISUAL,3;4;5,20,1-5,Step-by-step diagram of a process with decision points,Documenting workflows and identifying bottlenecks,flowchart
+BT-051,Storyboarding,VISUAL,1;3;6,25,1-5,Sequential visual frames showing user interaction scenarios,Communicating user experience and feature flows,storyboard
+BT-052,Architecture Decision Record,VISUAL,3;4,15,1-3,Structured document recording architectural decisions and rationale,Documenting and justifying technical choices,decision_record
+BT-053,Stakeholder Map,VISUAL,1;2;6,15,1-5,Visual map of stakeholders by influence and interest,Identifying key people to engage at each phase,stakeholder_matrix
+BT-054,Data Flow Diagram,VISUAL,3;4,20,1-3,Diagram showing how data moves through the system,Understanding data processing and storage needs,data_diagram
+BT-055,Personas Canvas,VISUAL,1,25,1-5,Detailed user persona with demographics behaviors goals frustrations,Creating shared understanding of target users,persona_sheet
+BT-056,Dot Voting,CONVERGENT,1;2;3,10,3-10,Each person gets dots to vote on favorite ideas,Quick democratic prioritization of ideas,ranked_list
+BT-057,Impact/Effort Matrix,CONVERGENT,2;3;4;7,15,1-5,Plot ideas on 2x2 grid of impact vs effort,Identifying quick wins and strategic projects,priority_matrix
+BT-058,100 Dollar Test,CONVERGENT,2;3,10,3-10,Distribute imaginary $100 across options to show preference,Forcing trade-off decisions in prioritization,allocation_table
+BT-059,NUF Test,CONVERGENT,2;3,10,1-5,Score ideas on New Useful Feasible criteria,Quick filtering of ideas for viability,scored_list
+BT-060,Forced Ranking,CONVERGENT,2;3;4,10,1-5,Rank all options from best to worst with no ties allowed,Making definitive choices between similar options,ranked_list
+BT-061,Pugh Matrix,CONVERGENT,3;4,20,1-5,Compare design alternatives against a baseline on multiple criteria,Systematic evaluation of design concepts,comparison_matrix
+BT-062,Sean Ellis Test,CONVERGENT,1,15,1-3,Ask users how disappointed they would be without the product,Measuring product-market fit,survey_results
+BT-063,ICE Scoring,CONVERGENT,2;3;4;7,15,1-5,Score ideas on Impact Confidence Ease,Prioritizing features or experiments,scored_list
+BT-064,RICE Scoring,CONVERGENT,2;3;4;7,15,1-5,Score ideas on Reach Impact Confidence Effort,Data-driven prioritization of product features,scored_list
+BT-065,Buy-a-Feature,CONVERGENT,2;3,15,3-10,Give participants budget to buy features they want most,Collaborative feature prioritization with stakeholders,allocation_table
+BT-066,Weighted Decision Matrix,CONVERGENT,3;4;6,20,1-5,Score options against criteria with different weights per criterion,Complex decisions with multiple important criteria,weighted_matrix
+BT-067,Nominal Group Technique,CONVERGENT,1;2,20,3-10,Silent idea generation then round-robin sharing and voting,Structured group decision-making reducing bias,ranked_list
+BT-068,Delphi Method,CONVERGENT,2;3,25,3-10,Multiple rounds of anonymous expert input with feedback,Complex decisions requiring expert consensus,consensus_report
+BT-069,Speed Boat,CONVERGENT,5;7,15,1-10,Identify anchors (problems) slowing down the project boat,Retrospective identification of blockers and issues,issue_list
+BT-070,Fist of Five,CONVERGENT,2;3;4,5,3-10,Quick consensus check with 1-5 finger vote,Rapid team alignment on decisions,consensus_result
+BT-071,Technical Spike Planning,BONUS,4,20,1-3,Structured exploration of unknown technical territory with time-box,Reducing technical uncertainty before committing to implementation,spike_plan
+BT-072,Feature Flag Strategy,BONUS,4;6,15,1-3,Plan which features to gate behind flags for progressive rollout,Managing risk during deployment of new features,flag_plan
+BT-073,Launch Readiness Storm,BONUS,6,20,1-5,Brainstorm all launch requirements across marketing ops support legal,Ensuring nothing is missed before going live,checklist
+BT-074,Growth Experiment Canvas,BONUS,7,25,1-5,Structured canvas for designing growth experiments with hypothesis and metrics,Planning data-driven growth initiatives,experiment_plan
+BT-075,Retention Cohort Brainstorm,BONUS,7,20,1-5,Analyze retention by cohort and brainstorm improvements for each stage,Improving user retention at specific lifecycle points,cohort_analysis

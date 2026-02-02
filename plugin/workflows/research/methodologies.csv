@@ -1,0 +1,27 @@
+id,name,category,phases,duration_min,participants,description,when_to_use,output_type,non_negotiable
+RM-001,User Interviews,QUALITATIVE,01;02;03,45,1-2,One-on-one conversations to understand user needs and pain points,Core discovery method for understanding real problems,interview_notes,true
+RM-002,Contextual Inquiry,QUALITATIVE,01;03,60,1-2,Observe users in their natural environment while they perform tasks,Understanding real workflows and pain points in context,observation_notes,false
+RM-003,Diary Studies,QUALITATIVE,03;04,30,1-5,Users document their experiences over time in a structured journal,Tracking behavior patterns and pain points over time,diary_entries,false
+RM-004,Focus Groups,QUALITATIVE,02;03,90,6-10,Moderated group discussion to explore attitudes and perceptions,Gathering diverse perspectives on a topic quickly,discussion_notes,false
+RM-005,Card Sorting,QUALITATIVE,03,30,5-15,Participants organize topics into categories that make sense to them,Designing information architecture and navigation,category_map,false
+RM-006,Usability Testing,QUALITATIVE,03;04,45,3-5,Observe users completing tasks on a prototype or product,Validating design decisions and finding usability issues,usability_report,false
+RM-007,Ethnographic Observation,QUALITATIVE,01;03,120,1-3,Deep immersive observation of user behavior without intervention,Understanding cultural and behavioral context,ethnographic_notes,false
+RM-008,Stakeholder Interviews,QUALITATIVE,01,30,1-2,Structured conversations with project stakeholders to align expectations,Aligning on project goals and constraints early,alignment_notes,false
+RM-009,Surveys,QUANTITATIVE,02;03,20,50-500,Structured questionnaires to gather data from a large sample,Quantifying attitudes and preferences at scale,survey_data,false
+RM-010,A/B Testing,QUANTITATIVE,04;05,30,100+,Compare two versions to measure which performs better,Validating design or feature decisions with data,test_results,false
+RM-011,Analytics Review,QUANTITATIVE,01;05,30,1,Analyze existing product or market data for patterns,Leveraging existing data before primary research,analytics_report,false
+RM-012,Heatmap Analysis,QUANTITATIVE,05,20,100+,Visual representation of where users click or look on a page,Understanding user attention and interaction patterns,heatmap_report,false
+RM-013,Funnel Analysis,QUANTITATIVE,05;07,25,1,Analyze conversion rates at each step of a user flow,Identifying drop-off points in user journeys,funnel_report,false
+RM-014,Benchmark Metrics,QUANTITATIVE,01;03,30,1,Collect quantitative data about competitor performance,Establishing baseline performance targets,benchmark_data,false
+RM-015,JTBD Analysis,ANALYTICAL,01;02,40,1-5,Identify functional emotional and social jobs users hire products for,Understanding true customer motivations beyond features,job_statements,false
+RM-016,PESTEL Analysis,ANALYTICAL,01;02,35,1-5,Analyze Political Economic Social Technological Environmental Legal factors,Understanding macro-environment impact on the project,pestel_report,false
+RM-017,Root Cause Analysis,ANALYTICAL,02;05,30,1-5,Systematic investigation to find the fundamental cause of a problem,Moving past symptoms to identify the real problem,root_cause_report,false
+RM-018,Value Proposition Canvas,ANALYTICAL,01;02,30,1-5,Map customer jobs pains gains against product value propositions,Ensuring product-market fit alignment,vpc_canvas,false
+RM-019,Assumption Mapping,ANALYTICAL,01;02,25,1-5,List and rank assumptions by risk and uncertainty,Identifying which assumptions to test first,risk_matrix,false
+RM-020,Five Whys,ANALYTICAL,02;05,15,1-3,Ask why 5 times to find root cause of a problem,Quick root cause investigation,root_cause,false
+RM-021,Empathy Map,ANALYTICAL,01;03,25,1-5,Map what users Think Feel Say Do to build deep understanding,Building empathy for target users,empathy_canvas,false
+RM-022,Competitive Analysis,STRATEGIC,01;02,60,1-3,Structured comparison of competitors on key dimensions,Understanding competitive landscape and positioning,comparison_table,true
+RM-023,Trend Analysis,STRATEGIC,01;02,45,1-3,Identify and analyze emerging trends in the market,Spotting opportunities and threats in the market,trend_report,false
+RM-024,Market Sizing TAM SAM SOM,STRATEGIC,01;02,40,1-3,Estimate Total Addressable Serviceable and Obtainable market,Quantifying the market opportunity,market_sizing,false
+RM-025,Blue Ocean Strategy,STRATEGIC,02,45,1-5,Identify uncontested market space by analyzing value factors,Finding differentiation beyond competing on existing factors,strategy_canvas,false
+RM-026,Porter Five Forces,STRATEGIC,01;02,35,1-3,Analyze competitive forces: rivalry substitutes buyers suppliers new entrants,Understanding industry dynamics and competitive pressure,forces_analysis,false

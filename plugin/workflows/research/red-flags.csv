@@ -1,0 +1,8 @@
+id,condition,severity,phase,message,corrective_action
+RF-001,interview_count==0,CRITICAL,03,No user interviews conducted. Research cannot proceed without user input.,STOP all other research activities. Organize and conduct user interviews immediately.
+RF-002,problem_statement_missing,CRITICAL,02,No Problem Statement defined. All research needs a clear problem to solve.,Revisit Step 02 (Understand). Use the problem-statement template to create one.
+RF-003,benchmark_count<3,HIGH,03,Fewer than 3 competitive benchmarks. Insufficient competitive understanding.,Analyze at least 5 competitors using the competitive-analysis template.
+RF-004,hypothesis_count==0,HIGH,02,No hypotheses formulated. Research has no direction without hypotheses to test.,Define at least 3 testable hypotheses using Assumption Mapping.
+RF-005,persona_count==0,MEDIUM,03,No personas created. User understanding is not formalized.,Create at least 2 personas using the persona template.
+RF-006,days_since_last_interview>30,MEDIUM,04,Research data may be stale. Last interview was over 30 days ago.,Consider refreshing research data with additional interviews.
+RF-007,validation_rate<50%,HIGH,04,Less than 50% of hypotheses validated. Problem-solution fit is weak.,Re-evaluate the Problem Statement. Consider pivoting or conducting additional research.

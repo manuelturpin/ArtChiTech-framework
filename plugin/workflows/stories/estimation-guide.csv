@@ -1,0 +1,6 @@
+size,label,effort_days,complexity,description,examples
+XS,Extra Small,<0.5,Low,Configuration change or trivial fix with no logic change,Change button color; Update text copy; Fix typo in validation message
+S,Small,0.5-1,Low,Small self-contained feature or fix with minimal dependencies,Add form validation; Create a static page; Add a new API field
+M,Medium,1-3,Medium,Feature requiring multiple files or components with moderate logic,User login flow; CRUD for a resource; Search with filters
+L,Large,3-5,High,Complex feature spanning multiple layers with significant logic,Payment integration; Real-time notifications; Role-based access control
+XL,Extra Large,5+,High,Epic-level work that should be broken down further,Full authentication system; Multi-tenant support; Data migration pipeline

@@ -1,0 +1,9 @@
+id,requirement,minimum,metric,phase,blocking,corrective_action
+NN-001,User Interviews,8,interview_count,03,true,Conduct at least 8 user interviews before proceeding. Schedule interviews immediately.
+NN-002,Competitive Benchmarks,5,benchmark_count,03,true,Analyze at least 5 competitors. Use the competitive-analysis template for each.
+NN-003,Problem Statement,1,problem_statement_exists,02,true,Create a Problem Statement using the problem-statement template. Cannot proceed without one.
+NN-004,Research Repository Initialized,1,repository_initialized,01,true,"Run mkdir -p .epct/research/{personas,interviews,benchmarks} to initialize."
+NN-005,Stakeholder Alignment Documented,1,stakeholder_alignment_exists,01,false,Document stakeholder alignment. Recommended but not blocking.
+NN-006,Testable Hypotheses,3,hypothesis_count,02,true,Formulate at least 3 testable hypotheses. Use Assumption Mapping (BT-033) to prioritize.
+NN-007,Persona Drafts,2,persona_count,03,true,Create at least 2 persona drafts using the persona template.
+NN-008,Validation Plan,1,validation_plan_exists,04,true,Create a validation plan mapping evidence to hypotheses before testing.

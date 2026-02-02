@@ -1,0 +1,8 @@
+id,name,required,description,validation_criteria,input_sources
+PRD-001,Vision & Objectives,true,Project vision and measurable objectives aligned with discovery findings,Clear problem statement referenced; 2-3 measurable objectives with KPIs; alignment with research synthesis,brainstorming output; research synthesis; strategy docs
+PRD-002,Users & Personas,true,Target users and personas with jobs-to-be-done,At least 2 personas referenced; JTBD documented; user segments defined with size estimates,research personas (.epct/research/personas/); brainstorming BT-032 Empathy Map
+PRD-003,Features,true,Feature list with MoSCoW prioritization,Features categorized as Must/Should/Could/Won't; each feature maps to a user need; acceptance criteria defined,brainstorming top ideas; research validated hypotheses
+PRD-004,Technical Requirements,true,Technical constraints and architecture guidelines,Tech stack specified; integration requirements listed; performance targets defined; security requirements noted,architecture docs; existing codebase analysis
+PRD-005,Success Metrics,true,KPIs and measurement plan,At least 3 quantitative KPIs; measurement method defined for each; baseline and target values set,strategy KPIs; research validation metrics
+PRD-006,Risks & Mitigations,true,Known risks with mitigation strategies,At least 3 risks identified; each risk has probability and impact rating; mitigation plan for high risks,brainstorming BT-039 Pre-Mortem; research red flags
+PRD-007,Timeline,false,High-level timeline with milestones,Phases or milestones defined; dependencies identified; realistic estimates based on scope,strategy roadmap; resource estimates
