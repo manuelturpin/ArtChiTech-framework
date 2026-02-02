@@ -8,13 +8,14 @@
 
 The Hooks System provides automated triggers that fire at specific points during agent execution. Unlike skills which depend on the agent remembering to use them, hooks are **mandatory** and **automatic**.
 
-## The 4 Essential Hooks
+## The 5 Essential Hooks
 
 | Hook | Trigger | Purpose |
 |------|---------|---------|
 | **PreSession** | Session start/context reset | Load context, enable recovery |
 | **PreToolUse** | Before Write/Edit/Bash | Refresh goals, prevent drift |
 | **PostToolUse** | After Write/Edit | Update progress, enable recovery |
+| **OnError** | Tool/command/validation failures | Log errors, enable recovery |
 | **Stop** | Completion claims | Verify before allowing done |
 
 ---
@@ -150,6 +151,24 @@ Hooks are configured in `hooks/hooks.json`. They work with the `.act/` context f
 
 ---
 
+### OnError Hook
+
+**When:** Tool error, command failure, validation error
+
+**Action:**
+1. Log error to `.act/progress.md`
+2. Check Deviation Rules (Rule 3 - Blockers)
+3. Attempt recovery or escalate
+
+**Message:**
+```
+⚠️ Error detected. Logging to progress.md and checking Deviation Rules...
+```
+
+📖 [Full documentation](./on-error.md)
+
+---
+
 ## Configuration
 
 ### hooks.json
@@ -236,6 +255,7 @@ hooks/
 ├── pre-session.md      # PreSession documentation
 ├── pre-tool-use.md     # PreToolUse documentation
 ├── post-tool-use.md    # PostToolUse documentation
+├── on-error.md         # OnError documentation
 └── stop.md             # Stop documentation
 ```
 

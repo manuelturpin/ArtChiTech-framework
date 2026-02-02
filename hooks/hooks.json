@@ -60,6 +60,19 @@
         "evidenceTypes": ["commit", "test", "documentation", "review"]
       },
       "message": "⚠️ Before claiming completion: Read .act/plan.md and verify ALL phases have completion evidence. No completion claims without verification."
+    },
+
+    "OnError": {
+      "enabled": true,
+      "description": "Handle operation failures gracefully",
+      "triggers": ["tool_error", "command_failure", "validation_error"],
+      "action": "log_and_recover",
+      "config": {
+        "logTo": "progress.md",
+        "suggestRetry": true,
+        "linkToDeviationRules": "rule-3"
+      },
+      "message": "⚠️ Error detected. Logging to progress.md and checking Deviation Rules..."
     }
   },
 
