@@ -13,6 +13,35 @@
 - **Shortcut**: ACT
 - **Type**: Claude Code Plugin
 
+---
+
+## ⚖️ Iron Laws
+
+**These rules are NON-NEGOTIABLE. No exceptions. No shortcuts.**
+
+### 1. TDD Iron Law
+> **NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST**
+
+- Write test → Run (FAIL) → Write code → Run (PASS)
+- Code written before test? **DELETE IT. Start over.**
+
+### 2. Debugging Iron Law
+> **NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST**
+
+- Investigate → Understand → Fix
+- 3+ failed fixes = wrong architecture. STOP and reassess.
+
+### 3. Verification Iron Law
+> **NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE**
+
+- Run the command → Read the output → THEN make the claim
+- Never say "should work" or "I'm confident" without evidence
+
+**Full details:** @rules/iron-laws.md  
+**Checklist:** @templates/verification-checklist.md
+
+---
+
 ## Rules
 
 @.claude/rules/0-behavior.md
