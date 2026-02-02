@@ -162,12 +162,46 @@ Quand il faut passer le relais (context full, timeout, etc.) :
 - Être spécifique dans les descriptions
 - Logger les décisions ET leur rationale
 - Faire des checkpoints réguliers
+- **Toujours inclure un timestamp**
 
 ### DON'T ❌
 - Attendre la fin pour tout écrire (risque de perte)
 - Écrire des logs vagues ("worked on stuff")
 - Oublier de mettre à jour state.md
 - Ignorer les discoveries (findings.md)
+- **Omettre les timestamps dans progress.md**
+
+---
+
+## ⏰ Timestamp Format (OBLIGATOIRE)
+
+**Tous les logs dans progress.md DOIVENT inclure un timestamp.**
+
+### Format Standard
+```
+[YYYY-MM-DD HH:mm] Action description
+```
+
+### Exemples
+```markdown
+### [2026-02-01 14:30] Created User model
+- **File(s):** src/models/user.py
+- **Change:** Added User class with fields
+
+### [2026-02-01 15:15] Fixed validation bug
+- **File(s):** src/validators/user.py
+- **Change:** Email format validation added
+
+### [2026-02-01 16:00] Phase 2 complete
+- **Progress:** 40%
+- **Next:** Start API implementation
+```
+
+### Pourquoi les timestamps ?
+1. **Chronologie** - Savoir l'ordre des actions
+2. **Durée** - Estimer le temps passé par tâche
+3. **Debug** - Corréler avec des logs système si besoin
+4. **Handoff** - Contexte temporel pour le prochain agent
 
 ---
 
@@ -180,6 +214,99 @@ Cette skill est renforcée par les hooks :
 | PreToolUse | Relire `state.md` pour refresh goals |
 | PostToolUse | Rappeler de mettre à jour `progress.md` |
 | Stop | Vérifier que l'état est récupérable |
+
+---
+
+## Local Hooks
+
+### Why Local Hooks?
+
+Certains projets ont des besoins spécifiques que les hooks framework ne couvrent pas :
+- Fichiers de contexte additionnels à lire
+- Hooks personnalisés pour des workflows spécifiques
+- Désactivation temporaire de certains hooks
+
+### When to Use Local Hooks
+
+| Situation | Solution |
+|-----------|----------|
+| Fichier de contexte supplémentaire | Override `PreToolUse.config.additionalFiles` |
+| Workflow de déploiement custom | Créer un hook `PreDeploy` |
+| Itérations rapides (prototype) | Désactiver `PostToolUse` temporairement |
+| Documentation API obligatoire | Hook custom `PostAPIChange` |
+
+### Setup
+
+```bash
+/act:init --with-hooks
+```
+
+Ou créer manuellement `.act/hooks.json` :
+
+```json
+{
+  "extends": "framework",
+  "hooks": {},
+  "overrides": {}
+}
+```
+
+### Examples
+
+#### Ajouter un fichier de contexte
+
+```json
+{
+  "extends": "framework",
+  "overrides": {
+    "PreToolUse": {
+      "config": {
+        "additionalFiles": ["docs/API.md", ".act/domain-context.md"]
+      }
+    }
+  }
+}
+```
+
+#### Hook de validation pre-commit
+
+```json
+{
+  "extends": "framework",
+  "hooks": {
+    "PreCommit": {
+      "enabled": true,
+      "triggers": ["commit", "push"],
+      "action": "validate_changes",
+      "config": {
+        "requireTests": true,
+        "requireDocs": false
+      }
+    }
+  }
+}
+```
+
+#### Mode prototype (hooks allégés)
+
+```json
+{
+  "extends": "framework",
+  "overrides": {
+    "PostToolUse": { "enabled": false },
+    "Stop": { 
+      "config": { "requireEvidence": false }
+    }
+  }
+}
+```
+
+### Best Practices
+
+- **Toujours utiliser `extends: "framework"`** pour garder les protections de base
+- **Documenter les raisons** des overrides dans le JSON (`description` field)
+- **Réactiver les hooks** une fois le prototype validé
+- **Ne jamais désactiver Stop** en production sans bonne raison
 
 ---
 

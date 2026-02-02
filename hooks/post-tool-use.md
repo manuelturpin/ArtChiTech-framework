@@ -70,9 +70,11 @@ After Write/Edit:
 
 ## Progress Log Format
 
+> ⏰ **OBLIGATOIRE:** Tous les logs DOIVENT inclure un timestamp au format `[YYYY-MM-DD HH:mm]`
+
 ### Entry Template
 ```markdown
-### HH:MM - Action Description
+### [YYYY-MM-DD HH:mm] Action Description
 - **File(s):** path/to/file.py
 - **Change:** Brief description
 - **Phase:** Current phase name
@@ -81,12 +83,18 @@ After Write/Edit:
 
 ### Example Entry
 ```markdown
-### 14:30 - Created User Model
+### [2026-02-01 14:30] Created User Model
 - **File(s):** src/models/user.py
 - **Change:** Added User class with id, email, name fields
 - **Phase:** Database Design
 - **Status:** In progress (3/5 models done)
 ```
+
+### Why Timestamps?
+- **Chronology** - Track order of actions
+- **Duration** - Estimate time per task
+- **Recovery** - Know when last action occurred
+- **Handoff** - Temporal context for next session
 
 ---
 
