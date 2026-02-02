@@ -1,6 +1,6 @@
 # ACT Framework
 
-![Version](https://img.shields.io/badge/version-2.5.0--alpha-blue)
+![Version](https://img.shields.io/badge/version-2.6.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-purple)
 
@@ -10,35 +10,49 @@ You start a project. Three weeks later, you're lost in your own code. Sound fami
 
 ACT gives your projects structure without the overhead. 7 phases. Clear milestones. No more "where was I?"
 
-## What's New in v2.5
+## What's New in v2.6
 
-### 🧠 Context Engineering
+### 🏗️ Consolidated Architecture
 
-The biggest upgrade: **your AI never forgets**.
-
-```
-Context Window = RAM (volatile, limited)
-Filesystem = Disk (persistent, unlimited)
-```
-
-ACT v2.5 introduces the **3-File Pattern** — persistent files that maintain context across sessions:
+All commands are now in a single location with clean namespacing:
 
 ```
-.act/
-├── config.yaml      # Project configuration
-├── state.md         # Current state (quick glance)
-├── plan.md          # Phases, progress, decisions
-├── findings.md      # Research & discoveries
-└── progress.md      # Session log
+plugin/commands/
+├── act/              # 24 ACT commands (/act:*)
+├── consider/         # 12 thinking models (/consider:*)
+└── *.md              # 9 utility commands
 ```
 
-**Result:** Start a session, pick up exactly where you left off. No more re-explaining context.
+### 🪝 Hooks System
+
+Automated behavioral triggers that are **100% reliable** (vs skills ~50-80%):
+
+| Hook | Trigger | Action |
+|------|---------|--------|
+| **PreToolUse** | Before Write/Edit/Bash | Refresh goals from plan |
+| **PostToolUse** | After Write/Edit | Update progress log |
+| **Stop** | Before completion | Verify all phases have evidence |
+
+### 🤖 Agent System
+
+Load specialized agents with `/act:agent`:
+
+| Agent | Model | Role |
+|-------|-------|------|
+| `planner` | opus | Planning, decomposition |
+| `architect` | opus | Design decisions |
+| `executor` | sonnet | Implementation |
+| `reviewer` | opus | Code review |
+| `tester` | sonnet | Tests |
+| `documenter` | haiku | Documentation |
 
 ### ✨ Key Features
 
-- **Session Recovery** — Automatic "catchup report" when resuming
-- **5-Question Reboot Test** — Verify context is complete
-- **Context Handoff** — Standardized format for transferring context between sessions or agents
+- **Context Engineering** — 3-File Pattern for persistent AI memory
+- **Session Recovery** — Automatic catchup report when resuming
+- **Iron Laws** — TDD, Debugging, Verification (non-negotiable)
+- **Deviation Rules** — Controlled autonomy (Rules 1-5)
+- **12 Thinking Models** — `/consider:*` commands
 
 ---
 
@@ -163,13 +177,24 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | `/act:audit-all` | Full framework audit |
 | `/act:heal` | Auto-repair audit issues |
 
-### Legacy Commands (v2.1)
+### Thinking Models
 
 | Command | Description |
 |---------|-------------|
-| `/act-project` | Your project hub |
-| `/act-next` | Move to next phase |
-| `/act-fix` | Fix blocking issues |
+| `/consider:first-principles` | Break down to fundamentals |
+| `/consider:5-whys` | Root cause analysis |
+| `/consider:pareto` | Focus 80/20 |
+| `/consider:inversion` | Solve backwards |
+| `/consider:second-order` | Consequences of consequences |
+| `/consider:pre-mortem` | Anticipate failure |
+
+### Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:agent <name>` | Load a specialized agent |
+| `/act:agent reset` | Clear agent context |
+| `/act:party "<topic>"` | Multi-perspective discussion |
 
 ---
 
@@ -327,24 +352,62 @@ See [SPEC-hooks-system.md](specs/SPEC-hooks-system.md) for full documentation.
 
 ## Installation
 
-ACT v2.5 is project-local. Just run:
+### From GitHub (recommended)
+
+```bash
+# Install locally in your project (default)
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+
+# Install globally for all projects
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --global
+```
+
+### Local Installation Structure
+
+```
+your-project/
+└── .claude/
+    └── commands/
+        ├── act/           # 24 ACT commands
+        └── consider/      # 12 thinking models
+```
+
+### Global Installation Structure
+
+```
+~/.claude/
+└── plugins/
+    └── act/              # Full plugin
+```
+
+### After Installation
+
+Restart Claude Code and run:
 
 ```bash
 /act:init
 ```
 
-Or manually create the `.act/` directory using the templates in `templates/act/`.
+This creates the `.act/` directory with context files in your project.
 
 ---
 
-## Migration from v2.1
+## Migration from Previous Versions
 
-ACT v2.5 is backward compatible. Your existing `.epct/` state is preserved.
+### From v2.5 to v2.6
 
-To upgrade:
-1. Run `/act:init` in your project
-2. ACT creates `.act/` alongside existing files
-3. Migrate state manually if needed
+v2.6 is fully backward compatible. Just reinstall:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+```
+
+### From v2.1 or earlier
+
+1. Install v2.6 (see Installation)
+2. Run `/act:init` in your project
+3. Your `.act/` directory will be created
+4. Migrate any `.epct/` state manually if needed
 
 ---
 
@@ -879,7 +942,19 @@ Creates:
 
 ---
 
-## Roadmap to v2.5 Final
+## Version History
+
+### v2.6.0 (Current)
+
+- [x] Consolidated architecture (single command location)
+- [x] Hooks behavior rules (mandatory triggers)
+- [x] `/act:agent` command (load specialized agents)
+- [x] `/act:verify-hooks` command
+- [x] Install script with local/global options
+- [x] Removed duplicate v1 commands
+- [x] 24 ACT commands + 12 thinking models
+
+### v2.5.0
 
 - [x] Context Engineering (3-File Pattern)
 - [x] Hooks System (Pre/Post/Stop)
@@ -890,11 +965,11 @@ Creates:
 - [x] Model Selection (Agent system)
 - [x] Context Handoff format
 - [x] Reflexion Pattern (+8-21% quality)
-- [x] Continuous Learning (Pattern detection & confidence scoring)
-- [x] GitHub Integration (Issues sync, PR templates)
-- [x] Party Mode (Multi-perspective discussions)
-- [x] Multi-IDE Support (Export to Cursor, Windsurf, Aider, etc.)
-- [x] Agent Auditors (Framework health & auto-repair)
+- [x] Continuous Learning
+- [x] GitHub Integration
+- [x] Party Mode
+- [x] Multi-IDE Support
+- [x] Agent Auditors
 
 ---
 
