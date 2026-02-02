@@ -247,15 +247,15 @@ PreToolUse hook
 ## Checklist Implémentation
 
 - [x] Spécification (ce fichier)
-- [ ] Config models section
-- [ ] Agent: planner.md
-- [ ] Agent: architect.md
-- [ ] Agent: executor.md
-- [ ] Agent: reviewer.md
-- [ ] Agent: tester.md
-- [ ] Agent: documenter.md
-- [ ] Documentation README
-- [ ] Integration CLAUDE.md
+- [x] Config models section
+- [x] Agent: planner.md
+- [x] Agent: architect.md
+- [x] Agent: executor.md
+- [x] Agent: reviewer.md
+- [x] Agent: tester.md
+- [x] Agent: documenter.md
+- [x] Documentation README
+- [x] Integration CLAUDE.md
 
 ---
 

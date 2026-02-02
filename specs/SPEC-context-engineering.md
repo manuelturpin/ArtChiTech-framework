@@ -322,16 +322,16 @@ Les projets ACT v2 existants n'ont pas de `.act/`. La migration est automatique 
 ## 10. Validation
 
 ### 10.1 Critères de Succès
-- [ ] Session recovery fonctionne après interruption
-- [ ] 5-Question Test réussi après reboot
-- [ ] Context handoff permet reprise par autre agent
-- [ ] Hooks maintiennent la cohérence
+- [x] Session recovery fonctionne après interruption
+- [x] 5-Question Test réussi après reboot
+- [x] Context handoff permet reprise par autre agent
+- [x] Hooks maintiennent la cohérence
 
 ### 10.2 Tests
-1. Démarrer projet → interrompre → reprendre
-2. Vérifier que l'état est correct après recovery
-3. Simuler handoff entre agents
-4. Remplir context window → vérifier pas de perte
+1. ✅ Démarrer projet → interrompre → reprendre
+2. ✅ Vérifier que l'état est correct après recovery
+3. ✅ Simuler handoff entre agents
+4. ✅ Remplir context window → vérifier pas de perte
 
 ---
 

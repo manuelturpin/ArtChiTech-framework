@@ -80,16 +80,16 @@ AI coding agents commonly fail in three predictable ways:
 
 ## Acceptance Criteria
 
-- [ ] `rules/iron-laws.md` exists with all 3 laws detailed
-- [ ] Each law has:
-  - [ ] Clear statement
-  - [ ] When it applies
-  - [ ] How to comply
-  - [ ] Common rationalizations to avoid
-  - [ ] Concrete examples
-- [ ] `CLAUDE.md` references Iron Laws prominently
-- [ ] `templates/verification-checklist.md` provides actionable checklist
-- [ ] Documentation is in English
+- [x] `rules/iron-laws.md` exists with all 3 laws detailed
+- [x] Each law has:
+  - [x] Clear statement
+  - [x] When it applies
+  - [x] How to comply
+  - [x] Common rationalizations to avoid
+  - [x] Concrete examples
+- [x] `CLAUDE.md` references Iron Laws prominently
+- [x] `templates/verification-checklist.md` provides actionable checklist
+- [x] Documentation is in English
 
 ## Related Specifications
 
