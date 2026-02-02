@@ -1,0 +1,29 @@
+# Session Progress
+
+## {{DATE}}
+
+### Session Start
+- **Objective:** {{OBJECTIVE}}
+- **Branch:** {{BRANCH}}
+- **Starting point:** {{STARTING_POINT}}
+
+### {{TIME}} - Work Started
+<!-- Log your progress here -->
+- 
+
+### Next Steps
+- [ ] 
+- [ ] 
+- [ ] 
+
+---
+
+## Checkpoints
+
+| Time | Progress | Notes |
+|------|----------|-------|
+| {{TIME}} | 0% | Starting |
+
+---
+
+*Session log - {{PROJECT_NAME}}*

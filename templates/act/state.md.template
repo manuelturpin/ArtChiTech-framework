@@ -1,0 +1,17 @@
+# ACT State
+
+## Current
+- **Phase:** 1/? ({{CURRENT_PHASE}})
+- **Task:** {{CURRENT_TASK}}
+- **Blocker:** None
+
+## Quick Stats
+- **Started:** {{DATE}}
+- **Last Update:** {{DATE}}
+- **Progress:** 0%
+
+## Next Action
+{{NEXT_ACTION}}
+
+---
+*Auto-updated by ACT v2.5*
