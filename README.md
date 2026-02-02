@@ -1,6 +1,6 @@
 # ACT Framework
 
-![Version](https://img.shields.io/badge/version-2.1.1-blue)
+![Version](https://img.shields.io/badge/version-2.5.0--alpha-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-purple)
 
@@ -10,27 +10,86 @@ You start a project. Three weeks later, you're lost in your own code. Sound fami
 
 ACT gives your projects structure without the overhead. 7 phases. Clear milestones. No more "where was I?"
 
+## What's New in v2.5
+
+### 🧠 Context Engineering
+
+The biggest upgrade: **your AI never forgets**.
+
+```
+Context Window = RAM (volatile, limited)
+Filesystem = Disk (persistent, unlimited)
+```
+
+ACT v2.5 introduces the **3-File Pattern** — persistent files that maintain context across sessions:
+
+```
+.act/
+├── config.yaml      # Project configuration
+├── state.md         # Current state (quick glance)
+├── plan.md          # Phases, progress, decisions
+├── findings.md      # Research & discoveries
+└── progress.md      # Session log
+```
+
+**Result:** Start a session, pick up exactly where you left off. No more re-explaining context.
+
+### ✨ Key Features
+
+- **Session Recovery** — Automatic "catchup report" when resuming
+- **5-Question Reboot Test** — Verify context is complete
+- **Context Handoff** — Seamless transfer between sessions
+
+---
+
 ## Quick Start
 
+### Initialize ACT in your project
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+/act:init
 ```
 
-Then in Claude Code:
+This creates the `.act/` directory with all context files.
 
+### Check status
+
+```bash
+/act:status
 ```
-/act-project
+
+### Start working
+
+Edit `.act/plan.md` to define your goal and phases, then begin!
+
+---
+
+## The .act/ Directory
+
+| File | Purpose | Update When |
+|------|---------|-------------|
+| `config.yaml` | Project settings | Setup |
+| `state.md` | Current state | Each milestone |
+| `plan.md` | Phases & progress | Phase transitions |
+| `findings.md` | Research & discoveries | New learnings |
+| `progress.md` | Session log | Continuously |
+
+### Example: state.md
+
+```markdown
+# ACT State
+
+## Current
+- **Phase:** 3/5 (Implementation)
+- **Task:** Building auth module
+- **Blocker:** None
+
+## Quick Stats
+- **Progress:** 60%
+- **Last Update:** 2026-02-01 14:30
 ```
 
-That's it. ACT detects your context and guides you from there.
-
-## Why ACT?
-
-| Without ACT | With ACT |
-|-------------|----------|
-| Start coding, figure it out later | Discovery → Strategy → Ship |
-| "Is this ready?" — No idea | Clear phases + progress score |
-| Reinvent the wheel each project | Built-in TDD, reviews, audits |
+---
 
 ## The 7 Phases
 
@@ -46,70 +105,150 @@ That's it. ACT detects your context and guides you from there.
 
 Each phase has **Go/No-Go criteria**. No skipping steps.
 
+---
+
 ## Commands
 
-| Command | What it does |
-|---------|--------------|
-| `/act-project` | Your project hub — start here |
-| `/act-status` | See where you are |
-| `/act-onboard` | Audit an existing project |
+### Core Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:init` | Initialize ACT in a project |
+| `/act:status` | Show current state |
+| `/act:recover` | Recovery from previous session |
+| `/act:handoff` | Generate handoff for session transfer |
+
+### Legacy Commands (v2.1)
+
+| Command | Description |
+|---------|-------------|
+| `/act-project` | Your project hub |
 | `/act-next` | Move to next phase |
 | `/act-fix` | Fix blocking issues |
-| `/act-feedback` | Report bugs or ideas |
+
+---
+
+## Session Recovery
+
+When you start a new session, ACT automatically:
+
+1. Detects existing `.act/` directory
+2. Reads the context files
+3. Generates a **Catchup Report**:
+
+```markdown
+## 🔄 Session Recovery
+
+**Project:** auth-module
+**Last Session:** 2026-02-01 14:30
+
+**Current State:**
+- Phase: 3/5 (Implementation)
+- Task: Building login endpoint
+- Progress: 60%
+
+**Recent Findings:**
+- JWT preferred over sessions
+- Legacy auth has vulnerabilities
+
+**Next Steps:**
+1. Complete login endpoint
+2. Add password reset
+```
+
+### 5-Question Reboot Test
+
+To verify context is complete, answer these:
+
+| Question | Source |
+|----------|--------|
+| Where am I? | `state.md` |
+| Where am I going? | `plan.md` |
+| What's the goal? | `plan.md` |
+| What have I learned? | `findings.md` |
+| What have I done? | `progress.md` |
+
+---
+
+## Project Structure
+
+```
+your-project/
+├── .act/                    # ACT context (v2.5)
+│   ├── config.yaml
+│   ├── state.md
+│   ├── plan.md
+│   ├── findings.md
+│   └── progress.md
+├── .claude/                 # Claude Code integration
+│   └── commands/
+└── your code...
+```
+
+---
+
+## Skills
+
+ACT v2.5 includes skills that provide detailed guidance:
+
+| Skill | Purpose |
+|-------|---------|
+| `context-engineering` | 3-File Pattern, session recovery |
+| (coming) `hooks` | Automated context refresh |
+| (coming) `iron-laws` | Quality enforcement |
+
+---
 
 ## Requirements
 
-- [Claude Code](https://claude.ai/code)
-- [Superpowers plugin](https://github.com/superpowers-marketplace/superpowers) (3.6.0+)
-- Python 3.8+
-- Git
+- Claude Code or compatible AI assistant
+- Git (recommended)
 
-```bash
-# Install superpowers first
-claude plugins:install superpowers-marketplace/superpowers
-```
+---
 
 ## Installation
 
-ACT installs locally in your project:
+ACT v2.5 is project-local. Just run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+/act:init
 ```
 
-Structure created:
-- `.claude/commands/` - Commands (Claude Code reads these)
-- `.claude/act/` - ACT resources (scripts, skills, etc.)
+Or manually create the `.act/` directory using the templates in `templates/act/`.
 
-## How It Works
+---
 
-ACT uses the right tool for each phase:
+## Migration from v2.1
 
-| Phase | Skill |
-|-------|-------|
-| Discovery & Strategy | `superpowers:brainstorming` |
-| Design | `superpowers:writing-plans` |
-| Development | `superpowers:test-driven-development` |
-| Quality | `superpowers:code-reviewer` |
+ACT v2.5 is backward compatible. Your existing `.epct/` state is preserved.
 
-## Project State
+To upgrade:
+1. Run `/act:init` in your project
+2. ACT creates `.act/` alongside existing files
+3. Migrate state manually if needed
 
-ACT stores progress in `.epct/`:
+---
 
-```
-.epct/
-├── state.json       # Current phase
-└── history/         # Checkpoints
-```
+## Philosophy
 
-Add to `.gitignore` if you don't want to track it.
+> **"Context Window = RAM, Filesystem = Disk"**
+
+The core insight: AI assistants "forget" because context isn't persisted. ACT solves this by treating the filesystem as persistent memory.
+
+### Design Principles
+
+1. **Persistence over conversation** — Write it down, don't just say it
+2. **Structure over chaos** — Clear files, clear roles
+3. **Recovery over restart** — Never lose progress
+4. **Evidence over claims** — Show, don't tell
+
+---
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-Quick version:
-1. Fork → Branch → Code → Test → PR
+---
 
 ## License
 
@@ -120,3 +259,13 @@ Quick version:
 <p align="center">
   <strong>Stop winging it. Start shipping.</strong>
 </p>
+
+---
+
+## Roadmap to v2.5 Final
+
+- [x] Context Engineering (3-File Pattern)
+- [ ] Hooks System (Pre/Post/Stop)
+- [ ] Iron Laws (TDD, Debug, Verification)
+- [ ] Scale-Adaptive (Quick vs Full mode)
+- [ ] Session Recovery automation
