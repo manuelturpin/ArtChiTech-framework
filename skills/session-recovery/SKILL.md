@@ -359,6 +359,84 @@ history:
   autoSave: true     # Sauvegarde auto en fin de session
 ```
 
+## History Directory
+
+Session history is stored in `.act/history/` for persistence and recovery.
+
+### File Format
+
+Files are named using the pattern: `YYYY-MM-DD-HHmm.md`
+
+Example:
+```
+.act/history/
+├── 2026-02-01-1430.md
+├── 2026-02-01-1830.md
+├── 2026-02-02-0930.md
+└── 2026-02-02-1500.md
+```
+
+### File Content Template
+
+Each session file contains:
+
+```markdown
+# Session: YYYY-MM-DD HH:mm
+
+## Summary
+- **Duration:** X minutes
+- **Phase:** [phase at session end]
+- **Progress:** [X% → Y%]
+
+## Actions Performed
+- [Action 1]
+- [Action 2]
+- ...
+
+## Commits
+- `abc1234` - Commit message 1
+- `def5678` - Commit message 2
+
+## State at End
+- **Phase:** X/Y
+- **Next task:** [description]
+- **Blockers:** [none/list]
+```
+
+### Automatic Rotation
+
+History rotation is controlled by `maxSessions` in config:
+
+```yaml
+# In .act/config.yaml
+history:
+  enabled: true
+  maxSessions: 10    # Keep last 10 sessions
+  autoSave: true     # Auto-save on session end
+```
+
+When `maxSessions` is reached, the oldest session file is automatically deleted before saving a new one.
+
+### Associated Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:history` | List all saved sessions |
+| `/act:replay <session>` | View details of a specific session |
+| `/act:resume` | Resume from latest session with catchup report |
+
+### Manual Access
+
+You can also browse history directly:
+
+```bash
+# List sessions
+ls -la .act/history/
+
+# View a specific session
+cat .act/history/2026-02-01-1430.md
+```
+
 ## Related
 
 - [Context Engineering Skill](../context-engineering/SKILL.md)

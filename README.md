@@ -190,6 +190,32 @@ To verify context is complete, answer these:
 | What have I learned? | `findings.md` |
 | What have I done? | `progress.md` |
 
+### Session History
+
+ACT stores session history in `.act/history/` for persistence across context resets.
+
+```
+.act/history/
+├── 2026-02-01-1430.md    # Session from Feb 1, 14:30
+├── 2026-02-01-1830.md    # Session from Feb 1, 18:30
+└── 2026-02-02-0930.md    # Session from Feb 2, 09:30
+```
+
+**File format:** `YYYY-MM-DD-HHmm.md`
+
+**Configuration:**
+```yaml
+# In .act/config.yaml
+history:
+  enabled: true
+  maxSessions: 10    # Auto-rotate: keep last 10 sessions
+  autoSave: true     # Save automatically on session end
+```
+
+**Commands:**
+- `/act:history` — List all saved sessions
+- `/act:replay <session>` — View details of a past session
+
 ---
 
 ## Project Structure
