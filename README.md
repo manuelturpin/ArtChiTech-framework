@@ -651,6 +651,54 @@ After completing a task, ask yourself:
 
 ---
 
+## Thinking Models
+
+ACT v2.5 includes **12 mental models** to enhance decision-making and problem-solving. Each model provides a structured thinking approach for different situations.
+
+### The /consider Commands
+
+| # | Command | Description |
+|---|---------|-------------|
+| 1 | `/consider:first-principles` | Break down to fundamentals |
+| 2 | `/consider:5-whys` | Root cause analysis |
+| 3 | `/consider:pareto` | Focus 80/20 |
+| 4 | `/consider:inversion` | Solve backwards |
+| 5 | `/consider:second-order` | Consequences of consequences |
+| 6 | `/consider:regret-minimization` | Long-term decision making |
+| 7 | `/consider:opportunity-cost` | Cost of alternatives |
+| 8 | `/consider:circle-of-competence` | Know your limits |
+| 9 | `/consider:map-territory` | Model vs reality |
+| 10 | `/consider:probabilistic` | Reason in probabilities |
+| 11 | `/consider:pre-mortem` | Anticipate failure |
+| 12 | `/consider:reversibility` | Reversible vs irreversible decisions |
+
+### Usage Example
+
+```bash
+# Before making a technical decision
+/consider:second-order Should we adopt this new framework?
+
+# When debugging a recurring issue
+/consider:5-whys Why do deployments fail on Fridays?
+
+# When prioritizing features
+/consider:pareto Which features will deliver the most value?
+```
+
+### When to Use
+
+| Situation | Recommended Model |
+|-----------|-------------------|
+| Architecture decision | `first-principles`, `second-order` |
+| Bug investigation | `5-whys`, `inversion` |
+| Feature prioritization | `pareto`, `opportunity-cost` |
+| Risk assessment | `pre-mortem`, `reversibility` |
+| Strategic planning | `regret-minimization`, `probabilistic` |
+
+**Details:** See `skills/thinking/SKILL.md`
+
+---
+
 ## Continuous Learning
 
 ACT v2.5 introduces a **Continuous Learning** system that observes your work patterns and improves automatically over time.
