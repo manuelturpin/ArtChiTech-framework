@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# ACT Framework - Script d'installation v2.6.0
+# ACT Framework - Script d'installation v2.7.0
 #
 # Modes d'installation :
 #   --local  (défaut) : Installe dans le dossier courant (.claude/)
@@ -33,7 +33,7 @@ NC='\033[0m'
 
 # Configuration
 REPO_URL="https://github.com/manuelturpin/ArtChiTech-framework"
-VERSION="2.6.0"
+VERSION="2.7.0"
 
 # Variables globales
 SOURCE_DIR=""

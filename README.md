@@ -1,14 +1,44 @@
 # ACT Framework
 
-![Version](https://img.shields.io/badge/version-2.6.0-blue)
+![Version](https://img.shields.io/badge/version-2.7.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-purple)
+![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
 
 > **Ship better projects.** From idea to production, guided by AI.
 
 You start a project. Three weeks later, you're lost in your own code. Sound familiar?
 
 ACT gives your projects structure without the overhead. 7 phases. Clear milestones. No more "where was I?"
+
+## What's New in v2.7
+
+### 🎯 Native Skills — Zero External Dependencies
+
+ACT v2.7 is now **100% autonomous**. No external plugins required.
+
+| Before (v2.6) | After (v2.7) |
+|---------------|--------------|
+| Required `superpowers` plugin | **Zero dependencies** |
+| Online marketplace needed | **Works offline** |
+| External skill updates | **Local, customizable skills** |
+
+### 6 Native Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `@skills/brainstorming` | Structured idea generation |
+| `@skills/tdd` | Test-Driven Development |
+| `@skills/code-review` | Systematic code review |
+| `@skills/debugging` | Methodical debugging |
+| `@skills/verification` | Completion verification |
+| `@skills/writing-plans` | Plan writing |
+
+### Migration
+
+Coming from superpowers? See [MIGRATION-FROM-SUPERPOWERS.md](docs/MIGRATION-FROM-SUPERPOWERS.md).
+
+---
 
 ## What's New in v2.6
 
@@ -296,7 +326,20 @@ your-project/
 
 ## Skills
 
-ACT v2.5 includes skills that provide detailed guidance:
+ACT v2.7 includes **native skills** with no external dependencies:
+
+### Core Skills (v2.7+)
+
+| Skill | Purpose |
+|-------|---------|
+| [`brainstorming`](skills/brainstorming/) | Structured idea generation |
+| [`tdd`](skills/tdd/) | Test-Driven Development methodology |
+| [`code-review`](skills/code-review/) | Systematic code review |
+| [`debugging`](skills/debugging/) | Methodical debugging approach |
+| [`verification`](skills/verification/) | Completion verification before claims |
+| [`writing-plans`](skills/writing-plans/) | Plan and documentation writing |
+
+### Framework Skills
 
 | Skill | Purpose |
 |-------|---------|
@@ -944,7 +987,15 @@ Creates:
 
 ## Version History
 
-### v2.6.0 (Current)
+### v2.7.0 (Current)
+
+- [x] Native skills — Zero external dependencies
+- [x] 6 built-in skills (brainstorming, tdd, code-review, debugging, verification, writing-plans)
+- [x] Removed superpowers plugin dependency
+- [x] Migration guide from superpowers
+- [x] Dependency verification script
+
+### v2.6.0
 
 - [x] Consolidated architecture (single command location)
 - [x] Hooks behavior rules (mandatory triggers)
