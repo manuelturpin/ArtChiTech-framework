@@ -7,7 +7,7 @@
 #   --global          : Installe globalement (~/.claude/plugins/act/)
 #
 # Structure d'installation :
-#   Local:   ./.claude/commands/act/     <- Commandes ACT v2.6
+#   Local:   ./.claude/commands/act/     <- Commandes ACT v2.7
 #            ./.claude/commands/consider/ <- Thinking models
 #   Global:  ~/.claude/plugins/act/      <- Plugin complet
 #
@@ -245,7 +245,7 @@ install_local() {
     mkdir -p "$INSTALL_DIR/commands/act"
     mkdir -p "$INSTALL_DIR/commands/consider"
 
-    # 1. Commandes ACT v2.6
+    # 1. Commandes ACT v2.7
     if [ -d "$SOURCE_DIR/commands/act" ]; then
         cp "$SOURCE_DIR/commands/act/"*.md "$INSTALL_DIR/commands/act/" 2>/dev/null || true
         local act_count=$(ls -1 "$INSTALL_DIR/commands/act/"*.md 2>/dev/null | wc -l | tr -d ' ')
@@ -381,7 +381,7 @@ print_summary() {
 
     if [ "$INSTALL_MODE" = "local" ]; then
         echo "Structure installée :"
-        echo -e "  ${BLUE}.claude/commands/act/${NC}      ← Commandes ACT v2.6"
+        echo -e "  ${BLUE}.claude/commands/act/${NC}      ← Commandes ACT v2.7"
         echo -e "  ${BLUE}.claude/commands/consider/${NC} ← Thinking models"
         echo ""
         echo "Commandes disponibles :"

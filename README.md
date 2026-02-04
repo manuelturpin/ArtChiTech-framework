@@ -40,7 +40,7 @@ Coming from superpowers? See [MIGRATION-FROM-SUPERPOWERS.md](docs/MIGRATION-FROM
 
 ---
 
-## What's New in v2.6
+## Features from v2.6
 
 ### 🏗️ Consolidated Architecture
 
@@ -437,17 +437,19 @@ This creates the `.act/` directory with context files in your project.
 
 ## Migration from Previous Versions
 
-### From v2.5 to v2.6
+### From v2.6 to v2.7
 
-v2.6 is fully backward compatible. Just reinstall:
+v2.7 removes the superpowers dependency. Just reinstall:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
 ```
 
-### From v2.1 or earlier
+If you used superpowers, see [MIGRATION-FROM-SUPERPOWERS.md](docs/MIGRATION-FROM-SUPERPOWERS.md).
 
-1. Install v2.6 (see Installation)
+### From v2.5 or earlier
+
+1. Install v2.7 (see Installation)
 2. Run `/act:init` in your project
 3. Your `.act/` directory will be created
 4. Migrate any `.epct/` state manually if needed
