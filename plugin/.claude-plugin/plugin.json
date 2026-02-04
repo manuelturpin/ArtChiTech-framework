@@ -20,6 +20,6 @@
     "tdd"
   ],
   "dependencies": {
-    "plugins": ["superpowers"]
+    "plugins": []
   }
 }

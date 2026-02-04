@@ -2,7 +2,7 @@
 
 **Objective**: Implement the MVP with quality
 
-**Active skills**: `superpowers:test-driven-development`, `superpowers:code-review`
+**Active skills**: `@skills/tdd/SKILL.md`, `@skills/code-review/SKILL.md`
 
 ## Checklist
 

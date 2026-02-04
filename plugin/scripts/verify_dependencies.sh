@@ -49,36 +49,7 @@ else
     ((WARNINGS++))
 fi
 
-# 3. Check superpowers plugin
-log "Checking superpowers plugin..."
-SUPERPOWERS_FOUND=false
-
-# Method 1: Check in Claude plugins cache
-if [ -d "$HOME/.claude/plugins/cache" ]; then
-    if ls "$HOME/.claude/plugins/cache/" 2>/dev/null | grep -q "superpowers"; then
-        SUPERPOWERS_FOUND=true
-    fi
-fi
-
-# Method 2: Check in installed plugins list (if available)
-if [ -f "$HOME/.claude/plugins.json" ]; then
-    if grep -q "superpowers" "$HOME/.claude/plugins.json" 2>/dev/null; then
-        SUPERPOWERS_FOUND=true
-    fi
-fi
-
-if [ "$SUPERPOWERS_FOUND" = true ]; then
-    log "  ${GREEN}✓${NC} superpowers plugin found"
-else
-    log "  ${YELLOW}⚠${NC} superpowers plugin not found"
-    log "      ACT will work with reduced functionality."
-    log "      Skills like brainstorming, TDD, debugging will be unavailable."
-    log ""
-    log "      To install: See https://github.com/superpowers-ai/superpowers"
-    ((WARNINGS++))
-fi
-
-# 4. Check ACT scripts
+# 3. Check ACT scripts
 log "Checking ACT scripts..."
 SCRIPTS_OK=true
 
@@ -98,7 +69,7 @@ for script in "${REQUIRED_SCRIPTS[@]}"; do
     fi
 done
 
-# 5. Check JSON schemas (optional but recommended)
+# 4. Check JSON schemas (optional but recommended)
 log "Checking JSON schemas..."
 SCHEMAS_DIR="$SCRIPT_DIR/../references/schemas"
 if [ -d "$SCHEMAS_DIR" ]; then

@@ -143,8 +143,8 @@ After all epics are decomposed:
 Next steps:
 1. Review stories in .epct/stories/stories/
 2. Run /act-next to advance to Phase 4: Development
-3. Use superpowers:test-driven-development for implementation
-4. Stories can be imported into your project management tool
+3. Stories can be imported into your project management tool
+4. Consider test-driven development practices for implementation
 
 💡 Tip: Start with Must Have stories from EPIC-01.
    Each story includes traceability back to PRD → Research → Hypotheses.

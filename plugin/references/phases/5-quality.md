@@ -2,7 +2,7 @@
 
 **Objective**: Validate quality before launch
 
-**Active skills**: `superpowers:verification-before-completion`, `superpowers:systematic-debugging`
+**Active skills**: `@skills/verification/SKILL.md`, `@skills/debugging/SKILL.md`
 
 ## Checklist
 

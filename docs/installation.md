@@ -4,7 +4,6 @@
 
 - Claude Code installé
 - Git
-- Superpowers plugin activé
 
 ## Installation
 
@@ -120,9 +119,8 @@ cp .epct-template/state.json .epct/state.json
 
 ### "Skills non activés"
 
-1. Vérifier Superpowers plugin installé
-2. Vérifier que les skills sont dans le bon dossier
-3. Redémarrer Claude Code
+1. Vérifier que les skills sont dans le bon dossier
+2. Redémarrer Claude Code
 
 ### "Contexte perdu entre sessions"
 

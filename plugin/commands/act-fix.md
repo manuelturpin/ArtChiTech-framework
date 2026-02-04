@@ -48,7 +48,7 @@ Analyze the project using the `phase-scoring` skill and list problems by priorit
 **Detection**: No test files or coverage below threshold
 
 **Solution**:
-1. Invoke `superpowers:test-driven-development`
+1. Invoke `@skills/tdd/SKILL.md`
 2. Identify untested functions:
    ```bash
    npm run test -- --coverage
@@ -400,8 +400,8 @@ Recalculate the phase score and display:
     ↓
 /act:fix [n] → Focus on problem n
     ↓
-superpowers:systematic-debugging (if code issue)
-superpowers:test-driven-development (if test issue)
+@skills/debugging/SKILL.md (if code issue)
+@skills/tdd/SKILL.md (if test issue)
     ↓
 Fix implemented
     ↓

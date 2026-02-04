@@ -2,7 +2,7 @@
 
 **Objective**: Define the roadmap and business model
 
-**Active skills**: `superpowers:writing-plans`, `superpowers:brainstorming`
+**Active skills**: `@skills/writing-plans/SKILL.md`, `@skills/brainstorming/SKILL.md`
 
 ## Checklist
 

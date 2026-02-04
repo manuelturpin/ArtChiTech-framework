@@ -2,7 +2,7 @@
 
 **Objective**: Design the technical architecture and UX
 
-**Active skills**: `superpowers:writing-plans`, `superpowers:brainstorming`
+**Active skills**: `@skills/writing-plans/SKILL.md`, `@skills/brainstorming/SKILL.md`
 
 ## Checklist
 
