@@ -2,7 +2,7 @@
 
 **Objective**: Validate the problem and define the value proposition
 
-**Active skills**: `superpowers:brainstorming`
+**Active skills**: `@skills/brainstorming/SKILL.md`
 
 ## Checklist
 

@@ -6,10 +6,11 @@
 
 Avant de commencer, vérifie que tu as :
 
-- [ ] Claude Code installé
-- [ ] Plugin superpowers installé (`claude plugins:install superpowers-marketplace/superpowers`)
+- [ ] Claude Code installé (v2.7+ recommandé pour les skills natives)
 - [ ] Python 3.8+
 - [ ] Git
+
+> **Note :** ACT v2.7+ utilise les skills natives de Claude Code. Aucune dépendance externe n'est requise.
 
 ## Étape 1 : Créer le projet test
 
@@ -132,7 +133,7 @@ claude
 ## En cas de problème
 
 1. **Commande non reconnue** → Redémarre Claude Code
-2. **Plugin non trouvé** → Vérifie `ls ~/.claude/plugins/`
+2. **Skills non détectées** → Vérifie que Claude Code est v2.7+ (`claude --version`)
 3. **Erreur Python** → Vérifie `python3 --version`
 
 Pour signaler un bug :

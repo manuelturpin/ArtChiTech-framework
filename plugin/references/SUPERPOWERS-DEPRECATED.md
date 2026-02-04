@@ -1,3 +1,12 @@
+> ⚠️ **DEPRECATED** as of v2.7
+>
+> ACT no longer depends on the external `superpowers` plugin.
+> All skills are now native — see the `skills/` directory.
+>
+> This file is preserved for historical reference only.
+
+---
+
 # Superpowers Dependency
 
 > ACT Framework depends on the [superpowers](https://github.com/superpowers-ai/superpowers) plugin.

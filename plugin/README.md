@@ -9,17 +9,15 @@
 | Dependency | Version | Required |
 |------------|---------|----------|
 | Claude Code | Latest | Yes |
-| Plugin `superpowers` | 3.6.0+ | Yes |
 | Python | 3.8+ | Yes |
 | Git | Any | Yes |
 
-### Install dependencies
+> **Note:** ACT v2.7+ includes native skills — no external plugin dependencies required.
+
+### Verify environment
 
 ```bash
-# 1. Install the superpowers plugin
-claude plugins:install superpowers-marketplace/superpowers
-
-# 2. Verify Python
+# Verify Python
 python3 --version  # Must be >= 3.8
 ```
 
@@ -92,18 +90,6 @@ ACT creates a `.epct/` folder in your project:
 ```
 
 Add `.epct/` to your `.gitignore` if you don't want to version ACT state.
-
-## Superpowers Integration
-
-ACT uses superpowers skills based on the phase:
-
-| Phase | Skill |
-|-------|-------|
-| Discovery | `superpowers:brainstorming` |
-| Strategy | `superpowers:brainstorming` |
-| Design | `superpowers:writing-plans` |
-| Development | `superpowers:test-driven-development` |
-| Quality | `superpowers:code-reviewer` |
 
 ## Development
 

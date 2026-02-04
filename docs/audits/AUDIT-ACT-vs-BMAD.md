@@ -1,3 +1,11 @@
+> ⚠️ **DOCUMENT HISTORIQUE** — Rédigé avant ACT v2.7
+> 
+> Ce document décrit l'état du framework **avant** la migration vers les skills natifs.
+> Depuis v2.7, ACT n'a plus de dépendance à `superpowers` — tous les skills sont intégrés.
+> Voir `docs/MIGRATION-FROM-SUPERPOWERS.md` pour les détails.
+
+---
+
 # Audit Comparatif : ACT Framework vs BMAD-METHOD
 
 > **Date**: 2025-01-27
