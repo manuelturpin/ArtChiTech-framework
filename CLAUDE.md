@@ -1,6 +1,6 @@
-# ArtChiTech Framework (ACT)
+# ArtChiTech Framework (ACT) v3.0
 
-> Claude Code plugin for 7-phase project management.
+> Unified 7-phase methodology with multi-project orchestration, BMAD artefacts, and Superpowers integration.
 
 ## Hooks Behavior (MANDATORY)
 
@@ -23,6 +23,7 @@ Claude MUST apply these hooks automatically:
 - **Name**: ArtChiTech Framework
 - **Shortcut**: ACT
 - **Type**: Claude Code Plugin
+- **Version**: 3.0.0-alpha
 
 ---
 
@@ -439,6 +440,74 @@ cd test-apps/[app-name] && /onboard
 git commit -m "feat: description"
 ```
 
+## 📁 Multi-Project Orchestrator (NEW v3.0)
+
+Manage 4-6 projects simultaneously from a centralized registry.
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/act:projects` | List, register, or scan for projects |
+| `/act:switch <name>` | Switch context to another project |
+| `/act:dashboard` | Multi-project overview with phases, progress, alerts |
+
+### Architecture
+
+```
+~/.act/projects.yaml     ← Global registry (all projects)
+    │
+    ├── project-a/.act/  ← Per-project state (source of truth)
+    ├── project-b/.act/
+    └── project-c/.act/
+```
+
+### Quick Start
+
+```bash
+# Register current project
+/act:projects --register .
+
+# See all projects
+/act:dashboard
+
+# Switch to another project
+/act:switch pocket-watch-ai
+```
+
+**Full details:** @skills/orchestrator/SKILL.md
+
+---
+
+## 📄 BMAD Artefacts (NEW v3.0)
+
+ACT v3.0 integrates structured artefacts from the BMAD methodology.
+
+### Product Requirements Document (PRD)
+
+Created during **Phase 2: Strategy** using `workflows/prd/`:
+- 7 structured sections (Vision, Users, Features, Tech, Metrics, Constraints, Timeline)
+- Three modes: Create, Validate, Edit
+- Stored in `.act/prd.md`
+
+### Architecture Decision Records (ADR)
+
+Created during **Phase 3: Design** using `workflows/adr/`:
+- Captures architectural decisions with context, alternatives, consequences
+- Triggered by Deviation Rule 4 (architectural changes)
+- Stored in `.act/architecture/ADR-NNN-slug.md`
+
+### Story Decomposition
+
+Created during **Phase 2: Strategy** using `workflows/stories/`:
+- Breaks PRD into Epics → Stories
+- Estimation and prioritization
+- Stored in `.act/stories/`
+
+**Workflows:** @plugin/workflows/prd/, @plugin/workflows/adr/, @plugin/workflows/stories/
+
+---
+
 ## Main Commands
 
 | Command | Description |
@@ -451,7 +520,7 @@ git commit -m "feat: description"
 | `/resume` | Resume session |
 | `/help` | Contextual help |
 
-### ACT v2.5 Commands
+### ACT v3.0 Commands
 
 | Command | Description |
 |---------|-------------|
@@ -469,6 +538,9 @@ git commit -m "feat: description"
 | `/act:reflect` | Reflect on task to improve quality (+8-21%) |
 | `/act:memorize` | Save important insights for future reference |
 | `/act:evolve` | Analyze observations and evolve the system |
+| `/act:projects` | **[NEW v3.0]** List/register/scan projects |
+| `/act:switch` | **[NEW v3.0]** Switch context to another project |
+| `/act:dashboard` | **[NEW v3.0]** Multi-project overview dashboard |
 | `/act:sync-github` | Sync project state with GitHub Issues |
 | `/act:export` | Export ACT config to other IDEs (Cursor, Windsurf, etc.) |
 | `/act:audit-skill` | Audit a specific skill |

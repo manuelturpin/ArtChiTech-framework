@@ -1,8 +1,8 @@
 # ACT Project Configuration
-# Version: 2.5
+# Version: 3.0
 # Created by: /act:init
 
-version: "2.5"
+version: "3.0"
 
 project:
   name: "{{PROJECT_NAME}}"
@@ -14,13 +14,13 @@ project:
 settings:
   # Commit après chaque phase
   auto_commit: true
-  
+
   # Vérification requise avant completion
   verification_required: true
-  
+
   # Mode TDD : strict | relaxed | off
   tdd_mode: "relaxed"
-  
+
   # Hooks actifs
   hooks:
     pre_tool_use: true
@@ -30,10 +30,10 @@ settings:
 context:
   # Refresh le plan avant chaque action tool
   refresh_on_tool_use: true
-  
+
   # Activer la session recovery
   session_recovery: true
-  
+
   # Fichiers à inclure dans le contexte
   context_files:
     - ".act/state.md"
@@ -43,8 +43,10 @@ context:
 agents:
   # Modèles par rôle (opus = planning, sonnet = execution, haiku = simple)
   planner: "opus"
+  architect: "opus"
   executor: "sonnet"
   reviewer: "opus"
+  tester: "sonnet"
   documenter: "haiku"
 
 deviation_rules:
@@ -54,3 +56,27 @@ deviation_rules:
   blockers: "auto-fix"       # Auto-fix immediately
   architectural: "ask-human" # STOP, ask user
   enhancements: "log-continue"  # Log to ISSUES.md, continue
+
+# NEW in v3.0 — Multi-project orchestrator
+orchestrator:
+  priority: "medium"         # high | medium | low
+  category: ""               # Custom category tag
+  team: "solo"               # solo | team
+
+# NEW in v3.0 — BMAD artefacts
+artefacts:
+  prd: true                  # Generate PRD in Discovery/Strategy
+  adr: true                  # Generate ADRs in Design
+  stories: true              # Generate Story decomposition in Strategy
+
+# NEW in v3.0 — History and sessions
+history:
+  enabled: true
+  maxSessions: 10
+  autoSave: true
+
+# NEW in v3.0 — Continuous learning
+learning:
+  enabled: true
+  maxObservations: 100
+  evolveThreshold: 0.7

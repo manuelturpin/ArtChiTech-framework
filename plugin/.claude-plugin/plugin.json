@@ -1,7 +1,7 @@
 {
   "name": "act",
-  "version": "2.6.0",
-  "description": "ACT (ArtChiTech) Framework v2.6 - 7-phase project management with consolidated architecture, hooks system, model selection, and 36+ commands.",
+  "version": "3.0.0-alpha",
+  "description": "ACT (ArtChiTech) Framework v3.0 - Unified 7-phase methodology with multi-project orchestration, BMAD artefacts (PRD, ADR, Stories), Superpowers integration, and auto-improvement.",
   "author": {
     "name": "Manuel Turpin",
     "email": "manuel.turpin@gmail.com",
@@ -14,10 +14,15 @@
     "framework",
     "project-management",
     "phases",
+    "multi-project",
+    "prd",
+    "adr",
+    "stories",
     "audit",
     "onboarding",
     "methodology",
-    "tdd"
+    "tdd",
+    "auto-improvement"
   ],
   "dependencies": {
     "plugins": ["superpowers"]

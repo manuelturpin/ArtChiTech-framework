@@ -1,0 +1,20 @@
+# ACT Global Project Registry
+# Location: ~/.act/projects.yaml
+# Managed by: /act:projects command
+
+version: "3.0"
+
+# Default project to load when starting a new session
+default_project: null
+
+# Directories to scan for .act/ projects (used by --scan)
+scan_paths: []
+  # - ~/projects
+  # - ~/Desktop/bonsai974/claude/lab
+
+# Registered projects
+projects: []
+  # - name: my-project
+  #   path: /absolute/path/to/project
+  #   registered: 2026-02-25
+  #   tags: [web, typescript]

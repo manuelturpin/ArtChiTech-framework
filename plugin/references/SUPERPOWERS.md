@@ -1,118 +1,141 @@
-# Superpowers Dependency
+# Superpowers Integration — ACT v3.0
 
-> ACT Framework depends on the [superpowers](https://github.com/superpowers-ai/superpowers) plugin.
+> ACT v3.0 **orchestrates** Superpowers skills within its 7-phase methodology. Superpowers remain installed as a separate plugin, but ACT provides the entry points and context.
 
-## Required Skills
+## Orchestration Principle
 
-The following superpowers skills are used throughout the ACT framework:
+```
+┌─────────────────────────────────────────────────┐
+│  ACT v3.0 (Orchestrator)                        │
+│                                                  │
+│  Phase 1 Discovery ──→ brainstorming            │
+│  Phase 2 Strategy  ──→ writing-plans            │
+│  Phase 3 Design    ──→ brainstorming + plans    │
+│  Phase 4 Development ─→ TDD + debugging         │
+│  Phase 5 Quality   ──→ verification + review    │
+│  Phase 6 Launch    ──→ verification             │
+│  Phase 7 Growth    ──→ debugging                │
+│                                                  │
+│  ✅ One entry point per phase                    │
+│  ✅ No duplication between ACT and Superpowers  │
+│  ✅ Superpowers skills stay installed, ACT calls │
+└─────────────────────────────────────────────────┘
+```
 
-| Skill | Used In | Purpose |
-|-------|---------|---------|
-| `brainstorming` | Discovery, Strategy, Design | Explore ideas and validate problems |
-| `writing-plans` | Strategy, Design | Create structured implementation plans |
-| `test-driven-development` | Development, `/act-fix` | Write tests before implementation |
-| `code-review` | Development | Review code quality and patterns |
-| `verification-before-completion` | Quality, Launch | Verify work is complete before claiming done |
-| `systematic-debugging` | Quality, Growth, Error Tracker | Debug issues methodically |
+**Key rule**: Users enter via ACT commands (`/act:full`, `/act:quick`), NOT directly via Superpowers skills. ACT provides the project context that Superpowers skills need.
 
 ---
 
-## Skills by Phase
+## Required Superpowers Skills
+
+| Skill | ACT Phase | ACT Iron Law | Purpose |
+|-------|-----------|--------------|---------|
+| `brainstorming` | 1 Discovery, 2 Strategy, 3 Design | - | Explore ideas, validate problems, define scope |
+| `writing-plans` | 2 Strategy, 3 Design | - | Create structured implementation plans |
+| `test-driven-development` | 4 Development | TDD Iron Law | RED→GREEN→REFACTOR cycle |
+| `code-review` | 4 Development, 5 Quality | - | Review code quality and patterns |
+| `verification-before-completion` | 5 Quality, 6 Launch | Verification Iron Law | Evidence before assertions |
+| `systematic-debugging` | 4 Development, 5 Quality, 7 Growth | Debugging Iron Law | Methodical root cause investigation |
+
+### Additional Superpowers Used
+
+| Skill | When Used | Purpose |
+|-------|-----------|---------|
+| `dispatching-parallel-agents` | Any phase with independent tasks | Parallelize work across agents |
+| `using-git-worktrees` | 4 Development | Isolate feature work |
+| `finishing-a-development-branch` | 5 Quality → 6 Launch | Complete and merge work |
+| `executing-plans` | Any phase | Execute implementation plans with checkpoints |
+| `receiving-code-review` | 5 Quality | Process review feedback properly |
+
+---
+
+## Skills by Phase (Detailed)
 
 ### Phase 1: Discovery
-- **`superpowers:brainstorming`** - Validate problem, explore user needs
+- **`superpowers:brainstorming`** — Validate problem, explore user needs
+- **ACT adds**: Research workflow, competitive analysis templates, PRD scaffolding
 
 ### Phase 2: Strategy
-- **`superpowers:brainstorming`** - Define MVP scope
-- **`superpowers:writing-plans`** - Create roadmap
+- **`superpowers:brainstorming`** — Define MVP scope, explore business models
+- **`superpowers:writing-plans`** — Create implementation roadmap
+- **ACT adds**: PRD workflow, Story decomposition, scale-adaptive depth
 
 ### Phase 3: Design
-- **`superpowers:brainstorming`** - Explore architecture options
-- **`superpowers:writing-plans`** - Document technical specifications
+- **`superpowers:brainstorming`** — Explore architecture options
+- **`superpowers:writing-plans`** — Document technical specifications
+- **ACT adds**: ADR workflow, `/act:party` for multi-perspective architecture decisions
 
 ### Phase 4: Development
-- **`superpowers:test-driven-development`** - Write tests first, implement after
-- **`superpowers:code-review`** - Review implementation quality
+- **`superpowers:test-driven-development`** — Write tests first, implement after
+- **`superpowers:code-review`** — Review implementation quality
+- **`superpowers:systematic-debugging`** — Debug failures methodically
+- **ACT adds**: Chunk-Test-Fix workflow, model selection (Sonnet for execution)
 
 ### Phase 5: Quality
-- **`superpowers:verification-before-completion`** - Ensure all tests pass
-- **`superpowers:systematic-debugging`** - Debug failing tests
+- **`superpowers:verification-before-completion`** — Ensure all tests pass
+- **`superpowers:systematic-debugging`** — Debug failing tests
+- **`superpowers:requesting-code-review`** — Final review before merge
+- **ACT adds**: All 3 Iron Laws enforced, Stop Hook verification
 
 ### Phase 6: Launch
-- **`superpowers:verification-before-completion`** - Pre-launch checklist
+- **`superpowers:verification-before-completion`** — Pre-launch checklist
+- **ACT adds**: Deployment verification, monitoring setup
 
 ### Phase 7: Growth
-- **`superpowers:systematic-debugging`** - Debug production issues
+- **`superpowers:systematic-debugging`** — Debug production issues
+- **ACT adds**: Continuous learning, observations, `/act:evolve`
 
 ---
 
-## Skills by Agent/Command
+## Skills by Agent
 
-### Agents
+| Agent | Model | Superpowers Used |
+|-------|-------|------------------|
+| `planner` | Opus | `brainstorming`, `writing-plans` |
+| `architect` | Opus | `brainstorming`, `writing-plans` |
+| `executor` | Sonnet | `test-driven-development`, `systematic-debugging` |
+| `reviewer` | Opus | `code-review`, `verification-before-completion` |
+| `tester` | Sonnet | `test-driven-development`, `systematic-debugging` |
+| `documenter` | Haiku | (none — documentation only) |
 
-| Agent | Skills Used |
-|-------|-------------|
-| `project-orchestrator` | `brainstorming`, `writing-plans`, `test-driven-development`, `code-review`, `verification-before-completion`, `systematic-debugging` |
-| `chunk-manager` | `systematic-debugging` (for test failures) |
-| `error-tracker` | `systematic-debugging` (for `/act-fix`) |
+---
 
-### Commands
+## Iron Laws ↔ Superpowers Mapping
 
-| Command | Skills Used |
-|---------|-------------|
-| `/act-project` | `brainstorming` |
-| `/act-fix` | `systematic-debugging`, `test-driven-development` |
+| Iron Law | Superpowers Enforcement | Phase |
+|----------|------------------------|-------|
+| TDD Iron Law | `test-driven-development` enforces RED→GREEN→REFACTOR | 4, 5 |
+| Debugging Iron Law | `systematic-debugging` enforces root cause investigation | 4, 5, 7 |
+| Verification Iron Law | `verification-before-completion` enforces evidence-first | 5, 6 |
 
 ---
 
 ## Installation Verification
-
-To verify superpowers is installed, check for its presence:
 
 ```bash
 # Check if superpowers plugin is installed
 ls ~/.claude/plugins/cache/ | grep superpowers
 ```
 
-If not installed, ACT will work with reduced functionality:
-- Manual brainstorming instead of structured skill
-- No TDD enforcement
-- No systematic debugging workflow
-
----
-
 ## Fallback Behavior
 
-When superpowers is not available, ACT will:
+When superpowers is not available, ACT provides built-in equivalents:
 
-1. **Log a warning** at startup:
-   ```
-   ⚠️  superpowers plugin not found. Some features may be limited.
-   ```
+| Superpower | ACT Fallback |
+|------------|-------------|
+| `brainstorming` | ACT brainstorming workflow (`workflows/brainstorming/`) |
+| `writing-plans` | Manual plan creation in `.act/plan.md` |
+| `test-driven-development` | TDD Iron Law enforcement via hooks |
+| `systematic-debugging` | Debugging Iron Law enforcement via hooks |
+| `verification-before-completion` | Verification Iron Law + Stop Hook |
+| `code-review` | `reviewer` agent with manual checklist |
 
-2. **Skip skill invocations** but continue workflow:
-   - Brainstorming → Manual discussion
-   - TDD → User-driven testing
-   - Debugging → Standard investigation
-
-3. **Recommend installation**:
-   ```
-   💡 Install superpowers for enhanced ACT capabilities:
-      See: https://github.com/superpowers-ai/superpowers
-   ```
+ACT will log a recommendation:
+```
+💡 Install superpowers for enhanced ACT capabilities:
+   See: https://github.com/superpowers-ai/superpowers
+```
 
 ---
 
-## Why Superpowers?
-
-Superpowers provides structured workflows that complement ACT's 7-phase methodology:
-
-| ACT Need | Superpowers Solution |
-|----------|---------------------|
-| Validate ideas before building | `brainstorming` skill with structured exploration |
-| Plan before coding | `writing-plans` with implementation blueprints |
-| Test-first development | `test-driven-development` enforces RED→GREEN→REFACTOR |
-| Quality gates | `verification-before-completion` prevents false claims |
-| Bug investigation | `systematic-debugging` follows scientific method |
-
-The combination of ACT phases + superpowers skills creates a comprehensive development methodology.
+*ACT v3.0 — Superpowers Orchestration Layer*

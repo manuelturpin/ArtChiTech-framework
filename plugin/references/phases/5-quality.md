@@ -2,7 +2,9 @@
 
 **Objective**: Validate quality before launch
 
-**Active skills**: `superpowers:verification-before-completion`, `superpowers:systematic-debugging`
+**Active skills**: `superpowers:verification-before-completion`, `superpowers:systematic-debugging`, `superpowers:requesting-code-review`
+**Iron Laws**: All three (TDD, Debugging, Verification)
+**Agents**: `reviewer` (Opus), `tester` (Sonnet)
 
 ## Checklist
 
@@ -64,6 +66,16 @@
 | Lighthouse score | > 90 |
 | WCAG compliance | AA |
 | P95 response time | < 200ms |
+
+## Superpowers Integration
+
+| Superpower | Role in Quality |
+|------------|-----------------|
+| `superpowers:verification-before-completion` | Prevents false completion claims — evidence before assertions |
+| `superpowers:systematic-debugging` | Methodical investigation of test failures and bugs |
+| `superpowers:requesting-code-review` | Final code review before merge/launch |
+
+**Verification Iron Law applies**: No completion claims without fresh verification evidence. Run it, read it, then claim it.
 
 ## Transition → Phase 6
 

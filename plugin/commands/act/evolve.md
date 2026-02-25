@@ -290,9 +290,87 @@ git checkout skills/nom-skill/SKILL.md
 cat .act/evolution-log.jsonl | tail -1
 ```
 
+---
+
+## v3.0 Enhancements
+
+### Auto-Reflexion After Project Completion
+
+When a project completes all 7 phases, `/act:evolve` automatically triggers a project-level reflexion:
+
+```markdown
+## 🔄 Post-Project Reflexion
+
+### Phase Performance Analysis
+| Phase | Duration | Issues | Quality |
+|-------|----------|--------|---------|
+| Discovery | 2d | 0 | ★★★★★ |
+| Strategy | 3d | 1 blocker | ★★★★☆ |
+| Design | 2d | 0 | ★★★★★ |
+| Development | 5d | 3 bugs | ★★★☆☆ |
+| Quality | 2d | 0 | ★★★★☆ |
+| Launch | 1d | 0 | ★★★★★ |
+| Growth | ongoing | - | - |
+
+### Bottleneck Detection
+- Development phase took 33% of total time
+- 3 bugs found → Consider stricter TDD enforcement
+
+### Template Improvement Suggestions
+1. PRD template: Add "Dependencies" section (missed in this project)
+2. config.yaml: Default TDD mode should be "strict" not "relaxed"
+
+### Cross-Project Patterns
+Comparing with 3 other registered projects:
+- Development is consistently the longest phase (avg 35%)
+- Projects with strict TDD mode have 60% fewer bugs in Quality phase
+```
+
+### Cross-Project Learning
+
+With multi-project orchestrator, `/act:evolve` can analyze patterns across ALL registered projects:
+
+```bash
+/act:evolve --cross-project
+```
+
+This scans `~/.act/projects.yaml`, reads observations from all projects, and identifies patterns that span multiple projects.
+
+| Option | Description |
+|--------|-------------|
+| `--cross-project` | Analyze all registered projects |
+| `--project <name>` | Analyze a specific project only |
+
+### Improvement Proposals
+
+When confidence > 80% on 3+ occurrences across projects, evolve generates a **framework improvement proposal**:
+
+```markdown
+## 🧬 Framework Improvement Proposal
+
+**Pattern:** "Tests before refactoring" observed in 4/4 projects
+**Confidence:** 0.87
+**Proposal:** Add pre-refactor test check to PreToolUse hook
+
+### Evidence
+- project-a: 3 successful refactors with pre-tests
+- project-b: 1 failed refactor without pre-tests
+- project-c: 2 successful with pre-tests
+- project-d: Explicit user request for this behavior
+
+### Suggested Change
+File: `hooks/pre-tool-use.md`
+Add: "Before refactoring, verify existing tests cover the affected code"
+
+**Apply?** Use `/act:evolve --apply` to implement.
+```
+
+---
+
 ## Voir aussi
 
 - `skills/continuous-learning/SKILL.md` - Skill de pattern detection
+- `skills/orchestrator/SKILL.md` - Multi-project orchestrator (cross-project learning)
 - `templates/act/observation.jsonl.md` - Format des observations
 - `instincts/README.md` - Documentation des instincts
 - `specs/SPEC-continuous-learning.md` - Spécification complète

@@ -1,0 +1,47 @@
+{
+  "name": "act-framework",
+  "version": "3.0.0-alpha.1",
+  "description": "ACT (ArtChiTech) Framework — Unified 7-phase methodology for Claude Code with multi-project orchestration, BMAD artefacts, and auto-improvement.",
+  "author": {
+    "name": "Manuel Turpin",
+    "email": "manuel.turpin@gmail.com",
+    "url": "https://github.com/manuelturpin"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manuelturpin/ArtChiTech-framework"
+  },
+  "homepage": "https://github.com/manuelturpin/ArtChiTech-framework",
+  "keywords": [
+    "claude-code",
+    "framework",
+    "project-management",
+    "methodology",
+    "tdd",
+    "multi-project",
+    "ai-agent"
+  ],
+  "bin": {
+    "act-framework": "./scripts/cli.sh"
+  },
+  "files": [
+    "plugin/",
+    "templates/",
+    "rules/",
+    "skills/",
+    "agents/",
+    "hooks/",
+    "scripts/cli.sh",
+    "scripts/install-local.sh",
+    "README.md"
+  ],
+  "scripts": {
+    "install-local": "./scripts/install-local.sh",
+    "init": "./scripts/cli.sh init",
+    "postinstall": "echo '\\n✅ ACT Framework installed. Run: npx act-framework init\\n'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

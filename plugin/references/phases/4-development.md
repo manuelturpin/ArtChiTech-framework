@@ -2,7 +2,9 @@
 
 **Objective**: Implement the MVP with quality
 
-**Active skills**: `superpowers:test-driven-development`, `superpowers:code-review`
+**Active skills**: `superpowers:test-driven-development`, `superpowers:code-review`, `superpowers:systematic-debugging`
+**Iron Laws**: TDD Iron Law (mandatory), Debugging Iron Law (when issues arise)
+**Agents**: `executor` (Sonnet), `tester` (Sonnet)
 
 ## Checklist
 
@@ -57,6 +59,16 @@ For each feature:
 | Build time | < 5 min |
 | Code review time | < 24h |
 | Bug escape rate | < 5% |
+
+## Superpowers Integration
+
+| Superpower | Role in Development |
+|------------|---------------------|
+| `superpowers:test-driven-development` | Enforces RED→GREEN→REFACTOR cycle for every feature |
+| `superpowers:code-review` | Reviews implementation quality after each chunk |
+| `superpowers:systematic-debugging` | Investigates failures methodically (Debugging Iron Law) |
+
+**TDD Iron Law applies**: No production code without a failing test first. Code written before test? DELETE IT.
 
 ## Transition → Phase 5
 
