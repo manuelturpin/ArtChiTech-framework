@@ -100,6 +100,29 @@ Archive: .act/logs/archive/2026-01-10-ralph-integration/
 Ready for next feature!
 ```
 
+## Examples
+
+### Basic Usage
+```bash
+/loop-complete
+```
+
+### After Successful Loop
+```
+=== Feature Complete ===
+Branch: feat/user-auth
+Stories: 7/7 passed
+Duration: 1h45
+Learnings curated: 2 patterns added to AGENTS.md
+Archive: .act/logs/archive/2026-02-25-user-auth/
+Ready for next feature!
+```
+
+## Related
+
+- [/loop](../loop.md) — Launch autonomous loop
+- [/loop-status](../loop-status.md) — Show loop progression
+
 ## Note Importante
 
 **AGENTS.md est utilise a la place de CLAUDE.md** pour cette implementation.

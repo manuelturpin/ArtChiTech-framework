@@ -49,7 +49,8 @@ Claude MUST apply these hooks automatically:
 - Run the command → Read the output → THEN make the claim
 - Never say "should work" or "I'm confident" without evidence
 
-**Full details:** @rules/iron-laws.md  
+**Full details:** @rules/iron-laws.md
+**Spec:** @specs/SPEC-iron-laws.md
 **Checklist:** @templates/verification-checklist.md
 
 ---
@@ -77,7 +78,8 @@ Can I fix this in < 5 min without changing how things work together?
           └── NO  → Rule 5 (Log and continue)
 ```
 
-**Full details:** @rules/deviation-rules.md  
+**Full details:** @rules/deviation-rules.md
+**Spec:** @specs/SPEC-deviation-rules.md
 **Enhancement log:** @templates/ISSUES.md
 
 ---
@@ -122,8 +124,8 @@ Verify context is complete using `/act:where-am-i`:
 - 3-4/5 → ⚠️ Partial, proceed with caution
 - 0-2/5 → ❌ Incomplete, run `/act:init --repair`
 
-**Full details:** @skills/session-recovery/SKILL.md  
-**Spec:** @specs/SPEC-reboot-test.md  
+**Full details:** @skills/session-recovery/SKILL.md
+**Specs:** @specs/SPEC-reboot-test.md, @specs/SPEC-session-recovery.md, @specs/SPEC-context-engineering.md
 **Commands:** `/act:resume`, `/act:where-am-i`
 
 ---
@@ -196,6 +198,7 @@ Session History saves a summary of each work session for traceability.
 ```
 
 **Full details:** @skills/session-recovery/SKILL.md
+**Spec:** @specs/SPEC-session-history.md
 
 ---
 
@@ -264,6 +267,7 @@ Haiku = LIT et DOCUMENTE (documentation, simple tasks)
 - **Before merge** → call `reviewer`
 
 **Full details:** @agents/README.md
+**Spec:** @specs/SPEC-model-selection.md
 
 ---
 
@@ -309,6 +313,7 @@ After completing a task, ask yourself:
 - **`CLAUDE.md`** — Important, reusable insights (`--important` flag)
 
 **Full details:** @skills/reflexion/SKILL.md
+**Spec:** @specs/SPEC-reflexion.md
 
 ---
 
@@ -343,6 +348,7 @@ Apply structured mental models to improve decision-making and problem-solving.
 | Risk assessment | `pre-mortem`, `reversibility` |
 
 **Full details:** @skills/thinking/SKILL.md
+**Spec:** @specs/SPEC-thinking-models.md
 
 ---
 
@@ -426,6 +432,7 @@ Explore decisions through **multiple perspectives** with simulated expert person
 | Conventions | @.claude/rules/4-conventions.md |
 | Tests | @.claude/rules/5-testing.md |
 | Troubleshooting | @.claude/rules/6-troubleshooting.md |
+| Loop Safety | @.claude/rules/7-loop-safety.md |
 
 ## Quick Start
 
@@ -548,6 +555,8 @@ Created during **Phase 2: Strategy** using `workflows/stories/`:
 | `/act:audit-agent` | Audit a specific agent |
 | `/act:audit-all` | Full framework audit |
 | `/act:heal` | Auto-repair audit issues |
+
+**Specs:** @specs/SPEC-act-validate.md, @specs/SPEC-scale-adaptive.md
 
 ---
 

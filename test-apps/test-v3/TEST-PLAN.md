@@ -206,16 +206,18 @@ ls .act/ 2>/dev/null || echo "No .act/ — needs init"
 
 | Test | Feature | Status |
 |------|---------|--------|
-| 1 | NPX Init | ⬜ |
-| 2 | Global Install | ⬜ |
-| 3 | Multi-Project Commands | ⬜ |
-| 4 | Phase Definitions | ⬜ |
-| 5 | ADR Workflow | ⬜ |
-| 6 | Evolve Cross-Project | ⬜ |
-| 7 | Plugin Manifest | ⬜ |
-| 8 | CLAUDE.md | ⬜ |
-| 9 | Backward Compatibility | ⬜ |
-| 10 | Full Init + Resume | ⬜ |
+| 1 | NPX Init | ✅ |
+| 2 | Global Install | ✅ |
+| 3 | Multi-Project Commands | ✅ |
+| 4 | Phase Definitions | ✅ |
+| 5 | ADR Workflow | ✅ |
+| 6 | Evolve Cross-Project | ✅ |
+| 7 | Plugin Manifest | ✅ |
+| 8 | CLAUDE.md | ✅ |
+| 9 | Backward Compatibility | ✅ |
+| 10 | Full Init + Resume | ✅ |
+
+**Result: 10/10 PASS** — Validated 2026-02-25
 
 ---
 

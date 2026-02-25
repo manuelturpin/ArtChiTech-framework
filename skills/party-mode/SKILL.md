@@ -98,6 +98,16 @@ Le but n'est pas l'unanimité mais la **clarté** :
 2. **Nommer les tensions** : Où sont les vrais trade-offs ?
 3. **Extraire l'actionable** : Que faire concrètement ?
 
+## When to Use
+
+| Situation | Recommended |
+|-----------|-------------|
+| Architecture decision | Full party (all 5) |
+| Implementation choice | architect, developer |
+| Quality concern | developer, reviewer |
+| UX question | developer, user-advocate |
+| Risk assessment | All + devil's advocate focus |
+
 ## Bonnes Pratiques
 
 ### ✅ Faire

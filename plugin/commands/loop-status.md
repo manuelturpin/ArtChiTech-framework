@@ -67,6 +67,28 @@ Recent learnings:
 | Boucle complete | "Boucle terminee! Toutes les stories passees." |
 | Boucle en cours | Affiche iteration courante |
 
+## Examples
+
+### Basic Usage
+```bash
+/loop-status
+```
+
+### During Active Loop
+```
+=== Loop Status ===
+Project: MyProject
+Branch: feat/user-auth
+Stories: 4/7 (57%)
+  Done: 4 | Pending: 2 | Skipped: 1
+Last iteration: #5 - US-004 passed
+```
+
+## Related
+
+- [/loop](../loop.md) — Launch autonomous loop
+- [/loop-complete](../loop-complete.md) — Finalize loop and curate learnings
+
 ## Fichiers Lus
 
 - `.act/session/prd.json` - Etat des stories
