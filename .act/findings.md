@@ -56,4 +56,14 @@ Pour vérifier que le contexte est récupérable :
 
 ---
 
-*Last updated: 2026-02-01*
+### 2026-02-25: v3.0-alpha Audit Insights
+
+- **Spec coverage gap** : 56% des specs n'étaient référencées nulle part dans CLAUDE.md — les specs "deep dive" doivent être reliées à leurs sections correspondantes
+- **Agents = meilleur score** : 4.9/5 — la structure agent (Model, Role, Inputs, Outputs, Workflow, Handoff) est un excellent template réutilisable
+- **Commands bien documentées** : 79% perfect score (5/5) — le frontmatter YAML + sections standardisées fonctionnent bien
+- **Auto-healing efficace** : 12 correctifs en 2 passes (--auto puis --force) ont remonté le score de 88% à 97%
+- **Backward compatibility** : v3.0 est 100% compatible v2.6 — tous les nouveaux champs sont optionnels
+
+---
+
+*Last updated: 2026-02-25*

@@ -457,3 +457,53 @@ All 8 features implemented:
 ---
 
 *Session log - ACT v2.5 Implementation - TIER 1 COMPLETE!*
+
+---
+
+## 2026-02-25
+
+### Session: v3.0-alpha Validation
+
+- **Objective:** Audit, heal, and validate ACT v3.0-alpha
+- **Branch:** v3.0-alpha
+- **Starting point:** v3.0-alpha release (commit cb69b58)
+
+### Phase A: Framework Audit (/act:audit-all)
+- Audited **73 composants** : 10 skills, 48 commands, 7 agents, 8 cross-refs
+- Score initial : **88%** (64 pass, 9 warnings, 0 errors)
+- Issues identifiées :
+  - 10/18 SPEC files orphelins (non référencés dans CLAUDE.md)
+  - Règle 7-loop-safety.md absente de la table Documentation
+  - loop-status.md et loop-complete.md manquent sections Examples
+  - party-mode/SKILL.md manque section "When to Use" explicite
+
+### Phase B: Auto-Healing (/act:heal)
+- **--auto** : 3 correctifs safe appliqués
+  - CLAUDE.md : ajout Loop Safety dans table Documentation
+  - loop-status.md : ajout Examples + Related
+  - loop-complete.md : ajout Examples + Related
+- **--force** : 9 correctifs additionnels
+  - CLAUDE.md : 10 refs specs orphelines reliées aux sections correspondantes
+  - party-mode/SKILL.md : ajout section "When to Use"
+- Score après healing : **~97%**
+
+### Phase C: Tests de Validation (10/10 PASS)
+- Test 1: NPX Init ✅ (.act/ v3.0 structure complète)
+- Test 2: Global Install ✅ (~/.act/projects.yaml v3.0)
+- Test 3: Multi-Project Commands ✅ (projects, dashboard, switch)
+- Test 4: Phase Definitions ✅ (5 phases enrichies Superpowers + BMAD)
+- Test 5: ADR Workflow ✅ (workflow + template + steps)
+- Test 6: Evolve Cross-Project ✅ (--cross-project, auto-reflexion)
+- Test 7: Plugin Manifest ✅ (version 3.0.0-alpha)
+- Test 8: CLAUDE.md ✅ (v3.0, orchestrator, BMAD, [NEW v3.0])
+- Test 9: Backward Compatibility ✅ (v2.6 non cassé)
+- Test 10: Full Init + Resume Cycle ✅ (artefacts + PRD + recovery)
+
+### Livrables
+- `VALIDATION-REPORT.md` créé dans test-apps/test-v3/
+- `TEST-PLAN.md` mis à jour (10/10 ✅)
+- Commit: `fe0e5ee` test(v3.0): Audit, heal, and validate v3.0-alpha
+
+---
+
+*Session log - ACT v3.0-alpha Validation Complete!*

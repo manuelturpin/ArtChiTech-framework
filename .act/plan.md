@@ -103,13 +103,58 @@ All 8 Tier 1 features implemented:
 
 ---
 
-## Next Steps: Tier 2
+## Tier 2 [DONE] ✅
 
-Future enhancements (not implemented yet):
-- [ ] Continuous Learning
-- [ ] Reflexion Pattern
-- [ ] Advanced Analytics
-- [ ] Multi-agent Orchestration
+- [x] Continuous Learning (observations.jsonl, /act:evolve)
+- [x] Reflexion Pattern (/act:reflect, /act:memorize)
+- [x] Thinking Models (12 /consider:* commands)
+- [x] Context Handoff (/act:handoff)
+- [x] Party Mode (/act:party, 5 personas)
+- [x] GitHub Integration (/act:sync-github)
+- [x] Agent Auditors (/act:audit-*, /act:heal)
+- [x] Multi-IDE Export (/act:export)
+
+---
+
+## v3.0-alpha [DONE] ✅
+
+### Multi-Project Orchestrator
+- [x] /act:projects command
+- [x] /act:switch command
+- [x] /act:dashboard command
+- [x] ~/.act/projects.yaml global registry
+- [x] orchestrator skill
+
+### BMAD Artefacts
+- [x] PRD workflow (workflows/prd/)
+- [x] ADR workflow (workflows/adr/)
+- [x] Story decomposition (workflows/stories/)
+- [x] prd.md template
+
+### Superpowers Integration
+- [x] Phase 1-Discovery → superpowers:brainstorming
+- [x] Phase 2-Strategy → superpowers:writing-plans + PRD/Stories
+- [x] Phase 3-Design → superpowers:writing-plans + ADR
+- [x] Phase 4-Development → superpowers:TDD + systematic-debugging
+- [x] Phase 5-Quality → all 3 Iron Laws + verification
+
+### Cross-Project Evolve
+- [x] --cross-project flag
+- [x] Auto-reflexion after project completion
+- [x] Framework improvement proposals
+
+### Validation (2026-02-25)
+- [x] Framework audit (73 composants, 88% → 97%)
+- [x] Auto-healing (12 correctifs, 4 fichiers)
+- [x] 10/10 tests de validation PASS
+
+---
+
+## Next Steps: v3.0-rc1
+
+- [ ] Validation utilisateur (tests interactifs)
+- [ ] Fix placeholders in test-v3/.act/ templates
+- [ ] Release candidate
 
 ---
 
