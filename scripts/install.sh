@@ -25,7 +25,7 @@
 #   ./install.sh --local      # Installation locale explicite
 #   ./install.sh --global     # Installation globale
 #
-#   curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.0-alpha/scripts/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.5-alpha/scripts/install.sh | bash
 #   curl -fsSL ... | bash -s -- --global
 # =============================================================================
 
@@ -42,7 +42,7 @@ NC='\033[0m'
 
 # Configuration
 REPO_URL="https://github.com/manuelturpin/ArtChiTech-framework"
-BRANCH="v3.0-alpha"
+BRANCH="v3.5-alpha"
 VERSION="3.5.0-alpha"
 
 # Variables globales

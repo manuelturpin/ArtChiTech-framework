@@ -400,10 +400,10 @@ See [SPEC-hooks-system.md](specs/SPEC-hooks-system.md) for full documentation.
 
 ```bash
 # Install locally in your project (default)
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.0-alpha/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.5-alpha/scripts/install.sh | bash
 
 # Install globally for all projects
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.0-alpha/scripts/install.sh | bash -s -- --global
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.5-alpha/scripts/install.sh | bash -s -- --global
 ```
 
 ### Local Installation Structure
@@ -450,7 +450,7 @@ This creates the `.act/` directory with context files in your project.
 v2.6 is fully backward compatible. Just reinstall:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.0-alpha/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.5-alpha/scripts/install.sh | bash
 ```
 
 ### From v2.1 or earlier

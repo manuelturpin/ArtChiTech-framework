@@ -2,11 +2,65 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, v3.5-alpha]
   pull_request:
-    branches: [main]
+    branches: [main, v3.5-alpha]
 
 jobs:
+  version-consistency:
+    name: Version Consistency Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check version consistency
+        run: |
+          echo "=== Version Consistency Check ==="
+
+          if [ ! -f VERSION ]; then
+            echo "❌ VERSION file not found"
+            exit 1
+          fi
+
+          SOURCE_VERSION=$(tr -d '[:space:]' < VERSION)
+          echo "Source version (VERSION): $SOURCE_VERSION"
+          echo ""
+
+          ERRORS=0
+
+          PKG_VERSION=$(grep '"version"' package.json | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+          if [ "$PKG_VERSION" = "$SOURCE_VERSION" ]; then
+            echo "✓ package.json: $PKG_VERSION"
+          else
+            echo "✗ package.json: $PKG_VERSION (expected $SOURCE_VERSION)"
+            ERRORS=$((ERRORS + 1))
+          fi
+
+          PLUGIN_VERSION=$(grep '"version"' plugin/.claude-plugin/plugin.json | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+          if [ "$PLUGIN_VERSION" = "$SOURCE_VERSION" ]; then
+            echo "✓ plugin.json: $PLUGIN_VERSION"
+          else
+            echo "✗ plugin.json: $PLUGIN_VERSION (expected $SOURCE_VERSION)"
+            ERRORS=$((ERRORS + 1))
+          fi
+
+          INSTALL_VERSION=$(grep '^VERSION=' scripts/install.sh | head -1 | sed 's/VERSION="\([^"]*\)"/\1/')
+          if [ "$INSTALL_VERSION" = "$SOURCE_VERSION" ]; then
+            echo "✓ install.sh: $INSTALL_VERSION"
+          else
+            echo "✗ install.sh: $INSTALL_VERSION (expected $SOURCE_VERSION)"
+            ERRORS=$((ERRORS + 1))
+          fi
+
+          echo ""
+          if [ $ERRORS -gt 0 ]; then
+            echo "❌ $ERRORS version mismatch(es) found"
+            echo "Run: ./scripts/bump-version.sh $SOURCE_VERSION"
+            exit 1
+          fi
+
+          echo "✅ All versions are consistent"
+
   validate:
     runs-on: ubuntu-latest
 
