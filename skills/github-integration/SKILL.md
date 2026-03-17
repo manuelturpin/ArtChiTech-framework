@@ -1,5 +1,9 @@
 # Skill: GitHub Integration
 
+**Type:** Flexible
+
+> **Self-Announcement:** When using this skill, announce: "Using GitHub Integration skill to synchronize project state with GitHub Issues."
+
 > Synchronise ton projet ACT avec GitHub Issues pour une gestion intégrée.
 
 ## Vue d'ensemble

@@ -282,12 +282,17 @@ Si l'état local et GitHub divergent :
 ### Configuration du token
 
 ```bash
-# Via variable d'environnement
+# Via variable d'environnement (recommended)
 export GITHUB_TOKEN=ghp_xxxxx
 
-# Ou dans .act/config.yaml (non recommandé)
+# Or use GitHub CLI
+gh auth login
+```
+
+```yaml
+# In .act/config.yaml:
 github:
-  token: ghp_xxxxx  # ⚠️ Attention: ne pas committer!
+  # token: DO NOT store tokens here — use GITHUB_TOKEN env var or 'gh auth login'
 ```
 
 ---

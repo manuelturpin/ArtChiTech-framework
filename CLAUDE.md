@@ -1,6 +1,6 @@
-# ArtChiTech Framework (ACT) v3.0
+# ArtChiTech Framework (ACT) v3.5
 
-> Unified 7-phase methodology with multi-project orchestration, BMAD artefacts, and Superpowers integration.
+> Unified 7-phase methodology with multi-project orchestration, BMAD artefacts, Superpowers integration, and subagent-driven development.
 
 ## Hooks Behavior (MANDATORY)
 
@@ -23,7 +23,7 @@ Claude MUST apply these hooks automatically:
 - **Name**: ArtChiTech Framework
 - **Shortcut**: ACT
 - **Type**: Claude Code Plugin
-- **Version**: 3.0.0-alpha
+- **Version**: 3.5.0-alpha
 
 ---
 
@@ -515,6 +515,93 @@ Created during **Phase 2: Strategy** using `workflows/stories/`:
 
 ---
 
+## 🤖 Subagent-Driven Development (NEW v3.5)
+
+ACT v3.5 transforms agents from role descriptions into executable orchestration workflows.
+
+### Core Concept
+
+```
+Controller (Opus) → Plans, dispatches, reviews
+Executor (Sonnet) → Implements in isolated context
+Reviewer (Opus)   → Two-stage: spec compliance then code quality
+```
+
+### Dispatch Templates
+
+| Template | Model | Purpose |
+|----------|-------|---------|
+| `implementer-dispatch` | Sonnet | Task implementation with TDD |
+| `spec-reviewer-dispatch` | Opus | Stage 1: spec compliance |
+| `quality-reviewer-dispatch` | Opus | Stage 2: code quality |
+| `plan-reviewer-dispatch` | Opus | Plan validation |
+| `tester-dispatch` | Sonnet | Comprehensive test writing |
+
+### Status Codes
+
+| Code | Meaning | Controller Action |
+|------|---------|-------------------|
+| `DONE` | Task complete | Proceed to review |
+| `DONE_WITH_CONCERNS` | Complete with caveats | Evaluate concerns |
+| `NEEDS_CONTEXT` | Missing information | Provide context, re-dispatch |
+| `BLOCKED` | Cannot proceed | Assess, may escalate |
+
+**Full details:** @skills/subagent-development/SKILL.md
+**Dispatch templates:** @plugin/agents/prompts/
+
+---
+
+## 📐 Scale 5 Levels (NEW v3.5)
+
+Replaces the binary Quick/Full with 5 graduated levels.
+
+| Level | Name | Scope | ACT Phases |
+|-------|------|-------|------------|
+| **0** | Atomic | Single change | Execute only |
+| **1** | Micro | Small feature (1-3h) | Plan → Execute → Verify |
+| **2** | Standard | Medium feature (1-3d) | 5 phases |
+| **3** | Complex | Large feature (1-2w) | 7 phases |
+| **4** | Product | New system (2+w) | 7 phases + BMAD |
+
+**Command:** `/act:start <description>` auto-detects level
+**Aliases:** `/act:quick` = Level 1, `/act:full` = Level 3
+
+**Spec:** @specs/SPEC-scale-adaptive.md
+
+---
+
+## 🔀 Worktree Isolation (NEW v3.5)
+
+Isolate feature development using git worktrees for clean context per task.
+
+```bash
+# Create isolated worktree
+git worktree add .worktrees/feat-login -b feature/login
+
+# Work in isolation, then finish
+git worktree remove .worktrees/feat-login
+```
+
+**Full details:** @skills/worktree-isolation/SKILL.md
+
+---
+
+## 🔍 Two-Stage Review (NEW v3.5)
+
+Structured code review: spec compliance FIRST, then code quality.
+
+| Stage | Reviewer | Question |
+|-------|----------|----------|
+| 1. Spec Compliance | Opus | Does it match the spec? |
+| 2. Code Quality | Opus | Is it well-built? |
+
+**Rule:** Never skip Stage 1. Never reverse the order. Max 3 review rounds.
+
+**Workflow:** @plugin/workflows/review/workflow.md
+**Review tools:** @plugin/workflows/review-tools/
+
+---
+
 ## Main Commands
 
 | Command | Description |
@@ -527,11 +614,12 @@ Created during **Phase 2: Strategy** using `workflows/stories/`:
 | `/resume` | Resume session |
 | `/help` | Contextual help |
 
-### ACT v3.0 Commands
+### ACT v3.5 Commands
 
 | Command | Description |
 |---------|-------------|
 | `/act:init` | Initialize ACT in a project |
+| `/act:start` | **[NEW v3.5]** Start task with auto-detected level (0-4) |
 | `/act:quick` | Start quick mode (small tasks) |
 | `/act:full` | Start full mode (complex projects) |
 | `/act:validate` | Validate .act/ file conformity |

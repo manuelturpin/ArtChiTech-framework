@@ -80,6 +80,21 @@ No exceptions. The code you wrote is contaminated by assumptions. The test you w
 | "TDD will slow me down" | TDD is faster than debugging untested code. |
 | "Let me keep this code as reference" | You'll adapt it to pass. Delete means delete. |
 | "It's just a refactor" | Refactors need tests to verify behavior is preserved. |
+| "The API isn't ready yet" | Mock it. Test your logic independently. |
+| "I need to see it work first" | That's what the test does — shows it working. |
+| "Tests slow down prototyping" | Untested prototypes become untested production code. |
+| "This is just a config change" | Config changes break builds. Test the configuration loads correctly. |
+| "The framework handles this" | Test YOUR usage of the framework, not the framework itself. |
+
+### Red Flags — STOP If You Think...
+
+These thoughts are WARNING SIGNS. If you catch yourself thinking them, pause immediately:
+
+- **"Let me keep this code and write the test later"** — This is the most dangerous thought. You will never write a test as rigorous as one written before the code exists.
+- **"The test is too hard to write"** — This means your design is wrong. Simplify the design, then the test becomes simple.
+- **"I already know this works"** — Knowledge is not evidence. Run the test.
+- **"One more function, then I'll test"** — This is the slippery slope. Stop now. Test now.
+- **"This is test-worthy but not test-first-worthy"** — There is no distinction. Test first or don't claim TDD compliance.
 
 ### Example
 
@@ -179,6 +194,19 @@ Stop. Step back. Question your assumptions. The architecture might be wrong.
 | "Let me just try this quick" | Quick tries lead to long debugging |
 | "It's probably X" | Probably isn't good enough |
 | "I'll understand it later" | You'll never understand it later |
+| "The error message is misleading" | Error messages are data. Read them carefully before dismissing. |
+| "It worked on my machine" | That's a clue, not an excuse. What's different? |
+| "It must be a framework bug" | 99% of the time, it's your code. Check yours first. |
+| "Let me just restart the service" | Restarting hides the problem. Understand it first. |
+| "I know this area well" | Familiarity breeds blind spots. Check your assumptions. |
+
+### Red Flags — STOP If You Think...
+
+- **"Just one more fix attempt"** (after 2+ failures) — You're guessing, not debugging. Step back and reassess.
+- **"The problem is intermittent"** — Intermittent problems have deterministic causes. Find the trigger condition.
+- **"Let me add more logging"** — Logging is good, but if you're adding your 5th round of logs, you need a different approach.
+- **"This can't be causing the issue"** — Challenge this assumption explicitly. Test it.
+- **"I'll come back to this later"** — Later, you'll have less context. Fix it now or document everything you know.
 
 ### Example
 
@@ -277,6 +305,19 @@ def extract_user_id(data):
 | "The previous run passed" | Fresh run required |
 | "I just changed a comment" | Comments can break things (ask Python) |
 | "Agent said success" | Verify independently |
+| "The CI will catch it" | CI is a safety net, not a replacement for local verification. |
+| "I just changed a comment" | Comments can affect documentation generators, annotations, and some runtimes. |
+| "It's the same change I tested before" | Contexts differ. Run it again. |
+| "The PR reviewer will check" | Don't burden reviewers with preventable issues. Verify first. |
+| "It's just a version bump" | Version bumps are the #1 source of silent breakage. Always verify. |
+
+### Red Flags — STOP If You Think...
+
+- **"Should work now"** — The two most dangerous words in software. Replace with "Let me verify."
+- **"I'm confident"** — Confidence without evidence is wishful thinking. Run the test.
+- **"The output looked right"** — Did you read ALL of it? Check the exit code too.
+- **"It passed last time"** — Last time is not this time. Fresh verification required.
+- **"No news is good news"** — Silence can mean success OR a silently swallowed error. Check explicitly.
 
 ### Example
 

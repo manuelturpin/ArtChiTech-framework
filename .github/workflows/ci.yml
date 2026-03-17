@@ -63,3 +63,85 @@ jobs:
             echo "❌ $ERRORS file(s) missing frontmatter"
             exit 1
           fi
+
+  skill-validation:
+    name: Skill & Command Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate skill structure
+        run: |
+          echo "=== Validating Skills ==="
+          ERRORS=0
+          WARNINGS=0
+
+          # Check each skill has SKILL.md
+          for dir in skills/*/; do
+            skill_name=$(basename "$dir")
+            if [ ! -f "${dir}SKILL.md" ]; then
+              echo "❌ ERROR: ${skill_name} missing SKILL.md"
+              ERRORS=$((ERRORS + 1))
+            else
+              # Check SKILL.md has required sections
+              if ! grep -q "## Purpose\|## When to Use\|## Workflow\|## How to" "${dir}SKILL.md"; then
+                echo "⚠️  WARNING: ${skill_name}/SKILL.md may be missing required sections"
+                WARNINGS=$((WARNINGS + 1))
+              fi
+
+              # Check line count < 500
+              lines=$(wc -l < "${dir}SKILL.md")
+              if [ "$lines" -gt 500 ]; then
+                echo "⚠️  WARNING: ${skill_name}/SKILL.md is ${lines} lines (limit: 500)"
+                WARNINGS=$((WARNINGS + 1))
+              fi
+
+              # Check for Type classification
+              if ! grep -q "Type:.*Rigid\|Type:.*Flexible" "${dir}SKILL.md"; then
+                echo "⚠️  WARNING: ${skill_name}/SKILL.md missing Type: Rigid|Flexible"
+                WARNINGS=$((WARNINGS + 1))
+              fi
+
+              # Check for Self-Announcement
+              if ! grep -q "Self-Announcement" "${dir}SKILL.md"; then
+                echo "⚠️  WARNING: ${skill_name}/SKILL.md missing Self-Announcement pattern"
+                WARNINGS=$((WARNINGS + 1))
+              fi
+            fi
+          done
+
+          echo ""
+          echo "=== Validating Commands ==="
+
+          # Check each command has frontmatter
+          for cmd in plugin/commands/act/*.md; do
+            cmd_name=$(basename "$cmd")
+            if ! head -1 "$cmd" | grep -q "^---"; then
+              echo "⚠️  WARNING: ${cmd_name} missing YAML frontmatter"
+              WARNINGS=$((WARNINGS + 1))
+            fi
+          done
+
+          echo ""
+          echo "=== Validating Workflows ==="
+
+          # Check each workflow has workflow.md
+          for dir in plugin/workflows/*/; do
+            wf_name=$(basename "$dir")
+            if [ ! -f "${dir}workflow.md" ]; then
+              echo "❌ ERROR: ${wf_name} missing workflow.md"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+
+          echo ""
+          echo "=== Results ==="
+          echo "Errors: ${ERRORS}"
+          echo "Warnings: ${WARNINGS}"
+
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "❌ Validation FAILED"
+            exit 1
+          fi
+
+          echo "✅ Validation PASSED (${WARNINGS} warnings)"

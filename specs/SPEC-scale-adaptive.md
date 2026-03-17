@@ -6,7 +6,85 @@
 
 ---
 
-## Problem Statement
+## Scale 5 Levels (v3.5)
+
+> Replaces the binary Quick/Full with 5 graduated levels.
+
+### Level Overview
+
+| Level | Name | Scope | Time | Docs Required | ACT Phases |
+|-------|------|-------|------|---------------|------------|
+| **0** | Atomic | Single change, 1 file | < 30 min | None | Execute only |
+| **1** | Micro | Small feature, 1-3 files | 1-3 hours | Tech note | Plan → Execute → Verify |
+| **2** | Standard | Medium feature, multiple files | 1-3 days | PRD light | 5 phases (skip Discovery/Growth) |
+| **3** | Complex | Large feature, cross-cutting | 1-2 weeks | PRD + Architecture | All 7 phases |
+| **4** | Product | New product or system | 2+ weeks | PRD + Arch + Stories + ADRs | All 7 phases + BMAD artefacts |
+
+### Auto-Detection Criteria
+
+```
+Score each dimension 0-4:
+
+Scope:     0=1 file  1=2-3 files  2=module  3=cross-module  4=system
+Unknowns:  0=none    1=minor      2=some    3=significant   4=fundamental
+Risk:      0=trivial 1=low        2=medium  3=high          4=critical
+Duration:  0=<30min  1=hours      2=days    3=1-2 weeks     4=weeks+
+
+Level = max(scores)  // Conservative: highest dimension wins
+```
+
+### Level Details
+
+#### Level 0: Atomic
+- **When:** Bug fix, typo, config change, simple rename
+- **Process:** Just do it. Commit. Done.
+- **State files:** None required
+- **Review:** Self-review sufficient
+
+#### Level 1: Micro (replaces Quick Mode)
+- **When:** Small feature, simple refactor, adding a test
+- **Process:** Plan (5 min) → Execute → Verify (5 min)
+- **State files:** Minimal `.act/` (plan.md only)
+- **Review:** Self-review + quick check
+
+#### Level 2: Standard
+- **When:** Medium feature, API endpoint, module addition
+- **Process:** Strategy → Design → Develop → Quality → Launch
+- **State files:** Full `.act/` suite
+- **Review:** Two-stage review recommended
+
+#### Level 3: Complex (replaces Full Mode)
+- **When:** Large feature, architectural change, multi-team
+- **Process:** All 7 ACT phases
+- **State files:** Full `.act/` + PRD + Architecture docs
+- **Review:** Two-stage review mandatory + SDD
+
+#### Level 4: Product
+- **When:** New product, major system, greenfield
+- **Process:** All 7 phases + BMAD artefacts
+- **State files:** Full `.act/` + PRD + ADRs + Stories
+- **Review:** Full SDD + formal reviews + stakeholder sign-off
+
+### Escalation & De-escalation
+
+**Escalation (level up):**
+- Deviation Rule 4 triggered → escalate at least 1 level
+- More unknowns discovered → reassess level
+- Timeline extends beyond current level → escalate
+
+**De-escalation (level down):**
+- After Strategy phase, scope is clearly smaller → de-escalate
+- Risk turns out lower than expected → de-escalate
+
+### Backward Compatibility
+
+- `/act:quick` → Level 1 (Micro)
+- `/act:full` → Level 3 (Complex)
+- Both commands continue to work as aliases
+
+---
+
+## Problem Statement (v2.5 Reference)
 
 Not every task needs the full ACT ceremony. A bug fix doesn't need research phases. A new product shouldn't skip architecture.
 

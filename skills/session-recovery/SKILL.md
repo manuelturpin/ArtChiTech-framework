@@ -3,6 +3,9 @@
 **Version:** 1.0.0
 **Category:** Context Engineering
 **Source:** Planning Files Framework
+**Type:** Flexible
+
+> **Self-Announcement:** When using this skill, announce: "Using Session Recovery skill to detect and recover previous session context."
 
 ---
 
@@ -369,280 +372,21 @@ System: No previous session found. Use /act:init to start a new project.
 
 ## Session History Integration
 
-Session Recovery s'intègre avec Session History pour offrir un contexte plus riche.
+Session Recovery integrates with Session History for richer context on resume. When history is enabled, the catchup report includes recent sessions (date, duration, result). Sessions are auto-saved on end via the Stop Hook, with automatic rotation to limit stored files.
 
-### Enhanced Catchup Report
-
-Quand l'historique est activé, le catchup report peut inclure les sessions récentes :
-
-```markdown
-## 🔄 Session Recovery
-
-**Projet :** ACT v2.5
-**Dernière session :** 2026-02-02 03:30
-
-### Sessions récentes
-| Date | Durée | Résultat |
-|------|-------|----------|
-| 2026-02-02 03:30 | 45min | ✅ Model Selection |
-| 2026-02-01 18:30 | 1h20 | ✅ Session Recovery |
-| 2026-02-01 14:30 | 30min | ✅ Deviation Rules |
-
-### Prochaines étapes
-...
-```
-
-### Auto-Save on Session End
-
-Quand une session se termine (via Stop Hook ou `/act:stop`) :
-
-1. Collecter les données de session :
-   - Heure de début/fin
-   - Actions effectuées (depuis progress.md)
-   - Commits créés (depuis git log)
-   - État final (depuis state.md)
-
-2. Générer le session log avec le template
-
-3. Sauvegarder dans `.act/history/YYYY-MM-DD-HHmm.md`
-
-4. Appliquer la rotation si nécessaire
-
-### Rotation
-
-Avant de sauvegarder une nouvelle session :
-
-```
-files = list(.act/history/*.md)
-if len(files) >= config.history.maxSessions:
-    oldest = sort_by_date(files)[0]
-    delete(oldest)
-save(new_session)
-```
-
-### Commands
-
-| Command | Purpose |
-|---------|---------|
-| `/act:history` | Lister les sessions |
-| `/act:replay <session>` | Voir une session passée |
-
-### Configuration
-
-```yaml
-# In .act/config.yaml
-history:
-  enabled: true      # Activer/désactiver
-  maxSessions: 10    # Nombre max de sessions
-  autoSave: true     # Sauvegarde auto en fin de session
-```
+**Full details:** [Advanced Features](advanced-features.md#session-history-integration)
 
 ## History Directory
 
-Session history is stored in `.act/history/` for persistence and recovery.
+Session history files are stored in `.act/history/` using the naming pattern `YYYY-MM-DD-HHmm.md`. Each file captures duration, phase, actions performed, commits, and end state. Rotation is controlled by `maxSessions` in config (default: 10).
 
-### File Format
-
-Files are named using the pattern: `YYYY-MM-DD-HHmm.md`
-
-Example:
-```
-.act/history/
-├── 2026-02-01-1430.md
-├── 2026-02-01-1830.md
-├── 2026-02-02-0930.md
-└── 2026-02-02-1500.md
-```
-
-### File Content Template
-
-Each session file contains:
-
-```markdown
-# Session: YYYY-MM-DD HH:mm
-
-## Summary
-- **Duration:** X minutes
-- **Phase:** [phase at session end]
-- **Progress:** [X% → Y%]
-
-## Actions Performed
-- [Action 1]
-- [Action 2]
-- ...
-
-## Commits
-- `abc1234` - Commit message 1
-- `def5678` - Commit message 2
-
-## State at End
-- **Phase:** X/Y
-- **Next task:** [description]
-- **Blockers:** [none/list]
-```
-
-### Automatic Rotation
-
-History rotation is controlled by `maxSessions` in config:
-
-```yaml
-# In .act/config.yaml
-history:
-  enabled: true
-  maxSessions: 10    # Keep last 10 sessions
-  autoSave: true     # Auto-save on session end
-```
-
-When `maxSessions` is reached, the oldest session file is automatically deleted before saving a new one.
-
-### Associated Commands
-
-| Command | Description |
-|---------|-------------|
-| `/act:history` | List all saved sessions |
-| `/act:replay <session>` | View details of a specific session |
-| `/act:resume` | Resume from latest session with catchup report |
-
-### Manual Access
-
-You can also browse history directly:
-
-```bash
-# List sessions
-ls -la .act/history/
-
-# View a specific session
-cat .act/history/2026-02-01-1430.md
-```
+**Full details:** [Advanced Features](advanced-features.md#history-directory)
 
 ## Context Handoff Integration
 
-Session Recovery works seamlessly with the Context Handoff format for richer recovery.
+Session Recovery works with the Context Handoff format for richer recovery. When `/act:resume` finds a recent handoff (< 24h) in `.act/handoffs/latest.xml`, it parses the content and enriches the catchup report with completed/remaining work, attempted approaches, and critical context.
 
-### What is Context Handoff?
-
-A standardized XML/Markdown format for transferring context between sessions or agents. Contains:
-- Original task description
-- Completed and remaining work
-- Attempted approaches (what worked/failed)
-- Critical context (must-not-lose info)
-- Current state snapshot
-
-### Enhanced Recovery with Handoff
-
-When a handoff file exists (`.act/handoffs/latest.xml`), recovery is enhanced:
-
-```markdown
-## 🔄 Session Recovery (with Handoff)
-
-**Projet :** ACT v2.5
-**Dernière session :** 2026-02-02 10:30 UTC
-**Handoff trouvé :** ✅ Recent (< 24h)
-
-### Contexte du handoff
-**Tâche originale :** Implement Phase 4 of ACT v2.5
-
-### Travail effectué (depuis handoff)
-- Created specs/SPEC-context-handoff.md
-- Created templates/context-handoff.xml
-
-### Travail restant (depuis handoff)
-- Create commands/act/handoff.md
-- Update session-recovery skill
-
-### Approches tentées
-- JSON format: ❌ Trop verbeux
-- XML format: ✅ Adopté
-
-### Contexte critique
-- User prefers XML as primary format
-- Must integrate with /act:resume
-```
-
-### Recovery Decision Flow
-
-```
-┌─────────────────────────────────┐
-│ /act:resume                     │
-└───────────────┬─────────────────┘
-                │
-                ▼
-        ┌───────────────┐
-        │  .act/ exists? │
-        └───────┬───────┘
-                │
-        ┌───────┴───────┐
-        │               │
-       Yes              No
-        │               │
-        ▼               ▼
-┌───────────────┐ ┌───────────────┐
-│ Check for     │ │ No recovery   │
-│ handoff       │ │ needed        │
-└───────┬───────┘ └───────────────┘
-        │
-        ▼
-┌─────────────────────────────────┐
-│ handoffs/latest.xml exists      │
-│ AND < 24h old?                  │
-└───────────────┬─────────────────┘
-        │
-┌───────┴───────┐
-│               │
-Yes             No
-│               │
-▼               ▼
-┌───────────────┐ ┌───────────────┐
-│ Enhanced      │ │ Standard      │
-│ recovery      │ │ recovery      │
-│ (with handoff)│ │ (state only)  │
-└───────────────┘ └───────────────┘
-```
-
-### Generating Handoff for Recovery
-
-Before ending a session, generate a handoff:
-
-```
-/act:handoff --save
-```
-
-Or automatically with stop:
-
-```
-/act:stop --handoff
-```
-
-### Using Handoff with /act:resume
-
-The `/act:resume` command automatically:
-
-1. Checks for `.act/handoffs/latest.xml`
-2. If recent (< 24h), parses handoff content
-3. Enriches catchup report with handoff data
-4. Prioritizes `work_remaining` from handoff
-
-### Handoff vs State Files
-
-| Aspect | State Files | Handoff |
-|--------|-------------|---------|
-| Purpose | Current state | Transfer context |
-| Scope | Project snapshot | Session summary |
-| Created | Continuously | On demand/session end |
-| Includes | Phase, progress | + Approaches, recommendations |
-| Format | Markdown | XML or Markdown |
-
-**Use both together:**
-- State files: Always up-to-date snapshot
-- Handoff: Rich context for transitions
-
-### Commands
-
-| Command | Recovery Role |
-|---------|---------------|
-| `/act:resume` | Uses handoff if available |
-| `/act:handoff` | Generates handoff |
-| `/act:handoff --save` | Saves for later recovery |
+**Full details:** [Advanced Features](advanced-features.md#context-handoff-integration)
 
 ## Related
 

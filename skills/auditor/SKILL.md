@@ -1,5 +1,9 @@
 # Skill: Auditor
 
+**Type:** Rigid
+
+> **Self-Announcement:** When using this skill, announce: "Using Auditor skill to verify and repair framework components."
+
 ## Purpose
 
 The Auditor skill enables systematic verification and repair of ACT framework components. It ensures structural integrity, format compliance, reference validity, and content completeness across skills, commands, and agents.

@@ -1,5 +1,9 @@
 # Skill: Party Mode
 
+**Type:** Flexible
+
+> **Self-Announcement:** When using this skill, announce: "Using Party Mode skill to explore decisions through multiple simulated perspectives."
+
 ## Vue d'Ensemble
 
 Party Mode permet d'explorer un sujet via **plusieurs perspectives simulées**. L'agent incarne successivement 5 personas différentes pour révéler tensions, trade-offs et angles morts.

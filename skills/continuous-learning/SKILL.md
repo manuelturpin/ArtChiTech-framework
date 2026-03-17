@@ -2,6 +2,9 @@
 
 **Version:** 1.0.0
 **Confidence:** N/A (meta-skill)
+**Type:** Flexible
+
+> **Self-Announcement:** When using this skill, announce: "Using Continuous Learning skill to observe patterns and improve from interactions."
 
 ## Description
 

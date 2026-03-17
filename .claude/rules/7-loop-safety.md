@@ -2,6 +2,19 @@
 
 > Ces règles sont **CRITIQUES** pour éviter les incidents en production causés par le loop autonome.
 
+## Security Notice
+
+> **The autonomous loop uses `--dangerously-skip-permissions` by design.**
+> This grants the agent unrestricted execution capabilities for autonomous code generation.
+>
+> **Mitigations:**
+> - Protected branch detection blocks execution on main/master/prod/staging
+> - Build verification after each iteration catches compilation errors
+> - Max iteration limit prevents runaway execution
+> - Type checking catches type errors before they propagate
+>
+> **Always run the loop on feature branches in development environments only.**
+
 ## Contexte
 
 Le loop autonome (`/loop` ou `loop.sh`) exécute du code sans supervision humaine. Un incident réel a causé la corruption d'un projet en production. Ces règles empêchent que cela se reproduise.

@@ -111,6 +111,11 @@ fi
 PROTECTED_BRANCHES=("main" "master" "prod" "production" "staging" "release")
 FORCE_MODE=false
 
+# ⚠️  SECURITY WARNING: --force bypasses protected branch detection.
+# This allows autonomous execution on main/master/prod branches.
+# Use ONLY when you explicitly need to run the loop on a protected branch.
+# Recommended: Never use --force in CI/CD or unattended environments.
+
 # Check if --force flag was passed
 for arg in "$@"; do
     if [[ "$arg" == "--force" ]]; then
@@ -390,6 +395,24 @@ main() {
         # Change to project directory for execution
         cd "$PROJECT_DIR"
 
+        # ╔══════════════════════════════════════════════════════════════════╗
+        # ║  ⚠️  SECURITY NOTICE: AUTONOMOUS EXECUTION MODE                ║
+        # ║                                                                  ║
+        # ║  --dangerously-skip-permissions grants the agent unrestricted    ║
+        # ║  filesystem, network, and code execution access.                 ║
+        # ║                                                                  ║
+        # ║  This is INTENTIONAL for autonomous loop execution.              ║
+        # ║  The agent needs full permissions to implement, test, and        ║
+        # ║  commit code without human approval at each step.                ║
+        # ║                                                                  ║
+        # ║  MITIGATIONS IN PLACE:                                          ║
+        # ║  - Protected branch detection (main/master/prod blocked)         ║
+        # ║  - Build verification after each iteration                      ║
+        # ║  - Max iteration limit (default: 10)                            ║
+        # ║  - Type checking verification                                   ║
+        # ║                                                                  ║
+        # ║  RECOMMENDED: Run only on feature branches in dev environments. ║
+        # ╚══════════════════════════════════════════════════════════════════╝
         # Run Claude with the prompt
         OUTPUT=$(cat "$PROMPT_FILE" | claude --dangerously-skip-permissions 2>&1) || true
 

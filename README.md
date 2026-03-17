@@ -1,6 +1,6 @@
-# ACT Framework
+# ACT Framework v3.5
 
-![Version](https://img.shields.io/badge/version-2.6.0-blue)
+![Version](https://img.shields.io/badge/version-3.5.0--alpha-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-purple)
 
@@ -9,6 +9,45 @@
 You start a project. Three weeks later, you're lost in your own code. Sound familiar?
 
 ACT gives your projects structure without the overhead. 7 phases. Clear milestones. No more "where was I?"
+
+## What's New in v3.5 — Agentic Execution
+
+ACT v3.5 transforms the framework from project planning into orchestrated agentic execution.
+
+### New Capabilities
+
+| Feature | Description |
+|---------|-------------|
+| **Subagent-Driven Development** | Orchestrate tasks through specialized subagents with fresh context |
+| **Two-Stage Review** | Spec compliance then code quality, with review loop |
+| **5-Level Scale** | Auto-detect task complexity (Level 0-4), replaces Quick/Full |
+| **Worktree Isolation** | Git worktrees for isolated feature development |
+| **Adaptive Replanning** | Reassess plan after each phase/milestone |
+| **Dispatch Templates** | Standardized prompts for subagent communication |
+| **Shell Script Hooks** | Real executable hooks (not just markdown rules) |
+| **Review Tools** | Adversarial review, edge case hunter, implementation readiness gate |
+| **Stuck Detection** | Mechanical Rule of 3 — escalate after 3 failed fixes |
+| **Skill Testing** | TDD methodology for skill development itself |
+
+### New Skills (4)
+- `subagent-development` — SDD orchestration controller workflow
+- `worktree-isolation` — Git worktree isolation for features
+- `adaptive-replanning` — Plan reassessment after phases
+- `skill-testing` — RED-GREEN-REFACTOR for skills
+
+### New Commands
+- `/act:start` — Start task with auto-detected complexity level
+
+### Enhanced
+- Iron Laws: companion docs, 10+ rationalizations, Red Flags sections
+- All skills: Type classification (Rigid/Flexible) + Self-Announcement
+- Workflows: step-file sharding for token efficiency
+- CI: automated skill/command/workflow validation
+
+### Backward Compatible
+All v3.0 projects work unchanged. New features are opt-in.
+
+---
 
 ## What's New in v2.6
 
@@ -176,6 +215,7 @@ Each phase has **Go/No-Go criteria**. No skipping steps.
 | `/act:audit-agent` | Audit a specific agent |
 | `/act:audit-all` | Full framework audit |
 | `/act:heal` | Auto-repair audit issues |
+| `/act:start` | Start task with auto-detected complexity level |
 
 ### Thinking Models
 
@@ -306,6 +346,10 @@ ACT v2.5 includes skills that provide detailed guidance:
 | [`reflexion`](skills/reflexion/) | Improve output quality through reflection (+8-21%) |
 | [`auditor`](skills/auditor/) | Audit and repair framework components |
 | [`github-integration`](skills/github-integration/) | Sync with GitHub Issues |
+| [`subagent-development`](skills/subagent-development/) | SDD orchestration controller workflow |
+| [`worktree-isolation`](skills/worktree-isolation/) | Git worktree isolation for features |
+| [`adaptive-replanning`](skills/adaptive-replanning/) | Plan reassessment after phases |
+| [`skill-testing`](skills/skill-testing/) | RED-GREEN-REFACTOR for skills |
 
 ### Hooks System
 

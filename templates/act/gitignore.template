@@ -1,9 +1,6 @@
 # ACT v2.5 - Optional ignores
 # Uncomment lines below based on your needs
 
-# Session history (if contains sensitive data)
-# .act/history/
-
 # Research findings (if confidential)
 # .act/findings.md
 
@@ -12,3 +9,9 @@
 
 # Progress logs (if too verbose for VCS)
 # .act/progress.md
+
+# Sensitive session data
+.act/history/
+.act/handoffs/
+.act/observations.jsonl
+.act/logs/

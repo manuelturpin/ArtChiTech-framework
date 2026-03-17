@@ -1,5 +1,9 @@
 # Skill: Thinking Models
 
+**Type:** Flexible
+
+> **Self-Announcement:** When using this skill, announce: "Using Thinking Models skill to apply structured mental frameworks for better reasoning."
+
 > **"The quality of your thinking determines the quality of your outcomes."**
 
 ## Purpose

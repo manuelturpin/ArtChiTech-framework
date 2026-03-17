@@ -1,5 +1,9 @@
 # Skill: Context Engineering
 
+**Type:** Flexible
+
+> **Self-Announcement:** When using this skill, announce: "Using Context Engineering skill to maintain persistent project context across sessions."
+
 > **"Context Window = RAM, Filesystem = Disk"**
 
 ## Purpose

@@ -1,5 +1,9 @@
 # Skill: Iron Laws
 
+**Type:** Rigid
+
+> **Self-Announcement:** When using this skill, announce: "Using Iron Laws skill to enforce TDD/Debugging/Verification compliance."
+
 > **"Evidence before claims. Root cause before fixes. Tests before code."**
 
 ## Purpose

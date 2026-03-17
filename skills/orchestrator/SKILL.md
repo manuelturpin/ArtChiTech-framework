@@ -3,6 +3,9 @@
 **Version:** 1.0.0
 **Category:** Project Management
 **New in:** ACT v3.0
+**Type:** Flexible
+
+> **Self-Announcement:** When using this skill, announce: "Using Orchestrator skill to manage multi-project context and switching."
 
 ---
 

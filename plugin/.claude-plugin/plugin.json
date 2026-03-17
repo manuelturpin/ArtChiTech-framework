@@ -1,7 +1,7 @@
 {
   "name": "act",
-  "version": "3.0.0-alpha",
-  "description": "ACT (ArtChiTech) Framework v3.0 - Unified 7-phase methodology with multi-project orchestration, BMAD artefacts (PRD, ADR, Stories), Superpowers integration, and auto-improvement.",
+  "version": "3.5.0-alpha",
+  "description": "ACT (ArtChiTech) Framework v3.5 - Agentic Execution with subagent-driven development, 5-level scale, worktree isolation, adaptive replanning, multi-project orchestration, BMAD artefacts, and Superpowers integration.",
   "author": {
     "name": "Manuel Turpin",
     "email": "manuel.turpin@gmail.com",

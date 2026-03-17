@@ -1,5 +1,9 @@
 # Skill: Reflexion
 
+**Type:** Flexible
+
+> **Self-Announcement:** When using this skill, announce: "Using Reflexion skill to improve output quality through structured self-reflection."
+
 > **"Reflect before you ship. +8-21% quality improvement."**
 
 ## Purpose

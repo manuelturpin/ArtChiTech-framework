@@ -52,8 +52,8 @@ test("list_tasks initially empty", len(result) == 0)
 print("\n📦 Module: validation (proper fix)")
 print("-" * 40)
 
-# Import the proper fix function from debug script
-exec(open('/home/node/.openclaw/workspace/projects/lab/lab23/sandbox/taskflow/debug_investigation.py').read().split('# Vérifier le fix')[0])
+# Security: replaced unsafe exec(open(...)) with inline validation logic.
+# The original debug_investigation.py content is no longer executed dynamically.
 
 def add_task_validated(title: str) -> dict:
     if title is None:
