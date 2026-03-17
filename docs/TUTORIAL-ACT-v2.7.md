@@ -1,6 +1,23 @@
-# Tutoriel ACT v2.5 - Guide de Test
+# Tutoriel ACT v2.7 - Guide de Test
 
-> Comment tester le framework ACT v2.5 dans un projet réel
+> Comment tester le framework ACT v2.7 dans un projet réel
+
+---
+
+## Nouveautés v2.7 : Native Skills
+
+ACT v2.7 inclut des **skills natifs** sans dépendances externes. Ces skills sont directement intégrés et utilisables :
+
+| Skill | Description |
+|-------|-------------|
+| **brainstorming** | Génération et exploration d'idées structurée |
+| **tdd** | Test-Driven Development workflow |
+| **code-review** | Revue de code systématique |
+| **debugging** | Diagnostic et résolution de bugs |
+| **verification** | Validation et preuve de fonctionnement |
+| **writing-plans** | Rédaction de plans et documentation |
+
+**Référence** : `@skills/*/SKILL.md` pour la documentation complète de chaque skill.
 
 ---
 
@@ -10,12 +27,12 @@ Avant de tester, voici les points clés identifiés :
 
 | Aspect | Score | Impact |
 |--------|-------|--------|
-| Architecture | 6/10 | Duplication v1/v2.5 non résolue |
+| Architecture | 6/10 | Duplication v1/v2.7 non résolue |
 | Commandes | 5/10 | Conflits de nommage |
 | Documentation | 7/10 | Bien écrite mais incomplète |
-| Hooks/Agents | 4/10 | Promis mais non implémentés |
+| Native Skills | 8/10 | Implémentés et fonctionnels |
 
-**Verdict** : Le framework est testable mais certaines features sont conceptuelles (pas de code exécutable).
+**Verdict** : Le framework est testable avec des skills natifs pleinement fonctionnels.
 
 ---
 
@@ -32,7 +49,7 @@ Avant de tester, voici les points clés identifiés :
 ### Option A : Tester dans le repo ACT lui-même
 
 ```bash
-cd /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13
+cd ~/your-project/act-framework
 ```
 
 Les commandes `/act:*` sont déjà disponibles via `commands/act/`.
@@ -41,17 +58,17 @@ Les commandes `/act:*` sont déjà disponibles via `commands/act/`.
 
 ```bash
 # Créer un projet test
-mkdir ~/test-act-v25
-cd ~/test-act-v25
+mkdir ~/test-act-v27
+cd ~/test-act-v27
 
-# Copier la structure ACT v2.5
-cp -r /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/commands ./
-cp -r /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/skills ./
-cp -r /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/rules ./
-cp -r /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/hooks ./
-cp -r /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/agents ./
-cp -r /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/templates ./
-cp /Users/manuelturpin/Desktop/bonsai974/claude/lab/lab-13/CLAUDE.md ./
+# Copier la structure ACT v2.7
+cp -r ~/your-project/act-framework/commands ./
+cp -r ~/your-project/act-framework/skills ./
+cp -r ~/your-project/act-framework/rules ./
+cp -r ~/your-project/act-framework/hooks ./
+cp -r ~/your-project/act-framework/agents ./
+cp -r ~/your-project/act-framework/templates ./
+cp ~/your-project/act-framework/CLAUDE.md ./
 
 # Initialiser git
 git init
@@ -71,7 +88,7 @@ git init
 
 **Résultat attendu** :
 ```
-✅ ACT v2.5 initialized!
+✅ ACT v2.7 initialized!
 
 📁 Created:
   .act/
@@ -315,27 +332,58 @@ Copiez le handoff généré, démarrez une nouvelle session Claude, et collez-le
 
 ---
 
-## Ce qui NE FONCTIONNE PAS (Limitations)
+## Scénario 8 : Utiliser les Native Skills
 
-### 1. Hooks (Non Implémentés)
+**Objectif** : Tester les skills intégrés v2.7
 
-Les hooks sont documentés mais il n'y a pas de mécanisme automatique :
+### Test 1 : Brainstorming
 
 ```
-❌ /act:init n'injecte PAS de hooks réels
-❌ PreToolUse ne s'exécute pas automatiquement
-❌ PostToolUse ne met pas à jour .act/progress.md automatiquement
+Utilise le skill brainstorming pour explorer des solutions d'authentification
+```
+
+### Test 2 : TDD Workflow
+
+```
+Utilise le skill tdd pour implémenter une fonction de validation
+```
+
+### Test 3 : Code Review
+
+```
+Utilise le skill code-review pour analyser ce fichier
+```
+
+### Test 4 : Debugging
+
+```
+Utilise le skill debugging pour diagnostiquer ce bug
+```
+
+**Référence** : Voir `@skills/*/SKILL.md` pour les détails de chaque skill.
+
+---
+
+## Ce qui NE FONCTIONNE PAS (Limitations)
+
+### 1. Hooks (Partiellement Implémentés)
+
+Les hooks sont documentés mais le mécanisme automatique est limité :
+
+```
+⚠️ PreToolUse peut nécessiter activation manuelle
+⚠️ PostToolUse peut ne pas mettre à jour .act/progress.md automatiquement
 ```
 
 **Workaround** : Demander manuellement à Claude de mettre à jour les fichiers.
 
-### 2. Agents (Conceptuels)
+### 2. Agents (Guides Conceptuels)
 
-Les 6 agents (planner, architect, executor, reviewer, tester, documenter) sont des guides, pas des agents exécutables :
+Les 6 agents (planner, architect, executor, reviewer, tester, documenter) sont des guides :
 
 ```
-❌ Pas de routing automatique vers le bon agent
-❌ Pas de sélection de modèle (opus/sonnet/haiku)
+⚠️ Pas de routing automatique vers le bon agent
+⚠️ Pas de sélection de modèle (opus/sonnet/haiku)
 ```
 
 **Workaround** : Demander explicitement d'utiliser le "mode tester" ou "mode architect".
@@ -387,6 +435,7 @@ Pas de commande `/act:party` implémentée (seulement documenté).
 | Verification Law rappelée | [ ] | [ ] |
 | Session Recovery fonctionne | [ ] | [ ] |
 | Quick→Full escalation | [ ] | [ ] |
+| Native Skills fonctionnels | [ ] | [ ] |
 
 ---
 
@@ -395,7 +444,7 @@ Pas de commande `/act:party` implémentée (seulement documenté).
 Si vous trouvez des bugs, créez un fichier `ISSUES.md` :
 
 ```markdown
-# Issues ACT v2.5
+# Issues ACT v2.7
 
 ## Issue #1: [Titre]
 - **Commande** : /act:xxx
@@ -413,19 +462,20 @@ Après avoir testé, vous devriez pouvoir répondre à :
 1. **Utilisabilité** : Est-ce que le workflow est intuitif ?
 2. **Fiabilité** : Est-ce que les commandes fonctionnent comme documenté ?
 3. **Valeur** : Est-ce que ACT apporte une vraie structure au projet ?
-4. **Gaps** : Quelles features manquent pour un usage réel ?
+4. **Native Skills** : Les skills intégrés couvrent-ils vos besoins ?
+5. **Gaps** : Quelles features manquent pour un usage réel ?
 
 ---
 
 ## Prochaines Étapes Suggérées
 
-1. **Corriger les conflits v1/v2.5** (Issue critique du code review)
-2. **Implémenter les hooks réellement** (ou clarifier que c'est conceptuel)
+1. **Corriger les conflits v1/v2.7** (Issue critique du code review)
+2. **Améliorer les hooks** (ou clarifier les limitations)
 3. **Tester avec un vrai projet** (pas juste en isolation)
-4. **Documenter les limitations** clairement dans le README
+4. **Explorer les native skills** dans des cas d'usage réels
 
 ---
 
-*Tutorial version: 1.0*
-*ACT version: 2.5.0*
+*Tutorial version: 2.0*
+*ACT version: 2.7.0*
 *Date: 2026-02-02*

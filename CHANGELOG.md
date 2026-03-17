@@ -1,4 +1,57 @@
-# Changelog - ACT v2.5
+# Changelog - ACT Framework
+
+## [2.7.0] - 2026-02-04
+
+### 🎯 Native Skills - Zero External Dependencies
+
+Cette version élimine la dépendance au plugin externe `superpowers` en migrant vers des skills natifs intégrés.
+
+### ✨ Nouveautés
+
+#### 6 Skills Natifs
+- `@skills/brainstorming/SKILL.md` — Génération d'idées structurée
+- `@skills/tdd/SKILL.md` — Test-Driven Development
+- `@skills/code-review/SKILL.md` — Revue de code systématique
+- `@skills/debugging/SKILL.md` — Debugging méthodique
+- `@skills/verification/SKILL.md` — Vérification avant complétion
+- `@skills/writing-plans/SKILL.md` — Rédaction de plans
+
+#### Outils
+- Script `verify_dependencies.sh` pour vérifier l'absence de dépendances externes
+- Guide de migration `docs/MIGRATION-FROM-SUPERPOWERS.md`
+
+### 🔧 Changements
+
+- `plugin.json` : `"plugins": []` — Plus aucune dépendance externe
+- Tous les workflows migrent de `superpowers:*` vers `@skills/*/SKILL.md`
+- Documentation mise à jour (installation.md, README.md)
+
+### 📊 Impact
+
+| Métrique | Avant | Après |
+|----------|-------|-------|
+| Dépendances externes | superpowers | **0** |
+| Skills natifs | 0 | **6** |
+| Refs superpowers (code actif) | 139+ | **0** |
+
+### 🏆 Bénéfices
+
+- ✅ Framework 100% autonome
+- ✅ Fonctionne offline
+- ✅ Skills personnalisables localement
+- ✅ Installation simplifiée
+
+---
+
+## [2.6.0] - 2026-02-03
+
+### 🏗️ Architecture Consolidée
+
+- Installation locale/globale avec options
+- Copie des répertoires cachés en install global
+- Documentation README mise à jour
+
+---
 
 ## [2.5.0] - 2026-02-02
 

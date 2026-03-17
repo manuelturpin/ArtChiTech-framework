@@ -2,7 +2,7 @@
 
 **Objective**: Iterate, optimize and scale
 
-**Active skills**: `superpowers:root-cause-tracing`, `superpowers:systematic-debugging`
+**Active skills**: `@skills/debugging/SKILL.md`
 
 ## Checklist
 

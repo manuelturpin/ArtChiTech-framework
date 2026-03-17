@@ -63,7 +63,7 @@ Display this menu:
      --stack "react,typescript"
    ```
 5. Display: "Project initialized! Starting Phase 1: Discovery"
-6. Invoke skill: `superpowers:brainstorming` with context about validating the problem
+6. Invoke skill: `@skills/brainstorming/SKILL.md` with context about validating the problem
 
 **Option 2: Learn more**
 - Display framework overview from `plugin/references/framework-overview.md`
@@ -92,8 +92,8 @@ Read the state and display:
 
 | Option | Action |
 |--------|--------|
-| 1. Add feature | Ask feature name → Invoke `superpowers:brainstorming` for design |
-| 2. Refactoring | Ask what to improve → Invoke `superpowers:brainstorming` for approach |
+| 1. Add feature | Ask feature name → Invoke `@skills/brainstorming/SKILL.md` for design |
+| 2. Refactoring | Ask what to improve → Invoke `@skills/brainstorming/SKILL.md` for approach |
 | 3. View checklist | Display checklist from current phase reference doc |
 | 4. Next phase | Invoke `/act-next` command flow |
 | 5. Full status | Invoke `/act-status` command flow |
@@ -125,13 +125,13 @@ Based on current phase, recommend appropriate skills:
 
 | Phase | Recommended Skills |
 |-------|-------------------|
-| 1 Discovery | `superpowers:brainstorming` |
-| 2 Strategy | `superpowers:writing-plans`, `superpowers:brainstorming` |
-| 3 Design | `superpowers:writing-plans`, `superpowers:brainstorming` |
-| 4 Development | `superpowers:test-driven-development`, `superpowers:code-review` |
-| 5 Quality | `superpowers:verification-before-completion`, `superpowers:systematic-debugging` |
-| 6 Launch | `superpowers:verification-before-completion` |
-| 7 Growth | `superpowers:systematic-debugging` |
+| 1 Discovery | `@skills/brainstorming/SKILL.md` |
+| 2 Strategy | `@skills/writing-plans/SKILL.md`, `@skills/brainstorming/SKILL.md` |
+| 3 Design | `@skills/writing-plans/SKILL.md`, `@skills/brainstorming/SKILL.md` |
+| 4 Development | `@skills/tdd/SKILL.md`, `@skills/code-review/SKILL.md` |
+| 5 Quality | `@skills/verification/SKILL.md`, `@skills/debugging/SKILL.md` |
+| 6 Launch | `@skills/verification/SKILL.md` |
+| 7 Growth | `@skills/debugging/SKILL.md` |
 
 ## Output Expected
 

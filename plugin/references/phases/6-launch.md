@@ -2,7 +2,7 @@
 
 **Objective**: Deploy and acquire the first users
 
-**Active skills**: `superpowers:verification-before-completion`
+**Active skills**: `@skills/verification/SKILL.md`
 
 ## Checklist
 

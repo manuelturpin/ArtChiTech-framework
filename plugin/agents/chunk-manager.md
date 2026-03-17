@@ -153,7 +153,7 @@ If test fails after implementation:
       Error: [Error message]
    ```
 
-2. Invoke `superpowers:systematic-debugging`
+2. Invoke `@skills/debugging/SKILL.md`
 
 3. Fix and retry
 

@@ -218,7 +218,7 @@ When `/act-fix [id]` is called:
    ╰─────────────────────────────────────────────────────╯
    ```
 
-3. Invoke `superpowers:systematic-debugging`
+3. Invoke `@skills/debugging/SKILL.md`
 4. After fix, mark as resolved
 
 ## Output Expected
