@@ -1,22 +1,31 @@
 #!/bin/bash
 # =============================================================================
-# ACT Framework - Script d'installation v2.6.0
+# ACT Framework - Installation Script v3.5
 #
 # Modes d'installation :
 #   --local  (défaut) : Installe dans le dossier courant (.claude/)
 #   --global          : Installe globalement (~/.claude/plugins/act/)
 #
-# Structure d'installation :
-#   Local:   ./.claude/commands/act/     <- Commandes ACT v2.6
-#            ./.claude/commands/consider/ <- Thinking models
-#   Global:  ~/.claude/plugins/act/      <- Plugin complet
+# Structure d'installation locale :
+#   ./.claude/commands/act/       ← ACT commands
+#   ./.claude/commands/consider/  ← Thinking models
+#   ./.claude/skills/             ← 14 skills
+#   ./.claude/workflows/          ← BMAD workflows
+#   ./.claude/agents/prompts/     ← Dispatch templates
+#   ./.claude/hooks/scripts/      ← Hook scripts
+#   ./.claude/rules/              ← Iron Laws, Deviation Rules
+#   ./.claude/templates/          ← Project templates
+#   ./.claude/references/         ← Phase definitions, scoring
+#
+# Structure d'installation globale :
+#   ~/.claude/plugins/act/        ← Full plugin with all components
 #
 # Usage:
 #   ./install.sh              # Installation locale (défaut)
 #   ./install.sh --local      # Installation locale explicite
 #   ./install.sh --global     # Installation globale
 #
-#   curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.0-alpha/scripts/install.sh | bash
 #   curl -fsSL ... | bash -s -- --global
 # =============================================================================
 
@@ -33,7 +42,8 @@ NC='\033[0m'
 
 # Configuration
 REPO_URL="https://github.com/manuelturpin/ArtChiTech-framework"
-VERSION="2.6.0"
+BRANCH="v3.0-alpha"
+VERSION="3.5.0-alpha"
 
 # Variables globales
 SOURCE_DIR=""
@@ -50,7 +60,7 @@ INSTALL_DIR=""
 print_header() {
     echo ""
     echo -e "${CYAN}╭─────────────────────────────────────────────────────────────╮${NC}"
-    echo -e "${CYAN}│${NC}  ${BOLD}ACT Framework - Installation v${VERSION}${NC}                      ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}  ${BOLD}ACT Framework - Installation v${VERSION}${NC}                  ${CYAN}│${NC}"
     echo -e "${CYAN}╰─────────────────────────────────────────────────────────────╯${NC}"
     echo ""
 }
@@ -112,8 +122,8 @@ show_help() {
     echo ""
     echo "Options:"
     echo "  --local   Installer dans le dossier courant (défaut)"
-    echo "            → .claude/commands/act/"
-    echo "            → .claude/commands/consider/"
+    echo "            Installe: commands, skills, workflows, agents,"
+    echo "            hooks, rules, templates, references"
     echo ""
     echo "  --global  Installer globalement"
     echo "            → ~/.claude/plugins/act/"
@@ -177,7 +187,7 @@ detect_source() {
     # Si on est dans le repo ACT (mode dev)
     if [[ -n "$SCRIPT_DIR" && -f "$SCRIPT_DIR/../plugin/.claude-plugin/plugin.json" ]]; then
         SOURCE_MODE="local"
-        SOURCE_DIR="$(cd "$SCRIPT_DIR/../plugin" && pwd)"
+        SOURCE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
         echo -e "${YELLOW}📍 Mode développeur détecté${NC}"
         echo -e "   Source: ${BLUE}$SOURCE_DIR${NC}"
     else
@@ -209,7 +219,7 @@ setup_install_paths() {
 # =============================================================================
 
 download_remote() {
-    print_info "Téléchargement depuis GitHub..."
+    print_info "Téléchargement depuis GitHub (branche $BRANCH)..."
 
     if ! command -v git &> /dev/null; then
         print_error "Git est requis pour l'installation"
@@ -219,19 +229,38 @@ download_remote() {
     TEMP_DIR=$(mktemp -d)
     CLEANUP_NEEDED=true
 
-    # Clone minimal avec sparse checkout
-    if ! git clone --depth 1 --filter=blob:none --sparse "$REPO_URL" "$TEMP_DIR/act" 2>/dev/null; then
-        print_error "Échec du téléchargement du repo"
+    # Clone minimal avec sparse checkout — tous les composants nécessaires
+    if ! git clone --depth 1 --branch "$BRANCH" --filter=blob:none --sparse "$REPO_URL" "$TEMP_DIR/act" 2>/dev/null; then
+        print_error "Échec du téléchargement du repo (branche: $BRANCH)"
+        echo "  Vérifiez que la branche '$BRANCH' existe sur $REPO_URL"
         exit 1
     fi
 
     cd "$TEMP_DIR/act"
-    git sparse-checkout set plugin 2>/dev/null
+    git sparse-checkout set plugin skills hooks rules templates agents 2>/dev/null
     cd - > /dev/null
 
-    SOURCE_DIR="$TEMP_DIR/act/plugin"
+    SOURCE_DIR="$TEMP_DIR/act"
 
     print_success "Téléchargement terminé"
+}
+
+# =============================================================================
+# Copie helper
+# =============================================================================
+
+copy_dir_contents() {
+    local src="$1"
+    local dst="$2"
+    local label="$3"
+
+    if [ -d "$src" ]; then
+        mkdir -p "$dst"
+        cp -r "$src/"* "$dst/" 2>/dev/null || true
+        local count
+        count=$(find "$dst" -type f 2>/dev/null | wc -l | tr -d ' ')
+        echo -e "  ${GREEN}✓${NC} $count $label"
+    fi
 }
 
 # =============================================================================
@@ -239,27 +268,65 @@ download_remote() {
 # =============================================================================
 
 install_local() {
-    print_info "Installation des commandes..."
+    print_info "Installation des composants ACT..."
 
-    # Créer la structure
-    mkdir -p "$INSTALL_DIR/commands/act"
-    mkdir -p "$INSTALL_DIR/commands/consider"
+    local src_plugin="$SOURCE_DIR/plugin"
+    local src_root="$SOURCE_DIR"
 
-    # 1. Commandes ACT v2.6
-    if [ -d "$SOURCE_DIR/commands/act" ]; then
-        cp "$SOURCE_DIR/commands/act/"*.md "$INSTALL_DIR/commands/act/" 2>/dev/null || true
-        local act_count=$(ls -1 "$INSTALL_DIR/commands/act/"*.md 2>/dev/null | wc -l | tr -d ' ')
+    # 1. Commandes ACT
+    if [ -d "$src_plugin/commands/act" ]; then
+        mkdir -p "$INSTALL_DIR/commands/act"
+        cp "$src_plugin/commands/act/"*.md "$INSTALL_DIR/commands/act/" 2>/dev/null || true
+        local act_count
+        act_count=$(ls -1 "$INSTALL_DIR/commands/act/"*.md 2>/dev/null | wc -l | tr -d ' ')
         echo -e "  ${GREEN}✓${NC} $act_count commandes ACT (/act:*)"
     fi
 
     # 2. Commandes Consider (thinking models)
-    if [ -d "$SOURCE_DIR/commands/consider" ]; then
-        cp "$SOURCE_DIR/commands/consider/"*.md "$INSTALL_DIR/commands/consider/" 2>/dev/null || true
-        local consider_count=$(ls -1 "$INSTALL_DIR/commands/consider/"*.md 2>/dev/null | wc -l | tr -d ' ')
+    if [ -d "$src_plugin/commands/consider" ]; then
+        mkdir -p "$INSTALL_DIR/commands/consider"
+        cp "$src_plugin/commands/consider/"*.md "$INSTALL_DIR/commands/consider/" 2>/dev/null || true
+        local consider_count
+        consider_count=$(ls -1 "$INSTALL_DIR/commands/consider/"*.md 2>/dev/null | wc -l | tr -d ' ')
         echo -e "  ${GREEN}✓${NC} $consider_count modèles de pensée (/consider:*)"
     fi
 
-    # 3. Commandes legacy migrées (optionnel)
+    # 3. Skills (all 14 — source of truth is skills/ at root)
+    if [ -d "$src_root/skills" ]; then
+        copy_dir_contents "$src_root/skills" "$INSTALL_DIR/skills" "fichiers skills"
+    fi
+
+    # 4. Workflows (BMAD)
+    if [ -d "$src_plugin/workflows" ]; then
+        copy_dir_contents "$src_plugin/workflows" "$INSTALL_DIR/workflows" "fichiers workflows"
+    fi
+
+    # 5. Agent dispatch templates
+    if [ -d "$src_plugin/agents/prompts" ]; then
+        copy_dir_contents "$src_plugin/agents/prompts" "$INSTALL_DIR/agents/prompts" "dispatch templates"
+    fi
+
+    # 6. Hook scripts
+    if [ -d "$src_plugin/hooks/scripts" ]; then
+        copy_dir_contents "$src_plugin/hooks/scripts" "$INSTALL_DIR/hooks/scripts" "hook scripts"
+    fi
+
+    # 7. Rules (Iron Laws, Deviation Rules)
+    if [ -d "$src_root/rules" ]; then
+        copy_dir_contents "$src_root/rules" "$INSTALL_DIR/rules" "fichiers rules"
+    fi
+
+    # 8. Templates
+    if [ -d "$src_root/templates" ]; then
+        copy_dir_contents "$src_root/templates" "$INSTALL_DIR/templates" "fichiers templates"
+    fi
+
+    # 9. References (phases, scoring, superpowers)
+    if [ -d "$src_plugin/references" ]; then
+        copy_dir_contents "$src_plugin/references" "$INSTALL_DIR/references" "fichiers references"
+    fi
+
+    # 10. Legacy commands (optionnel)
     local legacy_files=(
         "act-onboard.md"
         "act-feedback.md"
@@ -274,8 +341,8 @@ install_local() {
 
     local legacy_count=0
     for file in "${legacy_files[@]}"; do
-        if [ -f "$SOURCE_DIR/commands/$file" ]; then
-            cp "$SOURCE_DIR/commands/$file" "$INSTALL_DIR/commands/" 2>/dev/null || true
+        if [ -f "$src_plugin/commands/$file" ]; then
+            cp "$src_plugin/commands/$file" "$INSTALL_DIR/commands/" 2>/dev/null || true
             legacy_count=$((legacy_count + 1))
         fi
     done
@@ -284,10 +351,10 @@ install_local() {
         echo -e "  ${GREEN}✓${NC} $legacy_count commandes legacy"
     fi
 
-    # 4. Version marker
+    # Version marker
     echo "$VERSION" > "$INSTALL_DIR/act-version.txt"
 
-    print_success "Commandes installées"
+    print_success "Composants installés"
 }
 
 # =============================================================================
@@ -296,6 +363,9 @@ install_local() {
 
 install_global() {
     print_info "Installation du plugin..."
+
+    local src_plugin="$SOURCE_DIR/plugin"
+    local src_root="$SOURCE_DIR"
 
     # Backup si existe
     if [ -d "$INSTALL_DIR" ]; then
@@ -307,16 +377,60 @@ install_global() {
     # Créer la structure
     mkdir -p "$INSTALL_DIR"
 
-    # Copier tout le plugin (inclut les fichiers cachés)
-    cp -r "$SOURCE_DIR/"* "$INSTALL_DIR/"
-    cp -r "$SOURCE_DIR/".* "$INSTALL_DIR/" 2>/dev/null || true
+    # Copier le plugin (base)
+    if [ -d "$src_plugin" ]; then
+        cp -r "$src_plugin/"* "$INSTALL_DIR/" 2>/dev/null || true
+        cp -r "$src_plugin/".* "$INSTALL_DIR/" 2>/dev/null || true
+    fi
 
-    # Compter les fichiers
-    local cmd_count=$(find "$INSTALL_DIR/commands" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-    echo -e "  ${GREEN}✓${NC} $cmd_count commandes total"
+    # Fusionner les composants qui vivent hors de plugin/
+    # Skills (source of truth: skills/ at root, merge with plugin/skills/)
+    if [ -d "$src_root/skills" ]; then
+        cp -r "$src_root/skills/"* "$INSTALL_DIR/skills/" 2>/dev/null || true
+    fi
+
+    # Rules
+    if [ -d "$src_root/rules" ]; then
+        mkdir -p "$INSTALL_DIR/rules"
+        cp -r "$src_root/rules/"* "$INSTALL_DIR/rules/" 2>/dev/null || true
+    fi
+
+    # Templates
+    if [ -d "$src_root/templates" ]; then
+        mkdir -p "$INSTALL_DIR/templates"
+        cp -r "$src_root/templates/"* "$INSTALL_DIR/templates/" 2>/dev/null || true
+    fi
+
+    # Agents (root-level agent definitions)
+    if [ -d "$src_root/agents" ]; then
+        mkdir -p "$INSTALL_DIR/agents"
+        cp -r "$src_root/agents/"* "$INSTALL_DIR/agents/" 2>/dev/null || true
+    fi
+
+    # Hooks (root-level hooks)
+    if [ -d "$src_root/hooks" ]; then
+        mkdir -p "$INSTALL_DIR/hooks"
+        cp -r "$src_root/hooks/"* "$INSTALL_DIR/hooks/" 2>/dev/null || true
+    fi
+
+    # Compter les fichiers installés
+    local cmd_count
+    cmd_count=$(find "$INSTALL_DIR/commands" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
+    echo -e "  ${GREEN}✓${NC} $cmd_count commandes"
+
+    local skill_count
+    skill_count=$(find "$INSTALL_DIR/skills" -name "SKILL.md" 2>/dev/null | wc -l | tr -d ' ')
+    echo -e "  ${GREEN}✓${NC} $skill_count skills"
+
+    if [ -d "$INSTALL_DIR/workflows" ]; then
+        local wf_count
+        wf_count=$(find "$INSTALL_DIR/workflows" -name "workflow.md" 2>/dev/null | wc -l | tr -d ' ')
+        echo -e "  ${GREEN}✓${NC} $wf_count workflows"
+    fi
 
     if [ -d "$INSTALL_DIR/agents" ]; then
-        local agent_count=$(ls -1 "$INSTALL_DIR/agents/"*.md 2>/dev/null | wc -l | tr -d ' ')
+        local agent_count
+        agent_count=$(ls -1 "$INSTALL_DIR/agents/"*.md 2>/dev/null | wc -l | tr -d ' ')
         echo -e "  ${GREEN}✓${NC} $agent_count agents"
     fi
 
@@ -339,7 +453,8 @@ validate_install() {
     if [ "$INSTALL_MODE" = "local" ]; then
         # Vérifier commandes locales
         if [ -d "$INSTALL_DIR/commands/act" ]; then
-            local count=$(ls -1 "$INSTALL_DIR/commands/act/"*.md 2>/dev/null | wc -l | tr -d ' ')
+            local count
+            count=$(ls -1 "$INSTALL_DIR/commands/act/"*.md 2>/dev/null | wc -l | tr -d ' ')
             if [ "$count" -gt 0 ]; then
                 echo -e "  ${GREEN}✓${NC} Commandes ACT présentes ($count)"
             else
@@ -349,6 +464,17 @@ validate_install() {
         else
             echo -e "  ${RED}✗${NC} Dossier commands/act manquant"
             errors=$((errors + 1))
+        fi
+
+        # Vérifier skills
+        if [ -d "$INSTALL_DIR/skills" ]; then
+            local skill_count
+            skill_count=$(find "$INSTALL_DIR/skills" -name "SKILL.md" 2>/dev/null | wc -l | tr -d ' ')
+            if [ "$skill_count" -gt 0 ]; then
+                echo -e "  ${GREEN}✓${NC} Skills présentes ($skill_count)"
+            else
+                echo -e "  ${YELLOW}⚠${NC} Aucune skill trouvée"
+            fi
         fi
     else
         # Vérifier plugin global
@@ -375,20 +501,25 @@ validate_install() {
 print_summary() {
     echo ""
     echo -e "${GREEN}╭─────────────────────────────────────────────────────────────╮${NC}"
-    echo -e "${GREEN}│${NC}  ${BOLD}ACT Framework v${VERSION} installé avec succès !${NC}              ${GREEN}│${NC}"
+    echo -e "${GREEN}│${NC}  ${BOLD}ACT Framework v${VERSION} installé avec succès !${NC}          ${GREEN}│${NC}"
     echo -e "${GREEN}╰─────────────────────────────────────────────────────────────╯${NC}"
     echo ""
 
     if [ "$INSTALL_MODE" = "local" ]; then
-        echo "Structure installée :"
-        echo -e "  ${BLUE}.claude/commands/act/${NC}      ← Commandes ACT v2.6"
-        echo -e "  ${BLUE}.claude/commands/consider/${NC} ← Thinking models"
+        echo "Composants installés :"
+        echo -e "  ${BLUE}.claude/commands/act/${NC}       ← Commandes ACT"
+        echo -e "  ${BLUE}.claude/commands/consider/${NC}  ← Thinking models"
+        echo -e "  ${BLUE}.claude/skills/${NC}             ← 14 skills"
+        echo -e "  ${BLUE}.claude/workflows/${NC}          ← BMAD workflows"
+        echo -e "  ${BLUE}.claude/rules/${NC}              ← Iron Laws, Deviation Rules"
+        echo -e "  ${BLUE}.claude/templates/${NC}          ← Project templates"
+        echo -e "  ${BLUE}.claude/references/${NC}         ← Phase definitions"
         echo ""
         echo "Commandes disponibles :"
         echo -e "  ${YELLOW}/act:init${NC}       → Initialiser ACT dans ce projet"
+        echo -e "  ${YELLOW}/act:start${NC}      → Démarrer une tâche (auto-détection niveau)"
         echo -e "  ${YELLOW}/act:status${NC}     → Voir l'état du projet"
         echo -e "  ${YELLOW}/act:resume${NC}     → Reprendre une session"
-        echo -e "  ${YELLOW}/act:agent${NC}      → Charger un agent spécialisé"
         echo -e "  ${YELLOW}/consider:*${NC}     → Modèles de pensée"
         echo ""
         echo -e "${BOLD}Redémarre Claude Code et tape /act:init pour commencer !${NC}"
@@ -396,10 +527,13 @@ print_summary() {
         echo "Plugin installé :"
         echo -e "  ${BLUE}~/.claude/plugins/act/${NC}"
         echo ""
+        echo "Contenu :"
+        echo -e "  ← Commandes, skills, workflows, agents, hooks, rules, templates"
+        echo ""
         echo "Commandes disponibles globalement :"
         echo -e "  ${YELLOW}/act:init${NC}       → Initialiser un projet"
+        echo -e "  ${YELLOW}/act:start${NC}      → Démarrer une tâche"
         echo -e "  ${YELLOW}/act:status${NC}     → État du projet"
-        echo -e "  ${YELLOW}/act:agent${NC}      → Charger un agent"
         echo ""
         echo -e "${BOLD}Redémarre Claude Code pour activer le plugin !${NC}"
     fi

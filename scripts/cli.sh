@@ -9,6 +9,13 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 FRAMEWORK_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 ACT_GLOBAL_DIR="$HOME/.act"
 
+# Read version from VERSION file
+if [ -f "$FRAMEWORK_DIR/VERSION" ]; then
+    ACT_VERSION=$(tr -d '[:space:]' < "$FRAMEWORK_DIR/VERSION")
+else
+    ACT_VERSION="3.5.0-alpha"
+fi
+
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -19,7 +26,7 @@ NC='\033[0m' # No Color
 print_banner() {
     echo ""
     echo -e "${BLUE}╔══════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║     ACT Framework v3.0 — Init            ║${NC}"
+    echo -e "${BLUE}║     ACT Framework v${ACT_VERSION} — Init       ║${NC}"
     echo -e "${BLUE}║     7-phase project management           ║${NC}"
     echo -e "${BLUE}╚══════════════════════════════════════════╝${NC}"
     echo ""
@@ -175,8 +182,8 @@ cmd_init() {
     echo ""
     echo "Next steps:"
     echo "  1. Open Claude Code in this directory"
-    echo "  2. Run /act:full to start a full project"
-    echo "  3. Or /act:quick for a quick task"
+    echo "  2. Run /act:start to begin (auto-detects complexity level)"
+    echo "  3. Or /act:quick for a quick task, /act:full for a complex project"
     echo ""
     echo -e "${BLUE}💡 Register globally: npx act-framework install --global${NC}"
 }

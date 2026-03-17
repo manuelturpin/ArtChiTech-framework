@@ -400,10 +400,10 @@ See [SPEC-hooks-system.md](specs/SPEC-hooks-system.md) for full documentation.
 
 ```bash
 # Install locally in your project (default)
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.0-alpha/scripts/install.sh | bash
 
 # Install globally for all projects
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash -s -- --global
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.0-alpha/scripts/install.sh | bash -s -- --global
 ```
 
 ### Local Installation Structure
@@ -411,9 +411,16 @@ curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/m
 ```
 your-project/
 └── .claude/
-    └── commands/
-        ├── act/           # 24 ACT commands
-        └── consider/      # 12 thinking models
+    ├── commands/
+    │   ├── act/           # 27+ ACT commands
+    │   └── consider/      # 12 thinking models
+    ├── skills/            # 14 skills
+    ├── workflows/         # BMAD workflows
+    ├── rules/             # Iron Laws, Deviation Rules
+    ├── templates/         # Project templates
+    ├── references/        # Phase definitions, scoring
+    ├── agents/prompts/    # Dispatch templates
+    └── hooks/scripts/     # Hook scripts
 ```
 
 ### Global Installation Structure
@@ -421,7 +428,7 @@ your-project/
 ```
 ~/.claude/
 └── plugins/
-    └── act/              # Full plugin
+    └── act/              # Full plugin with all components
 ```
 
 ### After Installation
@@ -443,7 +450,7 @@ This creates the `.act/` directory with context files in your project.
 v2.6 is fully backward compatible. Just reinstall:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.0-alpha/scripts/install.sh | bash
 ```
 
 ### From v2.1 or earlier
