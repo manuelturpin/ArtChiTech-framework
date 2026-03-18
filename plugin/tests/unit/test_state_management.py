@@ -10,16 +10,16 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../skills/state-m
 from state_manager import init_state, read_state, update_state, checkpoint, recover, exists
 
 
-def test_init_creates_epct_folder():
-    """Vérifie que init crée .epct/ avec state.json"""
+def test_init_creates_act_folder():
+    """Vérifie que init crée .act/ avec state.json"""
     with tempfile.TemporaryDirectory() as tmpdir:
         result = init_state("test-project", "webapp", ["react", "typescript"], tmpdir)
 
-        assert os.path.exists(os.path.join(tmpdir, '.epct')), ".epct/ not created"
-        assert os.path.exists(os.path.join(tmpdir, '.epct', 'state.json')), "state.json not created"
+        assert os.path.exists(os.path.join(tmpdir, '.act')), ".act/ not created"
+        assert os.path.exists(os.path.join(tmpdir, '.act', 'state.json')), "state.json not created"
         assert result['project']['name'] == "test-project"
         assert result['phase']['current'] == 1
-        print("✅ test_init_creates_epct_folder PASSED")
+        print("✅ test_init_creates_act_folder PASSED")
 
 
 def test_read_returns_state():
@@ -90,7 +90,7 @@ def test_exists_returns_correct_value():
 
 if __name__ == '__main__':
     print("🧪 Running state_management tests...\n")
-    test_init_creates_epct_folder()
+    test_init_creates_act_folder()
     test_read_returns_state()
     test_read_returns_none_if_no_state()
     test_update_persists_changes()

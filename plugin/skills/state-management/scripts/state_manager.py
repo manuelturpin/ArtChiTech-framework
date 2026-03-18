@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ACT Framework State Manager
-Gère la création, lecture et mise à jour de .epct/state.json
+Gère la création, lecture et mise à jour de .act/state.json
 """
 import json
 import os
@@ -9,25 +9,25 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-EPCT_DIR = ".epct"
+ACT_DIR = ".act"
 STATE_FILE = "state.json"
 HISTORY_DIR = "history/checkpoints"
 SESSION_DIR = "session"
 
 
-def get_epct_path(base_path: str = ".") -> Path:
-    """Retourne le chemin vers .epct/"""
-    return Path(base_path) / EPCT_DIR
+def get_act_path(base_path: str = ".") -> Path:
+    """Retourne le chemin vers .act/"""
+    return Path(base_path) / ACT_DIR
 
 
 def init_state(project_name: str, project_type: str, stack: list, base_path: str = ".") -> dict:
-    """Initialise .epct/ avec un state.json par défaut"""
-    epct_path = get_epct_path(base_path)
+    """Initialise .act/ avec un state.json par défaut"""
+    act_path = get_act_path(base_path)
 
     # Créer les dossiers
-    epct_path.mkdir(exist_ok=True)
-    (epct_path / HISTORY_DIR).mkdir(parents=True, exist_ok=True)
-    (epct_path / SESSION_DIR).mkdir(exist_ok=True)
+    act_path.mkdir(exist_ok=True)
+    (act_path / HISTORY_DIR).mkdir(parents=True, exist_ok=True)
+    (act_path / SESSION_DIR).mkdir(exist_ok=True)
 
     # État initial
     state = {
@@ -57,7 +57,7 @@ def init_state(project_name: str, project_type: str, stack: list, base_path: str
     }
 
     # Écrire le fichier
-    state_path = epct_path / STATE_FILE
+    state_path = act_path / STATE_FILE
     with open(state_path, 'w', encoding='utf-8') as f:
         json.dump(state, f, indent=2, ensure_ascii=False)
 
@@ -65,8 +65,8 @@ def init_state(project_name: str, project_type: str, stack: list, base_path: str
 
 
 def read_state(base_path: str = ".") -> dict | None:
-    """Lit l'état courant depuis .epct/state.json"""
-    state_path = get_epct_path(base_path) / STATE_FILE
+    """Lit l'état courant depuis .act/state.json"""
+    state_path = get_act_path(base_path) / STATE_FILE
 
     if not state_path.exists():
         return None
@@ -79,7 +79,7 @@ def update_state(updates: dict, base_path: str = ".") -> dict:
     """Met à jour l'état avec les nouvelles valeurs"""
     state = read_state(base_path)
     if state is None:
-        raise FileNotFoundError("No .epct/state.json found. Run init first.")
+        raise FileNotFoundError("No .act/state.json found. Run init first.")
 
     # Merge récursif
     def deep_merge(base: dict, updates: dict) -> dict:
@@ -93,7 +93,7 @@ def update_state(updates: dict, base_path: str = ".") -> dict:
     state = deep_merge(state, updates)
 
     # Écrire
-    state_path = get_epct_path(base_path) / STATE_FILE
+    state_path = get_act_path(base_path) / STATE_FILE
     with open(state_path, 'w', encoding='utf-8') as f:
         json.dump(state, f, indent=2, ensure_ascii=False)
 
@@ -107,7 +107,7 @@ def checkpoint(base_path: str = ".") -> str:
         raise FileNotFoundError("No state to checkpoint")
 
     timestamp = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
-    checkpoint_path = get_epct_path(base_path) / HISTORY_DIR / f"{timestamp}.json"
+    checkpoint_path = get_act_path(base_path) / HISTORY_DIR / f"{timestamp}.json"
 
     with open(checkpoint_path, 'w', encoding='utf-8') as f:
         json.dump(state, f, indent=2, ensure_ascii=False)
@@ -121,7 +121,7 @@ def recover(checkpoint_file: str, base_path: str = ".") -> dict:
 
     if not checkpoint_path.exists():
         # Chercher dans history/checkpoints
-        checkpoint_path = get_epct_path(base_path) / HISTORY_DIR / checkpoint_file
+        checkpoint_path = get_act_path(base_path) / HISTORY_DIR / checkpoint_file
 
     if not checkpoint_path.exists():
         raise FileNotFoundError(f"Checkpoint not found: {checkpoint_file}")
@@ -130,7 +130,7 @@ def recover(checkpoint_file: str, base_path: str = ".") -> dict:
         state = json.load(f)
 
     # Écrire comme état courant
-    state_path = get_epct_path(base_path) / STATE_FILE
+    state_path = get_act_path(base_path) / STATE_FILE
     with open(state_path, 'w', encoding='utf-8') as f:
         json.dump(state, f, indent=2, ensure_ascii=False)
 
@@ -138,8 +138,8 @@ def recover(checkpoint_file: str, base_path: str = ".") -> dict:
 
 
 def exists(base_path: str = ".") -> bool:
-    """Vérifie si .epct/ existe"""
-    return (get_epct_path(base_path) / STATE_FILE).exists()
+    """Vérifie si .act/ existe"""
+    return (get_act_path(base_path) / STATE_FILE).exists()
 
 
 # CLI interface
