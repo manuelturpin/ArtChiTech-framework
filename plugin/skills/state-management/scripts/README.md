@@ -1,6 +1,6 @@
 # State Manager Script
 
-Gère la création, lecture et mise à jour de `.epct/state.json`.
+Gère la création, lecture et mise à jour de `.act/state.json`.
 
 ## Usage CLI
 
@@ -40,11 +40,11 @@ python state_manager.py exists
 
 ### init
 
-Crée la structure `.epct/` avec un état initial.
+Crée la structure `.act/` avec un état initial.
 
 **Structure créée** :
 ```
-.epct/
+.act/
 ├── state.json          # État principal
 ├── session/            # Données de session
 └── history/
@@ -55,7 +55,7 @@ Crée la structure `.epct/` avec un état initial.
 
 ### read
 
-Lit l'état courant depuis `.epct/state.json`.
+Lit l'état courant depuis `.act/state.json`.
 
 **Output** : JSON de l'état ou `null` si non trouvé (exit code 1)
 
@@ -68,7 +68,7 @@ Met à jour l'état avec un merge récursif.
 
 ### checkpoint
 
-Crée un snapshot horodaté dans `.epct/history/checkpoints/`.
+Crée un snapshot horodaté dans `.act/history/checkpoints/`.
 
 **Output** : Chemin du fichier checkpoint créé
 
@@ -147,7 +147,7 @@ if exists():
 
 | Erreur | Cause | Solution |
 |--------|-------|----------|
-| `FileNotFoundError` | `.epct/state.json` non trouvé | Exécuter `init` d'abord |
+| `FileNotFoundError` | `.act/state.json` non trouvé | Exécuter `init` d'abord |
 | `json.JSONDecodeError` | Fichier JSON invalide | Restaurer depuis checkpoint |
 
 ## Tests

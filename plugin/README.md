@@ -77,19 +77,19 @@ Restart Claude Code, then type `/act-project`.
 | FEATURE | New feature |
 | QUICK | Bugfix or refactoring |
 
-## .epct/ Structure
+## .act/ Structure
 
-ACT creates a `.epct/` folder in your project:
+ACT creates a `.act/` folder in your project:
 
 ```
-.epct/
+.act/
 ├── state.json          # Current state
 ├── session/            # Session data
 └── history/
     └── checkpoints/    # Checkpoints
 ```
 
-Add `.epct/` to your `.gitignore` if you don't want to version ACT state.
+Add `.act/` to your `.gitignore` if you don't want to version ACT state.
 
 ## Development
 

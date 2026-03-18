@@ -79,7 +79,7 @@ python3 session_start.py
 
 ### Comportement
 
-- Si `.epct/state.json` existe : Affiche le résumé du projet
+- Si `.act/state.md` existe : Affiche le résumé du projet
 - Si pas de projet ACT : Sort silencieusement (pas d'erreur)
 - Si fichier corrompu : Ignoré silencieusement
 

@@ -85,7 +85,7 @@ claude
 
 **Résultat attendu :**
 - Audit du projet
-- Création du dossier `.epct/`
+- Création du dossier `.act/`
 - Détection de la stack (Node.js, etc.)
 
 ### Test 4 : `/act-next`

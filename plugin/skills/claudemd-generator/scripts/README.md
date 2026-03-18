@@ -112,8 +112,8 @@ Phase: **4** (Development) | Score: 60%
 
 | Ressource | Accès |
 |-----------|-------|
-| État projet | `.epct/state.json` |
-| Historique | `.epct/history/` |
+| État projet | `.act/state.json` |
+| Historique | `.act/history/` |
 | Aide | `/act-help` |
 
 ## Commands

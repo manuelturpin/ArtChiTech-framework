@@ -458,7 +458,7 @@ curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v
 1. Install v2.6 (see Installation)
 2. Run `/act:init` in your project
 3. Your `.act/` directory will be created
-4. Migrate any `.epct/` state manually if needed
+4. Migrate any legacy `.epct/` state manually if needed (rename to `.act/`)
 
 ---
 

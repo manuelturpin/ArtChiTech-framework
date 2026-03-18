@@ -6,8 +6,8 @@ Ce dossier contient les schemas JSON pour valider les fichiers de données ACT.
 
 | Schema | Fichier | Description |
 |--------|---------|-------------|
-| `state.schema.json` | `.epct/state.json` | État du projet ACT |
-| `prd.schema.json` | `.epct/session/prd.json` | PRD pour le loop |
+| `state.schema.json` | `.act/state.json` | État du projet ACT |
+| `prd.schema.json` | `.act/session/prd.json` | PRD pour le loop |
 
 ## Validation
 
@@ -18,10 +18,10 @@ Ce dossier contient les schemas JSON pour valider les fichiers de données ACT.
 npm install -g ajv-cli
 
 # Valider state.json
-ajv validate -s plugin/references/schemas/state.schema.json -d .epct/state.json
+ajv validate -s plugin/references/schemas/state.schema.json -d .act/state.json
 
 # Valider prd.json
-ajv validate -s plugin/references/schemas/prd.schema.json -d .epct/session/prd.json
+ajv validate -s plugin/references/schemas/prd.schema.json -d .act/session/prd.json
 ```
 
 ### Avec Python jsonschema
@@ -35,7 +35,7 @@ with open('plugin/references/schemas/state.schema.json') as f:
     schema = json.load(f)
 
 # Charger les données
-with open('.epct/state.json') as f:
+with open('.act/state.json') as f:
     data = json.load(f)
 
 # Valider
@@ -46,10 +46,10 @@ except ValidationError as e:
     print(f"❌ Validation failed: {e.message}")
 ```
 
-## Structure .epct/
+## Structure .act/
 
 ```
-.epct/
+.act/
 ├── state.json              # État du projet (validé par state.schema.json)
 ├── session/
 │   ├── prd.json           # PRD actuel (validé par prd.schema.json)

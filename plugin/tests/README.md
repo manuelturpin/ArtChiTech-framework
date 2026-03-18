@@ -71,7 +71,7 @@ Tests the `/act-onboard` command flow for new projects:
 
 | Step | Action | Verification |
 |------|--------|--------------|
-| 1 | Start with clean project | No `.epct/` directory |
+| 1 | Start with clean project | No `.act/` directory |
 | 2 | Run stack detection | Detection returns valid JSON |
 | 3 | Initialize state | `state.json` created |
 | 4 | Check initial phase | Phase = 1 (Discovery) |
@@ -95,7 +95,7 @@ Tests the `/act-fix` command flow for error tracking:
 | Step | Action | Verification |
 |------|--------|--------------|
 | 1 | Initialize project | No active errors |
-| 2 | Create critical error | Error in `.epct/errors/active/` |
+| 2 | Create critical error | Error in `.act/errors/active/` |
 | 3 | Update state | `blocking: true` |
 | 4 | Resolve error | Error moved to `resolved/` |
 | 5 | Verify state | `blocking: false` |
@@ -109,8 +109,8 @@ Tests a complete ACT workflow end-to-end:
 |------|--------|--------------|
 | 1 | Create fake webapp | `package.json` with React |
 | 2 | Detect stack | Detection works |
-| 3 | Verify no `.epct` | Project is not ACT |
-| 4 | Run onboard | `.epct/` created |
+| 3 | Verify no `.act` | Project is not ACT |
+| 4 | Run onboard | `.act/` created |
 | 5 | Progress phases | Phase 1 → 2 → 3 → 4 |
 | 6 | Create checkpoint | Checkpoint file exists |
 | 7 | Add feature | Mode = FEATURE |
