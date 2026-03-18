@@ -181,6 +181,25 @@ Where:
 
 ## Execution Steps
 
+### Step 0: Check .act/ Directory
+
+```
+Check if .act/ directory exists
+├── Yes → Proceed to Step 1: Load State
+└── No  → Display "No ACT session found" message:
+
+    ## 📊 ACT Status
+
+    ❌ No ACT session found.
+
+    The `.act/` directory does not exist in this project.
+
+    **Options:**
+    1. `/act:init` — Initialize ACT in this project
+    2. `/act:start <task>` — Start a new task (auto-initializes)
+    3. Verify you're in the correct project directory
+```
+
 ### Step 1: Load State
 
 ```
@@ -238,6 +257,17 @@ Extrait depuis `plan.md` :
 - Total des phases
 - Objectif du projet
 - Décisions récentes
+
+---
+
+## Error Handling
+
+| Error | Response |
+|-------|----------|
+| No .act/ directory | Display "No ACT session found" + options |
+| Missing state.md | Partial status with warning, suggest `/act:init --repair` |
+| Missing plan.md | Status without phase/velocity data |
+| Missing config.yaml | Status with defaults, suggest repair |
 
 ---
 
