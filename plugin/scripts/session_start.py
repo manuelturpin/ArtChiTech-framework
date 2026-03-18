@@ -3,7 +3,7 @@
 ACT Session Start Hook
 Affiche l'état du projet ACT au démarrage de session.
 """
-import json
+import re
 import sys
 from pathlib import Path
 
@@ -13,40 +13,56 @@ sys.path.insert(0, str(script_dir))
 
 def main():
     # Vérifier si c'est un projet ACT
-    epct_state = Path.cwd() / ".epct" / "state.json"
+    act_state = Path.cwd() / ".act" / "state.md"
 
-    if not epct_state.exists():
+    if not act_state.exists():
         # Pas un projet ACT, sortir silencieusement
         return
 
     try:
-        with open(epct_state) as f:
-            state = json.load(f)
+        content = act_state.read_text(encoding='utf-8')
 
-        project_name = state.get("project", {}).get("name", "Projet")
-        phase_current = state.get("phase", {}).get("current", 1)
-        phase_name = state.get("phase", {}).get("name", "Discovery")
-        mode = state.get("mode", "COMPLET")
+        # Parser les champs depuis le format Markdown de state.md
+        project_name = "Projet"
+        phase_current = "?"
+        phase_name = ""
+        progress = "0"
 
-        # Calculer le score de la phase actuelle
-        phase_key = phase_name.lower()
-        scores = state.get("scores", {})
-        current_score = scores.get(phase_key, 0)
+        for line in content.splitlines():
+            line = line.strip()
+            # Match "**Phase:** 3/7 (Implementation)" or "- **Phase:** 3/5"
+            phase_match = re.search(r'\*\*Phase[:\s]*\*\*\s*(\d+)\s*/\s*\d+\s*(?:\(([^)]+)\))?', line)
+            if phase_match:
+                phase_current = phase_match.group(1)
+                phase_name = phase_match.group(2) or ""
+
+            # Match "**Progress:** 60%"
+            progress_match = re.search(r'\*\*Progress[:\s]*\*\*\s*(\d+)', line)
+            if progress_match:
+                progress = progress_match.group(1)
+
+            # Match "**Project:** name" or project name in header
+            project_match = re.search(r'\*\*Proje[ct]t?[:\s]*\*\*\s*(.+)', line)
+            if project_match:
+                project_name = project_match.group(1).strip()
+
+        phase_label = f"{phase_current} - {phase_name}" if phase_name else str(phase_current)
+        padding = max(0, 20 - len(phase_label) - len(progress))
 
         # Afficher le résumé
         print()
         print("╭─────────────────────────────────────────────────────╮")
         print(f"│  🎯 Projet ACT : {project_name:<35} │")
         print("│                                                     │")
-        print(f"│  Phase : {phase_current} - {phase_name} (score: {current_score}%){' ' * (20 - len(phase_name) - len(str(current_score)))}│")
-        print(f"│  Mode  : {mode:<42} │")
+        print(f"│  Phase    : {phase_label:<40} │")
+        print(f"│  Progress : {progress}%{' ' * (39 - len(progress))} │")
         print("│                                                     │")
-        print("│  💡 Tape /act-project pour continuer                │")
+        print("│  💡 Tape /act:resume pour continuer                 │")
         print("╰─────────────────────────────────────────────────────╯")
         print()
 
-    except (json.JSONDecodeError, KeyError) as e:
-        # Fichier corrompu, ignorer
+    except Exception:
+        # Fichier corrompu ou illisible, ignorer
         pass
 
 if __name__ == "__main__":
