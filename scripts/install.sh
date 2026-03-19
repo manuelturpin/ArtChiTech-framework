@@ -20,10 +20,16 @@
 # Structure d'installation globale :
 #   ~/.claude/plugins/act/        ← Full plugin with all components
 #
+# Clean Update:
+#   Uses manifest-based tracking (.act-manifest) to detect and remove
+#   files from previous versions that no longer exist in the new version.
+#   User-created files (custom skills, workflows) are never touched.
+#
 # Usage:
 #   ./install.sh              # Installation locale (défaut)
 #   ./install.sh --local      # Installation locale explicite
 #   ./install.sh --global     # Installation globale
+#   ./install.sh --dry-run    # Prévisualiser le nettoyage sans modifier
 #
 #   curl -fsSL https://raw.githubusercontent.com/manuelturpin/ArtChiTech-framework/v3.5-alpha/scripts/install.sh | bash
 #   curl -fsSL ... | bash -s -- --global
@@ -52,6 +58,9 @@ INSTALL_MODE="local"  # "local" (project) or "global" (~/.claude)
 TEMP_DIR=""
 CLEANUP_NEEDED=false
 INSTALL_DIR=""
+DRY_RUN=false
+MANIFEST_TEMP=""
+MANIFEST_FILE=""
 
 # =============================================================================
 # Fonctions utilitaires
@@ -85,6 +94,9 @@ cleanup_temp() {
     if [[ "$CLEANUP_NEEDED" == true && -n "$TEMP_DIR" && -d "$TEMP_DIR" ]]; then
         rm -rf "$TEMP_DIR"
     fi
+    if [[ -n "${MANIFEST_TEMP:-}" && -f "${MANIFEST_TEMP:-}" ]]; then
+        rm -f "$MANIFEST_TEMP"
+    fi
 }
 
 trap cleanup_temp EXIT
@@ -104,6 +116,10 @@ parse_args() {
                 INSTALL_MODE="global"
                 shift
                 ;;
+            --dry-run)
+                DRY_RUN=true
+                shift
+                ;;
             --help|-h)
                 show_help
                 exit 0
@@ -121,18 +137,22 @@ show_help() {
     echo "Usage: ./install.sh [OPTIONS]"
     echo ""
     echo "Options:"
-    echo "  --local   Installer dans le dossier courant (défaut)"
-    echo "            Installe: commands, skills, workflows, agents,"
-    echo "            hooks, rules, templates, references"
+    echo "  --local    Installer dans le dossier courant (défaut)"
+    echo "             Installe: commands, skills, workflows, agents,"
+    echo "             hooks, rules, templates, references"
     echo ""
-    echo "  --global  Installer globalement"
-    echo "            → ~/.claude/plugins/act/"
+    echo "  --global   Installer globalement"
+    echo "             → ~/.claude/plugins/act/"
     echo ""
-    echo "  --help    Afficher cette aide"
+    echo "  --dry-run  Prévisualiser les fichiers obsolètes sans modifier"
+    echo "             Utile pour voir ce qui serait nettoyé lors d'un update"
+    echo ""
+    echo "  --help     Afficher cette aide"
     echo ""
     echo "Exemples:"
     echo "  ./install.sh              # Local dans le projet courant"
     echo "  ./install.sh --global     # Global pour tous les projets"
+    echo "  ./install.sh --dry-run    # Voir les fichiers obsolètes"
     echo ""
 }
 
@@ -246,9 +266,128 @@ download_remote() {
 }
 
 # =============================================================================
-# Copie helper
+# Manifest-based tracking (clean update system)
 # =============================================================================
 
+manifest_init() {
+    MANIFEST_TEMP=$(mktemp)
+    MANIFEST_FILE="$INSTALL_DIR/.act-manifest"
+}
+
+manifest_record() {
+    echo "$1" >> "$MANIFEST_TEMP"
+}
+
+manifest_save() {
+    {
+        echo "# ACT Manifest v1"
+        echo "# version=$VERSION"
+        echo "# installed=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        echo "# mode=$INSTALL_MODE"
+        sort -u "$MANIFEST_TEMP"
+    } > "$MANIFEST_FILE"
+    rm -f "$MANIFEST_TEMP"
+    MANIFEST_TEMP=""
+}
+
+manifest_read_version() {
+    if [ -f "$1" ]; then
+        grep '^# version=' "$1" 2>/dev/null | head -1 | cut -d= -f2
+    else
+        echo "unknown"
+    fi
+}
+
+cleanup_stale() {
+    local dry_run="${1:-false}"
+    local old_manifest="$MANIFEST_FILE"
+
+    # Pas d'ancien manifest = première installation, rien à nettoyer
+    if [ ! -f "$old_manifest" ]; then
+        return 0
+    fi
+
+    # Extraire les listes de fichiers (ignorer les commentaires)
+    local old_files new_files stale_files
+    old_files=$(grep -v '^#' "$old_manifest" | grep -v '^$' | sort -u)
+    new_files=$(sort -u "$MANIFEST_TEMP")
+
+    # Fichiers dans l'ancien manifest mais pas dans le nouveau = obsolètes
+    stale_files=$(comm -23 <(echo "$old_files") <(echo "$new_files")) || true
+
+    if [ -z "$stale_files" ]; then
+        return 0
+    fi
+
+    local stale_count
+    stale_count=$(echo "$stale_files" | wc -l | tr -d ' ')
+
+    if [ "$dry_run" = "true" ]; then
+        echo ""
+        print_info "$stale_count fichier(s) obsolète(s) seraient supprimés :"
+        echo "$stale_files" | while IFS= read -r f; do
+            [ -n "$f" ] && echo -e "  ${YELLOW}🗑${NC}  $f"
+        done
+        return 0
+    fi
+
+    echo ""
+    print_info "Nettoyage de $stale_count fichier(s) obsolète(s)..."
+
+    echo "$stale_files" | while IFS= read -r f; do
+        [ -z "$f" ] && continue
+        local full_path="$INSTALL_DIR/$f"
+        if [ -f "$full_path" ]; then
+            rm "$full_path"
+        fi
+    done
+
+    # Nettoyer les dossiers vides (bottom-up) dans les sous-dossiers gérés
+    local managed_dirs=(
+        "$INSTALL_DIR/commands"
+        "$INSTALL_DIR/skills"
+        "$INSTALL_DIR/workflows"
+        "$INSTALL_DIR/rules"
+        "$INSTALL_DIR/hooks"
+        "$INSTALL_DIR/templates"
+        "$INSTALL_DIR/references"
+        "$INSTALL_DIR/agents"
+    )
+
+    for dir in "${managed_dirs[@]}"; do
+        if [ -d "$dir" ]; then
+            find "$dir" -type d -empty -delete 2>/dev/null || true
+        fi
+    done
+
+    print_success "Nettoyage: $stale_count fichier(s) obsolète(s) supprimé(s)"
+}
+
+# =============================================================================
+# Copie helpers (avec tracking manifest)
+# =============================================================================
+
+copy_dir_contents_tracked() {
+    local src="$1"
+    local dst="$2"
+    local label="$3"
+
+    [ -d "$src" ] || return 0
+
+    local count=0
+    while IFS= read -r -d '' file; do
+        local relative="${file#$src/}"
+        local dst_relative="${dst#$INSTALL_DIR/}/$relative"
+        mkdir -p "$(dirname "$dst/$relative")"
+        cp "$file" "$dst/$relative"
+        manifest_record "$dst_relative"
+        count=$((count + 1))
+    done < <(find "$src" -type f -print0)
+
+    echo -e "  ${GREEN}✓${NC} $count $label"
+}
+
+# Legacy helper (sans tracking, gardé pour compatibilité si besoin)
 copy_dir_contents() {
     local src="$1"
     local dst="$2"
@@ -268,6 +407,15 @@ copy_dir_contents() {
 # =============================================================================
 
 install_local() {
+    manifest_init
+
+    # Détecter mise à jour vs première installation
+    local previous_version
+    previous_version=$(manifest_read_version "$MANIFEST_FILE")
+    if [ "$previous_version" != "unknown" ]; then
+        print_info "Mise à jour détectée: v${previous_version} → v${VERSION}"
+    fi
+
     print_info "Installation des composants ACT..."
 
     local src_plugin="$SOURCE_DIR/plugin"
@@ -276,54 +424,66 @@ install_local() {
     # 1. Commandes ACT
     if [ -d "$src_plugin/commands/act" ]; then
         mkdir -p "$INSTALL_DIR/commands/act"
-        cp "$src_plugin/commands/act/"*.md "$INSTALL_DIR/commands/act/" 2>/dev/null || true
-        local act_count
-        act_count=$(ls -1 "$INSTALL_DIR/commands/act/"*.md 2>/dev/null | wc -l | tr -d ' ')
+        local act_count=0
+        for file in "$src_plugin/commands/act/"*.md; do
+            [ -f "$file" ] || continue
+            local basename
+            basename=$(basename "$file")
+            cp "$file" "$INSTALL_DIR/commands/act/$basename"
+            manifest_record "commands/act/$basename"
+            act_count=$((act_count + 1))
+        done
         echo -e "  ${GREEN}✓${NC} $act_count commandes ACT (/act:*)"
     fi
 
     # 2. Commandes Consider (thinking models)
     if [ -d "$src_plugin/commands/consider" ]; then
         mkdir -p "$INSTALL_DIR/commands/consider"
-        cp "$src_plugin/commands/consider/"*.md "$INSTALL_DIR/commands/consider/" 2>/dev/null || true
-        local consider_count
-        consider_count=$(ls -1 "$INSTALL_DIR/commands/consider/"*.md 2>/dev/null | wc -l | tr -d ' ')
+        local consider_count=0
+        for file in "$src_plugin/commands/consider/"*.md; do
+            [ -f "$file" ] || continue
+            local basename
+            basename=$(basename "$file")
+            cp "$file" "$INSTALL_DIR/commands/consider/$basename"
+            manifest_record "commands/consider/$basename"
+            consider_count=$((consider_count + 1))
+        done
         echo -e "  ${GREEN}✓${NC} $consider_count modèles de pensée (/consider:*)"
     fi
 
     # 3. Skills (all 14 — source of truth is skills/ at root)
     if [ -d "$src_root/skills" ]; then
-        copy_dir_contents "$src_root/skills" "$INSTALL_DIR/skills" "fichiers skills"
+        copy_dir_contents_tracked "$src_root/skills" "$INSTALL_DIR/skills" "fichiers skills"
     fi
 
     # 4. Workflows (BMAD)
     if [ -d "$src_plugin/workflows" ]; then
-        copy_dir_contents "$src_plugin/workflows" "$INSTALL_DIR/workflows" "fichiers workflows"
+        copy_dir_contents_tracked "$src_plugin/workflows" "$INSTALL_DIR/workflows" "fichiers workflows"
     fi
 
     # 5. Agent dispatch templates
     if [ -d "$src_plugin/agents/prompts" ]; then
-        copy_dir_contents "$src_plugin/agents/prompts" "$INSTALL_DIR/agents/prompts" "dispatch templates"
+        copy_dir_contents_tracked "$src_plugin/agents/prompts" "$INSTALL_DIR/agents/prompts" "dispatch templates"
     fi
 
     # 6. Hook scripts
     if [ -d "$src_plugin/hooks/scripts" ]; then
-        copy_dir_contents "$src_plugin/hooks/scripts" "$INSTALL_DIR/hooks/scripts" "hook scripts"
+        copy_dir_contents_tracked "$src_plugin/hooks/scripts" "$INSTALL_DIR/hooks/scripts" "hook scripts"
     fi
 
     # 7. Rules (Iron Laws, Deviation Rules)
     if [ -d "$src_root/rules" ]; then
-        copy_dir_contents "$src_root/rules" "$INSTALL_DIR/rules" "fichiers rules"
+        copy_dir_contents_tracked "$src_root/rules" "$INSTALL_DIR/rules" "fichiers rules"
     fi
 
     # 8. Templates
     if [ -d "$src_root/templates" ]; then
-        copy_dir_contents "$src_root/templates" "$INSTALL_DIR/templates" "fichiers templates"
+        copy_dir_contents_tracked "$src_root/templates" "$INSTALL_DIR/templates" "fichiers templates"
     fi
 
     # 9. References (phases, scoring, superpowers)
     if [ -d "$src_plugin/references" ]; then
-        copy_dir_contents "$src_plugin/references" "$INSTALL_DIR/references" "fichiers references"
+        copy_dir_contents_tracked "$src_plugin/references" "$INSTALL_DIR/references" "fichiers references"
     fi
 
     # 10. Legacy commands (optionnel)
@@ -343,6 +503,7 @@ install_local() {
     for file in "${legacy_files[@]}"; do
         if [ -f "$src_plugin/commands/$file" ]; then
             cp "$src_plugin/commands/$file" "$INSTALL_DIR/commands/" 2>/dev/null || true
+            manifest_record "commands/$file"
             legacy_count=$((legacy_count + 1))
         fi
     done
@@ -353,6 +514,13 @@ install_local() {
 
     # Version marker
     echo "$VERSION" > "$INSTALL_DIR/act-version.txt"
+    manifest_record "act-version.txt"
+
+    # Nettoyer les fichiers obsolètes de l'ancienne version
+    cleanup_stale "$DRY_RUN"
+
+    # Sauvegarder le manifest (TOUJOURS en dernier)
+    manifest_save
 
     print_success "Composants installés"
 }
@@ -438,6 +606,13 @@ install_global() {
         echo -e "  ${GREEN}✓${NC} Références et templates"
     fi
 
+    # Générer le manifest post-install (pour cohérence et futurs updates)
+    manifest_init
+    while IFS= read -r -d '' file; do
+        manifest_record "${file#$INSTALL_DIR/}"
+    done < <(find "$INSTALL_DIR" -type f -not -name ".act-manifest" -print0)
+    manifest_save
+
     print_success "Plugin installé"
 }
 
@@ -475,6 +650,13 @@ validate_install() {
             else
                 echo -e "  ${YELLOW}⚠${NC} Aucune skill trouvée"
             fi
+        fi
+
+        # Vérifier manifest
+        if [ -f "$INSTALL_DIR/.act-manifest" ]; then
+            local manifest_count
+            manifest_count=$(grep -cv '^#' "$INSTALL_DIR/.act-manifest" 2>/dev/null | tr -d ' ')
+            echo -e "  ${GREEN}✓${NC} Manifest: $manifest_count fichiers trackés"
         fi
     else
         # Vérifier plugin global
