@@ -1,3 +1,9 @@
+---
+name: tester
+description: "Use for writing and executing tests (TDD). Dispatched in BRDIVD Implement and Validate phases."
+model: sonnet
+---
+
 # Agent: Tester
 
 **Model:** sonnet

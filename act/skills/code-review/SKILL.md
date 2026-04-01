@@ -1,3 +1,8 @@
+---
+name: code-review
+description: Systematic code review with fresh eyes — quality, security, and correctness
+---
+
 # Skill: Code Review
 
 > **"Fresh eyes catch what tired ones miss."**

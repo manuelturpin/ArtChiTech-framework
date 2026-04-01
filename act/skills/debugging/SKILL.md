@@ -1,3 +1,8 @@
+---
+name: debugging
+description: Systematic debugging — root cause before fixes, evidence before claims
+---
+
 # Skill: Debugging
 
 > **"The bug is never where you think it is."**

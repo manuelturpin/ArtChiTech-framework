@@ -1,0 +1,19 @@
+{
+  "name": "artchitech-framework",
+  "owner": {
+    "name": "Manuel Turpin",
+    "email": "manuel.turpin@gmail.com"
+  },
+  "metadata": {
+    "description": "ArtChiTech Framework — methodology-as-code for Claude Code",
+    "version": "3.5.0"
+  },
+  "plugins": [
+    {
+      "name": "act",
+      "source": "./act",
+      "description": "ACT Framework v3.5 — 7-phase methodology, Iron Laws, Thinking Models, Subagent orchestration",
+      "version": "3.5.0"
+    }
+  ]
+}

@@ -1,3 +1,8 @@
+---
+name: verification
+description: Verify claims with evidence before marking work complete — trust nothing, verify everything
+---
+
 # Skill: Verification
 
 > **"Trust but verify. Actually, just verify."**

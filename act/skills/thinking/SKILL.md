@@ -1,3 +1,8 @@
+---
+name: thinking
+description: 12 structured thinking models (First Principles, Inversion, Pre-mortem, etc.) for better reasoning
+---
+
 # Skill: Thinking Models
 
 **Type:** Flexible

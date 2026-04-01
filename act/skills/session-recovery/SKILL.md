@@ -1,3 +1,8 @@
+---
+name: session-recovery
+description: Recover context and resume work from previous sessions using STATE.md and git history
+---
+
 # Skill: Session Recovery
 
 **Version:** 1.0.0

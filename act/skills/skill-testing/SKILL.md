@@ -1,3 +1,8 @@
+---
+name: skill-testing
+description: TDD for skills — test skill behavior before deployment with structured scenarios
+---
+
 # Skill: Skill Testing (TDD for Skills)
 
 **Version:** 1.0.0

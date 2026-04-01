@@ -1,3 +1,9 @@
+---
+name: planner
+description: "Use for phase planning, task decomposition, and sprint scoping. Dispatched in BRDIVD Design phase."
+model: opus
+---
+
 # Agent: Planner
 
 **Model:** opus

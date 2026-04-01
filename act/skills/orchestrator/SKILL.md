@@ -1,3 +1,8 @@
+---
+name: orchestrator
+description: Multi-project orchestration and cross-project coordination for complex initiatives
+---
+
 # Skill: Multi-Project Orchestrator
 
 **Version:** 1.0.0

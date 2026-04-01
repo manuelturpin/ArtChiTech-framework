@@ -1,3 +1,9 @@
+---
+name: architect
+description: "Use for system design, technical decisions, and architecture reviews. Dispatched in BRDIVD Design phase."
+model: opus
+---
+
 # Agent: Architect
 
 **Model:** opus

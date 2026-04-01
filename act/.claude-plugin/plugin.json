@@ -1,0 +1,8 @@
+{
+  "name": "act",
+  "description": "ACT Framework v3.5 — 7-phase methodology, Iron Laws, Thinking Models, Subagent orchestration for Claude Code",
+  "author": {
+    "name": "Manuel Turpin",
+    "email": "manuel.turpin@gmail.com"
+  }
+}

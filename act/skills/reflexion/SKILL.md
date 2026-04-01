@@ -1,3 +1,8 @@
+---
+name: reflexion
+description: Post-task reflection to identify improvements and avoid repeating mistakes
+---
+
 # Skill: Reflexion
 
 **Type:** Flexible

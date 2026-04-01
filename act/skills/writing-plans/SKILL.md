@@ -1,3 +1,8 @@
+---
+name: writing-plans
+description: Write structured implementation plans with tasks, dependencies, and acceptance criteria before coding
+---
+
 # Skill: Writing Plans
 
 > **"A plan is a map. Without it, you're wandering."**

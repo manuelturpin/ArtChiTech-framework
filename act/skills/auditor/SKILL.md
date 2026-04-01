@@ -1,3 +1,8 @@
+---
+name: auditor
+description: Audit project health, compliance, and technical debt with structured checks
+---
+
 # Skill: Auditor
 
 **Type:** Rigid

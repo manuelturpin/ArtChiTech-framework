@@ -1,3 +1,8 @@
+---
+name: worktree-isolation
+description: Git worktree isolation for parallel feature development without branch switching
+---
+
 # Skill: Worktree Isolation
 
 **Version:** 1.0.0

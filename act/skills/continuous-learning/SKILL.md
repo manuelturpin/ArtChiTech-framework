@@ -1,3 +1,8 @@
+---
+name: continuous-learning
+description: Detect patterns and improve workflows over time through structured retrospection
+---
+
 # Skill: Continuous Learning
 
 **Version:** 1.0.0

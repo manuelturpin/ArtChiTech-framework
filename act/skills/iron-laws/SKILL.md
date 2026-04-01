@@ -1,3 +1,8 @@
+---
+name: iron-laws
+description: Enforce TDD, debugging, and verification compliance — non-negotiable rules
+---
+
 # Skill: Iron Laws
 
 **Type:** Rigid

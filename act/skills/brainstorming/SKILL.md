@@ -1,3 +1,8 @@
+---
+name: brainstorming
+description: 75 techniques, 4 modes — structured creativity before implementation. Use before any creative work.
+---
+
 # Skill: Brainstorming
 
 > **"75 techniques, 4 modes, structured creativity on demand."**

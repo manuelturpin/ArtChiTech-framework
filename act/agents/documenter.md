@@ -1,3 +1,9 @@
+---
+name: documenter
+description: "Use for documentation updates, STATE.md maintenance, and file organization. Dispatched in BRDIVD Deploy phase."
+model: haiku
+---
+
 # Agent: Documenter
 
 **Model:** haiku

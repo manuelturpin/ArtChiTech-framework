@@ -1,3 +1,9 @@
+---
+name: executor
+description: "Use for implementation and production code writing. Dispatched in BRDIVD Implement phase via SDD."
+model: sonnet
+---
+
 # Agent: Executor
 
 **Model:** sonnet

@@ -1,3 +1,9 @@
+---
+name: reviewer
+description: "Use for code review, quality validation, and regression checking. Dispatched in BRDIVD Validate phase."
+model: opus
+---
+
 # Agent: Reviewer
 
 **Model:** opus

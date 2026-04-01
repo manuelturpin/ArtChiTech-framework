@@ -1,3 +1,8 @@
+---
+name: context-engineering
+description: Optimize CLAUDE.md, STATE.md, and project context files for maximum AI effectiveness
+---
+
 # Skill: Context Engineering
 
 **Type:** Flexible

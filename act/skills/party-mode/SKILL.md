@@ -1,3 +1,8 @@
+---
+name: party-mode
+description: Explore decisions through multiple simulated perspectives (Devil Advocate, Optimist, etc.)
+---
+
 # Skill: Party Mode
 
 **Type:** Flexible

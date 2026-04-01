@@ -1,3 +1,8 @@
+---
+name: adaptive-replanning
+description: Detect when plans are failing and replan systematically instead of pushing through
+---
+
 # Skill: Adaptive Replanning
 
 **Version:** 1.0.0

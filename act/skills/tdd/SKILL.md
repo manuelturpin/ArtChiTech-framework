@@ -1,3 +1,8 @@
+---
+name: tdd
+description: Red-Green-Refactor — write tests first, then implementation, then clean up
+---
+
 # Skill: Test-Driven Development (TDD)
 
 > **"Red → Green → Refactor. The discipline that prevents bugs before they exist."**

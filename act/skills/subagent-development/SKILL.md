@@ -1,3 +1,8 @@
+---
+name: subagent-development
+description: Subagent-Driven Development (SDD) — controller dispatches isolated executors for parallel work
+---
+
 # Skill: Subagent-Driven Development (SDD)
 
 **Version:** 1.0.0

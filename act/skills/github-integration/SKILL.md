@@ -1,3 +1,8 @@
+---
+name: github-integration
+description: Generate structured PR descriptions and manage GitHub workflow
+---
+
 # Skill: GitHub Integration
 
 **Type:** Flexible
