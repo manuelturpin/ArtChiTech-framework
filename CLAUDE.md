@@ -124,7 +124,7 @@ Verify context is complete using `/act:where-am-i`:
 - 3-4/5 → ⚠️ Partial, proceed with caution
 - 0-2/5 → ❌ Incomplete, run `/act:init --repair`
 
-**Full details:** @skills/session-recovery/SKILL.md
+**Full details:** @act/skills/session-recovery/SKILL.md
 **Specs:** @specs/SPEC-reboot-test.md, @specs/SPEC-session-recovery.md, @specs/SPEC-context-engineering.md
 **Commands:** `/act:resume`, `/act:where-am-i`
 
@@ -168,7 +168,7 @@ Projects can customize hooks via `.act/hooks.json`:
 | Custom project hooks | `"hooks": { "PreDeploy": {...} }` |
 | Disable hooks (prototype mode) | `"overrides": { "PostToolUse": { "enabled": false }}` |
 
-**Full details:** @hooks/ and @specs/SPEC-hooks-system.md
+**Full details:** @act/hooks/ and @specs/SPEC-hooks-system.md
 
 ---
 
@@ -197,7 +197,7 @@ Session History saves a summary of each work session for traceability.
     └── 2026-02-02-0330.md
 ```
 
-**Full details:** @skills/session-recovery/SKILL.md
+**Full details:** @act/skills/session-recovery/SKILL.md
 **Spec:** @specs/SPEC-session-history.md
 
 ---
@@ -266,7 +266,7 @@ Haiku = LIT et DOCUMENTE (documentation, simple tasks)
 - **Implementation task** → use `executor`
 - **Before merge** → call `reviewer`
 
-**Full details:** @agents/README.md
+**Full details:** @act/agents/README.md
 **Spec:** @specs/SPEC-model-selection.md
 
 ---
@@ -312,7 +312,7 @@ After completing a task, ask yourself:
 - **`.act/findings.md`** — All reflexion insights (default)
 - **`CLAUDE.md`** — Important, reusable insights (`--important` flag)
 
-**Full details:** @skills/reflexion/SKILL.md
+**Full details:** @act/skills/reflexion/SKILL.md
 **Spec:** @specs/SPEC-reflexion.md
 
 ---
@@ -347,7 +347,7 @@ Apply structured mental models to improve decision-making and problem-solving.
 | Feature prioritization | `pareto`, `opportunity-cost` |
 | Risk assessment | `pre-mortem`, `reversibility` |
 
-**Full details:** @skills/thinking/SKILL.md
+**Full details:** @act/skills/thinking/SKILL.md
 **Spec:** @specs/SPEC-thinking-models.md
 
 ---
@@ -414,7 +414,7 @@ Explore decisions through **multiple perspectives** with simulated expert person
 3. **Disagreements welcome** (reveal trade-offs)
 4. No **forced consensus**
 
-**Full details:** @skills/party-mode/SKILL.md, @specs/SPEC-party-mode.md
+**Full details:** @act/skills/party-mode/SKILL.md, @specs/SPEC-party-mode.md
 
 ---
 
@@ -482,7 +482,7 @@ Manage 4-6 projects simultaneously from a centralized registry.
 /act:switch pocket-watch-ai
 ```
 
-**Full details:** @skills/orchestrator/SKILL.md
+**Full details:** @act/skills/orchestrator/SKILL.md
 
 ---
 
@@ -546,7 +546,7 @@ Reviewer (Opus)   → Two-stage: spec compliance then code quality
 | `NEEDS_CONTEXT` | Missing information | Provide context, re-dispatch |
 | `BLOCKED` | Cannot proceed | Assess, may escalate |
 
-**Full details:** @skills/subagent-development/SKILL.md
+**Full details:** @act/skills/subagent-development/SKILL.md
 **Dispatch templates:** @plugin/agents/prompts/
 
 ---
@@ -582,7 +582,7 @@ git worktree add .worktrees/feat-login -b feature/login
 git worktree remove .worktrees/feat-login
 ```
 
-**Full details:** @skills/worktree-isolation/SKILL.md
+**Full details:** @act/skills/worktree-isolation/SKILL.md
 
 ---
 
@@ -707,7 +707,7 @@ Audit and repair framework components to maintain health and consistency.
 | New component added | Audit that component |
 | CI/CD pipeline | `/act:audit-all --fail-on-error` |
 
-**Full details:** @specs/SPEC-agent-auditors.md, @skills/auditor/SKILL.md
+**Full details:** @specs/SPEC-agent-auditors.md, @act/skills/auditor/SKILL.md
 
 ---
 
@@ -783,7 +783,7 @@ Local plan.md ──push──► GitHub Issues
 Local plan.md ◄──pull─── GitHub Issues
 ```
 
-**Full details:** @skills/github-integration/SKILL.md  
+**Full details:** @act/skills/github-integration/SKILL.md  
 **Spec:** @specs/SPEC-github-integration.md  
 **Templates:** @templates/github/
 
@@ -849,7 +849,7 @@ Temporary patterns in `instincts/`:
 - Can evolve into skills
 - Can be deleted if wrong
 
-**Full details:** @skills/continuous-learning/SKILL.md, @specs/SPEC-continuous-learning.md
+**Full details:** @act/skills/continuous-learning/SKILL.md, @specs/SPEC-continuous-learning.md
 
 ---
 
